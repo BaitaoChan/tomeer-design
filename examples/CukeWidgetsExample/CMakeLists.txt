@@ -9,8 +9,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-file(GLOB ORIGIN src/*.h src/*.cpp)
-file(GLOB WINDOW src/window/*.h src/window/*.cpp)
+file(GLOB ORIGIN CONFIGURE_DEPENDS src/*.h src/*.cpp)
+file(GLOB WINDOW CONFIGURE_DEPENDS src/window/*.h src/window/*.cpp)
 
 add_executable(
         ${PROJECT_NAME}
@@ -34,20 +34,25 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         CukeWidgets
 )
 
-# 使用 windeployqt 自动复制依赖
-find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_INSTALL_PATH}/bin")
+add_dependencies(${PROJECT_NAME} CukeWidgets)
 
-if (WINDEPLOYQT_EXECUTABLE)
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND "${WINDEPLOYQT_EXECUTABLE}" --no-translations --release "$<TARGET_FILE:${PROJECT_NAME}>"
-            COMMENT "Running windeployqt to deploy Qt DLLs"
-    )
-endif ()
-
-# 把 CukeWidgets.dll 复制到 exe 目录
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE:CukeWidgets>
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>
-        COMMENT "Copying CukeWidgets.dll to example output directory"
+install(TARGETS ${PROJECT_NAME}
+        RUNTIME DESTINATION ${PROJECT_NAME}
+        LIBRARY DESTINATION ${PROJECT_NAME}
 )
+
+find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${CMAKE_PREFIX_PATH}/bin")
+
+# WIN32 平台使用 windeployqt 将 QT 库安装至运行目录
+if (WIN32 AND WINDEPLOYQT_EXECUTABLE)
+    install(CODE "
+        if(EXISTS \"${WINDEPLOYQT_EXECUTABLE}\")
+            execute_process(
+                COMMAND \"${WINDEPLOYQT_EXECUTABLE}\"
+                        --no-translations
+                        --dir \"${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}\"
+                        \"${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}/${PROJECT_NAME}.exe\"
+            )
+        endif()
+    ")
+endif ()

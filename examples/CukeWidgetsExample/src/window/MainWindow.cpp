@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 
+#include <QToolButton>
+#include <QLayout>
 #include <QMenuBar>
 #include <QToolBar>
 #include <QStatusBar>
@@ -15,11 +17,12 @@
 #include <QFile>
 
 MainWindow::MainWindow(QWidget *parent)
-    : Window(parent) {
+    : CukeWindow(parent) {
     setWindowTitle("CukeWidgetsExample");
     setWindowIcon(QIcon(":/images/Mortis.png"));
 
     createMenuBar();
+    createThemeButton();
     createToolBar();
     createStatusBar();
     createCentralWidget();
@@ -28,8 +31,34 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() = default;
 
+void MainWindow::createThemeButton()
+{
+    auto *themeBtn = new QToolButton(this);
+    themeBtn->setText("☀");
+    themeBtn->setToolTip(tr("切换亮暗主题"));
+    themeBtn->setAutoRaise(true);
+
+    connect(themeBtn, &QToolButton::clicked, this, [this, themeBtn]() {
+        if (pTheme->getThemeMode() == CukeThemeType::Light) {
+            pTheme->setThemeMode(CukeThemeType::Dark);
+            themeBtn->setText("🌙");
+        } else {
+            pTheme->setThemeMode(CukeThemeType::Light);
+            themeBtn->setText("☀");
+        }
+    });
+
+    auto *rightBox = new QWidget(this);
+    auto *layout = new QHBoxLayout(rightBox);
+    layout->setContentsMargins(0, 0, 6, 0);
+    layout->setSpacing(0);
+    layout->addWidget(themeBtn);
+
+    menuBar->setCornerWidget(rightBox, Qt::TopRightCorner);
+}
+
 void MainWindow::createMenuBar() {
-    menuBar = new widget::MenuBar(this);
+    menuBar = new CukeMenuBar(this);
     setMenuBar(menuBar);
 
     // File
@@ -98,7 +127,7 @@ void MainWindow::createDockWidgets() {
     root->setText(0, "CukeWidgets");
 
     auto item1 = new QTreeWidgetItem(root);
-    item1->setText(0, "MainWindow");
+    item1->setText(0, "CukeMainWindow");
 
     auto item2 = new QTreeWidgetItem(root);
     item2->setText(0, "Widgets");

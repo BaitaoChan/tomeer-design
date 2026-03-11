@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "MenuBar.h"
-#include "Window.h"
+#include "CukeMenuBar.h"
+#include "CukeWindow.h"
 
-using namespace cuke;
+using namespace cuke::widget;
 
 class QMenuBar;
 class QToolBar;
@@ -17,7 +17,7 @@ class QListWidget;
 
 class QAction;
 
-class MainWindow : public widget::Window {
+class MainWindow : public CukeWindow {
     Q_OBJECT
 
 public:
@@ -25,6 +25,7 @@ public:
     ~MainWindow() override;
 
 private:
+    void createThemeButton();
     void createMenuBar();
     void createToolBar();
     void createStatusBar();
@@ -32,7 +33,7 @@ private:
     void createDockWidgets();
 
 private:
-    widget::MenuBar *menuBar;
+    CukeMenuBar *menuBar;
     QToolBar *toolBar;
     QStatusBar *statusBar;
     QTextEdit *editor;
