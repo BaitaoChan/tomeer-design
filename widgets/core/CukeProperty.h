@@ -46,6 +46,16 @@ TYPE CLASS::get##NAME() const {                                                 
     return _p##NAME;                                                                    \
 }
 
+#define CUKE_Q_SINGLETON_DECL(CLASS)                                                    \
+public:                                                                                 \
+    static CLASS *instance();
+
+#define CUKE_Q_SINGLETON_IMPL(CLASS)                                                    \
+CLASS *CLASS::instance() {                                                              \
+    static CLASS instance;                                                              \
+    return &instance;                                                                   \
+}
+
 #define CUKE_DECLARE_DPTR(CLASS)                                                        \
 private:                                                                                \
     Q_DECLARE_PRIVATE(CLASS)                                                            \
@@ -56,10 +66,10 @@ private:                                                                        
     Q_DECLARE_PUBLIC(CLASS)                                                             \
     CLASS *q_ptr = nullptr;
 
-#define CUKE_BEGIN_NAMESPACE(NAME)                                                      \
+#define CUKE_NAMESPACE_BEGIN(NAME)                                                      \
 namespace cuke::NAME {
 
-#define CUKE_END_NAMESPACE(NAME)                                                        \
+#define CUKE_NAMESPACE_END(NAME)                                                        \
 }
 
 #endif // PROPERTY_H

@@ -1,10 +1,10 @@
 #include "CukeLineEditStyle.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeLineEditStyle::CukeLineEditStyle(QStyle *style)
     : CukeContextMixin(style) {
 }
 
 CukeLineEditStyle::~CukeLineEditStyle() = default;
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

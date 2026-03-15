@@ -4,8 +4,8 @@
 
 class QPropertyAnimation;
 class QFont;
-CUKE_BEGIN_NAMESPACE(widget)
-CUKE_BEGIN_NAMESPACE(lab)
+CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(lab)
 class CukeLoopedRing;
 class CukeLoopedRingPrivate : public QObject {
     Q_OBJECT
@@ -19,7 +19,7 @@ private:
     QString _text = "Loading...";
     QFont *_font = nullptr;
 };
-CUKE_END_NAMESPACE(lab)
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(lab)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CUKELOOPEDRINGPRIVATE_H

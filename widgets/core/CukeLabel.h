@@ -8,7 +8,7 @@
 #include "CukeContextMixin.h"
 #include "CukeProperty.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeLabelPrivate;
 class CUKE_EXPORT CukeLabel : public CukeContextMixin<QLabel> {
     Q_OBJECT
@@ -23,6 +23,6 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CUKELABEL_H

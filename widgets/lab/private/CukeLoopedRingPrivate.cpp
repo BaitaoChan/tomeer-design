@@ -1,12 +1,12 @@
 #include "CukeLoopedRingPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
-CUKE_BEGIN_NAMESPACE(lab)
+CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(lab)
 CukeLoopedRingPrivate::CukeLoopedRingPrivate(CukeLoopedRing *q)
     : q_ptr(q) {
 }
 
 CukeLoopedRingPrivate::~CukeLoopedRingPrivate() = default;
 
-CUKE_END_NAMESPACE(lab)
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(lab)
+CUKE_NAMESPACE_END(widget)

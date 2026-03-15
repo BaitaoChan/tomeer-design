@@ -5,7 +5,7 @@
 #include "CukeContextMixin.h"
 #include "CukeProperty.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeLineEditPrivate;
 class CUKE_EXPORT CukeLineEdit : public CukeContextMixin<QLineEdit> {
     Q_OBJECT
@@ -26,6 +26,6 @@ protected:
 
     void onThemeChanged(CukeThemeType::ThemeMode mode) override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CUKELINEEDIT_H

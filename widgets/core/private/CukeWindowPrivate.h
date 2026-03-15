@@ -2,7 +2,7 @@
 #define CUKEWINDOWPRIVATE_H
 
 #include "CukeProperty.h"
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeWindow;
 class CukeWindowPrivate : public QObject {
     Q_OBJECT
@@ -11,6 +11,6 @@ public:
     explicit CukeWindowPrivate(CukeWindow *q = nullptr);
     ~CukeWindowPrivate() override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CUKEWINDOWPRIVATE_H

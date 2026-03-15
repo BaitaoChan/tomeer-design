@@ -1,6 +1,6 @@
 #include "CukeComboBoxItemDelegate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeComboBoxItemDelegate::CukeComboBoxItemDelegate(QObject *parent)
     : CukeContextMixin(parent) {
 }
@@ -42,4 +42,4 @@ QSize CukeComboBoxItemDelegate::sizeHint(const QStyleOptionViewItem &option,
     return QSize(0, 30);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

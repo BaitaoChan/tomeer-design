@@ -2,7 +2,7 @@
 #define CUKEFLOATLINEEDIT_H
 #include "CukeLineEdit.h"
 #include <QDoubleValidator>
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeFloatLineEditPrivate;
 class CUKE_EXPORT CukeFloatLineEdit : public CukeLineEdit {
     Q_OBJECT
@@ -35,6 +35,6 @@ private:
     void validateAndFix(bool forceEmit = false);
     void updateRangeToolTip();
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CUKEFLOATLINEEDIT_H

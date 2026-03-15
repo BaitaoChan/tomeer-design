@@ -1,7 +1,7 @@
 #include "CukeToggleSwitch.h"
 #include "CukeToggleSwitchPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, QColor, BgColor)
 CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, QColor, KnobColor)
 CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, qreal, KnobDiameter)
@@ -234,4 +234,4 @@ void CukeToggleSwitch::paintEvent(QPaintEvent *event) {
     p.drawEllipse(QPointF(_pKnobCenterX, _pKnobCenterY), radius, radius);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

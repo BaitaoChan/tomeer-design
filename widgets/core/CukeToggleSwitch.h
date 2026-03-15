@@ -13,7 +13,7 @@
 #include "CukeContextMixin.h"
 #include "CukeProperty.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeToggleSwitchPrivate;
 class CUKE_EXPORT CukeToggleSwitch : public CukeContextMixin<QWidget> {
     Q_OBJECT
@@ -46,6 +46,6 @@ protected:
 private slots:
     void onThemeChanged(CukeThemeType::ThemeMode Mode) override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // TOGGLESWITCH_H

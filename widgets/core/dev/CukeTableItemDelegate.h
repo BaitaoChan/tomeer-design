@@ -6,7 +6,7 @@
 #include "CukeContextMixin.h"
 #include "CukeLineEdit.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeTableItemDelegate : public CukeContextMixin<QStyledItemDelegate> {
     Q_OBJECT
 public:
@@ -26,7 +26,7 @@ protected:
                    const QModelIndex &index) const override;
 
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKETABLEITEMDELEGATE_H

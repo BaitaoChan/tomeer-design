@@ -1,6 +1,6 @@
 #include "CukeTableItemDelegate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeTableItemDelegate::CukeTableItemDelegate(QObject *parent)
     : CukeContextMixin(parent) {
 }
@@ -40,4 +40,4 @@ QSize CukeTableItemDelegate::sizeHint(const QStyleOptionViewItem &opt,
     return QStyledItemDelegate::sizeHint(opt, index);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

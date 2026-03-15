@@ -5,7 +5,7 @@
 #include "CukeLineEditStyle.h"
 #include "CukeLineEditPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, QColor, BorderColor)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, LineHalfWidth)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, BorderRadius)
@@ -144,4 +144,4 @@ void CukeLineEdit::paintEvent(QPaintEvent *event) {
     }
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

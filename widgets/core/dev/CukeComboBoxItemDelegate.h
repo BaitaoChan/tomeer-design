@@ -5,7 +5,7 @@
 
 #include "CukeContextMixin.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeComboBoxItemDelegate : public CukeContextMixin<QStyledItemDelegate> {
     Q_OBJECT
 public:
@@ -19,7 +19,7 @@ protected:
     QSize sizeHint(const QStyleOptionViewItem &option,
                    const QModelIndex &index) const override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKECOMBOBOXITEMDELEGATE_H

@@ -1,24 +1,23 @@
 #ifndef CUKETHEME_H
 #define CUKETHEME_H
 #include <QColor>
-#include "CukeDef.h"
+#include "CukeType.h"
 #include "CukeProperty.h"
 
 #define pTheme CukeTheme::instance()
 #define pThemeColor(Mode, Color) pTheme->getThemeColor(Mode, CukeThemeType::Color)
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeThemePrivate;
 class CUKE_EXPORT CukeTheme : public QObject {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeTheme)
+    CUKE_Q_SINGLETON_DECL(CukeTheme)
 private:
     explicit CukeTheme(QObject *parent = nullptr);
     ~CukeTheme() override;
 
 public:
-    static CukeTheme* instance();
-
     void setThemeMode(CukeThemeType::ThemeMode Mode);
     CukeThemeType::ThemeMode getThemeMode() const;
 
@@ -30,6 +29,6 @@ signals:
 private:
     void initThemeColor();
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CUKETHEME_H

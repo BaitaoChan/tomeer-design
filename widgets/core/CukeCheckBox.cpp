@@ -2,7 +2,7 @@
 #include "CukeCheckBoxPrivate.h"
 #include <QPainter>
 #include <QStyleOptionButton>
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CUKE_Q_PROPERTY_IMPL(CukeCheckBox, qreal, CheckProgress)
 CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
     : CukeContextMixin(parent),
@@ -117,4 +117,4 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
     p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

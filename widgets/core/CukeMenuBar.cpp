@@ -2,7 +2,7 @@
 #include "CukeMenuBarStyle.h"
 #include "CukeMenuBarPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeMenuBar::CukeMenuBar(QWidget *parent)
     : CukeContextMixin(parent),
       d_ptr(new CukeMenuBarPrivate(this)) {
@@ -11,4 +11,4 @@ CukeMenuBar::CukeMenuBar(QWidget *parent)
 
 CukeMenuBar::~CukeMenuBar() = default;
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

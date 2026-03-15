@@ -3,7 +3,7 @@
 
 #include "CukeMenuBarStyle.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
     CukeMenuBarStyle::CukeMenuBarStyle(QStyle *style)
     : CukeContextMixin(style) {
 }
@@ -55,4 +55,4 @@ int CukeMenuBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

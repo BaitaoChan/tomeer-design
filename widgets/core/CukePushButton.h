@@ -11,7 +11,7 @@
 
 #include "CukeProperty.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukePushButtonPrivate;
 class CUKE_EXPORT CukePushButton : public CukeContextMixin<QPushButton> {
     Q_OBJECT
@@ -29,6 +29,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // PUSHBUTTON_H

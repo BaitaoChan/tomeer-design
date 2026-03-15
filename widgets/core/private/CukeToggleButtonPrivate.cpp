@@ -1,10 +1,10 @@
 #include "CukeToggleButtonPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeToggleButtonPrivate::CukeToggleButtonPrivate(CukeToggleButton *q)
     : q_ptr(q) {
 }
 
 CukeToggleButtonPrivate::~CukeToggleButtonPrivate() = default;
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

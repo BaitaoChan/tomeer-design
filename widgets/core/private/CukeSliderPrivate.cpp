@@ -1,10 +1,10 @@
 #include "CukeSliderPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeSliderPrivate::CukeSliderPrivate(CukeSlider *q)
     : q_ptr(q) {
 }
 
 CukeSliderPrivate::~CukeSliderPrivate() = default;
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

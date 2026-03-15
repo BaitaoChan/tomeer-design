@@ -6,7 +6,7 @@
 
 #include "CukeTheme.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 template<class T>
 class CukeContextMixin : public T {
 public:
@@ -27,6 +27,6 @@ protected:
 
     CukeThemeType::ThemeMode _themeMode;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CONTEXTMIXIN_H

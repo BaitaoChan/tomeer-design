@@ -5,7 +5,7 @@
 
 #include "CukeContextMixin.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeComboBoxView : public CukeContextMixin<QListView> {
     Q_OBJECT
 public:
@@ -16,7 +16,7 @@ protected:
     int sizeHintForRow(int row) const override;
     void onThemeChanged(CukeThemeType::ThemeMode mode) override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKECOMBOBOXVIEW_H

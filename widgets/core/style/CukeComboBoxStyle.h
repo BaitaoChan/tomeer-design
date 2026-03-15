@@ -4,7 +4,7 @@
 
 #include "CukeContextMixin.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeComboBoxStyle : public CukeContextMixin<QProxyStyle> {
     Q_OBJECT
 public:
@@ -23,7 +23,7 @@ public:
     int pixelMetric(PixelMetric metric, const QStyleOption *option = nullptr,
                     const QWidget *widget = nullptr) const override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKECOMBOBOXSTYLE_H

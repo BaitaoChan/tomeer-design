@@ -1,7 +1,7 @@
 #include "CukePushButton.h"
 #include "CukePushButtonPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CUKE_Q_PROPERTY_IMPL(CukePushButton, int, BorderRadius)
 
 CukePushButton::CukePushButton(QWidget *parent)
@@ -93,4 +93,4 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

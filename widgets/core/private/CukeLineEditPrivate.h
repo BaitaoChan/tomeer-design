@@ -3,7 +3,7 @@
 #include "CukeProperty.h"
 
 class QPropertyAnimation;
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeLineEdit;
 class CukeLineEditPrivate : public QObject {
     Q_OBJECT
@@ -19,7 +19,7 @@ private:
     QPropertyAnimation *_borderAnim = nullptr;
     QPropertyAnimation *_lineAnim = nullptr;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKELINEEDITPRIVATE_H

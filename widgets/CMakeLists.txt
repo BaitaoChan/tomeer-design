@@ -22,6 +22,7 @@ add_library(${PROJECT_NAME} SHARED
         ${LAB}
         ${PRIVATE}
         ${STYLE}
+        ${CMAKE_CURRENT_SOURCE_DIR}/core/res/res.qrc
 )
 
 # 查找 Qt 包
@@ -37,8 +38,9 @@ target_include_directories(${PROJECT_NAME}
         PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/dev>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/private>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lab/private>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/style>
+
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lab/private>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lab/style>
 )
 

@@ -5,7 +5,7 @@
 #include "CukeContextMixin.h"
 #include "CukeProperty.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeWindowPrivate;
 class CUKE_EXPORT CukeWindow : public CukeContextMixin<QMainWindow> {
     Q_OBJECT
@@ -16,8 +16,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
-    void onThemeChanged(CukeThemeType::ThemeMode mode) override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // CUKEMAINWINDOW_H

@@ -4,7 +4,7 @@
 
 #include "CukeProperty.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeToggleButton;
 class CukeToggleButtonPrivate : public QObject {
     Q_OBJECT
@@ -24,7 +24,7 @@ private:
     QColor checkColor = QColor();
     QColor textColor = QColor();
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKETOGGLEBUTTONPRIVATE_H

@@ -1,10 +1,10 @@
 #include "CukeCheckBoxPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeCheckBoxPrivate::CukeCheckBoxPrivate(CukeCheckBox *q)
     : q_ptr(q) {
 }
 
 CukeCheckBoxPrivate::~CukeCheckBoxPrivate() = default;
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

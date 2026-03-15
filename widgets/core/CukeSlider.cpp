@@ -1,7 +1,7 @@
 #include "CukeSlider.h"
 #include "CukeSliderPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CUKE_Q_PROPERTY_IMPL(CukeSlider, qreal, HandleDiameter)
 
 CukeSlider::CukeSlider(QWidget *parent)
@@ -147,4 +147,4 @@ void CukeSlider::paintEvent(QPaintEvent *event) {
     p.drawEllipse(d_ptr->_handleCenter, _pHandleDiameter, _pHandleDiameter);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

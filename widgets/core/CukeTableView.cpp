@@ -3,7 +3,7 @@
 #include "CukeTableViewStyle.h"
 #include "CukeTableViewPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeTableView::CukeTableView(QWidget *parent)
     : CukeContextMixin(parent),
       d_ptr(new CukeTableViewPrivate(this)) {
@@ -27,4 +27,4 @@ CukeTableView::CukeTableView(QWidget *parent)
 
 CukeTableView::~CukeTableView() = default;
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

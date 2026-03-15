@@ -7,13 +7,13 @@
 #include "CukeComboBoxPrivate.h"
 
 #define CUKE_COMBOBOX_POPUP_ANIM_MODE 0
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, RotateAngle)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, LineHalfWidth)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, BorderRadius)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, PopupHeight)
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 inline QPainterPath SingleArrow() {
     QPainterPath path;
 
@@ -35,7 +35,7 @@ inline QPainterPath SingleArrow() {
     return path;
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 CukeComboBox::CukeComboBox(QWidget *parent)
     : CukeContextMixin(parent),
@@ -211,4 +211,4 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
     p.drawPath(cuke::widget::SingleArrow());
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

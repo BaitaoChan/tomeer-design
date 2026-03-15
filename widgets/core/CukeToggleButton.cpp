@@ -1,7 +1,7 @@
 #include "CukeToggleButton.h"
 #include "CukeToggleButtonPrivate.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeToggleButton::CukeToggleButton(QWidget *parent)
     : CukeContextMixin(parent), d_ptr(new CukeToggleButtonPrivate(this)) {
     setFlat(true);
@@ -106,4 +106,4 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

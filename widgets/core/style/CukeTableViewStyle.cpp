@@ -5,7 +5,7 @@
 
 #include "CukeTableViewStyle.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeTableViewStyle::CukeTableViewStyle(QStyle *style)
     : CukeContextMixin(style) {
 }
@@ -134,4 +134,4 @@ int CukeTableViewStyle::pixelMetric(PixelMetric metric,
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)

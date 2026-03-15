@@ -3,7 +3,7 @@
 #include "CukeProperty.h"
 
 class QPropertyAnimation;
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeComboBox;
 class CukeComboBoxPrivate : public QObject {
     Q_OBJECT
@@ -17,7 +17,7 @@ private:
     QPropertyAnimation *_lineAnim = nullptr;
     QPropertyAnimation *_heightAnim = nullptr;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKECOMBOBOXPRIVATE_H

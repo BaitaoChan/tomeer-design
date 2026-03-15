@@ -6,7 +6,7 @@
 
 #include "CukeContextMixin.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeTableViewPrivate;
 class CUKE_EXPORT CukeTableView : public CukeContextMixin<QTableView> {
     Q_OBJECT
@@ -15,6 +15,6 @@ public:
     explicit CukeTableView(QWidget *parent = nullptr);
     ~CukeTableView() override;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 #endif // TABLEVIEW_H

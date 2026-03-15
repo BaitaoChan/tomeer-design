@@ -3,7 +3,7 @@
 #include "CukeProperty.h"
 
 class QDoubleValidator;
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 class CukeFloatLineEdit;
 class CukeFloatLineEditPrivate : public QObject {
     Q_OBJECT
@@ -25,7 +25,7 @@ private:
 
     QDoubleValidator *_validator = nullptr;
 };
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
 
 
 #endif // CUKEFLOATLINEEDITPRIVATE_H

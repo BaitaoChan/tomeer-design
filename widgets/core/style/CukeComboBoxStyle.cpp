@@ -4,7 +4,7 @@
 
 #include "CukeComboBoxStyle.h"
 
-CUKE_BEGIN_NAMESPACE(widget)
+CUKE_NAMESPACE_BEGIN(widget)
 CukeComboBoxStyle::CukeComboBoxStyle(QStyle *style)
     : CukeContextMixin(style) {
 }
@@ -86,4 +86,4 @@ int CukeComboBoxStyle::pixelMetric(PixelMetric metric, const QStyleOption *optio
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-CUKE_END_NAMESPACE(widget)
+CUKE_NAMESPACE_END(widget)
