@@ -1,8 +1,10 @@
 #include "CukeToggleSwitchPrivate.h"
+#include "CukeToggleSwitch.h"
 
 CUKE_NAMESPACE_BEGIN(widget)
 CukeToggleSwitchPrivate::CukeToggleSwitchPrivate(CukeToggleSwitch *q)
-    : q_ptr(q) {
+    : QObject(q),
+      q_ptr(q) {
 }
 
 CukeToggleSwitchPrivate::~CukeToggleSwitchPrivate() = default;

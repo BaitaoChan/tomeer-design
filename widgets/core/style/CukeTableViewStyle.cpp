@@ -20,7 +20,7 @@ void CukeTableViewStyle::drawPrimitive(PrimitiveElement element,
         if (option->state & State_Selected) {
             painter->save();
             painter->setPen(Qt::NoPen);
-            painter->setBrush(pThemeColor(_themeMode, SelectedItem));
+            painter->setBrush(CukeThemeColor(_themeMode, SelectedItem));
             painter->drawRect(option->rect);
             painter->restore();
             return;
@@ -42,7 +42,7 @@ void CukeTableViewStyle::drawControl(ControlElement element,
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
         painter->setPen(Qt::NoPen);
-        painter->setBrush(pThemeColor(_themeMode, TableBg));
+        painter->setBrush(CukeThemeColor(_themeMode, TableBg));
         painter->drawRoundedRect(r, 6, 6);
         painter->restore();
         return;
@@ -69,7 +69,7 @@ void CukeTableViewStyle::drawControl(ControlElement element,
 
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(pThemeColor(_themeMode, HeaderBg));
+        painter->setBrush(CukeThemeColor(_themeMode, HeaderBg));
 
         if (isFirst && isLast) {
             painter->drawRoundedRect(r, radius, radius);
@@ -119,7 +119,7 @@ void CukeTableViewStyle::drawControl(ControlElement element,
                 qstyleoption_cast<const QStyleOptionHeader *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        painter->setPen(pThemeColor(_themeMode, Text));
+        painter->setPen(CukeThemeColor(_themeMode, Text));
         painter->drawText(
             option->rect, Qt::AlignVCenter | Qt::AlignHCenter, opt->text);
         painter->restore();

@@ -1,0 +1,23 @@
+#include <QFontDatabase>
+#include <QApplication>
+
+#include "CukeApplication.h"
+
+CUKE_NAMESPACE_BEGIN(widget)
+    CUKE_Q_SINGLETON_IMPL(CukeApplication)
+CukeApplication::CukeApplication(QObject *parent)
+    : QObject(parent) {
+}
+
+CukeApplication::~CukeApplication() = default;
+
+void CukeApplication::init() {
+    QFontDatabase::addApplicationFont(":/CukeGlyphs.ttf");
+
+    QFont font("Microsoft YaHei");
+    font.setPixelSize(13);
+    font.setStyleStrategy(QFont::PreferAntialias);
+    QApplication::setFont(font);
+}
+
+CUKE_NAMESPACE_END(widget)

@@ -4,8 +4,8 @@
 #include "CukeType.h"
 #include "CukeProperty.h"
 
-#define pTheme CukeTheme::instance()
-#define pThemeColor(Mode, Color) pTheme->getThemeColor(Mode, CukeThemeType::Color)
+#define cTheme CukeTheme::instance()
+#define CukeThemeColor(Mode, Color) cTheme->getThemeColor(Mode, CukeThemeType::Color)
 
 CUKE_NAMESPACE_BEGIN(widget)
 class CukeThemePrivate;

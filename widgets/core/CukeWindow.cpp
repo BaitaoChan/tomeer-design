@@ -1,24 +1,50 @@
 #include <QPainter>
+#include <QPainterPath>
+#include <QVBoxLayout>
+#include <QWidget>
 
 #include "CukeWindow.h"
 #include "CukeWindowStyle.h"
 #include "CukeWindowPrivate.h"
+#include "CukeAppBar.h"
 
 CUKE_NAMESPACE_BEGIN(widget)
+CUKE_Q_PROPERTY_IMPL(CukeWindow, int, BorderRadius)
 CukeWindow::CukeWindow(QWidget *parent)
     : CukeContextMixin(parent),
       d_ptr(new CukeWindowPrivate(this)) {
-    // setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    _pBorderRadius = 8;
+    d_ptr->_appBar = new CukeAppBar(this);
+    // 禁止绘制系统标题栏以及边框
+    setAttribute(Qt::WA_TranslucentBackground);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     resize(1280, 720);
     setStyle(new CukeWindowStyle(style()));
     setStyleSheet("QMainWindow { background: transparent; }");
+
+    d_ptr->_widget = new QWidget(this);
+    d_ptr->_layout = new QVBoxLayout(d_ptr->_widget);
+
+    d_ptr->_layout->addWidget(d_ptr->_appBar);
+    d_ptr->_layout->addStretch();
+
+    setCentralWidget(d_ptr->_widget);
 }
 
 CukeWindow::~CukeWindow() = default;
 
+void CukeWindow::resize(int w, int h) {
+    QMainWindow::resize(w, h + d_ptr->_appBar->getAppBarHeight());
+}
+
 void CukeWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.fillRect(rect(), pThemeColor(_themeMode, WindowAlpha));
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+
+    QPainterPath path;
+    path.addRoundedRect(rect(), _pBorderRadius, _pBorderRadius);
+
+    painter.fillPath(path, CukeThemeColor(_themeMode, Window));
 
     QMainWindow::paintEvent(event);
 }

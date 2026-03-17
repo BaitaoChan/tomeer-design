@@ -30,7 +30,7 @@ void CukeLabel::paintEvent(QPaintEvent *event) {
     if (_pTextColor.isValid())
         p.setPen(_pTextColor);
     else
-        p.setPen(pThemeColor(_themeMode, Text));
+        p.setPen(CukeThemeColor(_themeMode, Text));
 
     p.drawText(rect(), alignment(), text());
 }

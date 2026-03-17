@@ -13,8 +13,8 @@ public:
     template<typename... Args>
     explicit CukeContextMixin(Args &&... args)
         : T(std::forward<Args>(args)...) {
-        _themeMode = pTheme->getThemeMode();
-        QObject::connect(pTheme, &CukeTheme::themeModeChanged, this, &CukeContextMixin::onThemeChanged);
+        _themeMode = cTheme->getThemeMode();
+        QObject::connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeContextMixin::onThemeChanged);
     }
 
 protected:

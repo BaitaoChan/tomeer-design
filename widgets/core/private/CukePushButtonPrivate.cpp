@@ -1,8 +1,10 @@
 #include "CukePushButtonPrivate.h"
+#include "CukePushButton.h"
 
 CUKE_NAMESPACE_BEGIN(widget)
 CukePushButtonPrivate::CukePushButtonPrivate(CukePushButton *q)
-    : q_ptr(q) {
+    : QObject(q),
+      q_ptr(q) {
 }
 
 CukePushButtonPrivate::~CukePushButtonPrivate() = default;

@@ -1,8 +1,10 @@
 #include "CukeLabelPrivate.h"
+#include "CukeLabel.h"
 
 CUKE_NAMESPACE_BEGIN(widget)
 CukeLabelPrivate::CukeLabelPrivate(CukeLabel *q)
-    : q_ptr(q) {
+    : QObject(q),
+      q_ptr(q) {
 }
 
 CukeLabelPrivate::~CukeLabelPrivate() = default;

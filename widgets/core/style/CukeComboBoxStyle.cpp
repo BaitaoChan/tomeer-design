@@ -28,7 +28,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
             // 阴影区域
             QRect r(option->rect.x() + 6, option->rect.y(),
                     option->rect.width() - 12, option->rect.height() - 6);
-            painter->setBrush(pThemeColor(_themeMode, ComboBoxView));
+            painter->setBrush(CukeThemeColor(_themeMode, ComboBoxView));
             painter->setPen(Qt::NoPen);
             painter->drawRoundedRect(r, _radius, _radius);
             painter->restore();
@@ -41,7 +41,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
                 qstyleoption_cast<const QStyleOptionComboBox *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        painter->setPen(pThemeColor(_themeMode, Text));
+        painter->setPen(CukeThemeColor(_themeMode, Text));
         painter->drawText(
             option->rect.adjusted(8, 0, 0, 0),
             Qt::AlignVCenter | Qt::AlignLeft,
@@ -67,9 +67,9 @@ void CukeComboBoxStyle::drawComplexControl(
 
         // 背景
         if (opt->state & State_MouseOver)
-            painter->setBrush(pThemeColor(_themeMode, HoverAlpha));
+            painter->setBrush(CukeThemeColor(_themeMode, HoverAlpha));
         else
-            painter->setBrush(pThemeColor(_themeMode, DefaultAlpha));
+            painter->setBrush(CukeThemeColor(_themeMode, DefaultAlpha));
         painter->setPen(Qt::NoPen);
         painter->drawRoundedRect(fr.adjusted(1, 1, -1, -1), _radius, _radius);
 

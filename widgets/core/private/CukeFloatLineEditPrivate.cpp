@@ -1,8 +1,10 @@
 #include "CukeFloatLineEditPrivate.h"
+#include "CukeFloatLineEdit.h"
 
 CUKE_NAMESPACE_BEGIN(widget)
 CukeFloatLineEditPrivate::CukeFloatLineEditPrivate(CukeFloatLineEdit *q)
-    : q_ptr(q) {
+    : QObject(q),
+      q_ptr(q) {
 }
 
 CukeFloatLineEditPrivate::~CukeFloatLineEditPrivate() = default;

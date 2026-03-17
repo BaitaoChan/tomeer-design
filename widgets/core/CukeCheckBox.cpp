@@ -64,17 +64,17 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
     const QColor bgColor =
             enabled
                 ? (hovered
-                       ? pThemeColor(_themeMode, DefaultAlpha)
-                       : pThemeColor(_themeMode, DefaultAlpha))
-                : pThemeColor(_themeMode, Disable);
+                       ? CukeThemeColor(_themeMode, DefaultAlpha)
+                       : CukeThemeColor(_themeMode, DefaultAlpha))
+                : CukeThemeColor(_themeMode, Disable);
 
-    const QColor checkBgColor = pThemeColor(_themeMode, CheckAlpha);
+    const QColor checkBgColor = CukeThemeColor(_themeMode, CheckAlpha);
     const QColor borderColor = enabled
-                                   ? pThemeColor(_themeMode, Border)
-                                   : pThemeColor(_themeMode, Disable);
+                                   ? CukeThemeColor(_themeMode, Border)
+                                   : CukeThemeColor(_themeMode, Disable);
     const QColor textColor = enabled
-                                 ? pThemeColor(_themeMode, Text)
-                                 : pThemeColor(_themeMode, TextDisable);
+                                 ? CukeThemeColor(_themeMode, Text)
+                                 : CukeThemeColor(_themeMode, TextDisable);
 
     // 背景
     const QColor finalBg =
@@ -91,7 +91,7 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
 
     // 勾选动画
     if (_pCheckProgress > 0.0) {
-        p.setPen(QPen(pThemeColor(_themeMode, Text), penW, Qt::SolidLine, Qt::RoundCap));
+        p.setPen(QPen(CukeThemeColor(_themeMode, Text), penW, Qt::SolidLine, Qt::RoundCap));
 
         QPointF p1(boxRect.left() + boxSize * 0.25,
                    boxRect.top() + boxSize * 0.55);

@@ -1,8 +1,10 @@
 #include "CukeThemePrivate.h"
+#include "CukeCheckBox.h"
 
 CUKE_NAMESPACE_BEGIN(widget)
 CukeThemePrivate::CukeThemePrivate(CukeTheme *q)
-    : q_ptr(q) {
+    : QObject(q),
+      q_ptr(q) {
 }
 
 CukeThemePrivate::~CukeThemePrivate() = default;

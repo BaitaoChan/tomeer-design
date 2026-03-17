@@ -1,8 +1,10 @@
 #include "CukeWindowPrivate.h"
+#include "CukeWindow.h"
 
 CUKE_NAMESPACE_BEGIN(widget)
 CukeWindowPrivate::CukeWindowPrivate(CukeWindow *q)
-    : q_ptr(q) {
+    : QObject(q),
+      q_ptr(q) {
 }
 
 CukeWindowPrivate::~CukeWindowPrivate() = default;
