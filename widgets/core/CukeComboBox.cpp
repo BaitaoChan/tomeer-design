@@ -7,13 +7,13 @@
 #include "CukeComboBoxPrivate.h"
 
 #define CUKE_COMBOBOX_POPUP_ANIM_MODE 0
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, RotateAngle)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, LineHalfWidth)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, BorderRadius)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, PopupHeight)
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 inline QPainterPath SingleArrow() {
     QPainterPath path;
 
@@ -35,7 +35,7 @@ inline QPainterPath SingleArrow() {
     return path;
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 CukeComboBox::CukeComboBox(QWidget *parent)
     : CukeContextMixin(parent),
@@ -181,7 +181,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 底部横线
     p.setPen(Qt::NoPen);
-    p.setBrush(CukeThemeColor(_themeMode, CukeThemeType::Pattern));
+    p.setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Pattern));
     p.drawRect(QRectF(rect().left() + 4,
                       rect().bottom() * 0.82,
                       rect().right() - rect().left() - 8,
@@ -189,7 +189,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 焦点指示
     p.setPen(Qt::NoPen);
-    p.setBrush(CukeThemeColor(_themeMode, CukeThemeType::Check));
+    p.setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Check));
     p.drawRoundedRect(QRectF(rect().left() + 4 + (rect().right() - rect().left() - 8) / 2.0 - _pLineHalfWidth,
                              rect().bottom() * 0.82,
                              _pLineHalfWidth * 2,
@@ -206,9 +206,9 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
     p.translate(-rect().height() / 4.0, -rect().height() / 4.0);
     p.setTransform(QTransform().scale(rect().height() / 2.0 / 1024.0,
                                       rect().height() / 2.0 / 1024.0), true);
-    p.setBrush(CukeThemeColor(_themeMode, Text));
-    p.setPen(QPen(CukeThemeColor(_themeMode, Text), 1));
-    p.drawPath(cuke::widget::SingleArrow());
+    p.setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
+    p.setPen(QPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text), 1));
+    p.drawPath(cuke::pub::SingleArrow());
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

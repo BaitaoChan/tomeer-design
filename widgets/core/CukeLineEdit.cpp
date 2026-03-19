@@ -5,7 +5,7 @@
 #include "CukeLineEditStyle.h"
 #include "CukeLineEditPrivate.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, QColor, BorderColor)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, LineHalfWidth)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, BorderRadius)
@@ -47,11 +47,11 @@ void CukeLineEdit::onThemeChanged(CukeThemeType::ThemeMode mode) {
     CukeContextMixin::onThemeChanged(mode);
     // 设置文字颜色
     QPalette pal = palette();
-    pal.setColor(QPalette::Text, CukeThemeColor(_themeMode, CukeThemeType::Text));
+    pal.setColor(QPalette::Text, cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
     setPalette(pal);
 
     if (!d_ptr->_isFocused) {
-        _pBorderColor = CukeThemeColor(_themeMode, BorderAlpha);
+        _pBorderColor = cTheme->getThemeColor(_themeMode, CukeThemeType::BorderAlpha);
     }
     update();
 }
@@ -60,8 +60,8 @@ void CukeLineEdit::focusInEvent(QFocusEvent *event) {
     d_ptr->_isFocused = true;
     d_ptr->_hasFocusVisible = true;
     d_ptr->_borderAnim->stop();
-    d_ptr->_borderAnim->setStartValue(CukeThemeColor(_themeMode, BorderAlpha));
-    d_ptr->_borderAnim->setEndValue(CukeThemeColor(_themeMode, FocusBorder));
+    d_ptr->_borderAnim->setStartValue(cTheme->getThemeColor(_themeMode, CukeThemeType::BorderAlpha));
+    d_ptr->_borderAnim->setEndValue(cTheme->getThemeColor(_themeMode, CukeThemeType::FocusBorder));
     d_ptr->_borderAnim->start();
 
     d_ptr->_lineAnim->stop();
@@ -75,8 +75,8 @@ void CukeLineEdit::focusInEvent(QFocusEvent *event) {
 void CukeLineEdit::focusOutEvent(QFocusEvent *event) {
     d_ptr->_isFocused = false;
     d_ptr->_borderAnim->stop();
-    d_ptr->_borderAnim->setStartValue(CukeThemeColor(_themeMode, FocusBorder));
-    d_ptr->_borderAnim->setEndValue(CukeThemeColor(_themeMode, BorderAlpha));
+    d_ptr->_borderAnim->setStartValue(cTheme->getThemeColor(_themeMode, CukeThemeType::FocusBorder));
+    d_ptr->_borderAnim->setEndValue(cTheme->getThemeColor(_themeMode, CukeThemeType::BorderAlpha));
     d_ptr->_borderAnim->start();
 
     d_ptr->_lineAnim->stop();
@@ -110,12 +110,12 @@ void CukeLineEdit::paintEvent(QPaintEvent *event) {
 
     // 绘制背景
     p.setPen(Qt::NoPen);
-    p.setBrush(CukeThemeColor(_themeMode, CukeThemeType::DefaultAlpha));
+    p.setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha));
     QRect r = rect().adjusted(1, 1, -1, -1);
     p.drawRoundedRect(r, _pBorderRadius, _pBorderRadius);
 
     // 绘制边框
-    QPen pen(CukeThemeColor(_themeMode, BorderAlpha), 1);
+    QPen pen(cTheme->getThemeColor(_themeMode, CukeThemeType::BorderAlpha), 1);
     p.setPen(pen);
     p.setBrush(Qt::NoBrush);
     p.drawRoundedRect(r, _pBorderRadius, _pBorderRadius);
@@ -144,4 +144,4 @@ void CukeLineEdit::paintEvent(QPaintEvent *event) {
     }
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

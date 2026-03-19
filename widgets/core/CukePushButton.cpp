@@ -1,7 +1,7 @@
 #include "CukePushButton.h"
 #include "CukePushButtonPrivate.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukePushButton, int, BorderRadius)
 
 CukePushButton::CukePushButton(QWidget *parent)
@@ -45,11 +45,11 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QColor bgColor = CukeThemeColor(_themeMode, DefaultAlpha);
+    QColor bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha);
     if (d_ptr->_isPressed) {
-        bgColor = CukeThemeColor(_themeMode, PressAlpha);
+        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::PressAlpha);
     } else if (d_ptr->_isHovered) {
-        bgColor = CukeThemeColor(_themeMode, HoverAlpha);
+        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::HoverAlpha);
     }
 
     painter.setBrush(bgColor);
@@ -58,7 +58,7 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
 
     if (!d_ptr->_isPressed) {
         QPen pen;
-        pen.setColor(CukeThemeColor(_themeMode, Pattern));
+        pen.setColor(cTheme->getThemeColor(_themeMode, CukeThemeType::Pattern));
         pen.setWidthF(1.6);
         painter.setPen(pen);
 
@@ -81,7 +81,7 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     option.iconSize = icon().isNull() ? QSize() : this->iconSize();
 
     // 用当前的文字颜色
-    option.palette.setColor(QPalette::ButtonText, CukeThemeColor(_themeMode, Text));
+    option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
 
     if (d_ptr->_isPressed) {
         option.state |= QStyle::State_Sunken;
@@ -93,4 +93,4 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

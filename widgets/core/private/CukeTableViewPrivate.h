@@ -2,7 +2,7 @@
 #define CUKETABLEVIEWPRIVATE_H
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeTableView;
 class CukeTableViewPrivate : public QObject {
     Q_OBJECT
@@ -11,7 +11,7 @@ public:
     explicit CukeTableViewPrivate(CukeTableView *q);
     ~CukeTableViewPrivate() override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 
 #endif // CUKETABLEVIEWPRIVATE_H

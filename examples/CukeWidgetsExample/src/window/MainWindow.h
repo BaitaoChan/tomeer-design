@@ -4,7 +4,7 @@
 #include "CukeMenuBar.h"
 #include "CukeWindow.h"
 
-using namespace cuke::widget;
+using namespace cuke::pub;
 
 class MainWindow : public CukeWindow {
     Q_OBJECT

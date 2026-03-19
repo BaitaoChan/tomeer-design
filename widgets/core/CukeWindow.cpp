@@ -8,7 +8,7 @@
 #include "CukeWindowPrivate.h"
 #include "CukeAppBar.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeWindow, int, BorderRadius)
 CukeWindow::CukeWindow(QWidget *parent)
     : CukeContextMixin(parent),
@@ -24,6 +24,7 @@ CukeWindow::CukeWindow(QWidget *parent)
 
     d_ptr->_widget = new QWidget(this);
     d_ptr->_layout = new QVBoxLayout(d_ptr->_widget);
+    d_ptr->_layout->setContentsMargins(0, 0, 0, 0);
 
     d_ptr->_layout->addWidget(d_ptr->_appBar);
     d_ptr->_layout->addStretch();
@@ -37,6 +38,10 @@ void CukeWindow::resize(int w, int h) {
     QMainWindow::resize(w, h + d_ptr->_appBar->getAppBarHeight());
 }
 
+void CukeWindow::resizeEvent(QResizeEvent *event) {
+    QMainWindow::resizeEvent(event);
+}
+
 void CukeWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
@@ -44,9 +49,9 @@ void CukeWindow::paintEvent(QPaintEvent *event) {
     QPainterPath path;
     path.addRoundedRect(rect(), _pBorderRadius, _pBorderRadius);
 
-    painter.fillPath(path, CukeThemeColor(_themeMode, Window));
+    painter.fillPath(path, cTheme->getThemeColor(_themeMode, CukeThemeType::Window));
 
     QMainWindow::paintEvent(event);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

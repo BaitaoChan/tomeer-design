@@ -1,7 +1,6 @@
 #include "CukeLoopedRing.h"
 #include "CukeLoopedRingPrivate.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
 CUKE_NAMESPACE_BEGIN(lab)
 CUKE_Q_PROPERTY_IMPL(CukeLoopedRing, qreal, Angle)
 
@@ -55,7 +54,7 @@ void CukeLoopedRing::paintEvent(QPaintEvent *event) {
     const int widgetWidth = width();
     const int widgetHeight = height();
 
-    QColor colorBright = CukeThemeColor(_themeMode, LoopRing);
+    QColor colorBright = cTheme->getThemeColor(_themeMode, CukeThemeType::LoopRing);
     const QColor colorMedium(colorBright.red(), colorBright.green(), colorBright.blue(), 200);
     const QColor colorDim(colorBright.red(), colorBright.green(), colorBright.blue(), 160);
 
@@ -168,4 +167,3 @@ void CukeLoopedRing::paintEvent(QPaintEvent *event) {
 }
 
 CUKE_NAMESPACE_END(lab)
-CUKE_NAMESPACE_END(widget)

@@ -3,20 +3,18 @@
 
 #include "CukeMenuBarStyle.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
     CukeMenuBarStyle::CukeMenuBarStyle(QStyle *style)
     : CukeContextMixin(style) {
 }
 
 CukeMenuBarStyle::~CukeMenuBarStyle() = default;
 
-void CukeMenuBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter,
-                                 const QWidget *widget) const {
+void CukeMenuBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter,
-                               const QWidget *widget) const {
+void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     if (element == CE_MenuBarEmptyArea)
         return;
     if (element == CE_MenuBarItem) {
@@ -29,13 +27,13 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
         painter->setPen(Qt::NoPen);
         if (opt->state & State_Enabled) {
             if (opt->state & State_Selected)
-                painter->setBrush(CukeThemeColor(_themeMode, HoverAlpha));
+                painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::HoverAlpha));
             else if (opt->state & State_Sunken)
-                painter->setBrush(CukeThemeColor(_themeMode, PressAlpha));
+                painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::PressAlpha));
         }
         painter->drawRoundedRect(opt->rect.adjusted(3, 3, -3, -3), _radius, _radius);
 
-        painter->setPen(CukeThemeColor(_themeMode, Text));
+        painter->setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
         painter->drawText(opt->rect.adjusted(1, 1, -1, -1), Qt::AlignCenter, opt->text);
 
         painter->restore();
@@ -44,15 +42,12 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
     QProxyStyle::drawControl(element, option, painter, widget);
 }
 
-void CukeMenuBarStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter,
-                                      const QWidget *widget) const {
+void CukeMenuBarStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
     QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 
-int CukeMenuBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option,
-                              const QWidget *widget) const {
-
+int CukeMenuBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

@@ -4,7 +4,7 @@
 
 #include "CukeFloatLineEditPrivate.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(lab)
 CukeFloatLineEdit::CukeFloatLineEdit(QWidget *parent)
     : CukeLineEdit(parent),
       d_ptr(new CukeFloatLineEditPrivate(this)) {
@@ -110,4 +110,4 @@ void CukeFloatLineEdit::updateRangeToolTip() {
     setToolTip(tip);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(lab)

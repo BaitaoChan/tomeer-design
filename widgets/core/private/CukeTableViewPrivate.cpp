@@ -1,7 +1,7 @@
 #include "CukeTableViewPrivate.h"
 #include "CukeTableView.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeTableViewPrivate::CukeTableViewPrivate(CukeTableView *q)
     : QObject(q),
       q_ptr(q) {
@@ -9,4 +9,4 @@ CukeTableViewPrivate::CukeTableViewPrivate(CukeTableView *q)
 
 CukeTableViewPrivate::~CukeTableViewPrivate() = default;
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

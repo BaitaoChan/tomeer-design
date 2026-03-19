@@ -1,7 +1,7 @@
 #include "CukeThemePrivate.h"
 #include "CukeCheckBox.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeThemePrivate::CukeThemePrivate(CukeTheme *q)
     : QObject(q),
       q_ptr(q) {
@@ -9,4 +9,4 @@ CukeThemePrivate::CukeThemePrivate(CukeTheme *q)
 
 CukeThemePrivate::~CukeThemePrivate() = default;
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

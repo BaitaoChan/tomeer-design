@@ -4,7 +4,7 @@
 
 #include "CukeContextMixin.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeMenuBarPrivate;
 class CUKE_EXPORT CukeMenuBar : public CukeContextMixin<QMenuBar> {
     Q_OBJECT
@@ -13,6 +13,6 @@ public:
     explicit CukeMenuBar(QWidget* parent = nullptr);
     ~CukeMenuBar() override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKEMENUBAR_H

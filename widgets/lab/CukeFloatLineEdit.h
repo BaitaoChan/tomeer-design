@@ -1,8 +1,11 @@
 #ifndef CUKEFLOATLINEEDIT_H
 #define CUKEFLOATLINEEDIT_H
-#include "CukeLineEdit.h"
 #include <QDoubleValidator>
-CUKE_NAMESPACE_BEGIN(widget)
+#include "CukeLineEdit.h"
+
+using namespace cuke::pub;
+
+CUKE_NAMESPACE_BEGIN(lab)
 class CukeFloatLineEditPrivate;
 class CUKE_EXPORT CukeFloatLineEdit : public CukeLineEdit {
     Q_OBJECT
@@ -35,6 +38,6 @@ private:
     void validateAndFix(bool forceEmit = false);
     void updateRangeToolTip();
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(lab)
 
 #endif // CUKEFLOATLINEEDIT_H

@@ -2,7 +2,7 @@
 #include "CukeCheckBoxPrivate.h"
 #include <QPainter>
 #include <QStyleOptionButton>
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeCheckBox, qreal, CheckProgress)
 CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
     : CukeContextMixin(parent),
@@ -64,17 +64,17 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
     const QColor bgColor =
             enabled
                 ? (hovered
-                       ? CukeThemeColor(_themeMode, DefaultAlpha)
-                       : CukeThemeColor(_themeMode, DefaultAlpha))
-                : CukeThemeColor(_themeMode, Disable);
+                       ? cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha)
+                       : cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha))
+                : cTheme->getThemeColor(_themeMode, CukeThemeType::Disable);
 
-    const QColor checkBgColor = CukeThemeColor(_themeMode, CheckAlpha);
+    const QColor checkBgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::CheckAlpha);
     const QColor borderColor = enabled
-                                   ? CukeThemeColor(_themeMode, Border)
-                                   : CukeThemeColor(_themeMode, Disable);
+                                   ? cTheme->getThemeColor(_themeMode, CukeThemeType::Border)
+                                   : cTheme->getThemeColor(_themeMode, CukeThemeType::Disable);
     const QColor textColor = enabled
-                                 ? CukeThemeColor(_themeMode, Text)
-                                 : CukeThemeColor(_themeMode, TextDisable);
+                                 ? cTheme->getThemeColor(_themeMode, CukeThemeType::Text)
+                                 : cTheme->getThemeColor(_themeMode, CukeThemeType::TextDisable);
 
     // 背景
     const QColor finalBg =
@@ -91,7 +91,7 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
 
     // 勾选动画
     if (_pCheckProgress > 0.0) {
-        p.setPen(QPen(CukeThemeColor(_themeMode, Text), penW, Qt::SolidLine, Qt::RoundCap));
+        p.setPen(QPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text), penW, Qt::SolidLine, Qt::RoundCap));
 
         QPointF p1(boxRect.left() + boxSize * 0.25,
                    boxRect.top() + boxSize * 0.55);
@@ -117,4 +117,4 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
     p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

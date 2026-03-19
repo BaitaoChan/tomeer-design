@@ -1,7 +1,7 @@
 #include "CukeComboBoxPrivate.h"
 #include "CukeComboBox.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxPrivate::CukeComboBoxPrivate(CukeComboBox *q)
     : QObject(q),
       q_ptr(q) {
@@ -9,4 +9,4 @@ CukeComboBoxPrivate::CukeComboBoxPrivate(CukeComboBox *q)
 
 CukeComboBoxPrivate::~CukeComboBoxPrivate() = default;
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

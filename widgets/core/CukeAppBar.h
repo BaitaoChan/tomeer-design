@@ -5,7 +5,7 @@
 #include "CukeProperty.h"
 #include "CukeContextMixin.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBarPrivate;
 class CukeAppBar : public CukeContextMixin<QWidget> {
     Q_OBJECT
@@ -15,8 +15,11 @@ public:
     explicit CukeAppBar(QWidget *parent = nullptr);
     ~CukeAppBar() override;
 
+protected:
+    void onThemeChanged(CukeThemeType::ThemeMode mode) override;
+
 };
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKEAPPBAR_H

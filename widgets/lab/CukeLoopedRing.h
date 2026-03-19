@@ -11,7 +11,8 @@
 #include "CukeProperty.h"
 #include "CukeContextMixin.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+using namespace cuke::pub;
+
 CUKE_NAMESPACE_BEGIN(lab)
 class CukeLoopedRingPrivate;
 class CUKE_EXPORT CukeLoopedRing : public CukeContextMixin<QWidget> {
@@ -33,6 +34,5 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 };
 CUKE_NAMESPACE_END(lab)
-CUKE_NAMESPACE_END(widget)
 
 #endif // CUKELOOPEDRING_H

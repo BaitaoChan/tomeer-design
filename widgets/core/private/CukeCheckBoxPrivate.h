@@ -3,7 +3,7 @@
 #include "CukeProperty.h"
 
 class QVariantAnimation;
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeCheckBox;
 class CukeCheckBoxPrivate : public QObject {
     Q_OBJECT
@@ -15,5 +15,5 @@ public:
 private:
     QVariantAnimation* _checkAnim = nullptr;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 #endif // CUKECHECKBOXPRIVATE_H

@@ -2,7 +2,7 @@
 
 #include "CukeLabelPrivate.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeLabel, QColor, TextColor)
 
 CukeLabel::CukeLabel(QWidget *parent)
@@ -30,9 +30,9 @@ void CukeLabel::paintEvent(QPaintEvent *event) {
     if (_pTextColor.isValid())
         p.setPen(_pTextColor);
     else
-        p.setPen(CukeThemeColor(_themeMode, Text));
+        p.setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
 
     p.drawText(rect(), alignment(), text());
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

@@ -5,22 +5,22 @@
 
 #include "CukeTableViewStyle.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
+CUKE_Q_PROPERTY_IMPL(CukeTableViewStyle, int, BorderRadius)
 CukeTableViewStyle::CukeTableViewStyle(QStyle *style)
-    : CukeContextMixin(style) {
+    : CukeContextMixin(style),
+      _pBorderRadius(6) {
+
 }
 
 CukeTableViewStyle::~CukeTableViewStyle() = default;
 
-void CukeTableViewStyle::drawPrimitive(PrimitiveElement element,
-                                   const QStyleOption *option,
-                                   QPainter *painter,
-                                   const QWidget *widget) const {
+void CukeTableViewStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     if (element == PE_PanelItemViewRow) {
         if (option->state & State_Selected) {
             painter->save();
             painter->setPen(Qt::NoPen);
-            painter->setBrush(CukeThemeColor(_themeMode, SelectedItem));
+            painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::SelectedItem));
             painter->drawRect(option->rect);
             painter->restore();
             return;
@@ -32,17 +32,14 @@ void CukeTableViewStyle::drawPrimitive(PrimitiveElement element,
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-void CukeTableViewStyle::drawControl(ControlElement element,
-                                 const QStyleOption *option,
-                                 QPainter *painter,
-                                 const QWidget *widget) const {
+void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     if (element == CE_ShapedFrame) {
         QRect r = option->rect;
         r.adjust(1, 1, -1, -1);
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CukeThemeColor(_themeMode, TableBg));
+        painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::TableBg));
         painter->drawRoundedRect(r, 6, 6);
         painter->restore();
         return;
@@ -69,7 +66,7 @@ void CukeTableViewStyle::drawControl(ControlElement element,
 
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CukeThemeColor(_themeMode, HeaderBg));
+        painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::HeaderBg));
 
         if (isFirst && isLast) {
             painter->drawRoundedRect(r, radius, radius);
@@ -119,7 +116,7 @@ void CukeTableViewStyle::drawControl(ControlElement element,
                 qstyleoption_cast<const QStyleOptionHeader *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        painter->setPen(CukeThemeColor(_themeMode, Text));
+        painter->setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
         painter->drawText(
             option->rect, Qt::AlignVCenter | Qt::AlignHCenter, opt->text);
         painter->restore();
@@ -128,10 +125,8 @@ void CukeTableViewStyle::drawControl(ControlElement element,
     QProxyStyle::drawControl(element, option, painter, widget);
 }
 
-int CukeTableViewStyle::pixelMetric(PixelMetric metric,
-                                const QStyleOption *option,
-                                const QWidget *widget) const {
+int CukeTableViewStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

@@ -1,7 +1,7 @@
 #include "CukeToggleButton.h"
 #include "CukeToggleButtonPrivate.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeToggleButton::CukeToggleButton(QWidget *parent)
     : CukeContextMixin(parent), d_ptr(new CukeToggleButtonPrivate(this)) {
     setFlat(true);
@@ -62,13 +62,13 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QColor bgColor = CukeThemeColor(_themeMode, CukeThemeType::DefaultAlpha);
+    QColor bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha);
     if (d_ptr->_isToggled) {
-        bgColor = CukeThemeColor(_themeMode, CukeThemeType::CheckAlpha);
+        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::CheckAlpha);
     } else if (d_ptr->_isPressed) {
-        bgColor = CukeThemeColor(_themeMode, CukeThemeType::PressAlpha);
+        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::PressAlpha);
     } else if (d_ptr->_isHovered) {
-        bgColor = CukeThemeColor(_themeMode, CukeThemeType::HoverAlpha);
+        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::HoverAlpha);
     }
 
     painter.setBrush(bgColor);
@@ -77,7 +77,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
 
     if (!d_ptr->_isPressed && !d_ptr->_isToggled) {
         QPen pen;
-        pen.setColor(CukeThemeColor(_themeMode, Pattern));
+        pen.setColor(cTheme->getThemeColor(_themeMode, CukeThemeType::Pattern));
         pen.setWidthF(1.6);
         painter.setPen(pen);
 
@@ -97,7 +97,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     option.text = text();
     option.icon = icon();
     option.iconSize = icon().isNull() ? QSize() : this->iconSize();
-    option.palette.setColor(QPalette::ButtonText, CukeThemeColor(_themeMode, CukeThemeType::Text));
+    option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
 
     if (d_ptr->_isPressed) option.state |= QStyle::State_Sunken;
     if (d_ptr->_isHovered) option.state |= QStyle::State_MouseOver;
@@ -106,4 +106,4 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

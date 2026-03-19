@@ -1,6 +1,6 @@
 #include "CukeTableItemDelegate.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeTableItemDelegate::CukeTableItemDelegate(QObject *parent)
     : CukeContextMixin(parent) {
 }
@@ -24,7 +24,7 @@ void CukeTableItemDelegate::paint(QPainter *p,
     QRect r = opt.rect;
 
     // 文本
-    p->setPen(CukeThemeColor(_themeMode, Text));
+    p->setPen(cTheme->getThemeColor(_themeMode, Text));
     p->setFont(index.data(Qt::FontRole).value<QFont>());
 
     r.adjust(8, 0, -8, 0);
@@ -40,4 +40,4 @@ QSize CukeTableItemDelegate::sizeHint(const QStyleOptionViewItem &opt,
     return QStyledItemDelegate::sizeHint(opt, index);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

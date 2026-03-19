@@ -7,7 +7,7 @@
 #include "CukeProperty.h"
 #include "CukeContextMixin.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeCheckBoxPrivate;
 class CUKE_EXPORT CukeCheckBox : public CukeContextMixin<QCheckBox> {
     Q_OBJECT
@@ -21,6 +21,6 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKECHECKBOX_H

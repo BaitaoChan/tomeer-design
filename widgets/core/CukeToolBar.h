@@ -5,13 +5,13 @@
 #include "CukeContextMixin.h"
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
-class CukeToolBar : public CukeContextMixin<QToolBar> {
+CUKE_NAMESPACE_BEGIN(pub)
+class CUKE_EXPORT CukeToolBar : public CukeContextMixin<QToolBar> {
     Q_OBJECT
 public:
     explicit CukeToolBar(QWidget *parent = nullptr);
     ~CukeToolBar() override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif //CUKETOOLBAR_H

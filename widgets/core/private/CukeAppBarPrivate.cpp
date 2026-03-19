@@ -1,7 +1,7 @@
 #include "CukeAppBarPrivate.h"
 #include "CukeAppBar.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeAppBarPrivate::CukeAppBarPrivate(CukeAppBar *q)
     : QObject(q),
       q_ptr(q) {
@@ -9,4 +9,4 @@ CukeAppBarPrivate::CukeAppBarPrivate(CukeAppBar *q)
 
 CukeAppBarPrivate::~CukeAppBarPrivate() = default;
 
-CUKE_NAMESPACE_END(Widget)
+CUKE_NAMESPACE_END(pub)

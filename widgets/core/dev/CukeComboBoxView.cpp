@@ -1,6 +1,6 @@
 #include "CukeComboBoxView.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxView::CukeComboBoxView(QWidget*parent)
     : CukeContextMixin(parent) {
     setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
@@ -22,8 +22,8 @@ void CukeComboBoxView::onThemeChanged(CukeThemeType::ThemeMode mode) {
     CukeContextMixin::onThemeChanged(mode);
     // 设置文字颜色
     QPalette pal = palette();
-    pal.setColor(QPalette::Text, CukeThemeColor(_themeMode, Text));
+    pal.setColor(QPalette::Text, cTheme->getThemeColor(_themeMode, Text));
     setPalette(pal);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

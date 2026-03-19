@@ -5,9 +5,8 @@
 #include "CukeProperty.h"
 
 #define cTheme CukeTheme::instance()
-#define CukeThemeColor(Mode, Color) cTheme->getThemeColor(Mode, CukeThemeType::Color)
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeThemePrivate;
 class CUKE_EXPORT CukeTheme : public QObject {
     Q_OBJECT
@@ -29,6 +28,6 @@ signals:
 private:
     void initThemeColor();
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKETHEME_H

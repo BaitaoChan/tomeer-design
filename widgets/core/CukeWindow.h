@@ -5,7 +5,7 @@
 #include "CukeContextMixin.h"
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeWindowPrivate;
 class CUKE_EXPORT CukeWindow : public CukeContextMixin<QMainWindow> {
     Q_OBJECT
@@ -19,8 +19,9 @@ public:
     // void setCentralWidget(QWidget *widget);
 
 protected:
+    void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKEMAINWINDOW_H

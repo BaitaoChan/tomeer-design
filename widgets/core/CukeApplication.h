@@ -6,7 +6,7 @@
 
 #define cApp CukeApplication::instance()
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CUKE_EXPORT CukeApplication : public QObject {
     Q_OBJECT
     CUKE_Q_SINGLETON_DECL(CukeApplication)
@@ -16,6 +16,6 @@ private:
 public:
     void init();
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKEAPPLICATION_H

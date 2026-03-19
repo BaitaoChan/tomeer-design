@@ -5,7 +5,7 @@
 #include "CukeType.h"
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeTheme;
 class CukeThemePrivate : public QObject {
     Q_OBJECT
@@ -21,6 +21,6 @@ private:
     QMap<CukeThemeType::ThemeColor, QColor> _lightThemeColorList;
     QMap<CukeThemeType::ThemeColor, QColor> _darkThemeColorList;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKETHEMEPRIVATE_H

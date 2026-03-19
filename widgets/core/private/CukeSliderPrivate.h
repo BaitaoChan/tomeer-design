@@ -6,7 +6,7 @@
 #include "CukeProperty.h"
 
 class QPropertyAnimation;
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeSlider;
 class CukeSliderPrivate : public QObject {
     Q_OBJECT
@@ -25,7 +25,7 @@ private:
     QPropertyAnimation* _handleDiameterAnimation = nullptr;
 
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 
 #endif // CUKESLIDERPRIVATE_H

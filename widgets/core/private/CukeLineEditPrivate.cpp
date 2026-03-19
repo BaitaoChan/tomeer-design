@@ -1,7 +1,7 @@
 #include "CukeLineEditPrivate.h"
 #include "CukeLineEdit.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CukeLineEditPrivate::CukeLineEditPrivate(CukeLineEdit *q)
     : QObject(q),
       q_ptr(q) {
@@ -9,4 +9,4 @@ CukeLineEditPrivate::CukeLineEditPrivate(CukeLineEdit *q)
 
 CukeLineEditPrivate::~CukeLineEditPrivate() = default;
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

@@ -2,7 +2,7 @@
 #define CUKELABELPRIVATE_H
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeLabel;
 class CukeLabelPrivate : public QObject {
     Q_OBJECT
@@ -11,7 +11,7 @@ public:
     explicit CukeLabelPrivate(CukeLabel *q);
     ~CukeLabelPrivate() override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 
 #endif // CUKELABELPRIVATE_H

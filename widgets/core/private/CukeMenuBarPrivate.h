@@ -2,7 +2,7 @@
 #define CUKEMENUBARPRIVATE_H
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeMenuBar;
 class CukeMenuBarPrivate : public QObject {
     Q_OBJECT
@@ -11,6 +11,6 @@ public:
     explicit CukeMenuBarPrivate(CukeMenuBar *q);
     ~CukeMenuBarPrivate() override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKEMENUBARPRIVATE_H

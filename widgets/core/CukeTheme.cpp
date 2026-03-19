@@ -2,7 +2,7 @@
 #include "CukeThemePrivate.h"
 #include <QVariant>
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_SINGLETON_IMPL(CukeTheme)
 CukeTheme::CukeTheme(QObject *parent)
     : QObject(parent),
@@ -47,7 +47,7 @@ void CukeTheme::initThemeColor() {
 
     d_ptr->_lightThemeColorList[CukeThemeType::Default] = QColor(160, 160, 160);
     d_ptr->_darkThemeColorList[CukeThemeType::Default] = QColor(82, 82, 82);
-    d_ptr->_lightThemeColorList[CukeThemeType::Hover] = QColor(255, 255, 255);
+    d_ptr->_lightThemeColorList[CukeThemeType::Hover] = QColor(240, 240, 240);
     d_ptr->_darkThemeColorList[CukeThemeType::Hover] = QColor(52, 52, 52);
     d_ptr->_lightThemeColorList[CukeThemeType::Press] = QColor(230, 230, 230);
     d_ptr->_darkThemeColorList[CukeThemeType::Press] = QColor(32, 32, 32);
@@ -157,4 +157,4 @@ void CukeTheme::initThemeColor() {
     d_ptr->_darkThemeColorList[CukeThemeType::ComboBoxItem] = QColor(22, 22, 22);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

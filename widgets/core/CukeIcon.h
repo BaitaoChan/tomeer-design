@@ -7,7 +7,7 @@
 
 #define cIcon CukeIcon::instance()
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
     class CUKE_EXPORT CukeIcon : public QObject {
     Q_OBJECT
     CUKE_Q_SINGLETON_DECL(CukeIcon)
@@ -20,6 +20,6 @@ public:
     QIcon getCukeIcon(CukeIconType::Glyph glyph, QColor color, int pixelSize);
 };
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKEICON_H

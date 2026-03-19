@@ -9,7 +9,7 @@
 #include "CukeProperty.h"
 #include "CukeContextMixin.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeSliderPrivate;
 class CUKE_EXPORT CukeSlider : public CukeContextMixin<QSlider> {
     Q_OBJECT
@@ -29,6 +29,6 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // SLIDER_H

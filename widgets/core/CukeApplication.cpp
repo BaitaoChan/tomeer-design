@@ -3,7 +3,7 @@
 
 #include "CukeApplication.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
     CUKE_Q_SINGLETON_IMPL(CukeApplication)
 CukeApplication::CukeApplication(QObject *parent)
     : QObject(parent) {
@@ -20,4 +20,4 @@ void CukeApplication::init() {
     QApplication::setFont(font);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

@@ -1,6 +1,6 @@
 #include <QPainter>
 #include "CukeIcon.h"
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_SINGLETON_IMPL(CukeIcon)
 CukeIcon::CukeIcon(QObject *parent)
     : QObject(parent) {
@@ -64,4 +64,4 @@ QIcon CukeIcon::getCukeIcon(CukeIconType::Glyph glyph, QColor color, int pixelSi
     return QIcon(pixmap);
 }
 
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)

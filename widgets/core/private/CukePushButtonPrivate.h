@@ -2,7 +2,7 @@
 #define CUKEPUSHBUTTONPRIVATE_H
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukePushButton;
 class CukePushButtonPrivate : public QObject {
     Q_OBJECT
@@ -15,7 +15,7 @@ private:
     bool _isPressed = false;
     bool _isHovered = false;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 
 

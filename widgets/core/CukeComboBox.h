@@ -12,7 +12,7 @@
 #include "CukeContextMixin.h"
 #include "CukeProperty.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeComboBoxPrivate;
 class CUKE_EXPORT CukeComboBox : public CukeContextMixin<QComboBox> {
     Q_OBJECT
@@ -30,6 +30,6 @@ protected:
     void hidePopup() override;
     void paintEvent(QPaintEvent *event) override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKECOMBOBOX_H

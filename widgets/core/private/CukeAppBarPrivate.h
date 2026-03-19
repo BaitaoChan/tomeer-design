@@ -6,9 +6,10 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QIcon;
 class QLabel;
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBar;
 class CukeLabel;
+class CukeToolButton;
 class CukeAppBarPrivate : public QObject {
     Q_OBJECT
     CUKE_DECLARE_QPTR(CukeAppBar)
@@ -18,11 +19,17 @@ public:
 
 private:
     QHBoxLayout *_layout = nullptr;
+
     CukeLabel *_windowTitle = nullptr;
     QLabel *_windowIcon = nullptr;
 
+    QWidget *_container = nullptr;
+    QHBoxLayout *_containerLayout = nullptr;
 
+    CukeToolButton *_minimizeButton = nullptr;
+    CukeToolButton *_maximizeButton = nullptr;
+    CukeToolButton *_closeButton = nullptr;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif //CUKEAPPBARPRIVATE_H

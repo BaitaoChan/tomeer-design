@@ -7,7 +7,7 @@
 
 #include "CukeContextMixin.h"
 
-CUKE_NAMESPACE_BEGIN(widget)
+CUKE_NAMESPACE_BEGIN(pub)
 class CukeToggleButtonPrivate;
 class CUKE_EXPORT CukeToggleButton : public CukeContextMixin<QPushButton> {
     Q_OBJECT
@@ -32,6 +32,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
 };
-CUKE_NAMESPACE_END(widget)
+CUKE_NAMESPACE_END(pub)
 
 #endif // TOGGLEBUTTON_H
