@@ -7,7 +7,6 @@
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToolButtonStyle : public CukeContextMixin<QProxyStyle> {
     Q_OBJECT
-    CUKE_Q_PROPERTY_DECL(int, BorderRadius)
 public:
     explicit CukeToolButtonStyle(QStyle *style = nullptr);
     ~CukeToolButtonStyle() override;
@@ -19,4 +18,4 @@ public:
 
 CUKE_NAMESPACE_END(pub)
 
-#endif //CUKETOOLBUTTONSTYLE_H
+#endif // CUKETOOLBUTTONSTYLE_H

@@ -15,6 +15,16 @@ public:
 #define CUKE_TYPE_END(CLASS)                                \
 };
 
+CUKE_TYPE_BEGIN(CukeGeometryType)
+enum SideFlag {
+    TopLeft = 0x01,
+    TopRight = 0x02,
+    BottomLeft = 0x04,
+    BottomRight = 0x08,
+    All = TopLeft | TopRight | BottomLeft | BottomRight,
+};
+CUKE_TYPE_END(CukeGeometryType)
+
 CUKE_TYPE_BEGIN(CukeThemeType)
 enum ThemeMode {
     Light = 0x0000,
@@ -80,6 +90,8 @@ enum ThemeColor {
 
     ComboBoxView,
     ComboBoxItem,
+
+    Dismiss,
 
 };
 Q_ENUM(ThemeColor)

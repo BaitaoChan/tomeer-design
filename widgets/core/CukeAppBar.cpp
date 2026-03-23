@@ -3,7 +3,6 @@
 #include <QMainWindow>
 
 #include "CukeAppBar.h"
-
 #include "CukeAppBarPrivate.h"
 #include "CukeIcon.h"
 #include "CukeLabel.h"
@@ -23,7 +22,8 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     // 图标
     d_ptr->_windowIcon = new QLabel(this);
-    d_ptr->_windowIcon->setPixmap(parent->windowIcon().pixmap(18, 18));
+    if (!parent->windowIcon().isNull())
+        d_ptr->_windowIcon->setPixmap(parent->windowIcon().pixmap(18, 18));
     d_ptr->_layout->addWidget(d_ptr->_windowIcon);
     connect(parent, &QMainWindow::windowIconChanged, this, [this](const QIcon& icon) {
         d_ptr->_windowIcon->setPixmap(icon.pixmap(18, 18));
@@ -31,7 +31,8 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     // 标题
     d_ptr->_windowTitle = new CukeLabel(this);
-    d_ptr->_windowTitle->setText(parent->windowTitle());
+    if (!parent->windowTitle().isEmpty())
+        d_ptr->_windowTitle->setText(parent->windowTitle());
     d_ptr->_layout->addWidget(d_ptr->_windowTitle);
     connect(parent, &QMainWindow::windowTitleChanged, this, [this](const QString& title) {
         d_ptr->_windowTitle->setText(title);
@@ -49,17 +50,38 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d_ptr->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(_themeMode, CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_minimizeButton);
+    connect(d_ptr->_minimizeButton, &CukeToolButton::clicked, this, [this]() {
+        window()->showMinimized();
+    });
 
     // 最大化
     d_ptr->_maximizeButton = new CukeToolButton(this);
     d_ptr->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(_themeMode, CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_maximizeButton);
+    connect(d_ptr->_maximizeButton, &CukeToolButton::clicked, this, [this]() {
+        window()->showMaximized();
+    });
 
     // 关闭
     d_ptr->_closeButton = new CukeToolButton(this);
+    d_ptr->_closeButton->setBorderRadius(8);
+    d_ptr->_closeButton->setSideFlag(CukeGeometryType::TopRight);
+    d_ptr->_closeButton->bgColorFrom(cTheme->getThemeColor(_themeMode, CukeThemeType::Transparent));
+    d_ptr->_closeButton->bgColorTo(cTheme->getThemeColor(_themeMode, CukeThemeType::Dismiss));
+    d_ptr->_closeButton->setBgColorUsedFlag(true);
     d_ptr->_closeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(_themeMode, CukeThemeType::Text)));
+    connect(d_ptr->_closeButton, &CukeToolButton::pHoverChanged, this, [this]() {
+        if (cTheme->getThemeMode() == CukeThemeType::Dark)
+            return;
+        if (cTheme->getThemeMode() == CukeThemeType::Light) {
+            if (d_ptr->_closeButton->getHover())
+                d_ptr->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(CukeThemeType::Dark, CukeThemeType::Text)));
+            else
+                d_ptr->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(_themeMode, CukeThemeType::Text)));
+        }
+    });
     d_ptr->_containerLayout->addWidget(d_ptr->_closeButton);
 
     d_ptr->_layout->addWidget(d_ptr->_container);

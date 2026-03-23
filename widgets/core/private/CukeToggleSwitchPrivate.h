@@ -30,10 +30,10 @@ private:
     QColor offBgColor = QColor();
     QColor borderColor = QColor();
 
-    QPropertyAnimation* _bgAnimation = nullptr;
-    QPropertyAnimation* _knobColorAnimation = nullptr;
-    QPropertyAnimation* _knobDiameterAnimation = nullptr;
-    QPropertyAnimation* _moveAnimation = nullptr;
+    QPropertyAnimation *_bgAnimation = nullptr;
+    QPropertyAnimation *_knobColorAnimation = nullptr;
+    QPropertyAnimation *_knobDiameterAnimation = nullptr;
+    QPropertyAnimation *_moveAnimation = nullptr;
 
 };
 CUKE_NAMESPACE_END(pub)

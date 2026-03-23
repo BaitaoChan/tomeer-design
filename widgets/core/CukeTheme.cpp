@@ -155,6 +155,10 @@ void CukeTheme::initThemeColor() {
     d_ptr->_darkThemeColorList[CukeThemeType::ComboBoxView] = QColor(52, 52, 52);
     d_ptr->_lightThemeColorList[CukeThemeType::ComboBoxItem] = QColor(252, 252, 252);
     d_ptr->_darkThemeColorList[CukeThemeType::ComboBoxItem] = QColor(22, 22, 22);
+
+    // ToolButton
+    d_ptr->_lightThemeColorList[CukeThemeType::Dismiss] = QColor(232, 17, 35);
+    d_ptr->_darkThemeColorList[CukeThemeType::Dismiss] = QColor(232, 17, 35);
 }
 
 CUKE_NAMESPACE_END(pub)

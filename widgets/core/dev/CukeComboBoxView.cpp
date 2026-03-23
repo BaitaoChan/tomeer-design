@@ -22,7 +22,7 @@ void CukeComboBoxView::onThemeChanged(CukeThemeType::ThemeMode mode) {
     CukeContextMixin::onThemeChanged(mode);
     // 设置文字颜色
     QPalette pal = palette();
-    pal.setColor(QPalette::Text, cTheme->getThemeColor(_themeMode, Text));
+    pal.setColor(QPalette::Text, cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
     setPalette(pal);
 }
 

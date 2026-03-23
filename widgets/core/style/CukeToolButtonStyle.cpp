@@ -4,30 +4,32 @@
 
 #include "CukeToolButtonStyle.h"
 #include "CukeToolButton.h"
+#include "CukePainter.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeToolButtonStyle, int, BorderRadius)
 CukeToolButtonStyle::CukeToolButtonStyle(QStyle *style)
-    : CukeContextMixin(style),
-      _pBorderRadius(0) {
+    : CukeContextMixin(style) {
 }
 
 CukeToolButtonStyle::~CukeToolButtonStyle() = default;
 
 void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     if (element == PE_PanelButtonBevel) {
+        const auto toolButton = qobject_cast<const CukeToolButton *>(widget);
         painter->save();
         painter->setPen(Qt::NoPen);
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         // 背景
-        if (option->state & State_Enabled) {
-            if (option->state & State_Sunken) {
+        if (toolButton->getBgColorUsedFlag()) {
+            if (option->state & State_Sunken || option->state & State_MouseOver)
+                painter->setBrush(toolButton->getBgColor());
+        } else {
+            if (option->state & State_Sunken)
                 painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Press));
-            } else if (option->state & State_MouseOver) {
+            else if (option->state & State_MouseOver)
                 painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Hover));
-            }
         }
-        painter->drawRoundedRect(option->rect, _pBorderRadius, _pBorderRadius);
+        cPainter->drawRoundedRect(option->rect, painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), toolButton->getSideFlag());
         painter->restore();
         return;
     }
