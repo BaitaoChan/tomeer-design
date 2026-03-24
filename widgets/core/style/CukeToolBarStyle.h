@@ -2,10 +2,11 @@
 #define CUKETOOLBARSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToolBarStyle : public CukeContextMixin<QProxyStyle> {
+class CukeToolBarStyle : public QProxyStyle, public CukeContext {
     Q_OBJECT
 public:
     explicit CukeToolBarStyle(QStyle *style = nullptr);

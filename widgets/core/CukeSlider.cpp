@@ -5,7 +5,8 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeSlider, qreal, HandleDiameter)
 
 CukeSlider::CukeSlider(QWidget *parent)
-    : CukeContextMixin(parent),
+    : QSlider(parent),
+      CukeContext(this),
       d_ptr(new CukeSliderPrivate(this)) {
     setOrientation(Qt::Horizontal);
     setContentsMargins(4, 0, 4, 0);

@@ -2,12 +2,12 @@
 #define CUKELINEEDIT_H
 #include <QLineEdit>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeLineEditPrivate;
-class CUKE_EXPORT CukeLineEdit : public CukeContextMixin<QLineEdit> {
+class CUKE_EXPORT CukeLineEdit : public QLineEdit, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeLineEdit)
     CUKE_Q_PROPERTY_DECL(QColor, BorderColor)

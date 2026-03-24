@@ -1,19 +1,18 @@
 #ifndef PUSHBUTTON_H
 #define PUSHBUTTON_H
 
-#include "QPushButton.h"
-
-#include "CukeContextMixin.h"
+#include <QPushButton>
 
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOptionButton>
 
+#include "CukeContext.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukePushButtonPrivate;
-class CUKE_EXPORT CukePushButton : public CukeContextMixin<QPushButton> {
+class CUKE_EXPORT CukePushButton : public QPushButton, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukePushButton)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)

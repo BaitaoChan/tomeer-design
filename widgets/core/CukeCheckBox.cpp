@@ -5,8 +5,9 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeCheckBox, qreal, CheckProgress)
 CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
-    : CukeContextMixin(parent),
-    d_ptr(new CukeCheckBoxPrivate(this)) {
+    : QCheckBox(parent),
+      CukeContext(this),
+      d_ptr(new CukeCheckBoxPrivate(this)) {
     setCursor(Qt::PointingHandCursor);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     setMinimumHeight(24);
@@ -64,17 +65,17 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
     const QColor bgColor =
             enabled
                 ? (hovered
-                       ? cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha)
-                       : cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha))
-                : cTheme->getThemeColor(_themeMode, CukeThemeType::Disable);
+                       ? cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha)
+                       : cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha))
+                : cTheme->getThemeColor(getThemeMode(), CukeThemeType::Disable);
 
-    const QColor checkBgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::CheckAlpha);
+    const QColor checkBgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha);
     const QColor borderColor = enabled
-                                   ? cTheme->getThemeColor(_themeMode, CukeThemeType::Border)
-                                   : cTheme->getThemeColor(_themeMode, CukeThemeType::Disable);
+                                   ? cTheme->getThemeColor(getThemeMode(), CukeThemeType::Border)
+                                   : cTheme->getThemeColor(getThemeMode(), CukeThemeType::Disable);
     const QColor textColor = enabled
-                                 ? cTheme->getThemeColor(_themeMode, CukeThemeType::Text)
-                                 : cTheme->getThemeColor(_themeMode, CukeThemeType::TextDisable);
+                                 ? cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)
+                                 : cTheme->getThemeColor(getThemeMode(), CukeThemeType::TextDisable);
 
     // 背景
     const QColor finalBg =
@@ -91,7 +92,7 @@ void CukeCheckBox::paintEvent(QPaintEvent *) {
 
     // 勾选动画
     if (_pCheckProgress > 0.0) {
-        p.setPen(QPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text), penW, Qt::SolidLine, Qt::RoundCap));
+        p.setPen(QPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), penW, Qt::SolidLine, Qt::RoundCap));
 
         QPointF p1(boxRect.left() + boxSize * 0.25,
                    boxRect.top() + boxSize * 0.55);

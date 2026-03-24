@@ -6,7 +6,8 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxStyle::CukeComboBoxStyle(QStyle *style)
-    : CukeContextMixin(style) {
+    : QProxyStyle(style),
+      CukeContext(this) {
 }
 
 CukeComboBoxStyle::~CukeComboBoxStyle() = default;
@@ -26,7 +27,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
             // 阴影区域
             QRect r(option->rect.x() + 6, option->rect.y(),
                     option->rect.width() - 12, option->rect.height() - 6);
-            painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::ComboBoxView));
+            painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::ComboBoxView));
             painter->setPen(Qt::NoPen);
             painter->drawRoundedRect(r, _radius, _radius);
             painter->restore();
@@ -39,7 +40,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
                 qstyleoption_cast<const QStyleOptionComboBox *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        painter->setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
+        painter->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
         painter->drawText(
             option->rect.adjusted(8, 0, 0, 0),
             Qt::AlignVCenter | Qt::AlignLeft,
@@ -61,9 +62,9 @@ void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleO
 
         // 背景
         if (opt->state & State_MouseOver)
-            painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::HoverAlpha));
+            painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha));
         else
-            painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha));
+            painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
         painter->setPen(Qt::NoPen);
         painter->drawRoundedRect(fr.adjusted(1, 1, -1, -1), _radius, _radius);
 

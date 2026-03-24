@@ -2,7 +2,8 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeLineEditStyle::CukeLineEditStyle(QStyle *style)
-    : CukeContextMixin(style) {
+    : QProxyStyle(style),
+      CukeContext(this) {
 }
 
 CukeLineEditStyle::~CukeLineEditStyle() = default;

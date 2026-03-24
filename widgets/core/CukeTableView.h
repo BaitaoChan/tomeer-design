@@ -4,11 +4,12 @@
 #include <QPropertyAnimation>
 #include <QHeaderView>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeTableViewPrivate;
-class CUKE_EXPORT CukeTableView : public CukeContextMixin<QTableView> {
+class CUKE_EXPORT CukeTableView : public QTableView, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeTableView)
 public:

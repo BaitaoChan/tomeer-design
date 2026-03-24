@@ -38,7 +38,8 @@ inline QPainterPath SingleArrow() {
 CUKE_NAMESPACE_END(pub)
 
 CukeComboBox::CukeComboBox(QWidget *parent)
-    : CukeContextMixin(parent),
+    : QComboBox(parent),
+      CukeContext(this),
       _pBorderRadius(6),
       d_ptr(new CukeComboBoxPrivate(this)) {
     setStyleSheet(R"(

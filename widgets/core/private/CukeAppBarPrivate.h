@@ -1,6 +1,7 @@
 #ifndef CUKEAPPBARPRIVATE_H
 #define CUKEAPPBARPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 class QHBoxLayout;
 class QVBoxLayout;

@@ -3,10 +3,11 @@
 #include <QListView>
 #include <QPainter>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBoxView : public CukeContextMixin<QListView> {
+class CukeComboBoxView : public QListView, public CukeContext {
     Q_OBJECT
 public:
     explicit CukeComboBoxView(QWidget *parent = nullptr);

@@ -5,7 +5,8 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeTableView::CukeTableView(QWidget *parent)
-    : CukeContextMixin(parent),
+    : QTableView(parent),
+      CukeContext(this),
       d_ptr(new CukeTableViewPrivate(this)) {
 
     setStyle(new CukeTableViewStyle(style()));

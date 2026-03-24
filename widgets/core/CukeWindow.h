@@ -2,12 +2,12 @@
 #define CUKEMAINWINDOW_H
 #include <QMainWindow>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeWindowPrivate;
-class CUKE_EXPORT CukeWindow : public CukeContextMixin<QMainWindow> {
+class CUKE_EXPORT CukeWindow : public QMainWindow, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeWindow)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
@@ -19,6 +19,7 @@ public:
     // void setCentralWidget(QWidget *widget);
 
 protected:
+    bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result) override;
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 };

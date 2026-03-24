@@ -8,7 +8,8 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeTableViewStyle, int, BorderRadius)
 CukeTableViewStyle::CukeTableViewStyle(QStyle *style)
-    : CukeContextMixin(style),
+    : QProxyStyle(style),
+      CukeContext(this),
       _pBorderRadius(6) {
 
 }
@@ -20,7 +21,7 @@ void CukeTableViewStyle::drawPrimitive(PrimitiveElement element, const QStyleOpt
         if (option->state & State_Selected) {
             painter->save();
             painter->setPen(Qt::NoPen);
-            painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::SelectedItem));
+            painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::SelectedItem));
             painter->drawRect(option->rect);
             painter->restore();
             return;
@@ -39,7 +40,7 @@ void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption 
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
         painter->setPen(Qt::NoPen);
-        painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::TableBg));
+        painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::TableBg));
         painter->drawRoundedRect(r, 6, 6);
         painter->restore();
         return;
@@ -66,7 +67,7 @@ void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption 
 
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::HeaderBg));
+        painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::HeaderBg));
 
         if (isFirst && isLast) {
             painter->drawRoundedRect(r, radius, radius);
@@ -116,7 +117,7 @@ void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption 
                 qstyleoption_cast<const QStyleOptionHeader *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        painter->setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
+        painter->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
         painter->drawText(
             option->rect, Qt::AlignVCenter | Qt::AlignHCenter, opt->text);
         painter->restore();

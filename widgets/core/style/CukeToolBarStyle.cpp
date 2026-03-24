@@ -2,7 +2,8 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToolBarStyle::CukeToolBarStyle(QStyle *style)
-    : CukeContextMixin(style) {
+    : QProxyStyle(style),
+      CukeContext(this) {
 }
 
 CukeToolBarStyle::~CukeToolBarStyle() = default;

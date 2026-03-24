@@ -2,11 +2,12 @@
 #define CUKEMENUBAR_H
 #include <QMenuBar>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeMenuBarPrivate;
-class CUKE_EXPORT CukeMenuBar : public CukeContextMixin<QMenuBar> {
+class CUKE_EXPORT CukeMenuBar : public QMenuBar, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeMenuBar)
 public:

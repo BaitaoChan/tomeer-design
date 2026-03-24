@@ -8,7 +8,8 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToolButtonStyle::CukeToolButtonStyle(QStyle *style)
-    : CukeContextMixin(style) {
+    : QProxyStyle(style),
+      CukeContext(this) {
 }
 
 CukeToolButtonStyle::~CukeToolButtonStyle() = default;

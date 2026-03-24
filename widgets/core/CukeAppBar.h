@@ -2,12 +2,12 @@
 #define CUKEAPPBAR_H
 #include <QWidget>
 
+#include "CukeContext.h"
 #include "CukeProperty.h"
-#include "CukeContextMixin.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBarPrivate;
-class CukeAppBar : public CukeContextMixin<QWidget> {
+class CukeAppBar : public QWidget, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeAppBar)
     CUKE_Q_PROPERTY_DECL(int, AppBarHeight)

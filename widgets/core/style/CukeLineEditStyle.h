@@ -2,10 +2,11 @@
 #define CUKELINEEDITSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeLineEditStyle : public CukeContextMixin<QProxyStyle> {
+class CukeLineEditStyle : public QProxyStyle, public CukeContext {
     Q_OBJECT
 
 public:

@@ -2,10 +2,11 @@
 #define CUKEWINDOWSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeWindowStyle : public CukeContextMixin<QProxyStyle> {
+class CukeWindowStyle : public QProxyStyle, public CukeContext {
     Q_OBJECT
 public:
     explicit CukeWindowStyle(QStyle *style = nullptr);

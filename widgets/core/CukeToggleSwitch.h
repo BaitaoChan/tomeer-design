@@ -10,12 +10,12 @@
 #include <QResizeEvent>
 #include <QPaintEvent>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToggleSwitchPrivate;
-class CUKE_EXPORT CukeToggleSwitch : public CukeContextMixin<QWidget> {
+class CUKE_EXPORT CukeToggleSwitch : public QWidget, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToggleSwitch)
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)

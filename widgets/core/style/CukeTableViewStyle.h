@@ -2,10 +2,11 @@
 #define CUKETABLEVIEWSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeTableViewStyle : public CukeContextMixin<QProxyStyle> {
+class CukeTableViewStyle : public QProxyStyle, public CukeContext {
     Q_OBJECT
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
 public:

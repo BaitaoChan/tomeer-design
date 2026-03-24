@@ -3,11 +3,12 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 #include "CukeLineEdit.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeTableItemDelegate : public CukeContextMixin<QStyledItemDelegate> {
+class CukeTableItemDelegate : public QStyledItemDelegate, public CukeContext {
     Q_OBJECT
 public:
     explicit CukeTableItemDelegate(QObject *parent = nullptr);

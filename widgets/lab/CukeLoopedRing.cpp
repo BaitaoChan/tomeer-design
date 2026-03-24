@@ -5,7 +5,8 @@ CUKE_NAMESPACE_BEGIN(lab)
 CUKE_Q_PROPERTY_IMPL(CukeLoopedRing, qreal, Angle)
 
 CukeLoopedRing::CukeLoopedRing(QWidget *parent)
-    : CukeContextMixin(parent),
+    : QWidget(parent),
+      CukeContext(this),
       d_ptr(new CukeLoopedRingPrivate(this)) {
     setFixedSize(200, 200);
 
@@ -54,7 +55,7 @@ void CukeLoopedRing::paintEvent(QPaintEvent *event) {
     const int widgetWidth = width();
     const int widgetHeight = height();
 
-    QColor colorBright = cTheme->getThemeColor(_themeMode, CukeThemeType::LoopRing);
+    QColor colorBright = cTheme->getThemeColor(getThemeMode(), CukeThemeType::LoopRing);
     const QColor colorMedium(colorBright.red(), colorBright.green(), colorBright.blue(), 200);
     const QColor colorDim(colorBright.red(), colorBright.green(), colorBright.blue(), 160);
 

@@ -3,10 +3,11 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 
-#include "CukeContextMixin.h"
+#include "CukeContext.h"
+#include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBoxItemDelegate : public CukeContextMixin<QStyledItemDelegate> {
+class CukeComboBoxItemDelegate : public QStyledItemDelegate, public CukeContext {
     Q_OBJECT
 public:
     explicit CukeComboBoxItemDelegate(QObject *parent = nullptr);

@@ -8,10 +8,17 @@
 #include "CukeWindowPrivate.h"
 #include "CukeAppBar.h"
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#include <dwmapi.h>
+#pragma comment(lib, "dwmapi.lib")
+#endif
+
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeWindow, int, BorderRadius)
 CukeWindow::CukeWindow(QWidget *parent)
-    : CukeContextMixin(parent),
+    : QMainWindow(parent),
+      CukeContext(this),
       d_ptr(new CukeWindowPrivate(this)) {
     _pBorderRadius = 8;
     d_ptr->_appBar = new CukeAppBar(this);
@@ -38,9 +45,18 @@ void CukeWindow::resize(int w, int h) {
     QMainWindow::resize(w, h + d_ptr->_appBar->getAppBarHeight());
 }
 
+bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
+#ifdef Q_OS_WIN
+    auto msg = static_cast<MSG *>(message);
+#endif
+
+    return QMainWindow::nativeEvent(eventType, message, result);
+}
+
 void CukeWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
 }
+
 
 void CukeWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);

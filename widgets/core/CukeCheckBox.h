@@ -4,12 +4,12 @@
 #include <QColor>
 #include <QVariantAnimation>
 
+#include "CukeContext.h"
 #include "CukeProperty.h"
-#include "CukeContextMixin.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeCheckBoxPrivate;
-class CUKE_EXPORT CukeCheckBox : public CukeContextMixin<QCheckBox> {
+class CUKE_EXPORT CukeCheckBox : public QCheckBox, public CukeContext {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeCheckBox)
     CUKE_Q_PROPERTY_DECL(qreal, CheckProgress)

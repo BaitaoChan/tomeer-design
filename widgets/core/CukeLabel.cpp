@@ -6,7 +6,8 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeLabel, QColor, TextColor)
 
 CukeLabel::CukeLabel(QWidget *parent)
-    : CukeContextMixin(parent),
+    : QLabel(parent),
+      CukeContext(this),
       d_ptr(new CukeLabelPrivate(this)) {
     setAttribute(Qt::WA_TranslucentBackground);
 }
@@ -30,7 +31,7 @@ void CukeLabel::paintEvent(QPaintEvent *event) {
     if (_pTextColor.isValid())
         p.setPen(_pTextColor);
     else
-        p.setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
+        p.setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
     p.drawText(rect(), alignment(), text());
 }

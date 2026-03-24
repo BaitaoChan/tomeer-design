@@ -3,7 +3,9 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToggleButton::CukeToggleButton(QWidget *parent)
-    : CukeContextMixin(parent), d_ptr(new CukeToggleButtonPrivate(this)) {
+    : QPushButton(parent),
+      CukeContext(this),
+      d_ptr(new CukeToggleButtonPrivate(this)) {
     setFlat(true);
     setStyleSheet("border: none;");
     setCheckable(true);

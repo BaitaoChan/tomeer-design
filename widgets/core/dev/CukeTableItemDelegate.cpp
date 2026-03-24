@@ -2,7 +2,8 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeTableItemDelegate::CukeTableItemDelegate(QObject *parent)
-    : CukeContextMixin(parent) {
+    : QStyledItemDelegate(parent),
+      CukeContext(this) {
 }
 
 CukeTableItemDelegate::~CukeTableItemDelegate() = default;
@@ -24,7 +25,7 @@ void CukeTableItemDelegate::paint(QPainter *p,
     QRect r = opt.rect;
 
     // 文本
-    p->setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
+    p->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
     p->setFont(index.data(Qt::FontRole).value<QFont>());
 
     r.adjust(8, 0, -8, 0);

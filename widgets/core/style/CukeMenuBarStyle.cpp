@@ -4,8 +4,9 @@
 #include "CukeMenuBarStyle.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-    CukeMenuBarStyle::CukeMenuBarStyle(QStyle *style)
-    : CukeContextMixin(style) {
+CukeMenuBarStyle::CukeMenuBarStyle(QStyle *style)
+    : QProxyStyle(style),
+      CukeContext(this) {
 }
 
 CukeMenuBarStyle::~CukeMenuBarStyle() = default;
