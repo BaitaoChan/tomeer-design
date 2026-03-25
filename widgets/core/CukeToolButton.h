@@ -2,12 +2,12 @@
 #define CUKETOOLBUTTON_H
 #include <QToolButton>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToolButtonPrivate;
-class CUKE_EXPORT CukeToolButton : public QToolButton, public CukeContext {
+class CUKE_EXPORT CukeToolButton : public QToolButton, public CukeHub {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToolButton)
     CUKE_Q_PROPERTY_DECL(bool, Hover)

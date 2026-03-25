@@ -12,7 +12,7 @@ CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, BorderRadius)
 
 CukeLineEdit::CukeLineEdit(QWidget *parent)
     : QLineEdit(parent),
-      CukeContext(this),
+      CukeHub(this),
       _pBorderRadius(6),
       d_ptr(new CukeLineEditPrivate(this)) {
     setThemeMode(cTheme->getThemeMode());
@@ -45,7 +45,7 @@ CukeLineEdit::CukeLineEdit(QWidget *parent)
 CukeLineEdit::~CukeLineEdit() = default;
 
 void CukeLineEdit::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    CukeContext::onThemeChanged(mode);
+    CukeHub::onThemeChanged(mode);
     // 设置文字颜色
     QPalette pal = palette();
     pal.setColor(QPalette::Text, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));

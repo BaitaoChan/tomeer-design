@@ -2,12 +2,12 @@
 #define CUKEMAINWINDOW_H
 #include <QMainWindow>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeWindowPrivate;
-class CUKE_EXPORT CukeWindow : public QMainWindow, public CukeContext {
+class CUKE_EXPORT CukeWindow : public QMainWindow, public CukeHub {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeWindow)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)

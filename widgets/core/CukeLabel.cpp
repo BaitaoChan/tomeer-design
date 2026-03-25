@@ -7,7 +7,7 @@ CUKE_Q_PROPERTY_IMPL(CukeLabel, QColor, TextColor)
 
 CukeLabel::CukeLabel(QWidget *parent)
     : QLabel(parent),
-      CukeContext(this),
+      CukeHub(this),
       d_ptr(new CukeLabelPrivate(this)) {
     setAttribute(Qt::WA_TranslucentBackground);
 }

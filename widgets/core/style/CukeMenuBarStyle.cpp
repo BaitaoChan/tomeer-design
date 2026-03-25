@@ -6,7 +6,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeMenuBarStyle::CukeMenuBarStyle(QStyle *style)
     : QProxyStyle(style),
-      CukeContext(this) {
+      CukeHub(this) {
 }
 
 CukeMenuBarStyle::~CukeMenuBarStyle() = default;
@@ -28,13 +28,13 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
         painter->setPen(Qt::NoPen);
         if (opt->state & State_Enabled) {
             if (opt->state & State_Selected)
-                painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::HoverAlpha));
+                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha));
             else if (opt->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::PressAlpha));
+                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha));
         }
         painter->drawRoundedRect(opt->rect.adjusted(3, 3, -3, -3), _radius, _radius);
 
-        painter->setPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
+        painter->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
         painter->drawText(opt->rect.adjusted(1, 1, -1, -1), Qt::AlignCenter, opt->text);
 
         painter->restore();

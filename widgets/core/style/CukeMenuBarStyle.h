@@ -2,11 +2,11 @@
 #define CUKEMENUBARSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeMenuBarStyle : public QProxyStyle, public CukeContext {
+class CukeMenuBarStyle : public QProxyStyle, public CukeHub {
     Q_OBJECT
 public:
     explicit CukeMenuBarStyle(QStyle *style = nullptr);

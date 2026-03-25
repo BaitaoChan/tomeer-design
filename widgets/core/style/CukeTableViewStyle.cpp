@@ -9,7 +9,7 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeTableViewStyle, int, BorderRadius)
 CukeTableViewStyle::CukeTableViewStyle(QStyle *style)
     : QProxyStyle(style),
-      CukeContext(this),
+      CukeHub(this),
       _pBorderRadius(6) {
 
 }

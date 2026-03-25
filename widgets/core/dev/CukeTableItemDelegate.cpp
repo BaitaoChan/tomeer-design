@@ -3,7 +3,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeTableItemDelegate::CukeTableItemDelegate(QObject *parent)
     : QStyledItemDelegate(parent),
-      CukeContext(this) {
+      CukeHub(this) {
 }
 
 CukeTableItemDelegate::~CukeTableItemDelegate() = default;

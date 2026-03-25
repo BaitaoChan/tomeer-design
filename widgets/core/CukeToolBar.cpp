@@ -3,7 +3,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToolBar::CukeToolBar(QWidget *parent)
     : QToolBar(parent),
-      CukeContext(this) {
+      CukeHub(this) {
 }
 
 CukeToolBar::~CukeToolBar() = default;

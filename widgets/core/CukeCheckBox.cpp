@@ -6,7 +6,7 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeCheckBox, qreal, CheckProgress)
 CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
     : QCheckBox(parent),
-      CukeContext(this),
+      CukeHub(this),
       d_ptr(new CukeCheckBoxPrivate(this)) {
     setCursor(Qt::PointingHandCursor);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);

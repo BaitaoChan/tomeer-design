@@ -39,7 +39,7 @@ CUKE_NAMESPACE_END(pub)
 
 CukeComboBox::CukeComboBox(QWidget *parent)
     : QComboBox(parent),
-      CukeContext(this),
+      CukeHub(this),
       _pBorderRadius(6),
       d_ptr(new CukeComboBoxPrivate(this)) {
     setStyleSheet(R"(
@@ -182,7 +182,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 底部横线
     p.setPen(Qt::NoPen);
-    p.setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Pattern));
+    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
     p.drawRect(QRectF(rect().left() + 4,
                       rect().bottom() * 0.82,
                       rect().right() - rect().left() - 8,
@@ -190,7 +190,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 焦点指示
     p.setPen(Qt::NoPen);
-    p.setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Check));
+    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Check));
     p.drawRoundedRect(QRectF(rect().left() + 4 + (rect().right() - rect().left() - 8) / 2.0 - _pLineHalfWidth,
                              rect().bottom() * 0.82,
                              _pLineHalfWidth * 2,
@@ -207,8 +207,8 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
     p.translate(-rect().height() / 4.0, -rect().height() / 4.0);
     p.setTransform(QTransform().scale(rect().height() / 2.0 / 1024.0,
                                       rect().height() / 2.0 / 1024.0), true);
-    p.setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
-    p.setPen(QPen(cTheme->getThemeColor(_themeMode, CukeThemeType::Text), 1));
+    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+    p.setPen(QPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 1));
     p.drawPath(cuke::pub::SingleArrow());
 }
 

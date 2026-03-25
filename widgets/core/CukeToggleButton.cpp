@@ -4,7 +4,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToggleButton::CukeToggleButton(QWidget *parent)
     : QPushButton(parent),
-      CukeContext(this),
+      CukeHub(this),
       d_ptr(new CukeToggleButtonPrivate(this)) {
     setFlat(true);
     setStyleSheet("border: none;");
@@ -64,13 +64,13 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QColor bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::DefaultAlpha);
+    QColor bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
     if (d_ptr->_isToggled) {
-        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::CheckAlpha);
+        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha);
     } else if (d_ptr->_isPressed) {
-        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::PressAlpha);
+        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha);
     } else if (d_ptr->_isHovered) {
-        bgColor = cTheme->getThemeColor(_themeMode, CukeThemeType::HoverAlpha);
+        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha);
     }
 
     painter.setBrush(bgColor);
@@ -79,7 +79,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
 
     if (!d_ptr->_isPressed && !d_ptr->_isToggled) {
         QPen pen;
-        pen.setColor(cTheme->getThemeColor(_themeMode, CukeThemeType::Pattern));
+        pen.setColor(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
         pen.setWidthF(1.6);
         painter.setPen(pen);
 
@@ -99,7 +99,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     option.text = text();
     option.icon = icon();
     option.iconSize = icon().isNull() ? QSize() : this->iconSize();
-    option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(_themeMode, CukeThemeType::Text));
+    option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
     if (d_ptr->_isPressed) option.state |= QStyle::State_Sunken;
     if (d_ptr->_isHovered) option.state |= QStyle::State_MouseOver;

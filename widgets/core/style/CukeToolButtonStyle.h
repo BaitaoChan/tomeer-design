@@ -2,11 +2,11 @@
 #define CUKETOOLBUTTONSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToolButtonStyle : public QProxyStyle, public CukeContext {
+class CukeToolButtonStyle : public QProxyStyle, public CukeHub {
     Q_OBJECT
 public:
     explicit CukeToolButtonStyle(QStyle *style = nullptr);

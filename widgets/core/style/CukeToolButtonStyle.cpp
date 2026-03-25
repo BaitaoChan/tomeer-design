@@ -9,7 +9,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToolButtonStyle::CukeToolButtonStyle(QStyle *style)
     : QProxyStyle(style),
-      CukeContext(this) {
+      CukeHub(this) {
 }
 
 CukeToolButtonStyle::~CukeToolButtonStyle() = default;
@@ -26,9 +26,9 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
                 painter->setBrush(toolButton->getBgColor());
         } else {
             if (option->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Press));
+                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Press));
             else if (option->state & State_MouseOver)
-                painter->setBrush(cTheme->getThemeColor(_themeMode, CukeThemeType::Hover));
+                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Hover));
         }
         cPainter->drawRoundedRect(option->rect, painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), toolButton->getSideFlag());
         painter->restore();

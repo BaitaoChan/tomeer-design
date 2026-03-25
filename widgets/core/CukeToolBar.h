@@ -2,11 +2,11 @@
 #define CUKETOOLBAR_H
 #include <QToolBar>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CUKE_EXPORT CukeToolBar : public QToolBar, public CukeContext {
+class CUKE_EXPORT CukeToolBar : public QToolBar, public CukeHub {
     Q_OBJECT
 public:
     explicit CukeToolBar(QWidget *parent = nullptr);

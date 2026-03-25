@@ -5,12 +5,12 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToggleButtonPrivate;
-class CUKE_EXPORT CukeToggleButton : public QPushButton, public CukeContext {
+class CUKE_EXPORT CukeToggleButton : public QPushButton, public CukeHub {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToggleButton)
 public:

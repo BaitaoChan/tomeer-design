@@ -13,7 +13,7 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeAppBar, int, AppBarHeight)
 CukeAppBar::CukeAppBar(QWidget *parent)
     : QWidget(parent),
-      CukeContext(this),
+      CukeHub(this),
       d_ptr(new CukeAppBarPrivate(this)) {
     _pAppBarHeight = 32;
     setFixedHeight(_pAppBarHeight);
@@ -115,13 +115,12 @@ CukeAppBar::CukeAppBar(QWidget *parent)
         window()->close();
     });
     d_ptr->_layout->addWidget(d_ptr->_container);
-    connect(cTheme, &CukeTheme::themeModeChanged, this, onThemeChanged);
 }
 
 CukeAppBar::~CukeAppBar() = default;
 
 void CukeAppBar::onThemeChanged(const CukeThemeType::ThemeMode mode) {
-    CukeContext::onThemeChanged(mode);
+    CukeHub::onThemeChanged(mode);
     d_ptr->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));

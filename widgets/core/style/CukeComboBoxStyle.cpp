@@ -7,7 +7,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxStyle::CukeComboBoxStyle(QStyle *style)
     : QProxyStyle(style),
-      CukeContext(this) {
+      CukeHub(this) {
 }
 
 CukeComboBoxStyle::~CukeComboBoxStyle() = default;

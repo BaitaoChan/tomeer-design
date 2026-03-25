@@ -6,12 +6,12 @@
 #include <QPropertyAnimation>
 #include <QMouseEvent>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeSliderPrivate;
-class CUKE_EXPORT CukeSlider : public QSlider, public CukeContext {
+class CUKE_EXPORT CukeSlider : public QSlider, public CukeHub {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeSlider)
     CUKE_Q_PROPERTY_DECL(qreal, HandleDiameter)

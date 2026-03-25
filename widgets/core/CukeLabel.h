@@ -5,12 +5,12 @@
 #include <QFont>
 #include <QPainter>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeLabelPrivate;
-class CUKE_EXPORT CukeLabel : public QLabel, public CukeContext {
+class CUKE_EXPORT CukeLabel : public QLabel, public CukeHub {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeLabel)
     CUKE_Q_PROPERTY_DECL(QColor, TextColor)

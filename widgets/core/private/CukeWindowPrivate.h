@@ -9,6 +9,8 @@ class CukeWindow;
 class CukeWindowPrivate : public QObject {
     Q_OBJECT
     CUKE_DECLARE_QPTR(CukeWindow)
+    CUKE_Q_PROPERTY_DECL(bool, IsResize)
+    CUKE_Q_PROPERTY_DECL(bool, IsDrag)
 public:
     explicit CukeWindowPrivate(CukeWindow *q = nullptr);
     ~CukeWindowPrivate() override;

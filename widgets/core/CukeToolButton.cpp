@@ -15,7 +15,7 @@ CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, BgColorUsedFlag)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, CukeGeometryType::SideFlag, SideFlag)
 CukeToolButton::CukeToolButton(QWidget *parent)
     : QToolButton(parent),
-      CukeContext(this),
+      CukeHub(this),
       d_ptr(new CukeToolButtonPrivate(this)) {
     d_ptr->_style = new CukeToolButtonStyle();
     setStyle(d_ptr->_style);

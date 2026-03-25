@@ -8,14 +8,14 @@
 #include <QtMath>
 #include <QPaintEvent>
 
-#include "CukeContext.h"
+#include "CukeHub.h"
 #include "CukeProperty.h"
 
 using namespace cuke::pub;
 
 CUKE_NAMESPACE_BEGIN(lab)
 class CukeLoopedRingPrivate;
-class CUKE_EXPORT CukeLoopedRing : public QWidget, public CukeContext {
+class CUKE_EXPORT CukeLoopedRing : public QWidget, public CukeHub {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeLoopedRing)
     CUKE_Q_PROPERTY_DECL(qreal, Angle)

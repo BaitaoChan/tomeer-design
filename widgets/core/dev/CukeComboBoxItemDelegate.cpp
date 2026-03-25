@@ -3,7 +3,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxItemDelegate::CukeComboBoxItemDelegate(QObject *parent)
     : QStyledItemDelegate(parent),
-      CukeContext(this) {
+      CukeHub(this) {
 }
 
 CukeComboBoxItemDelegate::~CukeComboBoxItemDelegate() = default;

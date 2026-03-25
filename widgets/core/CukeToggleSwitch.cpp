@@ -9,7 +9,7 @@ CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, qreal, KnobCenterY)
 
 CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
     : QWidget(parent),
-      CukeContext(this),
+      CukeHub(this),
       _pKnobCenterX(-1),
       d_ptr(new CukeToggleSwitchPrivate(this)) {
     setFixedSize(44, 22);
@@ -44,7 +44,7 @@ CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
 CukeToggleSwitch::~CukeToggleSwitch() = default;
 
 void CukeToggleSwitch::onThemeChanged(CukeThemeType::ThemeMode Mode) {
-    CukeContext::onThemeChanged(Mode);
+    CukeHub::onThemeChanged(Mode);
 
     _pKnobColor = (getThemeMode() == CukeThemeType::Light) ^ d_ptr->_isToggled
                       ? cTheme->getThemeColor(CukeThemeType::Light, CukeThemeType::ToggleSwitchKnob)

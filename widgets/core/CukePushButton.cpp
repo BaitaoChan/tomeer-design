@@ -6,7 +6,7 @@ CUKE_Q_PROPERTY_IMPL(CukePushButton, int, BorderRadius)
 
 CukePushButton::CukePushButton(QWidget *parent)
     : QPushButton(parent),
-      CukeContext(this),
+      CukeHub(this),
       d_ptr(new CukePushButtonPrivate(this)) {
     setFlat(true);
     _pBorderRadius = 6;

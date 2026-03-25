@@ -5,7 +5,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeMenuBar::CukeMenuBar(QWidget *parent)
     : QMenuBar(parent),
-      CukeContext(this),
+      CukeHub(this),
       d_ptr(new CukeMenuBarPrivate(this)) {
     setStyle(new CukeMenuBarStyle(style()));
 }
