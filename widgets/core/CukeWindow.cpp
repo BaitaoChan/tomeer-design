@@ -53,7 +53,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
 #ifdef Q_OS_WIN
     MSG *pMsg = static_cast<MSG *>(message);
     if (pMsg->message == WM_NCHITTEST) {
-        const POINT ptMouse = {GET_X_LPARAM(pMsg->lParam), GET_Y_LPARAM(pMsg->lParam)};
+        const POINT hCursor = {GET_X_LPARAM(pMsg->lParam), GET_Y_LPARAM(pMsg->lParam)};
 
         RECT hRect;
         GetWindowRect(pMsg->hwnd, &hRect);
@@ -65,37 +65,58 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
         uchar hRow = 1, hCol = 1;
 
         // left 区域
-        if (ptMouse.x >= hRect.left && ptMouse.x <= hRect.left - hMargin.left) {
+        if (hCursor.x >= hRect.left && hCursor.x <= hRect.left - hMargin.left) {
             d->setIsResize(true);
             hCol = 0;
         }
         // top 区域
-        if (ptMouse.y > hRect.top && ptMouse.y <= hRect.top - hMargin.top) {
+        if (hCursor.y > hRect.top && hCursor.y <= hRect.top - hMargin.top) {
             d->setIsResize(true);
-            hRow = 0;
-        } else if (ptMouse.y > hRect.top - hMargin.top && ptMouse.y <= hRect.top + d->_appBar->getAppBarHeight()) {
-            d->setIsDrag(true);
             hRow = 0;
         }
         // right 区域
-        if (ptMouse.x > hRect.right - hMargin.right && ptMouse.x <= hRect.right) {
+        if (hCursor.x > hRect.right - hMargin.right && hCursor.x <= hRect.right) {
             d->setIsResize(true);
             hCol = 2;
         }
         // bottom 区域
-        if (ptMouse.y > hRect.bottom - hMargin.bottom && ptMouse.y <= hRect.bottom) {
+        if (hCursor.y > hRect.bottom - hMargin.bottom && hCursor.y <= hRect.bottom) {
             d->setIsResize(true);
             hRow = 2;
         }
 
-        const LRESULT hitArea[3][3] = {
-            {HTTOPLEFT, d->getIsDrag() ? HTCAPTION : HTTOP, HTTOPRIGHT},
-            {HTLEFT, HTNOWHERE, HTRIGHT},
-            {HTBOTTOMLEFT, HTBOTTOM, HTBOTTOMRIGHT},
-        };
+        // 返回 resize 命中
+        if (d->getIsResize()) {
+            static constexpr LRESULT hitArea[3][3] = {
+                {HTTOPLEFT, HTTOP, HTTOPRIGHT},
+                {HTLEFT, HTCLIENT, HTRIGHT},
+                {HTBOTTOMLEFT, HTBOTTOM, HTBOTTOMRIGHT},
+            };
 
-        *result = hitArea[hRow][hCol];
-        return true;
+            *result = hitArea[hRow][hCol];
+            return true;
+        }
+
+        // appBar 区域
+        if (hCursor.y > hRect.top - hMargin.top && hCursor.y <= hRect.top - hMargin.top + d->_appBar->getAppBarHeight()) {
+            for (const auto &child : d->_appBar->findElems()) {
+                const auto widget = static_cast<QWidget *>(child);
+                if (!widget || !widget->isVisible()) {
+                    continue;
+                }
+                // 坐标映射
+                const QPoint qCursor = widget->mapToGlobal(QPoint(0, 0));
+                const auto qRect = QRect(qCursor, widget->size());
+                if (qRect.contains(QPoint(hCursor.x, hCursor.y))) {
+                    d->setIsDrag(false);
+                    *result = HTCLIENT;
+                    return true;
+                }
+            }
+            d->setIsDrag(true);
+            *result = HTCAPTION;
+            return true;
+        }
     }
 #endif
     return QMainWindow::nativeEvent(eventType, message, result);
