@@ -25,18 +25,44 @@ CukeThemeType::ThemeMode CukeHub::getThemeMode() const {
 }
 
 void CukeHub::addElem(const QString &name, void *child) const {
+    if (name.isEmpty()) {
+        qCritical() << "[CukeHub] addElem failed: name is empty";
+        return;
+    }
+    if (!child) {
+        qCritical() << "[CukeHub] addElem failed:" << name << "child pointer is nullptr";
+        return;
+    }
+    if (d_ptr->_children.contains(name)) {
+        qWarning() << "[CukeHub] addElem warning:" << name << "already exists, it will be overwritten";
+    }
     d_ptr->_children.insert(name, child);
 }
 
 void *CukeHub::findElem(const QString &name) const {
+    if (name.isEmpty()) {
+        qCritical() << "[CukeHub] findElem failed: name is empty";
+        return nullptr;
+    }
+    if (!d_ptr->_children.contains(name)) {
+        qWarning() << "[CukeHub] findElem warning:" << name << "not found";
+        return nullptr;
+    }
     return d_ptr->_children.value(name);
 }
 
 QList<void *> CukeHub::findElems() const {
+    if (d_ptr->_children.isEmpty()) {
+        qWarning() << "[CukeHub] findElems warning:" << "no elements registered";
+    }
     return d_ptr->_children.values();
 }
 
 bool CukeHub::hasElem(const QString &name) const {
+    if (name.isEmpty()) {
+        qCritical() << "[CukeHub] hasElem failed: name is empty";
+        return false;
+    }
     return d_ptr->_children.contains(name);
 }
 

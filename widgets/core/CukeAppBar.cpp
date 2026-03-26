@@ -63,6 +63,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     // 最小化
     d_ptr->_minimizeButton = new CukeToolButton(this);
+    d_ptr->_minimizeButton->setStateOverride(true);
     d_ptr->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_minimizeButton);
@@ -75,6 +76,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     // 最大化
     d_ptr->_maximizeButton = new CukeToolButton(this);
+    d_ptr->_maximizeButton->setStateOverride(true);
     d_ptr->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_maximizeButton);
@@ -98,6 +100,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d_ptr->_closeButton->bgColorFrom(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Transparent));
     d_ptr->_closeButton->bgColorTo(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Dismiss));
     d_ptr->_closeButton->setBgColorUsedFlag(true);
+    d_ptr->_closeButton->setStateOverride(true);
     d_ptr->_closeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_closeButton);

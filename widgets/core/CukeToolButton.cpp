@@ -9,8 +9,10 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, Hover)
+CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, Pressed)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, QColor, BgColor)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, int, BorderRadius)
+CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, StateOverride)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, BgColorUsedFlag)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, CukeGeometryType::SideFlag, SideFlag)
 CukeToolButton::CukeToolButton(QWidget *parent)
@@ -28,38 +30,60 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     connect(this, &CukeToolButton::pBorderRadiusChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pBgColorUsedFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pSideFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
+    connect(this, &CukeToolButton::pHoverChanged, this, &CukeToolButton::onHoverChanged);
     connect(this, &CukeToolButton::pHoverChanged, this, QOverload<>::of(&CukeToolButton::update));
+    connect(this, &CukeToolButton::pPressedChanged, this, QOverload<>::of(&CukeToolButton::update));
 }
 
 CukeToolButton::~CukeToolButton() = default;
 
 void CukeToolButton::bgColorFrom(const QColor color) const {
+    if (d_ptr->_bgColorFrom) {
+        delete d_ptr->_bgColorFrom;
+        d_ptr->_bgColorFrom = nullptr;
+    }
     d_ptr->_bgColorFrom = new QColor(color);
 }
 
 void CukeToolButton::bgColorTo(const QColor color) const {
+    if (d_ptr->_bgColorTo) {
+        delete d_ptr->_bgColorTo;
+        d_ptr->_bgColorTo = nullptr;
+    }
     d_ptr->_bgColorTo = new QColor(color);
 }
 
-void CukeToolButton::enterEvent(QEnterEvent *event) {
-    setHover(true);
+void CukeToolButton::onHoverChanged() const {
     if (_pHover) {
         d_ptr->_bgAnim->stop();
         d_ptr->_bgAnim->setStartValue(*d_ptr->_bgColorFrom);
         d_ptr->_bgAnim->setEndValue(*d_ptr->_bgColorTo);
         d_ptr->_bgAnim->start();
-    }
-    QToolButton::enterEvent(event);
-}
-void CukeToolButton::leaveEvent(QEvent *event) {
-    setHover(false);
-    if (!_pHover) {
+    } else {
         d_ptr->_bgAnim->stop();
         d_ptr->_bgAnim->setStartValue(*d_ptr->_bgColorTo);
         d_ptr->_bgAnim->setEndValue(*d_ptr->_bgColorFrom);
         d_ptr->_bgAnim->start();
     }
+}
+
+void CukeToolButton::enterEvent(QEnterEvent *event) {
+    setHover(true);
+    QToolButton::enterEvent(event);
+}
+void CukeToolButton::leaveEvent(QEvent *event) {
+    setHover(false);
     QToolButton::leaveEvent(event);
+}
+
+void CukeToolButton::mousePressEvent(QMouseEvent *event) {
+    setPressed(true);
+    QToolButton::mousePressEvent(event);
+}
+
+void CukeToolButton::mouseReleaseEvent(QMouseEvent *event) {
+    setPressed(false);
+    QToolButton::mouseReleaseEvent(event);
 }
 
 CUKE_NAMESPACE_END(pub)

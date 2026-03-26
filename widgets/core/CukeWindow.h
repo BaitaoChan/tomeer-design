@@ -19,6 +19,7 @@ public:
     // void setCentralWidget(QWidget *widget);
 
 protected:
+    void showEvent(QShowEvent *event) override;
     bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result) override;
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;

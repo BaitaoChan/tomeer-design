@@ -1,9 +1,10 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QVBoxLayout>
-#include <QWidget>
+#include <QWindow>
 
 #include "CukeWindow.h"
+#include "CukeToolButton.h"
 #include "CukeWindowStyle.h"
 #include "CukeWindowPrivate.h"
 #include "CukeAppBar.h"
@@ -44,6 +45,10 @@ CukeWindow::~CukeWindow() = default;
 
 void CukeWindow::resize(int w, int h) {
     QMainWindow::resize(w, h + d_ptr->_appBar->getAppBarHeight());
+}
+
+void CukeWindow::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
 }
 
 bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
@@ -105,8 +110,20 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
                     continue;
                 }
                 // 坐标映射
-                const QPoint qCursor = widget->mapToGlobal(QPoint(0, 0));
-                const auto qRect = QRect(qCursor, widget->size());
+                // 获取当前窗口的 DPI 缩放倍率
+                const qreal hDpr = windowHandle() ? windowHandle()->devicePixelRatio() : 1.0;
+                // 获取 widget 左上角在 window 内的位置
+                const QPoint qCursor = widget->mapTo(window(), QPoint(0, 0));
+                const auto qRect = QRect(
+                    QPoint(
+                        hRect.left + qRound(qCursor.x() * hDpr),
+                        hRect.top + qRound(qCursor.y() * hDpr)
+                    ),
+                    QSize(
+                        qRound(widget->width() * hDpr),
+                        qRound(widget->height() * hDpr)
+                    )
+                );
                 if (qRect.contains(QPoint(hCursor.x, hCursor.y))) {
                     d->setIsDrag(false);
                     *result = HTCLIENT;
@@ -118,6 +135,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
             return true;
         }
     }
+
 #endif
     return QMainWindow::nativeEvent(eventType, message, result);
 }

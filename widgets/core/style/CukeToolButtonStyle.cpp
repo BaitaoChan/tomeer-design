@@ -22,13 +22,26 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         // 背景
         if (toolButton->getBgColorUsedFlag()) {
-            if (option->state & State_Sunken || option->state & State_MouseOver)
-                painter->setBrush(toolButton->getBgColor());
+            if (toolButton->getStateOverride()) {
+                if (toolButton->getHover() || toolButton->getPressed()) {
+                    painter->setBrush(toolButton->getBgColor());
+                }
+            } else {
+                if (option->state & State_Sunken || option->state & State_MouseOver)
+                    painter->setBrush(toolButton->getBgColor());
+            }
         } else {
-            if (option->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Press));
-            else if (option->state & State_MouseOver)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Hover));
+            if (toolButton->getStateOverride()) {
+                if (toolButton->getPressed())
+                    painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Press));
+                else if (toolButton->getHover())
+                    painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Hover));
+            } else {
+                if (option->state & State_Sunken)
+                    painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Press));
+                else if (option->state & State_MouseOver)
+                    painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Hover));
+            }
         }
         cPainter->drawRoundedRect(option->rect, painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), toolButton->getSideFlag());
         painter->restore();
