@@ -14,7 +14,6 @@ class CUKE_EXPORT CukeToolButton : public QToolButton, public CukeHub {
     CUKE_Q_PROPERTY_DECL(bool, Pressed)
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
-    CUKE_Q_PROPERTY_DECL(bool, StateOverride)
     CUKE_Q_PROPERTY_DECL(bool, BgColorUsedFlag)
     CUKE_Q_PROPERTY_DECL(CukeGeometryType::SideFlag, SideFlag)
 public:

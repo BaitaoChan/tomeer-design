@@ -3,6 +3,7 @@
 
 #include "CukeProperty.h"
 class QVBoxLayout;
+class QMainWindow;
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBar;
 class CukeWindow;
@@ -19,6 +20,7 @@ private:
     QWidget *_widget = nullptr;
     QVBoxLayout *_layout = nullptr;
     CukeAppBar *_appBar = nullptr;
+    QMainWindow *_window = nullptr;
 };
 CUKE_NAMESPACE_END(pub)
 

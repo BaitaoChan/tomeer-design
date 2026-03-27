@@ -24,9 +24,9 @@ CukeWindow::CukeWindow(QWidget *parent)
       d_ptr(new CukeWindowPrivate(this)) {
     _pBorderRadius = 8;
     d_ptr->_appBar = new CukeAppBar(this);
-    // 禁止绘制系统标题栏以及边框
     setAttribute(Qt::WA_TranslucentBackground);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    // 保留窗口系统功能
+    setWindowFlags(Qt::Window | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::WindowSystemMenuHint);
     resize(1280, 720);
     setStyle(new CukeWindowStyle(style()));
     setStyleSheet("QMainWindow { background: transparent; }");
@@ -34,11 +34,14 @@ CukeWindow::CukeWindow(QWidget *parent)
     d_ptr->_widget = new QWidget(this);
     d_ptr->_layout = new QVBoxLayout(d_ptr->_widget);
     d_ptr->_layout->setContentsMargins(0, 0, 0, 0);
+    d_ptr->_layout->setSpacing(0);
 
     d_ptr->_layout->addWidget(d_ptr->_appBar);
-    d_ptr->_layout->addStretch();
 
     setCentralWidget(d_ptr->_widget);
+
+    d_ptr->_window = new QMainWindow(this);
+    d_ptr->_layout->addWidget(d_ptr->_window);
 }
 
 CukeWindow::~CukeWindow() = default;
@@ -47,16 +50,31 @@ void CukeWindow::resize(int w, int h) {
     QMainWindow::resize(w, h + d_ptr->_appBar->getAppBarHeight());
 }
 
-void CukeWindow::showEvent(QShowEvent *event) {
-    QMainWindow::showEvent(event);
-}
-
 bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
     Q_D(CukeWindow);
     d->setIsResize(false);
     d->setIsDrag(false);
 #ifdef Q_OS_WIN
-    MSG *pMsg = static_cast<MSG *>(message);
+    const auto pMsg = static_cast<MSG *>(message);
+    // 隐藏非客户区
+    if (pMsg->message == WM_NCCALCSIZE) {
+        if (pMsg->wParam == TRUE) {
+            // 获取客户区参数信息
+            auto params = reinterpret_cast<NCCALCSIZE_PARAMS *>(pMsg->lParam);
+            RECT &qRect = params->rgrc[0];
+            const RECT pRect = qRect;
+
+            // 先按标准窗口规则去计算客户区
+            *result = DefWindowProcW(pMsg->hwnd, WM_NCCALCSIZE, pMsg->wParam, pMsg->lParam);
+            qRect.top = pRect.top;
+            // 恢复最大化的顶部安全边界
+            if (IsZoomed(pMsg->hwnd)) {
+                const int frameY = GetSystemMetrics(SM_CYSIZEFRAME) + GetSystemMetrics(SM_CXPADDEDBORDER);
+                qRect.top += frameY;
+            }
+            return true;
+        }
+    }
     if (pMsg->message == WM_NCHITTEST) {
         const POINT hCursor = {GET_X_LPARAM(pMsg->lParam), GET_Y_LPARAM(pMsg->lParam)};
 
@@ -150,7 +168,7 @@ void CukeWindow::paintEvent(QPaintEvent *event) {
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     QPainterPath path;
-    path.addRoundedRect(rect(), _pBorderRadius, _pBorderRadius);
+    path.addRect(rect());
 
     painter.fillPath(path, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Window));
 

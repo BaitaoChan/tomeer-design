@@ -20,7 +20,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     d_ptr->_layout = new QHBoxLayout(this);
     d_ptr->_layout->setContentsMargins(8, 0, 0, 0);
-    d_ptr->_layout->setAlignment(Qt::AlignTop);
+    d_ptr->_layout->setAlignment(Qt::AlignCenter);
 
     // 图标
     d_ptr->_windowIcon = new QLabel(this);
@@ -63,7 +63,6 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     // 最小化
     d_ptr->_minimizeButton = new CukeToolButton(this);
-    d_ptr->_minimizeButton->setStateOverride(true);
     d_ptr->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_minimizeButton);
@@ -76,7 +75,6 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     // 最大化
     d_ptr->_maximizeButton = new CukeToolButton(this);
-    d_ptr->_maximizeButton->setStateOverride(true);
     d_ptr->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_maximizeButton);
@@ -93,14 +91,13 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     // 关闭
     d_ptr->_closeButton = new CukeToolButton(this);
-    if (auto w = qobject_cast<CukeWindow *>(window())) {
+    if (qobject_cast<CukeWindow *>(window())) {
         d_ptr->_closeButton->setBorderRadius(qobject_cast<CukeWindow *>(window())->getBorderRadius());
     }
-    d_ptr->_closeButton->setSideFlag(CukeGeometryType::TopRight);
+    d_ptr->_closeButton->setSideFlag(CukeGeometryType::None);
     d_ptr->_closeButton->bgColorFrom(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Transparent));
     d_ptr->_closeButton->bgColorTo(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Dismiss));
     d_ptr->_closeButton->setBgColorUsedFlag(true);
-    d_ptr->_closeButton->setStateOverride(true);
     d_ptr->_closeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d_ptr->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d_ptr->_containerLayout->addWidget(d_ptr->_closeButton);

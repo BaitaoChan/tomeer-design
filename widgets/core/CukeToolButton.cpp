@@ -12,7 +12,6 @@ CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, Hover)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, Pressed)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, QColor, BgColor)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, int, BorderRadius)
-CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, StateOverride)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, BgColorUsedFlag)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, CukeGeometryType::SideFlag, SideFlag)
 CukeToolButton::CukeToolButton(QWidget *parent)
@@ -26,7 +25,6 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     d_ptr->_bgAnim->setDuration(250);
     d_ptr->_bgAnim->setEasingCurve(QEasingCurve::InOutSine);
     connect(d_ptr->_bgAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&CukeToolButton::update));
-
     connect(this, &CukeToolButton::pBorderRadiusChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pBgColorUsedFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pSideFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
