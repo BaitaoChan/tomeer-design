@@ -3,11 +3,11 @@
 #include <QListView>
 #include <QPainter>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBoxView : public QListView, public CukeHub {
+class CukeComboBoxView : public QListView, public CukeScope {
     Q_OBJECT
 public:
     explicit CukeComboBoxView(QWidget *parent = nullptr);

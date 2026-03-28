@@ -9,34 +9,35 @@ CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, qreal, KnobCenterY)
 
 CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
     : QWidget(parent),
-      CukeHub(this),
+      CukeScope(this),
       _pKnobCenterX(-1),
       d_ptr(new CukeToggleSwitchPrivate(this)) {
+    Q_D(CukeToggleSwitch);
     setFixedSize(44, 22);
     _pKnobColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::ToggleSwitchKnob);
     _pBgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
 
     // 属性名与 Q_PROPERTY 中的一致
-    d_ptr->_bgAnimation = new QPropertyAnimation(this, "_pBgColor", this);
-    d_ptr->_bgAnimation->setDuration(200);
-    d_ptr->_bgAnimation->setEasingCurve(QEasingCurve::InOutSine);
+    d->_bgAnimation = new QPropertyAnimation(this, "_pBgColor", this);
+    d->_bgAnimation->setDuration(200);
+    d->_bgAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
-    d_ptr->_knobColorAnimation = new QPropertyAnimation(this, "_pKnobColor", this);
-    d_ptr->_knobColorAnimation->setDuration(200);
-    d_ptr->_knobColorAnimation->setEasingCurve(QEasingCurve::InOutSine);
+    d->_knobColorAnimation = new QPropertyAnimation(this, "_pKnobColor", this);
+    d->_knobColorAnimation->setDuration(200);
+    d->_knobColorAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
-    d_ptr->_knobDiameterAnimation = new QPropertyAnimation(this, "_pKnobDiameter", this);
-    d_ptr->_knobDiameterAnimation->setDuration(200);
-    d_ptr->_knobDiameterAnimation->setEasingCurve(QEasingCurve::InOutSine);
+    d->_knobDiameterAnimation = new QPropertyAnimation(this, "_pKnobDiameter", this);
+    d->_knobDiameterAnimation->setDuration(200);
+    d->_knobDiameterAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
-    d_ptr->_moveAnimation = new QPropertyAnimation(this, "_pKnobCenterX", this);
-    d_ptr->_moveAnimation->setDuration(200);
-    d_ptr->_moveAnimation->setEasingCurve(QEasingCurve::InOutSine);
+    d->_moveAnimation = new QPropertyAnimation(this, "_pKnobCenterX", this);
+    d->_moveAnimation->setDuration(200);
+    d->_moveAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
-    connect(d_ptr->_bgAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(d_ptr->_knobColorAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(d_ptr->_knobDiameterAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(d_ptr->_moveAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_bgAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_knobColorAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_knobDiameterAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_moveAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
 
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToggleSwitch::onThemeChanged);
 }
@@ -44,24 +45,27 @@ CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
 CukeToggleSwitch::~CukeToggleSwitch() = default;
 
 void CukeToggleSwitch::onThemeChanged(CukeThemeType::ThemeMode Mode) {
-    CukeHub::onThemeChanged(Mode);
+    Q_D(CukeToggleSwitch);
+    CukeScope::onThemeChanged(Mode);
 
-    _pKnobColor = (getThemeMode() == CukeThemeType::Light) ^ d_ptr->_isToggled
+    _pKnobColor = (getThemeMode() == CukeThemeType::Light) ^ d->_isToggled
                       ? cTheme->getThemeColor(CukeThemeType::Light, CukeThemeType::ToggleSwitchKnob)
                       : cTheme->getThemeColor(CukeThemeType::Dark, CukeThemeType::ToggleSwitchKnob);
     update();
 }
 
 void CukeToggleSwitch::setIsToggled(bool isToggled) {
-    if (d_ptr->_isToggled == isToggled) return;
-    d_ptr->_isToggled = isToggled;
+    Q_D(CukeToggleSwitch);
+    if (d->_isToggled == isToggled) return;
+    d->_isToggled = isToggled;
     // 立即跳到对应位置
-    _pKnobCenterX = d_ptr->_isToggled ? d_ptr->knobCenterXR : d_ptr->knobCenterXL;
+    _pKnobCenterX = d->_isToggled ? d->knobCenterXR : d->knobCenterXL;
     update();
 }
 
-bool CukeToggleSwitch::getIsToggled() const {
-    return d_ptr->_isToggled;
+bool CukeToggleSwitch::getIsToggled() {
+    Q_D(CukeToggleSwitch);
+    return d->_isToggled;
 }
 
 void CukeToggleSwitch::setKnobCenterX(qreal knobX) {
@@ -77,7 +81,8 @@ qreal CukeToggleSwitch::getKnobCenterX() const {
 }
 
 void CukeToggleSwitch::mousePressEvent(QMouseEvent *event) {
-    d_ptr->_isPressed = true;
+    Q_D(CukeToggleSwitch);
+    d->_isPressed = true;
     QPointF mousePos = event->pos();
     qreal radius = _pKnobDiameter * 0.5;
     QRectF knobRect(_pKnobCenterX - radius, _pKnobCenterY - radius,
@@ -85,10 +90,10 @@ void CukeToggleSwitch::mousePressEvent(QMouseEvent *event) {
 
     if (knobRect.contains(mousePos)) {
         // 动画到 Press 状态直径
-        d_ptr->_knobDiameterAnimation->stop();
-        d_ptr->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
-        d_ptr->_knobDiameterAnimation->setEndValue(d_ptr->knobDiameterPress);
-        d_ptr->_knobDiameterAnimation->start();
+        d->_knobDiameterAnimation->stop();
+        d->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
+        d->_knobDiameterAnimation->setEndValue(d->knobDiameterPress);
+        d->_knobDiameterAnimation->start();
     }
 
     update();
@@ -96,45 +101,46 @@ void CukeToggleSwitch::mousePressEvent(QMouseEvent *event) {
 }
 
 void CukeToggleSwitch::mouseReleaseEvent(QMouseEvent *event) {
-    d_ptr->_isPressed = false;
+    Q_D(CukeToggleSwitch);
+    d->_isPressed = false;
 
     // 松开
     QPointF mousePos = event->pos();
     qreal radius = _pKnobDiameter * 0.5;
     QRectF knobRect(_pKnobCenterX - radius, _pKnobCenterY - radius,
                     _pKnobDiameter, _pKnobDiameter);
-    d_ptr->_knobDiameterAnimation->stop();
-    d_ptr->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
+    d->_knobDiameterAnimation->stop();
+    d->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
     if (knobRect.contains(mousePos)) {
-        d_ptr->_knobDiameterAnimation->setEndValue(d_ptr->knobDiameterHover);
+        d->_knobDiameterAnimation->setEndValue(d->knobDiameterHover);
     } else {
-        d_ptr->_knobDiameterAnimation->setEndValue(d_ptr->knobDiameter);
+        d->_knobDiameterAnimation->setEndValue(d->knobDiameter);
     }
-    d_ptr->_knobDiameterAnimation->start();
+    d->_knobDiameterAnimation->start();
 
     // 切换状态
-    d_ptr->_isToggled = !d_ptr->_isToggled;
-    emit toggled(d_ptr->_isToggled);
+    d->_isToggled = !d->_isToggled;
+    emit toggled(d->_isToggled);
 
-    d_ptr->_bgAnimation->stop();
-    d_ptr->_bgAnimation->setStartValue(_pBgColor);
-    d_ptr->_bgAnimation->setEndValue(d_ptr->_isToggled
+    d->_bgAnimation->stop();
+    d->_bgAnimation->setStartValue(_pBgColor);
+    d->_bgAnimation->setEndValue(d->_isToggled
                                          ? cTheme->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha)
                                          : cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
-    d_ptr->_bgAnimation->start();
+    d->_bgAnimation->start();
 
-    d_ptr->_knobColorAnimation->stop();
-    d_ptr->_knobColorAnimation->setStartValue(_pKnobColor);
-    d_ptr->_knobColorAnimation->setEndValue((getThemeMode() == CukeThemeType::Light) ^ d_ptr->_isToggled
+    d->_knobColorAnimation->stop();
+    d->_knobColorAnimation->setStartValue(_pKnobColor);
+    d->_knobColorAnimation->setEndValue((getThemeMode() == CukeThemeType::Light) ^ d->_isToggled
                                                 ? cTheme->getThemeColor(CukeThemeType::Light, CukeThemeType::ToggleSwitchKnob)
                                                 : cTheme->getThemeColor(CukeThemeType::Dark, CukeThemeType::ToggleSwitchKnob));
-    d_ptr->_knobColorAnimation->start();
+    d->_knobColorAnimation->start();
 
     // 使用当前 knobX 作为起点，目标为左右位置
-    d_ptr->_moveAnimation->stop();
-    d_ptr->_moveAnimation->setStartValue(_pKnobCenterX);
-    d_ptr->_moveAnimation->setEndValue(d_ptr->_isToggled ? d_ptr->knobCenterXR : d_ptr->knobCenterXL);
-    d_ptr->_moveAnimation->start();
+    d->_moveAnimation->stop();
+    d->_moveAnimation->setStartValue(_pKnobCenterX);
+    d->_moveAnimation->setEndValue(d->_isToggled ? d->knobCenterXR : d->knobCenterXL);
+    d->_moveAnimation->start();
 
     QWidget::mouseReleaseEvent(event);
 }
@@ -150,6 +156,7 @@ void CukeToggleSwitch::leaveEvent(QEvent *event) {
 }
 
 void CukeToggleSwitch::mouseMoveEvent(QMouseEvent *event) {
+    Q_D(CukeToggleSwitch);
     QPointF mousePos = event->pos();
 
     qreal radius = _pKnobDiameter * 0.5;
@@ -157,18 +164,18 @@ void CukeToggleSwitch::mouseMoveEvent(QMouseEvent *event) {
                     _pKnobDiameter, _pKnobDiameter);
 
     if (knobRect.contains(mousePos)) {
-        if (!qFuzzyCompare(_pKnobDiameter + 1.0, d_ptr->knobDiameterHover + 1.0)) {
-            d_ptr->_knobDiameterAnimation->stop();
-            d_ptr->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
-            d_ptr->_knobDiameterAnimation->setEndValue(d_ptr->knobDiameterHover);
-            d_ptr->_knobDiameterAnimation->start();
+        if (!qFuzzyCompare(_pKnobDiameter + 1.0, d->knobDiameterHover + 1.0)) {
+            d->_knobDiameterAnimation->stop();
+            d->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
+            d->_knobDiameterAnimation->setEndValue(d->knobDiameterHover);
+            d->_knobDiameterAnimation->start();
         }
     } else {
-        if (!qFuzzyCompare(_pKnobDiameter + 1.0, d_ptr->knobDiameter + 1.0)) {
-            d_ptr->_knobDiameterAnimation->stop();
-            d_ptr->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
-            d_ptr->_knobDiameterAnimation->setEndValue(d_ptr->knobDiameter);
-            d_ptr->_knobDiameterAnimation->start();
+        if (!qFuzzyCompare(_pKnobDiameter + 1.0, d->knobDiameter + 1.0)) {
+            d->_knobDiameterAnimation->stop();
+            d->_knobDiameterAnimation->setStartValue(_pKnobDiameter);
+            d->_knobDiameterAnimation->setEndValue(d->knobDiameter);
+            d->_knobDiameterAnimation->start();
         }
     }
     QWidget::mouseMoveEvent(event);
@@ -176,6 +183,7 @@ void CukeToggleSwitch::mouseMoveEvent(QMouseEvent *event) {
 
 
 void CukeToggleSwitch::resizeEvent(QResizeEvent *event) {
+    Q_D(CukeToggleSwitch);
     QWidget::resizeEvent(event);
 
     const qreal margin = 4.0;
@@ -187,21 +195,21 @@ void CukeToggleSwitch::resizeEvent(QResizeEvent *event) {
     const qreal h = contentRect.height();
 
     // knob 的基本直径
-    d_ptr->knobDiameter = qMax<qreal>(0.0, h - 2.0 * margin);
-    d_ptr->knobDiameterHover = d_ptr->knobDiameter * 1.2;
-    d_ptr->knobDiameterPress = d_ptr->knobDiameter * 0.8;
+    d->knobDiameter = qMax<qreal>(0.0, h - 2.0 * margin);
+    d->knobDiameterHover = d->knobDiameter * 1.2;
+    d->knobDiameterPress = d->knobDiameter * 0.8;
 
     // 圆心 Y 用 contentRect 的中心
     _pKnobCenterY = contentRect.top() + h * 0.5;
 
     // 左右圆心 X
-    d_ptr->knobCenterXL = contentRect.left() + margin + d_ptr->knobDiameter * 0.5;
-    d_ptr->knobCenterXR = contentRect.right() - margin - d_ptr->knobDiameter * 0.5;
+    d->knobCenterXL = contentRect.left() + margin + d->knobDiameter * 0.5;
+    d->knobCenterXR = contentRect.right() - margin - d->knobDiameter * 0.5;
 
-    _pKnobDiameter = d_ptr->knobDiameter;
+    _pKnobDiameter = d->knobDiameter;
 
     if (_pKnobCenterX < 0.0) {
-        _pKnobCenterX = d_ptr->_isToggled ? d_ptr->knobCenterXR : d_ptr->knobCenterXL;
+        _pKnobCenterX = d->_isToggled ? d->knobCenterXR : d->knobCenterXL;
     }
 }
 

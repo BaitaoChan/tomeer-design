@@ -2,12 +2,12 @@
 #define CUKELINEEDIT_H
 #include <QLineEdit>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeLineEditPrivate;
-class CUKE_EXPORT CukeLineEdit : public QLineEdit, public CukeHub {
+class CUKE_EXPORT CukeLineEdit : public QLineEdit, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeLineEdit)
     CUKE_Q_PROPERTY_DECL(QColor, BorderColor)

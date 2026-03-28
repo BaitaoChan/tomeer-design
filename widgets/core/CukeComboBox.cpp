@@ -39,7 +39,7 @@ CUKE_NAMESPACE_END(pub)
 
 CukeComboBox::CukeComboBox(QWidget *parent)
     : QComboBox(parent),
-      CukeHub(this),
+      CukeScope(this),
       _pBorderRadius(6),
       d_ptr(new CukeComboBoxPrivate(this)) {
     setStyleSheet(R"(

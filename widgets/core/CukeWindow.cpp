@@ -2,6 +2,7 @@
 #include <QPainterPath>
 #include <QVBoxLayout>
 #include <QWindow>
+#include <QMouseEvent>
 
 #include "CukeWindow.h"
 #include "CukeToolButton.h"
@@ -20,9 +21,8 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeWindow, int, BorderRadius)
 CukeWindow::CukeWindow(QWidget *parent)
     : QMainWindow(parent),
-      CukeHub(this),
+      CukeScope(this),
       d_ptr(new CukeWindowPrivate(this)) {
-    _pBorderRadius = 8;
     d_ptr->_appBar = new CukeAppBar(this);
     setAttribute(Qt::WA_TranslucentBackground);
     // 保留窗口系统功能
@@ -31,24 +31,9 @@ CukeWindow::CukeWindow(QWidget *parent)
     setStyle(new CukeWindowStyle(style()));
     setStyleSheet("QMainWindow { background: transparent; }");
 
-    d_ptr->_widget = new QWidget(this);
-    d_ptr->_layout = new QVBoxLayout(d_ptr->_widget);
-    d_ptr->_layout->setContentsMargins(0, 0, 0, 0);
-    d_ptr->_layout->setSpacing(0);
-
-    d_ptr->_layout->addWidget(d_ptr->_appBar);
-
-    setCentralWidget(d_ptr->_widget);
-
-    d_ptr->_window = new QMainWindow(this);
-    d_ptr->_layout->addWidget(d_ptr->_window);
 }
 
 CukeWindow::~CukeWindow() = default;
-
-void CukeWindow::resize(int w, int h) {
-    QMainWindow::resize(w, h + d_ptr->_appBar->getAppBarHeight());
-}
 
 bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
     Q_D(CukeWindow);
@@ -152,6 +137,20 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
             *result = HTCAPTION;
             return true;
         }
+    }
+    if (pMsg->message == WM_GETMINMAXINFO) {
+        const auto info = reinterpret_cast<MINMAXINFO *>(pMsg->lParam);
+        const qreal hDpr = windowHandle() ? windowHandle()->devicePixelRatio() : 1.0;
+
+        qreal width = 80;
+        for (const auto &child : d->_appBar->findElems()) {
+            const auto widget = static_cast<QWidget *>(child);
+            width += widget->sizeHint().width();
+        }
+
+        info->ptMinTrackSize.x = qRound((d->_appBar ? width : minimumWidth()) * hDpr);
+        *result = NULL;
+        return true;
     }
 
 #endif

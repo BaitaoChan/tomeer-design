@@ -6,9 +6,9 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeTableView::CukeTableView(QWidget *parent)
     : QTableView(parent),
-      CukeHub(this),
+      CukeScope(this),
       d_ptr(new CukeTableViewPrivate(this)) {
-
+    Q_D(CukeTableView);
     setStyle(new CukeTableViewStyle(style()));
     setItemDelegate(new CukeTableItemDelegate(this));
 

@@ -9,4 +9,12 @@ CukeLineEditPrivate::CukeLineEditPrivate(CukeLineEdit *q)
 
 CukeLineEditPrivate::~CukeLineEditPrivate() = default;
 
+void CukeLineEditPrivate::onLineAnimFinished() {
+    Q_Q(CukeLineEdit);
+    if (!_isFocused) {
+        _hasFocusVisible = false;
+        q->update();
+    }
+}
+
 CUKE_NAMESPACE_END(pub)

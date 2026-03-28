@@ -10,12 +10,12 @@
 #include <QResizeEvent>
 #include <QPaintEvent>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToggleSwitchPrivate;
-class CUKE_EXPORT CukeToggleSwitch : public QWidget, public CukeHub {
+class CUKE_EXPORT CukeToggleSwitch : public QWidget, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToggleSwitch)
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
@@ -29,7 +29,7 @@ public:
     ~CukeToggleSwitch() override;
 
     void setIsToggled(bool isToggled);
-    bool getIsToggled() const;
+    bool getIsToggled();
 
 signals:
     void toggled(bool checked);

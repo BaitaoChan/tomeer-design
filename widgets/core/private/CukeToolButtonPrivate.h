@@ -15,6 +15,8 @@ public:
     explicit CukeToolButtonPrivate(CukeToolButton *parent = nullptr);
     ~CukeToolButtonPrivate() override;
 
+    Q_SLOT void onHoverChanged();
+
 private:
     CukeToolButtonStyle *_style = nullptr;
 

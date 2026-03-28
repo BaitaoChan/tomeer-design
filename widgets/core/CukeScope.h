@@ -1,16 +1,16 @@
-#ifndef CUKEHUB_H
-#define CUKEHUB_H
+#ifndef CUKESCOPE_H
+#define CUKESCOPE_H
 #define CUKE_ELEM(OBJECT, TYPE, NAME) static_cast<TYPE *>((OBJECT)->findElem(NAME))
 #include "CukeTheme.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeHubPrivate;
-class CUKE_EXPORT CukeHub {
+class CUKE_EXPORT CukeScope {
     CUKE_DECLARE_DPTR(CukeHub)
 public:
-    explicit CukeHub(QObject *child);
-    virtual ~CukeHub();
+    explicit CukeScope(QObject *child);
+    virtual ~CukeScope();
 
     void setThemeMode(CukeThemeType::ThemeMode mode);
     CukeThemeType::ThemeMode getThemeMode() const;
@@ -26,4 +26,4 @@ protected:
 };
 CUKE_NAMESPACE_END(pub)
 
-#endif // CUKEHUB_H
+#endif // CUKESCOPE_H

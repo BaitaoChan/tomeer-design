@@ -9,12 +9,12 @@
 #include <QLayout>
 #include <QGraphicseffect>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeComboBoxPrivate;
-class CUKE_EXPORT CukeComboBox : public QComboBox, public CukeHub {
+class CUKE_EXPORT CukeComboBox : public QComboBox, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeComboBox)
     CUKE_Q_PROPERTY_DECL(int, RotateAngle)

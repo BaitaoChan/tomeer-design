@@ -15,6 +15,19 @@ public:
 #define CUKE_TYPE_END(CLASS)                                \
 };
 
+CUKE_TYPE_BEGIN(CukeWindowType)
+
+enum WindowState {
+    Normal      = 0x00,
+    Minimized   = 0x01,
+    Maximized   = 0x02,
+    FullScreen  = 0x04
+};
+
+Q_ENUM(WindowState)
+
+CUKE_TYPE_END(CukeWindowType)
+
 CUKE_TYPE_BEGIN(CukeGeometryType)
 enum SideFlag {
     None = 0x00,
@@ -24,6 +37,9 @@ enum SideFlag {
     BottomRight = 0x08,
     All = TopLeft | TopRight | BottomLeft | BottomRight,
 };
+
+Q_ENUM(SideFlag)
+
 CUKE_TYPE_END(CukeGeometryType)
 
 CUKE_TYPE_BEGIN(CukeThemeType)

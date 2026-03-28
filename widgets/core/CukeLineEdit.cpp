@@ -12,9 +12,10 @@ CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, BorderRadius)
 
 CukeLineEdit::CukeLineEdit(QWidget *parent)
     : QLineEdit(parent),
-      CukeHub(this),
+      CukeScope(this),
       _pBorderRadius(6),
       d_ptr(new CukeLineEditPrivate(this)) {
+    Q_D(CukeLineEdit);
     setThemeMode(cTheme->getThemeMode());
 
     setStyle(new CukeLineEditStyle(style()));
@@ -22,80 +23,79 @@ CukeLineEdit::CukeLineEdit(QWidget *parent)
     setAttribute(Qt::WA_TranslucentBackground);
 
     // 边框颜色动画
-    d_ptr->_borderAnim = new QPropertyAnimation(this, "_pBorderColor", this);
-    d_ptr->_borderAnim->setDuration(250);
-    d_ptr->_borderAnim->setEasingCurve(QEasingCurve::InOutSine);
+    d->_borderAnim = new QPropertyAnimation(this, "_pBorderColor", this);
+    d->_borderAnim->setDuration(250);
+    d->_borderAnim->setEasingCurve(QEasingCurve::InOutSine);
 
-    d_ptr->_lineAnim = new QPropertyAnimation(this, QByteArrayLiteral("_pLineHalfWidth"), this);
-    d_ptr->_lineAnim->setDuration(250);
-    d_ptr->_lineAnim->setEasingCurve(QEasingCurve::InOutCubic);
+    d->_lineAnim = new QPropertyAnimation(this, QByteArrayLiteral("_pLineHalfWidth"), this);
+    d->_lineAnim->setDuration(250);
+    d->_lineAnim->setEasingCurve(QEasingCurve::InOutCubic);
 
     setStyleSheet("QLineEdit { border: none; padding-left: 8px; background: transparent; }");
 
-    connect(d_ptr->_borderAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(d_ptr->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(d_ptr->_lineAnim, &QPropertyAnimation::finished, this, [this]() {
-        if (!d_ptr->_isFocused) {
-            d_ptr->_hasFocusVisible = false;
-            update();
-        }
-    });
+    connect(d->_borderAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_lineAnim, &QPropertyAnimation::finished, d, &CukeLineEditPrivate::onLineAnimFinished);
 }
 
 CukeLineEdit::~CukeLineEdit() = default;
 
 void CukeLineEdit::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    CukeHub::onThemeChanged(mode);
+    Q_D(CukeLineEdit);
+    CukeScope::onThemeChanged(mode);
     // 设置文字颜色
     QPalette pal = palette();
     pal.setColor(QPalette::Text, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
     setPalette(pal);
 
-    if (!d_ptr->_isFocused) {
+    if (!d->_isFocused) {
         _pBorderColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::BorderAlpha);
     }
     update();
 }
 
 void CukeLineEdit::focusInEvent(QFocusEvent *event) {
-    d_ptr->_isFocused = true;
-    d_ptr->_hasFocusVisible = true;
-    d_ptr->_borderAnim->stop();
-    d_ptr->_borderAnim->setStartValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::BorderAlpha));
-    d_ptr->_borderAnim->setEndValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::FocusBorder));
-    d_ptr->_borderAnim->start();
+    Q_D(CukeLineEdit);
+    d->_isFocused = true;
+    d->_hasFocusVisible = true;
+    d->_borderAnim->stop();
+    d->_borderAnim->setStartValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::BorderAlpha));
+    d->_borderAnim->setEndValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::FocusBorder));
+    d->_borderAnim->start();
 
-    d_ptr->_lineAnim->stop();
-    d_ptr->_lineAnim->setStartValue(0);
-    d_ptr->_lineAnim->setEndValue(width() / 2);
-    d_ptr->_lineAnim->start();
+    d->_lineAnim->stop();
+    d->_lineAnim->setStartValue(0);
+    d->_lineAnim->setEndValue(width() / 2);
+    d->_lineAnim->start();
 
     QLineEdit::focusInEvent(event);
 }
 
 void CukeLineEdit::focusOutEvent(QFocusEvent *event) {
-    d_ptr->_isFocused = false;
-    d_ptr->_borderAnim->stop();
-    d_ptr->_borderAnim->setStartValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::FocusBorder));
-    d_ptr->_borderAnim->setEndValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::BorderAlpha));
-    d_ptr->_borderAnim->start();
+    Q_D(CukeLineEdit);
+    d->_isFocused = false;
+    d->_borderAnim->stop();
+    d->_borderAnim->setStartValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::FocusBorder));
+    d->_borderAnim->setEndValue(cTheme->getThemeColor(getThemeMode(), CukeThemeType::BorderAlpha));
+    d->_borderAnim->start();
 
-    d_ptr->_lineAnim->stop();
-    d_ptr->_lineAnim->setStartValue(_pLineHalfWidth);
-    d_ptr->_lineAnim->setEndValue(0);
-    d_ptr->_lineAnim->start();
+    d->_lineAnim->stop();
+    d->_lineAnim->setStartValue(_pLineHalfWidth);
+    d->_lineAnim->setEndValue(0);
+    d->_lineAnim->start();
 
     QLineEdit::focusOutEvent(event);
 }
 
 void CukeLineEdit::resizeEvent(QResizeEvent *event) {
+    Q_D(CukeLineEdit);
     QLineEdit::resizeEvent(event);
 
-    if (d_ptr->_isFocused) {
-        d_ptr->_lineAnim->stop();
-        d_ptr->_lineAnim->setStartValue(_pLineHalfWidth);
-        d_ptr->_lineAnim->setEndValue(width() / 2);
-        d_ptr->_lineAnim->start();
+    if (d->_isFocused) {
+        d->_lineAnim->stop();
+        d->_lineAnim->setStartValue(_pLineHalfWidth);
+        d->_lineAnim->setEndValue(width() / 2);
+        d->_lineAnim->start();
     } else {
         _pLineHalfWidth = 0;
         update();
@@ -104,6 +104,7 @@ void CukeLineEdit::resizeEvent(QResizeEvent *event) {
 
 
 void CukeLineEdit::paintEvent(QPaintEvent *event) {
+    Q_D(CukeLineEdit);
     QLineEdit::paintEvent(event);
 
     QPainter p(this);
@@ -128,7 +129,7 @@ void CukeLineEdit::paintEvent(QPaintEvent *event) {
     p.drawRoundedRect(r, _pBorderRadius, _pBorderRadius);
 
     // 绘制底部横线
-    if (d_ptr->_hasFocusVisible) {
+    if (d->_hasFocusVisible) {
         pen.setWidth(3);
         p.setPen(pen);
         int y = height() - 1;

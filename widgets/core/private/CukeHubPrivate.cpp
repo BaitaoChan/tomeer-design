@@ -1,8 +1,8 @@
 #include "CukeHubPrivate.h"
-#include "CukeHub.h"
+#include "CukeScope.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeHubPrivate::CukeHubPrivate(CukeHub *q)
+CukeHubPrivate::CukeHubPrivate(CukeScope *q)
     : q_ptr(q) {
 }
 

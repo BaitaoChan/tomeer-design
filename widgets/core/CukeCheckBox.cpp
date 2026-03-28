@@ -6,36 +6,33 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeCheckBox, qreal, CheckProgress)
 CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
     : QCheckBox(parent),
-      CukeHub(this),
+      CukeScope(this),
       d_ptr(new CukeCheckBoxPrivate(this)) {
+    Q_D(CukeCheckBox);
     setCursor(Qt::PointingHandCursor);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     setMinimumHeight(24);
 
     setText(text);
     // Animation
-    d_ptr->_checkAnim = new QVariantAnimation(this);
-    d_ptr->_checkAnim->setDuration(120);
-    d_ptr->_checkAnim->setEasingCurve(QEasingCurve::OutCubic);
+    d->_checkAnim = new QVariantAnimation(this);
+    d->_checkAnim->setDuration(120);
+    d->_checkAnim->setEasingCurve(QEasingCurve::OutCubic);
 
-    connect(d_ptr->_checkAnim, &QVariantAnimation::valueChanged, this, [this](const QVariant &v) {
+    connect(d->_checkAnim, &QVariantAnimation::valueChanged, this, [this](const QVariant &v) {
         setCheckProgress(v.toReal());
         update();
     });
 
-    connect(this, &QCheckBox::toggled, this, [this](bool on) {
-        d_ptr->_checkAnim->stop();
-        d_ptr->_checkAnim->setStartValue(_pCheckProgress);
-        d_ptr->_checkAnim->setEndValue(on ? 1.0 : 0.0);
-        d_ptr->_checkAnim->start();
-    });
+    connect(this, &QCheckBox::toggled, d, &CukeCheckBoxPrivate::onToggled);
 
     _pCheckProgress = isChecked() ? 1.0 : 0.0;
 }
 
 CukeCheckBox::~CukeCheckBox() = default;
 
-void CukeCheckBox::paintEvent(QPaintEvent *) {
+void CukeCheckBox::paintEvent(QPaintEvent *event) {
+    Q_D(CukeCheckBox);
     QPainter p(this);
     p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 

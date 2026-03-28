@@ -18,7 +18,7 @@ private:
 
 public:
     void setThemeMode(CukeThemeType::ThemeMode Mode);
-    CukeThemeType::ThemeMode getThemeMode() const;
+    CukeThemeType::ThemeMode getThemeMode();
 
     void addThemeColor(CukeThemeType::ThemeMode Mode, CukeThemeType::ThemeColor Color, QColor newColor);
     const QColor& getThemeColor(CukeThemeType::ThemeMode Mode, CukeThemeType::ThemeColor Color);

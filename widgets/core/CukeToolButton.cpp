@@ -16,53 +16,42 @@ CUKE_Q_PROPERTY_IMPL(CukeToolButton, bool, BgColorUsedFlag)
 CUKE_Q_PROPERTY_IMPL(CukeToolButton, CukeGeometryType::SideFlag, SideFlag)
 CukeToolButton::CukeToolButton(QWidget *parent)
     : QToolButton(parent),
-      CukeHub(this),
+      CukeScope(this),
       d_ptr(new CukeToolButtonPrivate(this)) {
-    d_ptr->_style = new CukeToolButtonStyle();
-    setStyle(d_ptr->_style);
+    Q_D(CukeToolButton);
+    d->_style = new CukeToolButtonStyle();
+    setStyle(d->_style);
 
-    d_ptr->_bgAnim = new QPropertyAnimation(this, "_pBgColor", this);
-    d_ptr->_bgAnim->setDuration(250);
-    d_ptr->_bgAnim->setEasingCurve(QEasingCurve::InOutSine);
-    connect(d_ptr->_bgAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&CukeToolButton::update));
+    d->_bgAnim = new QPropertyAnimation(this, "_pBgColor", this);
+    d->_bgAnim->setDuration(250);
+    d->_bgAnim->setEasingCurve(QEasingCurve::InOutSine);
+    connect(d->_bgAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pBorderRadiusChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pBgColorUsedFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pSideFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
-    connect(this, &CukeToolButton::pHoverChanged, this, &CukeToolButton::onHoverChanged);
+    connect(this, &CukeToolButton::pHoverChanged, d, &CukeToolButtonPrivate::onHoverChanged);
     connect(this, &CukeToolButton::pHoverChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pPressedChanged, this, QOverload<>::of(&CukeToolButton::update));
 }
 
 CukeToolButton::~CukeToolButton() = default;
 
-void CukeToolButton::bgColorFrom(const QColor color) const {
-    if (d_ptr->_bgColorFrom) {
-        delete d_ptr->_bgColorFrom;
-        d_ptr->_bgColorFrom = nullptr;
+void CukeToolButton::bgColorFrom(const QColor color) {
+    Q_D(CukeToolButton);
+    if (d->_bgColorFrom) {
+        delete d->_bgColorFrom;
+        d->_bgColorFrom = nullptr;
     }
-    d_ptr->_bgColorFrom = new QColor(color);
+    d->_bgColorFrom = new QColor(color);
 }
 
-void CukeToolButton::bgColorTo(const QColor color) const {
-    if (d_ptr->_bgColorTo) {
-        delete d_ptr->_bgColorTo;
-        d_ptr->_bgColorTo = nullptr;
+void CukeToolButton::bgColorTo(const QColor color) {
+    Q_D(CukeToolButton);
+    if (d->_bgColorTo) {
+        delete d->_bgColorTo;
+        d->_bgColorTo = nullptr;
     }
-    d_ptr->_bgColorTo = new QColor(color);
-}
-
-void CukeToolButton::onHoverChanged() const {
-    if (_pHover) {
-        d_ptr->_bgAnim->stop();
-        d_ptr->_bgAnim->setStartValue(*d_ptr->_bgColorFrom);
-        d_ptr->_bgAnim->setEndValue(*d_ptr->_bgColorTo);
-        d_ptr->_bgAnim->start();
-    } else {
-        d_ptr->_bgAnim->stop();
-        d_ptr->_bgAnim->setStartValue(*d_ptr->_bgColorTo);
-        d_ptr->_bgAnim->setEndValue(*d_ptr->_bgColorFrom);
-        d_ptr->_bgAnim->start();
-    }
+    d->_bgColorTo = new QColor(color);
 }
 
 void CukeToolButton::enterEvent(QEnterEvent *event) {

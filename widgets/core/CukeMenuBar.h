@@ -2,12 +2,12 @@
 #define CUKEMENUBAR_H
 #include <QMenuBar>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeMenuBarPrivate;
-class CUKE_EXPORT CukeMenuBar : public QMenuBar, public CukeHub {
+class CUKE_EXPORT CukeMenuBar : public QMenuBar, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeMenuBar)
 public:

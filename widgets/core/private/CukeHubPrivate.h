@@ -6,11 +6,11 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeHub;
+class CukeScope;
 class CukeHubPrivate {
-    CUKE_DECLARE_QPTR(CukeHub)
+    CUKE_DECLARE_QPTR(CukeScope)
 public:
-    explicit CukeHubPrivate(CukeHub *q);
+    explicit CukeHubPrivate(CukeScope *q);
     ~CukeHubPrivate();
 
 private:

@@ -18,8 +18,10 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : CukeWindow(parent) {
-    setWindowTitle("CukeWidgetsExample");
+    setWindowTitle("CukeWidgets");
     setWindowIcon(QIcon(":/images/Mortis.png"));
+
+
 }
 
 MainWindow::~MainWindow() = default;

@@ -6,8 +6,9 @@ CUKE_Q_PROPERTY_IMPL(CukePushButton, int, BorderRadius)
 
 CukePushButton::CukePushButton(QWidget *parent)
     : QPushButton(parent),
-      CukeHub(this),
+      CukeScope(this),
       d_ptr(new CukePushButtonPrivate(this)) {
+    Q_D(CukePushButton);
     setFlat(true);
     _pBorderRadius = 6;
     setStyleSheet("border: none;");
@@ -22,34 +23,39 @@ CukePushButton::CukePushButton(QString text, QWidget* parent)
 CukePushButton::~CukePushButton() = default;
 
 void CukePushButton::enterEvent(QEnterEvent *event) {
-    d_ptr->_isHovered = true;
+    Q_D(CukePushButton);
+    d->_isHovered = true;
     QPushButton::enterEvent(event);
 }
 
 void CukePushButton::leaveEvent(QEvent* event) {
-    d_ptr->_isHovered = false;
+    Q_D(CukePushButton);
+    d->_isHovered = false;
     QPushButton::leaveEvent(event);
 }
 
 void CukePushButton::mousePressEvent(QMouseEvent* event) {
-    d_ptr->_isPressed = true;
+    Q_D(CukePushButton);
+    d->_isPressed = true;
     QPushButton::mousePressEvent(event);
 }
 
 void CukePushButton::mouseReleaseEvent(QMouseEvent* event) {
-    d_ptr->_isPressed = false;
+    Q_D(CukePushButton);
+    d->_isPressed = false;
     QPushButton::mouseReleaseEvent(event);
 }
 
 void CukePushButton::paintEvent(QPaintEvent* event) {
+    Q_D(CukePushButton);
     Q_UNUSED(event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
     QColor bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
-    if (d_ptr->_isPressed) {
+    if (d->_isPressed) {
         bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha);
-    } else if (d_ptr->_isHovered) {
+    } else if (d->_isHovered) {
         bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha);
     }
 
@@ -57,7 +63,7 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     painter.setPen(Qt::NoPen);
     painter.drawRoundedRect(rect(), _pBorderRadius, _pBorderRadius);
 
-    if (!d_ptr->_isPressed) {
+    if (!d->_isPressed) {
         QPen pen;
         pen.setColor(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
         pen.setWidthF(1.6);
@@ -84,10 +90,10 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     // 用当前的文字颜色
     option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
-    if (d_ptr->_isPressed) {
+    if (d->_isPressed) {
         option.state |= QStyle::State_Sunken;
     }
-    if (d_ptr->_isHovered) {
+    if (d->_isHovered) {
         option.state |= QStyle::State_MouseOver;
     }
 

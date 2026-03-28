@@ -6,7 +6,7 @@ CUKE_Q_PROPERTY_IMPL(CukeLoopedRing, qreal, Angle)
 
 CukeLoopedRing::CukeLoopedRing(QWidget *parent)
     : QWidget(parent),
-      CukeHub(this),
+      CukeScope(this),
       d_ptr(new CukeLoopedRingPrivate(this)) {
     setFixedSize(200, 200);
 

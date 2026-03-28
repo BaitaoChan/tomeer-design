@@ -5,12 +5,12 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToggleButtonPrivate;
-class CUKE_EXPORT CukeToggleButton : public QPushButton, public CukeHub {
+class CUKE_EXPORT CukeToggleButton : public QPushButton, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToggleButton)
 public:
@@ -21,7 +21,7 @@ public:
     void setBorderRadius(int radius);
 
     void setIsToggled(bool isToggled);
-    bool getIsToggled() const;
+    bool getIsToggled();
 
 signals:
     void toggled(bool checked);

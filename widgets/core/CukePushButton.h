@@ -7,12 +7,12 @@
 #include <QPainter>
 #include <QStyleOptionButton>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukePushButtonPrivate;
-class CUKE_EXPORT CukePushButton : public QPushButton, public CukeHub {
+class CUKE_EXPORT CukePushButton : public QPushButton, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukePushButton)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)

@@ -6,7 +6,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeMenuBarStyle::CukeMenuBarStyle(QStyle *style)
     : QProxyStyle(style),
-      CukeHub(this) {
+      CukeScope(this) {
 }
 
 CukeMenuBarStyle::~CukeMenuBarStyle() = default;

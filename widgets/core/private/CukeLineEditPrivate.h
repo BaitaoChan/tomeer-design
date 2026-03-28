@@ -12,6 +12,8 @@ public:
     explicit CukeLineEditPrivate(CukeLineEdit *q);
     ~CukeLineEditPrivate() override;
 
+    Q_SLOT void onLineAnimFinished();
+
 private:
     bool _isFocused = false;
     bool _hasFocusVisible = false;

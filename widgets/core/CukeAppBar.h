@@ -2,12 +2,12 @@
 #define CUKEAPPBAR_H
 #include <QWidget>
 
-#include "CukeHub.h"
+#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBarPrivate;
-class CukeAppBar : public QWidget, public CukeHub {
+class CukeAppBar : public QWidget, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeAppBar)
     CUKE_Q_PROPERTY_DECL(int, AppBarHeight)
@@ -17,6 +17,8 @@ public:
 
 protected:
     void onThemeChanged(CukeThemeType::ThemeMode mode) override;
+
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 };
 

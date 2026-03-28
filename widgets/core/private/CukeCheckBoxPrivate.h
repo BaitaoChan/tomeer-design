@@ -12,6 +12,8 @@ public:
     explicit CukeCheckBoxPrivate(CukeCheckBox *q);
     ~CukeCheckBoxPrivate() override;
 
+    Q_SLOT void onToggled(bool checked);
+
 private:
     QVariantAnimation* _checkAnim = nullptr;
 };

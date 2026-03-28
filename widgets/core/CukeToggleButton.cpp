@@ -4,8 +4,9 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToggleButton::CukeToggleButton(QWidget *parent)
     : QPushButton(parent),
-      CukeHub(this),
+      CukeScope(this),
       d_ptr(new CukeToggleButtonPrivate(this)) {
+    Q_D(CukeToggleButton);
     setFlat(true);
     setStyleSheet("border: none;");
     setCheckable(true);
@@ -19,65 +20,73 @@ CukeToggleButton::CukeToggleButton(const QString &text, QWidget *parent)
 CukeToggleButton::~CukeToggleButton() = default;
 
 void CukeToggleButton::setBorderRadius(const int radius) {
-    d_ptr->_borderRadius = radius;
+    Q_D(CukeToggleButton);
+    d->_borderRadius = radius;
     update();
 }
 
 void CukeToggleButton::setIsToggled(const bool isToggled) {
-    if (d_ptr->_isToggled != isToggled) {
-        d_ptr->_isToggled = isToggled;
-        emit toggled(d_ptr->_isToggled);
+    Q_D(CukeToggleButton);
+    if (d->_isToggled != isToggled) {
+        d->_isToggled = isToggled;
+        emit toggled(d->_isToggled);
         update();
     }
 }
 
-bool CukeToggleButton::getIsToggled() const {
-    return d_ptr->_isToggled;
+bool CukeToggleButton::getIsToggled() {
+    Q_D(CukeToggleButton);
+    return d->_isToggled;
 }
 
 void CukeToggleButton::enterEvent(QEnterEvent *event) {
-    d_ptr->_isHovered = true;
+    Q_D(CukeToggleButton);
+    d->_isHovered = true;
     QPushButton::enterEvent(event);
 }
 
 void CukeToggleButton::leaveEvent(QEvent *event) {
-    d_ptr->_isHovered = false;
+    Q_D(CukeToggleButton);
+    d->_isHovered = false;
     QPushButton::leaveEvent(event);
 }
 
 void CukeToggleButton::mousePressEvent(QMouseEvent *event) {
-    d_ptr->_isPressed = true;
+    Q_D(CukeToggleButton);
+    d->_isPressed = true;
     QPushButton::mousePressEvent(event);
 }
 
 void CukeToggleButton::mouseReleaseEvent(QMouseEvent *event) {
-    d_ptr->_isPressed = false;
+    Q_D(CukeToggleButton);
+    d->_isPressed = false;
     // 点击切换状态
     if (rect().contains(event->pos())) {
-        setIsToggled(!d_ptr->_isToggled);
+        setIsToggled(!d->_isToggled);
     }
     QPushButton::mouseReleaseEvent(event);
 }
 
 void CukeToggleButton::paintEvent(QPaintEvent *event) {
+    Q_D(CukeToggleButton);
     Q_UNUSED(event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
     QColor bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
-    if (d_ptr->_isToggled) {
+    if (d->_isToggled) {
         bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha);
-    } else if (d_ptr->_isPressed) {
+    } else if (d->_isPressed) {
         bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha);
-    } else if (d_ptr->_isHovered) {
+    } else if (d->_isHovered) {
         bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha);
     }
 
     painter.setBrush(bgColor);
     painter.setPen(Qt::NoPen);
-    painter.drawRoundedRect(rect(), d_ptr->_borderRadius, d_ptr->_borderRadius);
+    painter.drawRoundedRect(rect(), d->_borderRadius, d->_borderRadius);
 
-    if (!d_ptr->_isPressed && !d_ptr->_isToggled) {
+    if (!d->_isPressed && !d->_isToggled) {
         QPen pen;
         pen.setColor(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
         pen.setWidthF(1.6);
@@ -87,9 +96,9 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
         QRect r = rect();
 
         painter.drawLine(
-            r.x() + d_ptr->_borderRadius,
+            r.x() + d->_borderRadius,
             r.height() - shadowBorder,
-            r.width() - d_ptr->_borderRadius,
+            r.width() - d->_borderRadius,
             r.height() - shadowBorder
         );
     }
@@ -101,9 +110,9 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     option.iconSize = icon().isNull() ? QSize() : this->iconSize();
     option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
-    if (d_ptr->_isPressed) option.state |= QStyle::State_Sunken;
-    if (d_ptr->_isHovered) option.state |= QStyle::State_MouseOver;
-    if (d_ptr->_isToggled) option.state |= QStyle::State_On;
+    if (d->_isPressed) option.state |= QStyle::State_Sunken;
+    if (d->_isHovered) option.state |= QStyle::State_MouseOver;
+    if (d->_isToggled) option.state |= QStyle::State_On;
 
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
 }

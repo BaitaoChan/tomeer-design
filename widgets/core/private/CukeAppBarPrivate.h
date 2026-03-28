@@ -18,6 +18,13 @@ public:
     explicit CukeAppBarPrivate(CukeAppBar *q);
     ~CukeAppBarPrivate() override;
 
+    Q_SLOT void onWindowIconChanged(const QIcon &icon) const;
+    Q_SLOT void onWindowTitleChanged(const QString& title) const;
+    Q_SLOT void onMinimizeButtonClicked();
+    Q_SLOT void onMaximizeButtonClicked();
+    Q_SLOT void onCloseButtonClicked();
+    Q_SLOT void onHoverChanged();
+
 private:
     QHBoxLayout *_layout = nullptr;
 
