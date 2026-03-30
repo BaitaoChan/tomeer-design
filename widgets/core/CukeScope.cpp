@@ -1,11 +1,11 @@
 #include <QWidget>
 
 #include "CukeScope.h"
-#include "CukeHubPrivate.h"
+#include "CukeScopePrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeScope::CukeScope(QObject *child)
-    : d_ptr(new CukeHubPrivate(this)) {
+    : d_ptr(new CukeScopePrivate(this)) {
     d_ptr->_child = child;
     setThemeMode(cTheme->getThemeMode());
     QObject::connect(cTheme, &CukeTheme::themeModeChanged, child, [this](CukeThemeType::ThemeMode mode) {
@@ -24,31 +24,23 @@ CukeThemeType::ThemeMode CukeScope::getThemeMode() const {
     return d_ptr->_pThemeMode;
 }
 
-void CukeScope::addElem(const QString &name, void *child) const {
-    if (name.isEmpty()) {
-        qCritical() << "[CukeScope] addElem failed: name is empty";
-        return;
-    }
+void CukeScope::addElem(const int key, void *child) const {
     if (!child) {
-        qCritical() << "[CukeScope] addElem failed:" << name << "child pointer is nullptr";
+        qCritical() << "[CukeScope] addElem failed:" << "key =" << key << ", child pointer is nullptr";
         return;
     }
-    if (d_ptr->_children.contains(name)) {
-        qWarning() << "[CukeScope] addElem warning:" << name << "already exists, it will be overwritten";
+    if (d_ptr->_children.contains(key)) {
+        qWarning() << "[CukeScope] addElem warning:" << "key =" << key << "already exists, it will be overwritten";
     }
-    d_ptr->_children.insert(name, child);
+    d_ptr->_children.insert(key, child);
 }
 
-void *CukeScope::findElem(const QString &name) const {
-    if (name.isEmpty()) {
-        qCritical() << "[CukeScope] findElem failed: name is empty";
+void *CukeScope::findElem(const int key) const {
+    if (!d_ptr->_children.contains(key)) {
+        qWarning() << "[CukeScope] findElem warning:" << "key =" << key << "not found";
         return nullptr;
     }
-    if (!d_ptr->_children.contains(name)) {
-        qWarning() << "[CukeScope] findElem warning:" << name << "not found";
-        return nullptr;
-    }
-    return d_ptr->_children.value(name);
+    return d_ptr->_children.value(key);
 }
 
 QList<void *> CukeScope::findElems() const {
@@ -58,12 +50,8 @@ QList<void *> CukeScope::findElems() const {
     return d_ptr->_children.values();
 }
 
-bool CukeScope::hasElem(const QString &name) const {
-    if (name.isEmpty()) {
-        qCritical() << "[CukeScope] hasElem failed: name is empty";
-        return false;
-    }
-    return d_ptr->_children.contains(name);
+bool CukeScope::hasElem(const int key) const {
+    return d_ptr->_children.contains(key);
 }
 
 void CukeScope::onThemeChanged(CukeThemeType::ThemeMode mode) {

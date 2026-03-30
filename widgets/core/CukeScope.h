@@ -1,13 +1,13 @@
 #ifndef CUKESCOPE_H
 #define CUKESCOPE_H
-#define CUKE_ELEM(OBJECT, TYPE, NAME) static_cast<TYPE *>((OBJECT)->findElem(NAME))
+#define CUKE_ELEM(OBJECT, TYPE, KEY) static_cast<TYPE *>((OBJECT)->findElem(KEY))
 #include "CukeTheme.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeHubPrivate;
+class CukeScopePrivate;
 class CUKE_EXPORT CukeScope {
-    CUKE_DECLARE_DPTR(CukeHub)
+    CUKE_DECLARE_DPTR(CukeScope)
 public:
     explicit CukeScope(QObject *child);
     virtual ~CukeScope();
@@ -15,10 +15,10 @@ public:
     void setThemeMode(CukeThemeType::ThemeMode mode);
     CukeThemeType::ThemeMode getThemeMode() const;
 
-    void addElem(const QString &name, void *child) const;
-    void *findElem(const QString &name) const;
+    void addElem(int key, void *child) const;
+    void *findElem(int key) const;
     QList<void *> findElems() const;
-    bool hasElem(const QString &name) const;
+    bool hasElem(int key) const;
 
 
 protected:

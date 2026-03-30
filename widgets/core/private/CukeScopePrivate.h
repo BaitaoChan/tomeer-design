@@ -1,5 +1,5 @@
-#ifndef CUKEHUBPRIVATE_H
-#define CUKEHUBPRIVATE_H
+#ifndef CUKESCOPEPRIVATE_H
+#define CUKESCOPEPRIVATE_H
 #include <QHash>
 
 #include "CukeProperty.h"
@@ -7,18 +7,18 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeScope;
-class CukeHubPrivate {
+class CukeScopePrivate {
     CUKE_DECLARE_QPTR(CukeScope)
 public:
-    explicit CukeHubPrivate(CukeScope *q);
-    ~CukeHubPrivate();
+    explicit CukeScopePrivate(CukeScope *q);
+    ~CukeScopePrivate();
 
 private:
     QObject *_child = nullptr;
     CukeThemeType::ThemeMode _pThemeMode = CukeThemeType::Light;
 
-    QHash<QString, void *> _children;
+    QHash<int, void *> _children;
 };
 CUKE_NAMESPACE_END(pub)
 
-#endif // CUKEHUBPRIVATE_H
+#endif // CUKESCOPEPRIVATE_H

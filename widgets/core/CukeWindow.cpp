@@ -41,6 +41,8 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
     d->setIsDrag(false);
 #ifdef Q_OS_WIN
     const auto pMsg = static_cast<MSG *>(message);
+    // 获取当前窗口的 DPI 缩放倍率
+    const qreal hDpr = windowHandle() ? windowHandle()->devicePixelRatio() : 1.0;
     // 隐藏非客户区
     if (pMsg->message == WM_NCCALCSIZE) {
         if (pMsg->wParam == TRUE) {
@@ -106,20 +108,18 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
         }
 
         // appBar 区域
-        if (hCursor.y > hRect.top - hMargin.top && hCursor.y <= hRect.top - hMargin.top + d->_appBar->getAppBarHeight()) {
+        if (hCursor.y > hRect.top - hMargin.top && hCursor.y <= hRect.top - hMargin.top + d->_appBar->getAppBarHeight() * hDpr) {
             for (const auto &child : d->_appBar->findElems()) {
                 const auto widget = static_cast<QWidget *>(child);
                 if (!widget || !widget->isVisible()) {
                     continue;
                 }
                 // 坐标映射
-                // 获取当前窗口的 DPI 缩放倍率
-                const qreal hDpr = windowHandle() ? windowHandle()->devicePixelRatio() : 1.0;
                 // 获取 widget 左上角在 window 内的位置
                 const QPoint qCursor = widget->mapTo(window(), QPoint(0, 0));
                 const auto qRect = QRect(
                     QPoint(
-                        hRect.left + qRound(qCursor.x() * hDpr),
+                        hRect.left - hMargin.left + qRound(qCursor.x() * hDpr),
                         hRect.top + qRound(qCursor.y() * hDpr)
                     ),
                     QSize(
@@ -129,6 +129,10 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
                 );
                 if (qRect.contains(QPoint(hCursor.x, hCursor.y))) {
                     d->setIsDrag(false);
+                    if (widget == CUKE_ELEM(d->_appBar, CukeToolButton, CukeElemType::MaximizeButton)) {
+                        *result = HTMAXBUTTON;
+                        return true;
+                    }
                     *result = HTCLIENT;
                     return true;
                 }
@@ -138,9 +142,74 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
             return true;
         }
     }
+    // 非客户区光标事件
+    if (pMsg->message == WM_NCMOUSEMOVE) {
+        if (pMsg->wParam == HTMAXBUTTON) {
+            if ((d->_widget = CUKE_ELEM(d->_appBar, CukeToolButton, CukeElemType::MaximizeButton))) {
+                QEvent enterEvent(QEvent::Enter);
+                QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &enterEvent);
+                *result = NULL;
+                return true;
+            }
+        }
+        if (d->_widget) {
+            QEvent leaveEvent(QEvent::Leave);
+            QCoreApplication::sendEvent(static_cast<QWidget *>(d->_widget), &leaveEvent);
+            d->_widget = nullptr;
+            *result = NULL;
+            return true;
+        }
+    }
+    // 客户区光标事件
+    if (pMsg->message == WM_MOUSEMOVE) {
+        if (d->_widget) {
+            QEvent leaveEvent(QEvent::Leave);
+            QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &leaveEvent);
+
+            d->_widget = nullptr;
+        }
+    }
+    if (pMsg->message == WM_NCLBUTTONDOWN) {
+        if (pMsg->wParam == HTMAXBUTTON) {
+            if (d->_widget) {
+                // QCursor::pos() 全局坐标
+                QMouseEvent pressEvent(
+                    QEvent::MouseButtonPress,
+                    static_cast<CukeToolButton *>(d->_widget)->mapFromGlobal(QCursor::pos()),
+                    QCursor::pos(),
+                    Qt::LeftButton,
+                    Qt::LeftButton,
+                    Qt::NoModifier
+                );
+
+                QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &pressEvent);
+
+                *result = NULL;
+                return true;
+            }
+        }
+    }
+    if (pMsg->message == WM_NCLBUTTONUP) {
+        if (pMsg->wParam == HTMAXBUTTON) {
+            if (d->_widget) {
+                QMouseEvent releaseEvent(
+                    QEvent::MouseButtonRelease,
+                    static_cast<CukeToolButton *>(d->_widget)->mapFromGlobal(QCursor::pos()),
+                    QCursor::pos(),
+                    Qt::LeftButton,
+                    Qt::NoButton,
+                    Qt::NoModifier
+                );
+
+                QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &releaseEvent);
+
+                *result = NULL;
+                return true;
+            }
+        }
+    }
     if (pMsg->message == WM_GETMINMAXINFO) {
         const auto info = reinterpret_cast<MINMAXINFO *>(pMsg->lParam);
-        const qreal hDpr = windowHandle() ? windowHandle()->devicePixelRatio() : 1.0;
 
         qreal width = 80;
         for (const auto &child : d->_appBar->findElems()) {

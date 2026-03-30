@@ -15,18 +15,18 @@ public:
 #define CUKE_TYPE_END(CLASS)                                \
 };
 
-CUKE_TYPE_BEGIN(CukeWindowType)
-
-enum WindowState {
-    Normal      = 0x00,
-    Minimized   = 0x01,
-    Maximized   = 0x02,
-    FullScreen  = 0x04
+CUKE_TYPE_BEGIN(CukeElemType)
+enum AppBar {
+    InvalidElem = -1,
+    WindowIcon = 0,
+    WindowTitle,
+    MinimizeButton,
+    MaximizeButton,
+    CloseButton
 };
+Q_ENUM(AppBar)
 
-Q_ENUM(WindowState)
-
-CUKE_TYPE_END(CukeWindowType)
+CUKE_TYPE_END(CukeElemType)
 
 CUKE_TYPE_BEGIN(CukeGeometryType)
 enum SideFlag {

@@ -17,10 +17,9 @@ public:
     ~CukeWindowPrivate() override;
 
 private:
-    QWidget *_widget = nullptr;
-    QVBoxLayout *_layout = nullptr;
     CukeAppBar *_appBar = nullptr;
-    QMainWindow *_window = nullptr;
+
+    void *_widget = nullptr;
 };
 CUKE_NAMESPACE_END(pub)
 

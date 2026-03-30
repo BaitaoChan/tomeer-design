@@ -34,7 +34,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     else
         d->_windowIcon->setVisible(false);
     d->_layout->addWidget(d->_windowIcon);
-    addElem("windowIcon", d->_windowIcon);
+    addElem(CukeElemType::WindowIcon, d->_windowIcon);
     connect(parent, &QMainWindow::windowIconChanged, d, &CukeAppBarPrivate::onWindowIconChanged);
 
     // 标题
@@ -44,7 +44,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     else
         d->_windowTitle->setVisible(false);
     d->_layout->addWidget(d->_windowTitle);
-    addElem("windowTitle", d->_windowTitle);
+    addElem(CukeElemType::WindowTitle, d->_windowTitle);
     connect(parent, &QMainWindow::windowTitleChanged, d, &CukeAppBarPrivate::onWindowTitleChanged);
 
     d->_layout->addStretch();
@@ -62,7 +62,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_minimizeButton);
-    addElem("minimizeButton", d->_minimizeButton);
+    addElem(CukeElemType::MinimizeButton, d->_minimizeButton);
     connect(d->_minimizeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onMinimizeButtonClicked);
 
     // 最大化
@@ -70,7 +70,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_maximizeButton);
-    addElem("maximizeButton", d->_maximizeButton);
+    addElem(CukeElemType::MaximizeButton, d->_maximizeButton);
     connect(d->_maximizeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onMaximizeButtonClicked);
 
     // 关闭
@@ -85,7 +85,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_closeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_closeButton);
-    addElem("closeButton", d->_closeButton);
+    addElem(CukeElemType::CloseButton, d->_closeButton);
     connect(d->_closeButton, &CukeToolButton::pHoverChanged, d, &CukeAppBarPrivate::onHoverChanged);
     connect(d->_closeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onCloseButtonClicked);
     d->_layout->addWidget(d->_container);
