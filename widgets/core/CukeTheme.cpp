@@ -71,13 +71,13 @@ void CukeTheme::initThemeColor() {
     d->_darkThemeColorList[CukeThemeType::Window] = QColor(32, 32, 32);
 
     // 不使能
-    d->_lightThemeColorList[CukeThemeType::Disable] = QColor(0xF5, 0xF5, 0xF5, 60);
+    d->_lightThemeColorList[CukeThemeType::Disable] = QColor(245, 245, 245, 60);
     d->_darkThemeColorList[CukeThemeType::Disable] = QColor(0, 0, 0, 60);
-    d->_lightThemeColorList[CukeThemeType::TextDisable] = QColor(0xB6, 0xB6, 0xB6);
-    d->_darkThemeColorList[CukeThemeType::TextDisable] = QColor(0xA7, 0xA7, 0xA7);
+    d->_lightThemeColorList[CukeThemeType::TextDisable] = QColor(182, 182, 182);
+    d->_darkThemeColorList[CukeThemeType::TextDisable] = QColor(167, 167, 167);
 
     // 透明
-    d->_lightThemeColorList[CukeThemeType::DefaultAlpha] = QColor(160, 160, 160, 32);
+    d->_lightThemeColorList[CukeThemeType::DefaultAlpha] = QColor(160, 160, 160, 64);
     d->_darkThemeColorList[CukeThemeType::DefaultAlpha] = QColor(52, 52, 52, 32);
     d->_lightThemeColorList[CukeThemeType::HoverAlpha] = QColor(255, 255, 255, 128);
     d->_darkThemeColorList[CukeThemeType::HoverAlpha] = QColor(52, 52, 52, 128);
@@ -107,20 +107,14 @@ void CukeTheme::initThemeColor() {
     d->_darkThemeColorList[CukeThemeType::FocusBorder] = QColor(0, 120, 215);
 
     // ToggleSwitch
-    d->_lightThemeColorList[CukeThemeType::ToggleSwitchKnob] = QColor(225, 225, 225, 220);
-    d->_darkThemeColorList[CukeThemeType::ToggleSwitchKnob] = QColor(60, 60, 60, 220);
-    d->_lightThemeColorList[CukeThemeType::ToggleSwitchBorder] = QColor(200, 200, 200);
+    d->_lightThemeColorList[CukeThemeType::ToggleSwitchKnob] = QColor(252, 252, 252);
+    d->_darkThemeColorList[CukeThemeType::ToggleSwitchKnob] = QColor(60, 60, 60);
+    d->_lightThemeColorList[CukeThemeType::ToggleSwitchBorder] = QColor(220, 220, 220);
     d->_darkThemeColorList[CukeThemeType::ToggleSwitchBorder] = QColor(60, 60, 60);
 
     // Slider
     d->_lightThemeColorList[CukeThemeType::SliderHandleBorder] = QColor(200, 200, 200);
     d->_darkThemeColorList[CukeThemeType::SliderHandleBorder] = QColor(60, 60, 60);
-
-    // ShinyText
-    d->_lightThemeColorList[CukeThemeType::ShinyText] = QColor(157, 157, 157);
-    d->_darkThemeColorList[CukeThemeType::ShinyText] = QColor(178, 178, 178);
-    d->_lightThemeColorList[CukeThemeType::Shiny] = QColor(255, 255, 255, 200);
-    d->_darkThemeColorList[CukeThemeType::Shiny] = QColor(255, 255, 255, 250);
 
     // Waveform
     d->_lightThemeColorList[CukeThemeType::WaveformLegendText] = QColor(0, 0, 0);

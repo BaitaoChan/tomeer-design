@@ -20,6 +20,7 @@ enum AppBar {
     InvalidElem = -1,
     WindowIcon = 0,
     WindowTitle,
+    ThemeSwitch,
     MinimizeButton,
     MaximizeButton,
     CloseButton
@@ -109,6 +110,10 @@ enum ThemeColor {
     ComboBoxItem,
 
     Dismiss,
+
+    ThemeSwitchKnobL,
+    ThemeSwitchKnobR,
+    ThemeSwitchBorder,
 
 };
 Q_ENUM(ThemeColor)

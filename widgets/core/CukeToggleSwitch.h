@@ -1,5 +1,5 @@
-#ifndef TOGGLESWITCH_H
-#define TOGGLESWITCH_H
+#ifndef CUKETOGGLESWITCH_H
+#define CUKETOGGLESWITCH_H
 
 #include <QWidget>
 #include <QEvent>
@@ -19,17 +19,19 @@ class CUKE_EXPORT CukeToggleSwitch : public QWidget, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToggleSwitch)
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
-    CUKE_Q_PROPERTY_DECL(QColor, KnobColor)
-    CUKE_Q_PROPERTY_DECL(qreal, KnobDiameter)
-    CUKE_Q_PROPERTY_DECL(qreal, KnobCenterY)
-    CUKE_Q_PROPERTY_DECL(qreal, KnobCenterX)
 
 public:
     explicit CukeToggleSwitch(QWidget *parent = nullptr);
     ~CukeToggleSwitch() override;
 
+    void bgColorFrom(QColor color);
+    void bgColorTo(QColor color);
+
     void setIsToggled(bool isToggled);
     bool getIsToggled();
+
+    void setIcon(const QIcon &icon);
+    QIcon getIcon();
 
 signals:
     void toggled(bool checked);
@@ -43,9 +45,8 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent* event) override;
 
-private slots:
     void onThemeChanged(CukeThemeType::ThemeMode Mode) override;
 };
 CUKE_NAMESPACE_END(pub)
 
-#endif // TOGGLESWITCH_H
+#endif // CUKETOGGLESWITCH_H

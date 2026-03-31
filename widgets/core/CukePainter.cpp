@@ -1,4 +1,5 @@
 #include "CukePainter.h"
+#include "CukeIcon.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_SINGLETON_IMPL(CukePainter)
@@ -46,6 +47,15 @@ void CukePainter::drawRoundedRect(const QRect &rect, QPainter *painter, qreal xR
 
     path.closeSubpath();
     painter->drawPath(path);
+}
+
+void CukePainter::drawIcon(const QPointF &center, QPainter *painter, const QIcon &icon, const QSize &size) {
+    if (!painter || icon.isNull())
+        return;
+
+    painter->drawPixmap(QRect(QPointF(center.x() - size.width() / 2.0,
+                                      center.y() - size.height() / 2.0).toPoint(), size),
+                        icon.pixmap(size));
 }
 
 CUKE_NAMESPACE_END(pub)

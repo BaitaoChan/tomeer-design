@@ -2,7 +2,7 @@
 
 #include <QToolButton>
 #include <QLayout>
-#include <QMenuBar>
+#include "CukeMenuBar.h"
 #include <QToolBar>
 #include <QStatusBar>
 #include <QTextEdit>
@@ -20,8 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     : CukeWindow(parent) {
     setWindowTitle("CukeWidgets");
     setWindowIcon(QIcon(":/images/Mortis.png"));
-
-
 }
 
 MainWindow::~MainWindow() = default;

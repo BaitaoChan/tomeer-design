@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 
     MainWindow w;
     w.show();
-    cTheme->setThemeMode(CukeThemeType::Dark);
+    cTheme->setThemeMode(CukeThemeType::Light);
 
     return app.exec();
 }

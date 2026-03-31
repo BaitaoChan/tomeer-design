@@ -18,6 +18,8 @@ private:
 public:
     inline void drawRoundedRect(const QRect &rect, QPainter *painter, qreal xRadius, qreal yRadius, CukeGeometryType::SideFlag flag = CukeGeometryType::All);
 
+    inline void drawIcon(const QPointF &center, QPainter *painter, const QIcon &icon, const QSize &size = QSize(24, 24));
+
 
 };
 CUKE_NAMESPACE_END(pub)

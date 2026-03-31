@@ -8,6 +8,7 @@
 #include "CukeIcon.h"
 #include "CukeLabel.h"
 #include "CukeToolButton.h"
+#include "CukeToggleSwitch.h"
 #include "CukeWindow.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
@@ -48,6 +49,19 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     connect(parent, &QMainWindow::windowTitleChanged, d, &CukeAppBarPrivate::onWindowTitleChanged);
 
     d->_layout->addStretch();
+
+    // 主题切换
+    d->_themeSwitch = new CukeToggleSwitch(this);
+    d->_themeSwitch->setFixedSize(44, 28);
+    d->_themeSwitch->bgColorFrom(cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
+    d->_themeSwitch->bgColorTo(cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
+    d->_themeSwitch->setIsToggled(!static_cast<bool>(cTheme->getThemeMode()));
+    d->_themeSwitch->setIcon(!static_cast<bool>(cTheme->getThemeMode())
+                                 ? cIcon->getCukeIcon(CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 48)
+                                 : cIcon->getCukeIcon(CukeIconType::WeatherSunny, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 48));
+    d->_layout->addWidget(d->_themeSwitch);
+    addElem(CukeElemType::ThemeSwitch, d->_themeSwitch);
+    connect(d->_themeSwitch, &CukeToggleSwitch::toggled, d, &CukeAppBarPrivate::onThemeSwitchToggled);
 
     d->_container = new QWidget(this);
     d->_containerLayout = new QHBoxLayout(d->_container);
@@ -96,6 +110,10 @@ CukeAppBar::~CukeAppBar() = default;
 void CukeAppBar::onThemeChanged(const CukeThemeType::ThemeMode mode) {
     Q_D(CukeAppBar);
     CukeScope::onThemeChanged(mode);
+    d->_themeSwitch->setIsToggled(!static_cast<bool>(cTheme->getThemeMode()));
+    d->_themeSwitch->setIcon(!static_cast<bool>(cTheme->getThemeMode())
+                                 ? cIcon->getCukeIcon(CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 32)
+                                 : cIcon->getCukeIcon(CukeIconType::WeatherSunny, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 32));
     d->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));

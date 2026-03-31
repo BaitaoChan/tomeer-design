@@ -1,7 +1,9 @@
 #ifndef CUKEAPPBARPRIVATE_H
 #define CUKEAPPBARPRIVATE_H
+#include "CukeAppBarPrivate.h"
 #include "CukeProperty.h"
 #include "CukeType.h"
+
 
 class QHBoxLayout;
 class QVBoxLayout;
@@ -11,6 +13,7 @@ CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBar;
 class CukeLabel;
 class CukeToolButton;
+class CukeToggleSwitch;
 class CukeAppBarPrivate : public QObject {
     Q_OBJECT
     CUKE_DECLARE_QPTR(CukeAppBar)
@@ -20,6 +23,7 @@ public:
 
     Q_SLOT void onWindowIconChanged(const QIcon &icon) const;
     Q_SLOT void onWindowTitleChanged(const QString& title) const;
+    Q_SLOT void onThemeSwitchToggled(bool checked);
     Q_SLOT void onMinimizeButtonClicked();
     Q_SLOT void onMaximizeButtonClicked();
     Q_SLOT void onCloseButtonClicked();
@@ -30,6 +34,8 @@ private:
 
     CukeLabel *_windowTitle = nullptr;
     QLabel *_windowIcon = nullptr;
+
+    CukeToggleSwitch *_themeSwitch = nullptr;
 
     QWidget *_container = nullptr;
     QHBoxLayout *_containerLayout = nullptr;
