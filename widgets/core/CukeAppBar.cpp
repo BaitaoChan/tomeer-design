@@ -50,19 +50,6 @@ CukeAppBar::CukeAppBar(QWidget *parent)
 
     d->_layout->addStretch();
 
-    // 主题切换
-    d->_themeSwitch = new CukeToggleSwitch(this);
-    d->_themeSwitch->setFixedSize(44, 28);
-    d->_themeSwitch->bgColorFrom(cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
-    d->_themeSwitch->bgColorTo(cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
-    d->_themeSwitch->setIsToggled(!static_cast<bool>(cTheme->getThemeMode()));
-    d->_themeSwitch->setIcon(!static_cast<bool>(cTheme->getThemeMode())
-                                 ? cIcon->getCukeIcon(CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 48)
-                                 : cIcon->getCukeIcon(CukeIconType::WeatherSunny, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 48));
-    d->_layout->addWidget(d->_themeSwitch);
-    addElem(CukeElemType::ThemeSwitch, d->_themeSwitch);
-    connect(d->_themeSwitch, &CukeToggleSwitch::toggled, d, &CukeAppBarPrivate::onThemeSwitchToggled);
-
     d->_container = new QWidget(this);
     d->_containerLayout = new QHBoxLayout(d->_container);
     d->_containerLayout->setContentsMargins(0, 0, 0, 0);
@@ -70,6 +57,14 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_containerLayout->setSizeConstraint(QLayout::SetFixedSize);
     d->_container->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     d->_container->setFixedWidth(d->_containerLayout->sizeHint().width());
+
+    // 主题切换
+    d->_themeButton = new CukeToolButton(this);
+    d->_themeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
+    d->_themeButton->setIcon(cIcon->getCukeIcon(getThemeMode() ? CukeIconType::WeatherSunny : CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
+    d->_containerLayout->addWidget(d->_themeButton);
+    addElem(CukeElemType::ThemeButton, d->_themeButton);
+    connect(d->_themeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onThemeButtonClicked);
 
     // 最小化
     d->_minimizeButton = new CukeToolButton(this);
@@ -110,10 +105,7 @@ CukeAppBar::~CukeAppBar() = default;
 void CukeAppBar::onThemeChanged(const CukeThemeType::ThemeMode mode) {
     Q_D(CukeAppBar);
     CukeScope::onThemeChanged(mode);
-    d->_themeSwitch->setIsToggled(!static_cast<bool>(cTheme->getThemeMode()));
-    d->_themeSwitch->setIcon(!static_cast<bool>(cTheme->getThemeMode())
-                                 ? cIcon->getCukeIcon(CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 32)
-                                 : cIcon->getCukeIcon(CukeIconType::WeatherSunny, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 32));
+    d->_themeButton->setIcon(cIcon->getCukeIcon(getThemeMode() ? CukeIconType::WeatherSunny : CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));

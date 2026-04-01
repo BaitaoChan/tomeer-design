@@ -23,7 +23,7 @@ public:
 
     Q_SLOT void onWindowIconChanged(const QIcon &icon) const;
     Q_SLOT void onWindowTitleChanged(const QString& title) const;
-    Q_SLOT void onThemeSwitchToggled(bool checked);
+    Q_SLOT void onThemeButtonClicked();
     Q_SLOT void onMinimizeButtonClicked();
     Q_SLOT void onMaximizeButtonClicked();
     Q_SLOT void onCloseButtonClicked();
@@ -35,11 +35,10 @@ private:
     CukeLabel *_windowTitle = nullptr;
     QLabel *_windowIcon = nullptr;
 
-    CukeToggleSwitch *_themeSwitch = nullptr;
-
     QWidget *_container = nullptr;
     QHBoxLayout *_containerLayout = nullptr;
 
+    CukeToolButton *_themeButton = nullptr;
     CukeToolButton *_minimizeButton = nullptr;
     CukeToolButton *_maximizeButton = nullptr;
     CukeToolButton *_closeButton = nullptr;

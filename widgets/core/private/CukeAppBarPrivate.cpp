@@ -29,9 +29,9 @@ void CukeAppBarPrivate::onWindowTitleChanged(const QString& title) const {
     _windowTitle->setText(title);
 }
 
-void CukeAppBarPrivate::onThemeSwitchToggled(const bool checked) {
+void CukeAppBarPrivate::onThemeButtonClicked() {
     Q_Q(CukeAppBar);
-    if (checked)
+    if (q->getThemeMode())
         cTheme->setThemeMode(CukeThemeType::Light);
     else
         cTheme->setThemeMode(CukeThemeType::Dark);

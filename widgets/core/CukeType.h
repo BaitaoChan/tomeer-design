@@ -20,7 +20,7 @@ enum AppBar {
     InvalidElem = -1,
     WindowIcon = 0,
     WindowTitle,
-    ThemeSwitch,
+    ThemeButton,
     MinimizeButton,
     MaximizeButton,
     CloseButton
