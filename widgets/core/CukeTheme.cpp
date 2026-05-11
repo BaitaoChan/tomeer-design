@@ -15,9 +15,9 @@ CukeTheme::CukeTheme(QObject *parent)
 
 CukeTheme::~CukeTheme() = default;
 
-void CukeTheme::setThemeMode(CukeThemeType::ThemeMode Mode) {
+void CukeTheme::setThemeMode(CukeThemeType::ThemeMode mode) {
     Q_D(CukeTheme);
-    d->_themeMode = Mode;
+    d->_themeMode = mode;
     emit themeModeChanged(d->_themeMode);
 }
 
@@ -26,21 +26,21 @@ CukeThemeType::ThemeMode CukeTheme::getThemeMode() {
     return d->_themeMode;
 }
 
-void CukeTheme::addThemeColor(CukeThemeType::ThemeMode Mode, CukeThemeType::ThemeColor Color, QColor newColor) {
+void CukeTheme::addThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color, QColor newColor) {
     Q_D(CukeTheme);
-    if (Mode == CukeThemeType::Light) {
-        d->_lightThemeColorList[Color] = newColor;
-    } else if (Mode == CukeThemeType::Dark) {
-        d->_darkThemeColorList[Color] = newColor;
+    if (mode == CukeThemeType::Light) {
+        d->_lightThemeColorList[color] = newColor;
+    } else if (mode == CukeThemeType::Dark) {
+        d->_darkThemeColorList[color] = newColor;
     }
 }
 
-const QColor &CukeTheme::getThemeColor(CukeThemeType::ThemeMode Mode, CukeThemeType::ThemeColor Color) {
+const QColor &CukeTheme::getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color) {
     Q_D(CukeTheme);
-    if (Mode == CukeThemeType::Light) {
-        return d->_lightThemeColorList[Color];
-    } else if (Mode == CukeThemeType::Dark) {
-        return d->_darkThemeColorList[Color];
+    if (mode == CukeThemeType::Light) {
+        return d->_lightThemeColorList[color];
+    } else if (mode == CukeThemeType::Dark) {
+        return d->_darkThemeColorList[color];
     }
     return QColor();
 }

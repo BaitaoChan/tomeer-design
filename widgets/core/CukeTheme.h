@@ -17,13 +17,13 @@ private:
     ~CukeTheme() override;
 
 public:
-    void setThemeMode(CukeThemeType::ThemeMode Mode);
+    void setThemeMode(CukeThemeType::ThemeMode mode);
     CukeThemeType::ThemeMode getThemeMode();
 
-    void addThemeColor(CukeThemeType::ThemeMode Mode, CukeThemeType::ThemeColor Color, QColor newColor);
-    const QColor& getThemeColor(CukeThemeType::ThemeMode Mode, CukeThemeType::ThemeColor Color);
+    void addThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color, QColor newColor);
+    const QColor& getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color);
 signals:
-    void themeModeChanged(CukeThemeType::ThemeMode Mode);
+    void themeModeChanged(CukeThemeType::ThemeMode mode);
 
 private:
     void initThemeColor();
