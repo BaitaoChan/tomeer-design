@@ -26,9 +26,9 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
                 painter->setBrush(toolButton->getBgColor());
         } else {
             if (option->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Press));
+                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha));
             else if (option->state & State_MouseOver)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Hover));
+                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha));
         }
         cPainter->drawRoundedRect(option->rect, painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), toolButton->getSideFlag());
         painter->restore();

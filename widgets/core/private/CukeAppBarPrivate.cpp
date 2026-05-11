@@ -76,4 +76,14 @@ void CukeAppBarPrivate::onHoverChanged() {
     }
 }
 
+void CukeAppBarPrivate::onWindowStateChanged() {
+    Q_Q(CukeAppBar);
+    if (q->window()->windowState() & Qt::WindowMaximized)
+        _maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize,
+                                                    cTheme->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
+    else
+        _maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::SquareMultiple,
+                                                    cTheme->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
+}
+
 CUKE_NAMESPACE_END(pub)

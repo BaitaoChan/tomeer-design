@@ -2,6 +2,7 @@
 #include <QLayout>
 #include <QMainWindow>
 #include <QEvent>
+#include <QWindow>
 
 #include "CukeAppBar.h"
 #include "CukeAppBarPrivate.h"
@@ -119,6 +120,13 @@ bool CukeAppBar::eventFilter(QObject *watched, QEvent *event) {
             }
     }
     return QWidget::eventFilter(watched, event);
+}
+
+void CukeAppBar::showEvent(QShowEvent *event) {
+    Q_D(CukeAppBar);
+    QWidget::showEvent(event);
+    if (window()->windowHandle())
+        connect(window()->windowHandle(), &QWindow::windowStateChanged, d, &CukeAppBarPrivate::onWindowStateChanged, Qt::UniqueConnection);
 }
 
 CUKE_NAMESPACE_END(pub)

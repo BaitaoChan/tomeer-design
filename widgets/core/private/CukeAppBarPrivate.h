@@ -28,6 +28,7 @@ public:
     Q_SLOT void onMaximizeButtonClicked();
     Q_SLOT void onCloseButtonClicked();
     Q_SLOT void onHoverChanged();
+    Q_SLOT void onWindowStateChanged();
 
 private:
     QHBoxLayout *_layout = nullptr;

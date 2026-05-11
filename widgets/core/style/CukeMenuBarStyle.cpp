@@ -32,7 +32,7 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
             else if (opt->state & State_Sunken)
                 painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha));
         }
-        painter->drawRoundedRect(opt->rect.adjusted(3, 3, -3, -3), _radius, _radius);
+        painter->drawRoundedRect(opt->rect.adjusted(1, 1, -1, -1), _radius, _radius);
 
         painter->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
         painter->drawText(opt->rect.adjusted(1, 1, -1, -1), Qt::AlignCenter, opt->text);
@@ -49,6 +49,15 @@ void CukeMenuBarStyle::drawComplexControl(ComplexControl control, const QStyleOp
 
 int CukeMenuBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
     return QProxyStyle::pixelMetric(metric, option, widget);
+}
+
+QSize CukeMenuBarStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
+    QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
+    if (type == CT_MenuBarItem) {
+        s.rwidth() -= 16;
+        s.rheight() -= 8;
+    }
+    return s;
 }
 
 CUKE_NAMESPACE_END(pub)

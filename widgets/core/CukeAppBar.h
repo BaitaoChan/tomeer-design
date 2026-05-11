@@ -20,6 +20,8 @@ protected:
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 
+    void showEvent(QShowEvent *event) override;
+
 };
 
 CUKE_NAMESPACE_END(pub)
