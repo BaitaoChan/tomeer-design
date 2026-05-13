@@ -6,6 +6,7 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
+class CukeAppBar;
 class CukeWindowPrivate;
 class CUKE_EXPORT CukeWindow : public QMainWindow, public CukeScope {
     Q_OBJECT
@@ -15,7 +16,7 @@ public:
     explicit CukeWindow(QWidget *parent = nullptr);
     ~CukeWindow() override;
 
-
+    CukeAppBar *appBar();
 
 protected:
     bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result) override;

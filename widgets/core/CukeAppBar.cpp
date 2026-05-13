@@ -25,18 +25,20 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     setGeometry(0, 0, window()->width(), height());
     window()->installEventFilter(this);
 
-    d->_layout = new QHBoxLayout(this);
-    d->_layout->setContentsMargins(8, 0, 0, 0);
-    d->_layout->setAlignment(Qt::AlignVCenter);
+    d->_mainLayout = new QHBoxLayout(this);
+    d->_mainLayout->setContentsMargins(8, 0, 0, 0);
+    d->_mainLayout->setAlignment(Qt::AlignVCenter);
 
     // 图标
     d->_windowIcon = new QLabel(this);
+    d->_windowIcon->setFixedSize(18, 18);
+    d->_windowIcon->setScaledContents(true);
     if (!parent->windowIcon().isNull())
         d->_windowIcon->setPixmap(parent->windowIcon().pixmap(18, 18));
     else
         d->_windowIcon->setVisible(false);
-    d->_layout->addWidget(d->_windowIcon);
-    addElem(CukeElemType::WindowIcon, d->_windowIcon);
+    d->_mainLayout->addWidget(d->_windowIcon);
+    addElem(CukeAppBarType::WindowIcon, d->_windowIcon);
     connect(parent, &QMainWindow::windowIconChanged, d, &CukeAppBarPrivate::onWindowIconChanged);
 
     // 标题
@@ -45,12 +47,27 @@ CukeAppBar::CukeAppBar(QWidget *parent)
         d->_windowTitle->setText(parent->windowTitle());
     else
         d->_windowTitle->setVisible(false);
-    d->_layout->addWidget(d->_windowTitle);
-    addElem(CukeElemType::WindowTitle, d->_windowTitle);
+    d->_mainLayout->addWidget(d->_windowTitle);
+    addElem(CukeAppBarType::WindowTitle, d->_windowTitle);
     connect(parent, &QMainWindow::windowTitleChanged, d, &CukeAppBarPrivate::onWindowTitleChanged);
 
-    d->_layout->addStretch();
+    // 自定义区域
+    d->_widget = new QWidget(this);
+    d->_layout = new QHBoxLayout(d->_widget);
+    d->_layout->setContentsMargins(0, 0, 0, 0);
+    d->_layout->setSpacing(0);
+    d->_mainLayout->addWidget(d->_widget, Qt::AlignVCenter);
 
+    d->_leftLayout = new QHBoxLayout;
+    d->_middleLayout = new QHBoxLayout;
+    d->_rightLayout = new QHBoxLayout;
+    d->_layout->addLayout(d->_leftLayout);
+    d->_layout->addStretch();
+    d->_layout->addLayout(d->_middleLayout);
+    d->_layout->addStretch();
+    d->_layout->addLayout(d->_rightLayout);
+
+    // 容器
     d->_container = new QWidget(this);
     d->_containerLayout = new QHBoxLayout(d->_container);
     d->_containerLayout->setContentsMargins(0, 0, 0, 0);
@@ -64,7 +81,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_themeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_themeButton->setIcon(cIcon->getCukeIcon(getThemeMode() ? CukeIconType::WeatherSunny : CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_themeButton);
-    addElem(CukeElemType::ThemeButton, d->_themeButton);
+    addElem(CukeAppBarType::ThemeButton, d->_themeButton);
     connect(d->_themeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onThemeButtonClicked);
 
     // 最小化
@@ -72,7 +89,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_minimizeButton);
-    addElem(CukeElemType::MinimizeButton, d->_minimizeButton);
+    addElem(CukeAppBarType::MinimizeButton, d->_minimizeButton);
     connect(d->_minimizeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onMinimizeButtonClicked);
 
     // 最大化
@@ -80,7 +97,7 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_maximizeButton);
-    addElem(CukeElemType::MaximizeButton, d->_maximizeButton);
+    addElem(CukeAppBarType::MaximizeButton, d->_maximizeButton);
     connect(d->_maximizeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onMaximizeButtonClicked);
 
     // 关闭
@@ -95,13 +112,27 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_closeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_closeButton);
-    addElem(CukeElemType::CloseButton, d->_closeButton);
+    addElem(CukeAppBarType::CloseButton, d->_closeButton);
     connect(d->_closeButton, &CukeToolButton::pHoverChanged, d, &CukeAppBarPrivate::onHoverChanged);
     connect(d->_closeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onCloseButtonClicked);
-    d->_layout->addWidget(d->_container);
+    d->_mainLayout->addWidget(d->_container);
 }
 
 CukeAppBar::~CukeAppBar() = default;
+
+void CukeAppBar::addCustomWidget(QWidget *widget, CukeAppBarType::CustomArea customArea) {
+    Q_D(CukeAppBar);
+    if (customArea == CukeAppBarType::LeftArea) {
+        d->_leftLayout->addWidget(widget);
+        addElem(CukeAppBarType::LeftWidget, widget);
+    } else if (customArea == CukeAppBarType::MiddleArea) {
+        d->_middleLayout->addWidget(widget);
+        addElem(CukeAppBarType::MiddleWidget, widget);
+    } else if (customArea == CukeAppBarType::RightArea) {
+        d->_rightLayout->addWidget(widget);
+        addElem(CukeAppBarType::RightWidget, widget);
+    }
+}
 
 void CukeAppBar::onThemeChanged(const CukeThemeType::ThemeMode mode) {
     Q_D(CukeAppBar);

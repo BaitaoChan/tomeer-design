@@ -31,10 +31,16 @@ public:
     Q_SLOT void onWindowStateChanged();
 
 private:
-    QHBoxLayout *_layout = nullptr;
+    QHBoxLayout *_mainLayout = nullptr;
 
-    CukeLabel *_windowTitle = nullptr;
     QLabel *_windowIcon = nullptr;
+    CukeLabel *_windowTitle = nullptr;
+
+    QWidget *_widget = nullptr;
+    QHBoxLayout *_layout = nullptr;
+    QHBoxLayout *_leftLayout = nullptr;
+    QHBoxLayout *_middleLayout = nullptr;
+    QHBoxLayout *_rightLayout = nullptr;
 
     QWidget *_container = nullptr;
     QHBoxLayout *_containerLayout = nullptr;

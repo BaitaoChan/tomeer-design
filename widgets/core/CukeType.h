@@ -15,19 +15,29 @@ public:
 #define CUKE_TYPE_END(CLASS)                                \
 };
 
-CUKE_TYPE_BEGIN(CukeElemType)
-enum AppBar {
+CUKE_TYPE_BEGIN(CukeAppBarType)
+enum Elem {
     InvalidElem = -1,
     WindowIcon = 0,
     WindowTitle,
+    LeftWidget,
+    MiddleWidget,
+    RightWidget,
     ThemeButton,
     MinimizeButton,
     MaximizeButton,
     CloseButton
 };
-Q_ENUM(AppBar)
+Q_ENUM(Elem)
 
-CUKE_TYPE_END(CukeElemType)
+enum CustomArea {
+    LeftArea,
+    MiddleArea,
+    RightArea,
+};
+Q_ENUM(CustomArea)
+
+CUKE_TYPE_END(CukeAppBarType)
 
 CUKE_TYPE_BEGIN(CukeGeometryType)
 enum SideFlag {
@@ -38,7 +48,6 @@ enum SideFlag {
     BottomRight = 0x08,
     All = TopLeft | TopRight | BottomLeft | BottomRight,
 };
-
 Q_ENUM(SideFlag)
 
 CUKE_TYPE_END(CukeGeometryType)
@@ -48,7 +57,6 @@ enum ThemeMode {
     Light = 0x0000,
     Dark = 0x0001,
 };
-
 Q_ENUM(ThemeMode)
 
 enum ThemeColor {
@@ -1614,6 +1622,8 @@ enum Glyph {
     ZoomIn = 0xEDD0,
     ZoomOut = 0xEDD1,
 };
+Q_ENUM(Glyph)
+
 CUKE_TYPE_END(CukeIconType)
 
 #endif // CUKETYPE_H

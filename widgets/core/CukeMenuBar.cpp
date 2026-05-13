@@ -9,6 +9,7 @@ CukeMenuBar::CukeMenuBar(QWidget *parent)
       d_ptr(new CukeMenuBarPrivate(this)) {
     Q_D(CukeMenuBar);
     setStyle(new CukeMenuBarStyle(style()));
+    setFixedHeight(24);
 }
 
 CukeMenuBar::~CukeMenuBar() = default;

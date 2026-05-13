@@ -7,13 +7,15 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBarPrivate;
-class CukeAppBar : public QWidget, public CukeScope {
+class CUKE_EXPORT CukeAppBar : public QWidget, public CukeScope {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeAppBar)
     CUKE_Q_PROPERTY_DECL(int, AppBarHeight)
 public:
     explicit CukeAppBar(QWidget *parent = nullptr);
     ~CukeAppBar() override;
+
+    void addCustomWidget(QWidget *widget, CukeAppBarType::CustomArea customArea);
 
 protected:
     void onThemeChanged(CukeThemeType::ThemeMode mode) override;

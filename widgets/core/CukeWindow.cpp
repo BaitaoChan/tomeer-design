@@ -35,6 +35,11 @@ CukeWindow::CukeWindow(QWidget *parent)
 
 CukeWindow::~CukeWindow() = default;
 
+CukeAppBar *CukeWindow::appBar() {
+    Q_D(CukeWindow);
+    return d->_appBar;
+}
+
 bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
     Q_D(CukeWindow);
     d->setIsResize(false);
@@ -129,7 +134,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
                 );
                 if (qRect.contains(QPoint(hCursor.x, hCursor.y))) {
                     d->setIsDrag(false);
-                    if (widget == CUKE_ELEM(d->_appBar, CukeToolButton, CukeElemType::MaximizeButton)) {
+                    if (widget == CUKE_ELEM(d->_appBar, CukeToolButton, CukeAppBarType::MaximizeButton)) {
                         *result = HTMAXBUTTON;
                         return true;
                     }
@@ -145,7 +150,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
     // 非客户区光标事件
     if (pMsg->message == WM_NCMOUSEMOVE) {
         if (pMsg->wParam == HTMAXBUTTON) {
-            if ((d->_widget = CUKE_ELEM(d->_appBar, CukeToolButton, CukeElemType::MaximizeButton))) {
+            if ((d->_widget = CUKE_ELEM(d->_appBar, CukeToolButton, CukeAppBarType::MaximizeButton))) {
                 QEvent enterEvent(QEvent::Enter);
                 QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &enterEvent);
                 *result = NULL;

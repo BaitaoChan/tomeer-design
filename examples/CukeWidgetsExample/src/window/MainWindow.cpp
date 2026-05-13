@@ -16,15 +16,22 @@
 
 #include <QFile>
 
+#include "CukeAppBar.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : CukeWindow(parent) {
     // setWindowTitle("CukeWidgets");
     setWindowIcon(QIcon(":/images/Mortis.png"));
 
     auto menuBar = new CukeMenuBar(this);
-    menuBar->addAction(new QAction("Open"));
-    menuBar->addAction(new QAction("Close"));
-    setMenuBar(menuBar);
+    menuBar->addAction(new QAction("文件"));
+    menuBar->addAction(new QAction("编辑"));
+    menuBar->addAction(new QAction("视图"));
+    menuBar->addAction(new QAction("项目"));
+    menuBar->addAction(new QAction("生成"));
+    menuBar->addAction(new QAction("调试"));
+    menuBar->addAction(new QAction("拓展"));
+    appBar()->addCustomWidget(menuBar, CukeAppBarType::LeftArea);
 }
 
 MainWindow::~MainWindow() = default;
