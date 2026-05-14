@@ -1,6 +1,7 @@
 #include <QStyleoption>
 #include <QPainter>
 
+#include "CukeMenuBar.h"
 #include "CukeMenuBarStyle.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
@@ -54,8 +55,13 @@ int CukeMenuBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option
 QSize CukeMenuBarStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
     QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
     if (type == CT_MenuBarItem) {
-        s.rwidth() -= 16;
-        s.rheight() -= 8;
+        if (const auto opt =
+                qstyleoption_cast<const QStyleOptionMenuItem *>(option)) {
+            if (const auto menuBar = qobject_cast<const QMenuBar *>(widget)) {
+                s.setHeight(menuBar->height());
+                s.setWidth(qRound(QFontMetrics(opt->font).horizontalAdvance(opt->text) + menuBar->height() * 0.8));
+            }
+        }
     }
     return s;
 }
