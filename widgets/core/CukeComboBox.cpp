@@ -12,7 +12,7 @@ CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, RotateAngle)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, LineHalfWidth)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, BorderRadius)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, PopupHeight)
-
+CUKE_Q_PROPERTY_IMPL(CukeComboBox, CukeThemeType::ThemeMode, ThemeMode)
 CUKE_NAMESPACE_BEGIN(pub)
 inline QPainterPath SingleArrow() {
     QPainterPath path;
@@ -39,7 +39,6 @@ CUKE_NAMESPACE_END(pub)
 
 CukeComboBox::CukeComboBox(QWidget *parent)
     : QComboBox(parent),
-      CukeScope(this),
       _pBorderRadius(6),
       d_ptr(new CukeComboBoxPrivate(this)) {
     setStyleSheet(R"(
@@ -68,6 +67,7 @@ CukeComboBox::CukeComboBox(QWidget *parent)
     connect(this, &CukeComboBox::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
     connect(d_ptr->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
     connect(d_ptr->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeComboBox::onThemeChanged);
 
     setMaxVisibleItems(4);
 }
@@ -175,6 +175,7 @@ void CukeComboBox::hidePopup() {
 }
 
 void CukeComboBox::paintEvent(QPaintEvent *event) {
+    Q_D(CukeComboBox);
     QComboBox::paintEvent(event);
 
     QPainter p(this);
@@ -210,6 +211,12 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
     p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
     p.setPen(QPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 1));
     p.drawPath(cuke::pub::SingleArrow());
+}
+
+void CukeComboBox::onThemeChanged(CukeThemeType::ThemeMode mode) {
+    Q_D(CukeComboBox);
+    setThemeMode(mode);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)

@@ -2,11 +2,10 @@
 #define CUKECOMBOBOXSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeScope.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBoxStyle : public QProxyStyle, public CukeScope {
+class CukeComboBoxStyle : public QProxyStyle {
     Q_OBJECT
 public:
     explicit CukeComboBoxStyle(QStyle *style = nullptr);

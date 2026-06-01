@@ -8,15 +8,14 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToolButtonStyle::CukeToolButtonStyle(QStyle *style)
-    : QProxyStyle(style),
-      CukeScope(this) {
+    : QProxyStyle(style) {
 }
 
 CukeToolButtonStyle::~CukeToolButtonStyle() = default;
 
 void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto toolButton = qobject_cast<const CukeToolButton *>(widget);
     if (element == PE_PanelButtonBevel) {
-        const auto toolButton = qobject_cast<const CukeToolButton *>(widget);
         painter->save();
         painter->setPen(Qt::NoPen);
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
@@ -26,9 +25,9 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
                 painter->setBrush(toolButton->getBgColor());
         } else {
             if (option->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha));
+                painter->setBrush(cTheme->getThemeColor(toolButton->getThemeMode(), CukeThemeType::PressAlpha));
             else if (option->state & State_MouseOver)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha));
+                painter->setBrush(cTheme->getThemeColor(toolButton->getThemeMode(), CukeThemeType::HoverAlpha));
         }
         cPainter->drawRoundedRect(option->rect, painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), toolButton->getSideFlag());
         painter->restore();

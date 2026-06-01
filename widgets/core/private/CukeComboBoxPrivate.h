@@ -1,6 +1,7 @@
 #ifndef CUKECOMBOBOXPRIVATE_H
 #define CUKECOMBOBOXPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 class QPropertyAnimation;
 CUKE_NAMESPACE_BEGIN(pub)

@@ -1,6 +1,7 @@
 #ifndef CUKELABELPRIVATE_H
 #define CUKELABELPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeLabel;

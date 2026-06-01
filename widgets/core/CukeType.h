@@ -16,8 +16,8 @@ public:
 };
 
 CUKE_TYPE_BEGIN(CukeAppBarType)
-enum Elem {
-    InvalidElem = -1,
+enum Object {
+    InvalidObject = -1,
     WindowIcon = 0,
     WindowTitle,
     LeftWidget,
@@ -28,7 +28,7 @@ enum Elem {
     MaximizeButton,
     CloseButton
 };
-Q_ENUM(Elem)
+Q_ENUM(Object)
 
 enum CustomArea {
     LeftArea,

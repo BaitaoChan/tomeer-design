@@ -6,8 +6,7 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeMenuBarStyle::CukeMenuBarStyle(QStyle *style)
-    : QProxyStyle(style),
-      CukeScope(this) {
+    : QProxyStyle(style) {
 }
 
 CukeMenuBarStyle::~CukeMenuBarStyle() = default;
@@ -17,6 +16,7 @@ void CukeMenuBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
 }
 
 void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto menuBar = qobject_cast<const CukeMenuBar *>(widget);
     if (element == CE_MenuBarEmptyArea)
         return;
     if (element == CE_MenuBarItem) {
@@ -29,13 +29,13 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
         painter->setPen(Qt::NoPen);
         if (opt->state & State_Enabled) {
             if (opt->state & State_Selected)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha));
+                painter->setBrush(cTheme->getThemeColor(menuBar->getThemeMode(), CukeThemeType::HoverAlpha));
             else if (opt->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha));
+                painter->setBrush(cTheme->getThemeColor(menuBar->getThemeMode(), CukeThemeType::PressAlpha));
         }
         painter->drawRoundedRect(opt->rect.adjusted(1, 1, -1, -1), _radius, _radius);
 
-        painter->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+        painter->setPen(cTheme->getThemeColor(menuBar->getThemeMode(), CukeThemeType::Text));
         painter->drawText(opt->rect.adjusted(1, 1, -1, -1), Qt::AlignCenter, opt->text);
 
         painter->restore();

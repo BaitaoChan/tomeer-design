@@ -2,8 +2,7 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeLineEditStyle::CukeLineEditStyle(QStyle *style)
-    : QProxyStyle(style),
-      CukeScope(this) {
+    : QProxyStyle(style) {
 }
 
 CukeLineEditStyle::~CukeLineEditStyle() = default;

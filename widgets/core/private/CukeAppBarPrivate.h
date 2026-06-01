@@ -12,6 +12,7 @@ class QLabel;
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBar;
 class CukeLabel;
+class CukeObjectMap;
 class CukeToolButton;
 class CukeToggleSwitch;
 class CukeAppBarPrivate : public QObject {
@@ -49,6 +50,8 @@ private:
     CukeToolButton *_minimizeButton = nullptr;
     CukeToolButton *_maximizeButton = nullptr;
     CukeToolButton *_closeButton = nullptr;
+
+    CukeObjectMap *_objectMap = nullptr;
 };
 CUKE_NAMESPACE_END(pub)
 

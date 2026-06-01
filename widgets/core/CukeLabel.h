@@ -5,15 +5,16 @@
 #include <QFont>
 #include <QPainter>
 
-#include "CukeScope.h"
+#include "CukeTheme.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeLabelPrivate;
-class CUKE_EXPORT CukeLabel : public QLabel, public CukeScope {
+class CUKE_EXPORT CukeLabel : public QLabel {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeLabel)
     CUKE_Q_PROPERTY_DECL(QColor, TextColor)
+    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
 public:
     explicit CukeLabel(QWidget *parent = nullptr);
     explicit CukeLabel(const QString &text, QWidget *parent = nullptr);
@@ -22,6 +23,8 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+
+    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

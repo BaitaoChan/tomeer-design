@@ -4,6 +4,7 @@
 #include <QRect>
 
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 class QPropertyAnimation;
 CUKE_NAMESPACE_BEGIN(pub)

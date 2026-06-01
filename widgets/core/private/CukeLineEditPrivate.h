@@ -1,6 +1,7 @@
 #ifndef CUKELINEEDITPRIVATE_H
 #define CUKELINEEDITPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 class QPropertyAnimation;
 CUKE_NAMESPACE_BEGIN(pub)

@@ -1,6 +1,7 @@
 #ifndef CUKEMENUBARPRIVATE_H
 #define CUKEMENUBARPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeMenuBar;

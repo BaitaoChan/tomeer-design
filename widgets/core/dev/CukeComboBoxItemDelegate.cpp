@@ -1,9 +1,9 @@
 #include "CukeComboBoxItemDelegate.h"
+#include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxItemDelegate::CukeComboBoxItemDelegate(QObject *parent)
-    : QStyledItemDelegate(parent),
-      CukeScope(this) {
+    : QStyledItemDelegate(parent) {
 }
 
 CukeComboBoxItemDelegate::~CukeComboBoxItemDelegate() = default;
@@ -18,7 +18,7 @@ void CukeComboBoxItemDelegate::paint(QPainter *painter,
     // 背景
     if (option.state & QStyle::State_Selected) {
         painter->setPen(Qt::NoPen);
-        painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::ComboBoxItem));
+        painter->setBrush(cTheme->getThemeColor(cTheme->getThemeMode(), CukeThemeType::ComboBoxItem));
         painter->drawRoundedRect(r.adjusted(8, 2, -2, -2), 4, 4);
     }
 
@@ -31,7 +31,7 @@ void CukeComboBoxItemDelegate::paint(QPainter *painter,
     }
 
     // 文本
-    painter->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+    painter->setPen(cTheme->getThemeColor(cTheme->getThemeMode(), CukeThemeType::Text));
     painter->drawText(r.adjusted(16, 0, -2, 0), Qt::AlignVCenter | Qt::AlignLeft,
                       index.data(Qt::DisplayRole).toString());
 

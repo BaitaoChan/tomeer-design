@@ -3,11 +3,12 @@
 #include <QStyleOptionComboBox>
 
 #include "CukeComboBoxStyle.h"
+#include "CukeComboBox.h"
+#include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxStyle::CukeComboBoxStyle(QStyle *style)
-    : QProxyStyle(style),
-      CukeScope(this) {
+    : QProxyStyle(style) {
 }
 
 CukeComboBoxStyle::~CukeComboBoxStyle() = default;
@@ -17,6 +18,7 @@ void CukeComboBoxStyle::drawPrimitive(PrimitiveElement element, const QStyleOpti
 }
 
 void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto combo = qobject_cast<const CukeComboBox *>(widget);
     // QFrame
     if (element == CE_ShapedFrame) {
         if (widget && qobject_cast<const QFrame *>(widget)) {
@@ -27,7 +29,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
             // 阴影区域
             QRect r(option->rect.x() + 6, option->rect.y(),
                     option->rect.width() - 12, option->rect.height() - 6);
-            painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::ComboBoxView));
+            painter->setBrush(cTheme->getThemeColor(combo->getThemeMode(), CukeThemeType::ComboBoxView));
             painter->setPen(Qt::NoPen);
             painter->drawRoundedRect(r, _radius, _radius);
             painter->restore();
@@ -40,7 +42,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
                 qstyleoption_cast<const QStyleOptionComboBox *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        painter->setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+        painter->setPen(cTheme->getThemeColor(combo->getThemeMode(), CukeThemeType::Text));
         painter->drawText(
             option->rect.adjusted(8, 0, 0, 0),
             Qt::AlignVCenter | Qt::AlignLeft,
@@ -52,6 +54,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
 }
 
 void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
+    const auto combo = qobject_cast<const CukeComboBox *>(widget);
     if (control == CC_ComboBox) {
         const auto *opt = qstyleoption_cast<const QStyleOptionComboBox *>(option);
         painter->save();
@@ -62,9 +65,9 @@ void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleO
 
         // 背景
         if (opt->state & State_MouseOver)
-            painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha));
+            painter->setBrush(cTheme->getThemeColor(combo->getThemeMode(), CukeThemeType::HoverAlpha));
         else
-            painter->setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
+            painter->setBrush(cTheme->getThemeColor(combo->getThemeMode(), CukeThemeType::DefaultAlpha));
         painter->setPen(Qt::NoPen);
         painter->drawRoundedRect(fr.adjusted(1, 1, -1, -1), _radius, _radius);
 

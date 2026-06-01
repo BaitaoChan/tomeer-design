@@ -5,10 +5,9 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, QColor, BgColor)
-
+CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, CukeThemeType::ThemeMode, ThemeMode)
 CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
     : QWidget(parent),
-      CukeScope(this),
       d_ptr(new CukeToggleSwitchPrivate(this)) {
     Q_D(CukeToggleSwitch);
     d->_pKnobCenterX = -1;
@@ -45,6 +44,7 @@ CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
     connect(d->_moveAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
 
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToggleSwitch::onThemeChanged);
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToggleSwitch::onThemeChanged);
 }
 
 CukeToggleSwitch::~CukeToggleSwitch() = default;
@@ -67,7 +67,7 @@ void CukeToggleSwitch::bgColorTo(const QColor color) {
     d->_bgColorTo = new QColor(color);
 }
 
-void CukeToggleSwitch::onThemeChanged(CukeThemeType::ThemeMode Mode) {
+void CukeToggleSwitch::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeToggleSwitch);
 
     d->_pKnobColor = (getThemeMode() == CukeThemeType::Light) || d->_isToggled
@@ -80,7 +80,8 @@ void CukeToggleSwitch::onThemeChanged(CukeThemeType::ThemeMode Mode) {
                     : d->_bgColorFrom
                           ? *d->_bgColorFrom
                           : cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
-    CukeScope::onThemeChanged(Mode);
+    setThemeMode(mode);
+    update();
 }
 
 void CukeToggleSwitch::setIsToggled(bool isToggled) {

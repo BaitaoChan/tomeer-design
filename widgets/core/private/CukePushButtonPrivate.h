@@ -1,6 +1,7 @@
 #ifndef CUKEPUSHBUTTONPRIVATE_H
 #define CUKEPUSHBUTTONPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukePushButton;

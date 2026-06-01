@@ -1,7 +1,8 @@
 #ifndef CUKEWINDOWPRIVATE_H
 #define CUKEWINDOWPRIVATE_H
-
 #include "CukeProperty.h"
+#include "CukeType.h"
+
 class QVBoxLayout;
 class QMainWindow;
 CUKE_NAMESPACE_BEGIN(pub)
@@ -20,6 +21,8 @@ private:
     CukeAppBar *_appBar = nullptr;
 
     void *_widget = nullptr;
+
+    CukeThemeType::ThemeMode _themeMode = CukeThemeType::Dark;
 };
 CUKE_NAMESPACE_END(pub)
 

@@ -2,23 +2,26 @@
 #define CUKEAPPBAR_H
 #include <QWidget>
 
-#include "CukeScope.h"
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBarPrivate;
-class CUKE_EXPORT CukeAppBar : public QWidget, public CukeScope {
+class CUKE_EXPORT CukeAppBar : public QWidget {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeAppBar)
     CUKE_Q_PROPERTY_DECL(int, AppBarHeight)
+    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
 public:
     explicit CukeAppBar(QWidget *parent = nullptr);
     ~CukeAppBar() override;
 
     void addCustomWidget(QWidget *widget, CukeAppBarType::CustomArea customArea);
 
+    void *object(int key);
+    QList<void *> objects();
 protected:
-    void onThemeChanged(CukeThemeType::ThemeMode mode) override;
+    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 

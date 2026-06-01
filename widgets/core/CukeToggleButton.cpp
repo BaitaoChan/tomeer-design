@@ -1,15 +1,17 @@
 #include "CukeToggleButton.h"
 #include "CukeToggleButtonPrivate.h"
+#include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
+CUKE_Q_PROPERTY_IMPL(CukeToggleButton, CukeThemeType::ThemeMode, ThemeMode)
 CukeToggleButton::CukeToggleButton(QWidget *parent)
     : QPushButton(parent),
-      CukeScope(this),
       d_ptr(new CukeToggleButtonPrivate(this)) {
     Q_D(CukeToggleButton);
     setFlat(true);
     setStyleSheet("border: none;");
     setCheckable(true);
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToggleButton::onThemeChanged);
 }
 
 CukeToggleButton::CukeToggleButton(const QString &text, QWidget *parent)
@@ -115,6 +117,12 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     if (d->_isToggled) option.state |= QStyle::State_On;
 
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
+}
+
+void CukeToggleButton::onThemeChanged(CukeThemeType::ThemeMode mode) {
+    Q_D(CukeToggleButton);
+    setThemeMode(mode);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)

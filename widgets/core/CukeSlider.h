@@ -6,15 +6,16 @@
 #include <QPropertyAnimation>
 #include <QMouseEvent>
 
-#include "CukeScope.h"
+#include "CukeTheme.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeSliderPrivate;
-class CUKE_EXPORT CukeSlider : public QSlider, public CukeScope {
+class CUKE_EXPORT CukeSlider : public QSlider {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeSlider)
     CUKE_Q_PROPERTY_DECL(qreal, HandleDiameter)
+    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
 public:
     explicit CukeSlider(QWidget *parent = nullptr);
     explicit CukeSlider(Qt::Orientation orientation, QWidget *parent = nullptr);
@@ -28,6 +29,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
+
+    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

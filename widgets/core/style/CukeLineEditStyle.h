@@ -2,13 +2,12 @@
 #define CUKELINEEDITSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeScope.h"
+#include "CukeObjectMap.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeLineEditStyle : public QProxyStyle, public CukeScope {
+class CukeLineEditStyle : public QProxyStyle {
     Q_OBJECT
-
 public:
     explicit CukeLineEditStyle(QStyle *style = nullptr);
     ~CukeLineEditStyle() override;

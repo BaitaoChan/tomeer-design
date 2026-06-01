@@ -4,6 +4,7 @@
 #include <QColor>
 
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 class QIcon;
 class QPropertyAnimation;

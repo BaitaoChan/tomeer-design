@@ -2,8 +2,7 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeToolBarStyle::CukeToolBarStyle(QStyle *style)
-    : QProxyStyle(style),
-      CukeScope(this) {
+    : QProxyStyle(style) {
 }
 
 CukeToolBarStyle::~CukeToolBarStyle() = default;

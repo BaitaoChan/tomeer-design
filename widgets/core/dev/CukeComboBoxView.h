@@ -3,11 +3,12 @@
 #include <QListView>
 #include <QPainter>
 
-#include "CukeScope.h"
+#include "CukeObjectMap.h"
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBoxView : public QListView, public CukeScope {
+class CukeComboBoxView : public QListView {
     Q_OBJECT
 public:
     explicit CukeComboBoxView(QWidget *parent = nullptr);
@@ -15,7 +16,7 @@ public:
 
 protected:
     int sizeHintForRow(int row) const override;
-    void onThemeChanged(CukeThemeType::ThemeMode mode) override;
+    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

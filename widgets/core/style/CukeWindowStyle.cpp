@@ -6,8 +6,7 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeWindowStyle::CukeWindowStyle(QStyle *style)
-    : QProxyStyle(style),
-      CukeScope(this) {
+    : QProxyStyle(style) {
 }
 
 CukeWindowStyle::~CukeWindowStyle() = default;

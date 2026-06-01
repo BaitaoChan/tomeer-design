@@ -21,7 +21,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : CukeWindow(parent) {
     // setWindowTitle("CukeWidgets");
-    setWindowIcon(QIcon(":/images/Mortis.png"));
+    setWindowIcon(QIcon(":/images/GreenSun.svg"));
 
     auto menuBar = new CukeMenuBar(this);
     menuBar->addAction(new QAction("文件"));

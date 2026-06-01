@@ -9,14 +9,12 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, QColor, BorderColor)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, LineHalfWidth)
 CUKE_Q_PROPERTY_IMPL(CukeLineEdit, int, BorderRadius)
-
+CUKE_Q_PROPERTY_IMPL(CukeLineEdit, CukeThemeType::ThemeMode, ThemeMode)
 CukeLineEdit::CukeLineEdit(QWidget *parent)
     : QLineEdit(parent),
-      CukeScope(this),
       _pBorderRadius(6),
       d_ptr(new CukeLineEditPrivate(this)) {
     Q_D(CukeLineEdit);
-    setThemeMode(cTheme->getThemeMode());
 
     setStyle(new CukeLineEditStyle(style()));
     setFixedHeight(30);
@@ -36,13 +34,14 @@ CukeLineEdit::CukeLineEdit(QWidget *parent)
     connect(d->_borderAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
     connect(d->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
     connect(d->_lineAnim, &QPropertyAnimation::finished, d, &CukeLineEditPrivate::onLineAnimFinished);
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeLineEdit::onThemeChanged);
 }
 
 CukeLineEdit::~CukeLineEdit() = default;
 
 void CukeLineEdit::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeLineEdit);
-    CukeScope::onThemeChanged(mode);
+    setThemeMode(mode);
     // 设置文字颜色
     QPalette pal = palette();
     pal.setColor(QPalette::Text, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));

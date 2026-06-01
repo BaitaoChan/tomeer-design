@@ -1,6 +1,7 @@
 #ifndef CUKELOOPEDRINGPRIVATE_H
 #define CUKELOOPEDRINGPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 class QPropertyAnimation;
 class QFont;

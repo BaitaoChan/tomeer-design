@@ -10,16 +10,16 @@
 #include <QResizeEvent>
 #include <QPaintEvent>
 
-#include "CukeScope.h"
+#include "CukeTheme.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToggleSwitchPrivate;
-class CUKE_EXPORT CukeToggleSwitch : public QWidget, public CukeScope {
+class CUKE_EXPORT CukeToggleSwitch : public QWidget {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToggleSwitch)
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
-
+    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
 public:
     explicit CukeToggleSwitch(QWidget *parent = nullptr);
     ~CukeToggleSwitch() override;
@@ -45,7 +45,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent* event) override;
 
-    void onThemeChanged(CukeThemeType::ThemeMode Mode) override;
+    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

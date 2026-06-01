@@ -4,9 +4,9 @@
 #include <QStyleOptionButton>
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeCheckBox, qreal, CheckProgress)
+CUKE_Q_PROPERTY_IMPL(CukeCheckBox, CukeThemeType::ThemeMode, ThemeMode)
 CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
     : QCheckBox(parent),
-      CukeScope(this),
       d_ptr(new CukeCheckBoxPrivate(this)) {
     Q_D(CukeCheckBox);
     setCursor(Qt::PointingHandCursor);
@@ -25,6 +25,7 @@ CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
     });
 
     connect(this, &QCheckBox::toggled, d, &CukeCheckBoxPrivate::onToggled);
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeCheckBox::onThemeChanged);
 
     _pCheckProgress = isChecked() ? 1.0 : 0.0;
 }
@@ -113,6 +114,12 @@ void CukeCheckBox::paintEvent(QPaintEvent *event) {
     p.setPen(textColor);
     p.setFont(font());
     p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
+}
+
+void CukeCheckBox::onThemeChanged(CukeThemeType::ThemeMode mode) {
+    Q_D(CukeCheckBox);
+    setThemeMode(mode);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)

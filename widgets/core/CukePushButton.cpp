@@ -3,16 +3,16 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukePushButton, int, BorderRadius)
-
+CUKE_Q_PROPERTY_IMPL(CukePushButton, CukeThemeType::ThemeMode, ThemeMode)
 CukePushButton::CukePushButton(QWidget *parent)
     : QPushButton(parent),
-      CukeScope(this),
       d_ptr(new CukePushButtonPrivate(this)) {
     Q_D(CukePushButton);
     setFlat(true);
     _pBorderRadius = 6;
     setStyleSheet("border: none;");
     connect(this, &CukePushButton::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukePushButton::onThemeChanged);
 }
 
 CukePushButton::CukePushButton(QString text, QWidget* parent)
@@ -98,6 +98,12 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     }
 
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
+}
+
+void CukePushButton::onThemeChanged(CukeThemeType::ThemeMode mode) {
+    Q_D(CukePushButton);
+    setThemeMode(mode);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)

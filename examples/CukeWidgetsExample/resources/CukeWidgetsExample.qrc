@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/Mortis.png</file>
+        <file>images/GreenSun.svg</file>
     </qresource>
 </RCC>

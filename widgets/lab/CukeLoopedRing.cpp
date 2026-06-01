@@ -1,12 +1,12 @@
 #include "CukeLoopedRing.h"
 #include "CukeLoopedRingPrivate.h"
+#include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(lab)
 CUKE_Q_PROPERTY_IMPL(CukeLoopedRing, qreal, Angle)
-
+CUKE_Q_PROPERTY_IMPL(CukeLoopedRing, CukeThemeType::ThemeMode, ThemeMode)
 CukeLoopedRing::CukeLoopedRing(QWidget *parent)
     : QWidget(parent),
-      CukeScope(this),
       d_ptr(new CukeLoopedRingPrivate(this)) {
     setFixedSize(200, 200);
 
@@ -49,6 +49,7 @@ void CukeLoopedRing::exec() const {
 }
 
 void CukeLoopedRing::paintEvent(QPaintEvent *event) {
+    Q_D(CukeLoopedRing);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 

@@ -14,4 +14,4 @@ public:
     ~MainWindow() override;
 };
 
-#endif
+#endif // MAINWINDOW_H

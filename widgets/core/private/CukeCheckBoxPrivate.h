@@ -1,6 +1,7 @@
 #ifndef CUKECHECKBOXPRIVATE_H
 #define CUKECHECKBOXPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 class QVariantAnimation;
 CUKE_NAMESPACE_BEGIN(pub)

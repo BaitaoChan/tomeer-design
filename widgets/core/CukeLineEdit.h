@@ -2,18 +2,18 @@
 #define CUKELINEEDIT_H
 #include <QLineEdit>
 
-#include "CukeScope.h"
+#include "CukeTheme.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeLineEditPrivate;
-class CUKE_EXPORT CukeLineEdit : public QLineEdit, public CukeScope {
+class CUKE_EXPORT CukeLineEdit : public QLineEdit {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeLineEdit)
     CUKE_Q_PROPERTY_DECL(QColor, BorderColor)
     CUKE_Q_PROPERTY_DECL(int, LineHalfWidth)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
-
+    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
 public:
     explicit CukeLineEdit(QWidget *parent = nullptr);
     ~CukeLineEdit() override;
@@ -24,7 +24,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
-    void onThemeChanged(CukeThemeType::ThemeMode mode) override;
+    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

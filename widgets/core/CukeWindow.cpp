@@ -19,9 +19,9 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeWindow, int, BorderRadius)
+CUKE_Q_PROPERTY_IMPL(CukeWindow, CukeThemeType::ThemeMode, ThemeMode)
 CukeWindow::CukeWindow(QWidget *parent)
     : QMainWindow(parent),
-      CukeScope(this),
       d_ptr(new CukeWindowPrivate(this)) {
     d_ptr->_appBar = new CukeAppBar(this);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -30,7 +30,7 @@ CukeWindow::CukeWindow(QWidget *parent)
     resize(1280, 720);
     setStyle(new CukeWindowStyle(style()));
     setStyleSheet("QMainWindow { background: transparent; }");
-
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeWindow::onThemeChanged);
 }
 
 CukeWindow::~CukeWindow() = default;
@@ -114,7 +114,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
 
         // appBar 区域
         if (hCursor.y > hRect.top - hMargin.top && hCursor.y <= hRect.top - hMargin.top + d->_appBar->getAppBarHeight() * hDpr) {
-            for (const auto &child : d->_appBar->findElems()) {
+            for (const auto &child : d->_appBar->objects()) {
                 const auto widget = static_cast<QWidget *>(child);
                 if (!widget || !widget->isVisible()) {
                     continue;
@@ -134,7 +134,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
                 );
                 if (qRect.contains(QPoint(hCursor.x, hCursor.y))) {
                     d->setIsDrag(false);
-                    if (widget == CUKE_ELEM(d->_appBar, CukeToolButton, CukeAppBarType::MaximizeButton)) {
+                    if (widget == static_cast<CukeToolButton *>(d->_appBar->object(CukeAppBarType::MaximizeButton))) {
                         *result = HTMAXBUTTON;
                         return true;
                     }
@@ -150,7 +150,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
     // 非客户区光标事件
     if (pMsg->message == WM_NCMOUSEMOVE) {
         if (pMsg->wParam == HTMAXBUTTON) {
-            if ((d->_widget = CUKE_ELEM(d->_appBar, CukeToolButton, CukeAppBarType::MaximizeButton))) {
+            if ((d->_widget = static_cast<CukeToolButton *>(d->_appBar->object(CukeAppBarType::MaximizeButton)))) {
                 QEvent enterEvent(QEvent::Enter);
                 QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &enterEvent);
                 *result = NULL;
@@ -217,7 +217,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
         const auto info = reinterpret_cast<MINMAXINFO *>(pMsg->lParam);
 
         qreal width = 80;
-        for (const auto &child : d->_appBar->findElems()) {
+        for (const auto &child : d->_appBar->objects()) {
             const auto widget = static_cast<QWidget *>(child);
             width += widget->sizeHint().width();
         }
@@ -237,6 +237,7 @@ void CukeWindow::resizeEvent(QResizeEvent *event) {
 
 
 void CukeWindow::paintEvent(QPaintEvent *event) {
+    Q_D(CukeWindow);
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
@@ -246,6 +247,12 @@ void CukeWindow::paintEvent(QPaintEvent *event) {
     painter.fillPath(path, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Window));
 
     QMainWindow::paintEvent(event);
+}
+
+void CukeWindow::onThemeChanged(CukeThemeType::ThemeMode mode) {
+    Q_D(CukeWindow);
+    setThemeMode(mode);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)

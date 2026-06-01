@@ -2,11 +2,11 @@
 #define CUKEWINDOWSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeScope.h"
+#include "CukeObjectMap.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeWindowStyle : public QProxyStyle, public CukeScope {
+class CukeWindowStyle : public QProxyStyle {
     Q_OBJECT
 public:
     explicit CukeWindowStyle(QStyle *style = nullptr);

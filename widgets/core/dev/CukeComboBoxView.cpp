@@ -1,9 +1,9 @@
 #include "CukeComboBoxView.h"
+#include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeComboBoxView::CukeComboBoxView(QWidget*parent)
-    : QListView(parent),
-      CukeScope(this) {
+    : QListView(parent) {
     setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
     setSelectionMode(SingleSelection);
     setMouseTracking(true);
@@ -20,11 +20,11 @@ int CukeComboBoxView::sizeHintForRow(const int row) const {
 }
 
 void CukeComboBoxView::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    CukeScope::onThemeChanged(mode);
     // 设置文字颜色
     QPalette pal = palette();
-    pal.setColor(QPalette::Text, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+    pal.setColor(QPalette::Text, cTheme->getThemeColor(cTheme->getThemeMode(), CukeThemeType::Text));
     setPalette(pal);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)

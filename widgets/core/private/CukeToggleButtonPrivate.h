@@ -3,6 +3,7 @@
 #include <QColor>
 
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToggleButton;

@@ -2,12 +2,12 @@
 #define CUKETOOLBUTTON_H
 #include <QToolButton>
 
-#include "CukeScope.h"
+#include "CukeTheme.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeToolButtonPrivate;
-class CUKE_EXPORT CukeToolButton : public QToolButton, public CukeScope {
+class CUKE_EXPORT CukeToolButton : public QToolButton {
     Q_OBJECT
     CUKE_DECLARE_DPTR(CukeToolButton)
     CUKE_Q_PROPERTY_DECL(bool, Hover)
@@ -15,6 +15,7 @@ class CUKE_EXPORT CukeToolButton : public QToolButton, public CukeScope {
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
     CUKE_Q_PROPERTY_DECL(bool, BgColorUsedFlag)
+    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
     CUKE_Q_PROPERTY_DECL(CukeGeometryType::SideFlag, SideFlag)
 public:
     explicit CukeToolButton(QWidget *parent = nullptr);
@@ -28,6 +29,8 @@ protected:
     void leaveEvent(QEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+
+    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

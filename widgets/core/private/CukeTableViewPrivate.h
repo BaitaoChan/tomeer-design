@@ -1,6 +1,7 @@
 #ifndef CUKETABLEVIEWPRIVATE_H
 #define CUKETABLEVIEWPRIVATE_H
 #include "CukeProperty.h"
+#include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeTableView;

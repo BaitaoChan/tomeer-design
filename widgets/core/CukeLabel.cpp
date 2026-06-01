@@ -4,12 +4,12 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeLabel, QColor, TextColor)
-
+CUKE_Q_PROPERTY_IMPL(CukeLabel, CukeThemeType::ThemeMode, ThemeMode)
 CukeLabel::CukeLabel(QWidget *parent)
     : QLabel(parent),
-      CukeScope(this),
       d_ptr(new CukeLabelPrivate(this)) {
     setAttribute(Qt::WA_TranslucentBackground);
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeLabel::onThemeChanged);
 }
 
 CukeLabel::CukeLabel(const QString &text, QWidget *parent)
@@ -26,6 +26,7 @@ CukeLabel::CukeLabel(const QString &text, const QColor &color, QWidget *parent)
 CukeLabel::~CukeLabel() = default;
 
 void CukeLabel::paintEvent(QPaintEvent *event) {
+    Q_D(CukeLabel);
     QPainter p(this);
     p.setRenderHint(QPainter::TextAntialiasing, true);
     if (_pTextColor.isValid())
@@ -34,6 +35,12 @@ void CukeLabel::paintEvent(QPaintEvent *event) {
         p.setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
     p.drawText(rect(), alignment(), text());
+}
+
+void CukeLabel::onThemeChanged(CukeThemeType::ThemeMode mode) {
+    Q_D(CukeLabel);
+    setThemeMode(mode);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)

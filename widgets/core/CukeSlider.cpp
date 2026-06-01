@@ -3,10 +3,9 @@
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeSlider, qreal, HandleDiameter)
-
+CUKE_Q_PROPERTY_IMPL(CukeSlider, CukeThemeType::ThemeMode, ThemeMode)
 CukeSlider::CukeSlider(QWidget *parent)
     : QSlider(parent),
-      CukeScope(this),
       d_ptr(new CukeSliderPrivate(this)) {
     Q_D(CukeSlider);
     setOrientation(Qt::Horizontal);
@@ -18,6 +17,7 @@ CukeSlider::CukeSlider(QWidget *parent)
 
     connect(d->_handleDiameterAnimation, &QPropertyAnimation::valueChanged, this,
             QOverload<>::of(&QWidget::update));
+    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeSlider::onThemeChanged);
 }
 
 CukeSlider::CukeSlider(Qt::Orientation orientation, QWidget *parent)
@@ -153,6 +153,12 @@ void CukeSlider::paintEvent(QPaintEvent *event) {
     p.setPen(Qt::NoPen);
     p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Check));
     p.drawEllipse(d->_handleCenter, _pHandleDiameter, _pHandleDiameter);
+}
+
+void CukeSlider::onThemeChanged(CukeThemeType::ThemeMode mode) {
+    Q_D(CukeSlider);
+    setThemeMode(mode);
+    update();
 }
 
 CUKE_NAMESPACE_END(pub)
