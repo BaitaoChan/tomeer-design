@@ -9,7 +9,7 @@
 #include "CukeIcon.h"
 #include "CukeLabel.h"
 #include "CukeObjectMap.h"
-#include "CukeToolButton.h"
+#include "CukeAppBarButton.h"
 #include "CukeToggleSwitch.h"
 #include "CukeWindow.h"
 
@@ -79,31 +79,31 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_container->setFixedWidth(d->_containerLayout->sizeHint().width());
 
     // 主题切换
-    d->_themeButton = new CukeToolButton(this);
+    d->_themeButton = new CukeAppBarButton(this);
     d->_themeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_themeButton->setIcon(cIcon->getCukeIcon(getThemeMode() ? CukeIconType::WeatherSunny : CukeIconType::WeatherMoon, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_themeButton);
     d->_objectMap->add(CukeAppBarType::ThemeButton, d->_themeButton);
-    connect(d->_themeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onThemeButtonClicked);
+    connect(d->_themeButton, &CukeAppBarButton::clicked, d, &CukeAppBarPrivate::onThemeButtonClicked);
 
     // 最小化
-    d->_minimizeButton = new CukeToolButton(this);
+    d->_minimizeButton = new CukeAppBarButton(this);
     d->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_minimizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Subtract, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_minimizeButton);
     d->_objectMap->add(CukeAppBarType::MinimizeButton, d->_minimizeButton);
-    connect(d->_minimizeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onMinimizeButtonClicked);
+    connect(d->_minimizeButton, &CukeAppBarButton::clicked, d, &CukeAppBarPrivate::onMinimizeButtonClicked);
 
     // 最大化
-    d->_maximizeButton = new CukeToolButton(this);
+    d->_maximizeButton = new CukeAppBarButton(this);
     d->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_maximizeButton);
     d->_objectMap->add(CukeAppBarType::MaximizeButton, d->_maximizeButton);
-    connect(d->_maximizeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onMaximizeButtonClicked);
+    connect(d->_maximizeButton, &CukeAppBarButton::clicked, d, &CukeAppBarPrivate::onMaximizeButtonClicked);
 
     // 关闭
-    d->_closeButton = new CukeToolButton(this);
+    d->_closeButton = new CukeAppBarButton(this);
     if (qobject_cast<CukeWindow *>(window())) {
         d->_closeButton->setBorderRadius(qobject_cast<CukeWindow *>(window())->getBorderRadius());
     }
@@ -115,8 +115,8 @@ CukeAppBar::CukeAppBar(QWidget *parent)
     d->_closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text)));
     d->_containerLayout->addWidget(d->_closeButton);
     d->_objectMap->add(CukeAppBarType::CloseButton, d->_closeButton);
-    connect(d->_closeButton, &CukeToolButton::pHoverChanged, d, &CukeAppBarPrivate::onHoverChanged);
-    connect(d->_closeButton, &CukeToolButton::clicked, d, &CukeAppBarPrivate::onCloseButtonClicked);
+    connect(d->_closeButton, &CukeAppBarButton::pHoverChanged, d, &CukeAppBarPrivate::onHoverChanged);
+    connect(d->_closeButton, &CukeAppBarButton::clicked, d, &CukeAppBarPrivate::onCloseButtonClicked);
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeAppBar::onThemeChanged);
     d->_mainLayout->addWidget(d->_container);
 }

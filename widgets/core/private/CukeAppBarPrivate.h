@@ -1,6 +1,5 @@
 #ifndef CUKEAPPBARPRIVATE_H
 #define CUKEAPPBARPRIVATE_H
-#include "CukeAppBarPrivate.h"
 #include "CukeProperty.h"
 #include "CukeType.h"
 
@@ -13,7 +12,7 @@ CUKE_NAMESPACE_BEGIN(pub)
 class CukeAppBar;
 class CukeLabel;
 class CukeObjectMap;
-class CukeToolButton;
+class CukeAppBarButton;
 class CukeToggleSwitch;
 class CukeAppBarPrivate : public QObject {
     Q_OBJECT
@@ -46,10 +45,10 @@ private:
     QWidget *_container = nullptr;
     QHBoxLayout *_containerLayout = nullptr;
 
-    CukeToolButton *_themeButton = nullptr;
-    CukeToolButton *_minimizeButton = nullptr;
-    CukeToolButton *_maximizeButton = nullptr;
-    CukeToolButton *_closeButton = nullptr;
+    CukeAppBarButton *_themeButton = nullptr;
+    CukeAppBarButton *_minimizeButton = nullptr;
+    CukeAppBarButton *_maximizeButton = nullptr;
+    CukeAppBarButton *_closeButton = nullptr;
 
     CukeObjectMap *_objectMap = nullptr;
 };

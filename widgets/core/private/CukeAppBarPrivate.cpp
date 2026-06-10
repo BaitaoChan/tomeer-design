@@ -1,7 +1,7 @@
 #include "CukeAppBarPrivate.h"
 #include "CukeAppBar.h"
 #include "CukeLabel.h"
-#include "CukeToolButton.h"
+#include "CukeAppBarButton.h"
 #include "CukePainter.h"
 #include "CukeIcon.h"
 

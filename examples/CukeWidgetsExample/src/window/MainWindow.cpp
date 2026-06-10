@@ -17,6 +17,7 @@
 #include <QFile>
 
 #include "CukeAppBar.h"
+#include "CukeToolBar.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : CukeWindow(parent) {
@@ -32,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar->addAction(new QAction("调试"));
     menuBar->addAction(new QAction("拓展"));
     appBar()->addCustomWidget(menuBar, CukeAppBarType::LeftArea);
+
+    auto toolBar = new CukeToolBar(this);
+    this->addToolBar(toolBar);
 }
 
 MainWindow::~MainWindow() = default;
