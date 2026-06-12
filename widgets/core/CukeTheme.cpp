@@ -156,9 +156,13 @@ void CukeTheme::initThemeColor() {
     d->_lightThemeColorList[CukeThemeType::ComboBoxItem] = QColor(252, 252, 252);
     d->_darkThemeColorList[CukeThemeType::ComboBoxItem] = QColor(22, 22, 22);
 
-    // ToolButton
+    // AppBarButton
     d->_lightThemeColorList[CukeThemeType::Dismiss] = QColor(232, 17, 35);
     d->_darkThemeColorList[CukeThemeType::Dismiss] = QColor(232, 17, 35);
+
+    // ToolBar
+    d->_lightThemeColorList[CukeThemeType::IndicatorToolBarHandle] = QColor(98, 238, 147);
+    d->_darkThemeColorList[CukeThemeType::IndicatorToolBarHandle] = QColor(98, 238, 147);
 }
 
 CUKE_NAMESPACE_END(pub)

@@ -15,8 +15,9 @@ void CukeApplication::init() {
     QFontDatabase::addApplicationFont(":/CukeGlyphs.ttf");
 
     QFont font("Microsoft YaHei");
-    font.setPixelSize(13);
+    font.setPixelSize(12);
     font.setStyleStrategy(QFont::PreferAntialias);
+    font.setHintingPreference(QFont::PreferFullHinting);
     QApplication::setFont(font);
 }
 

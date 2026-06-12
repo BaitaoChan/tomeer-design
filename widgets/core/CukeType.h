@@ -123,6 +123,8 @@ enum ThemeColor {
     ThemeSwitchKnobR,
     ThemeSwitchBorder,
 
+    IndicatorToolBarHandle,
+
 };
 Q_ENUM(ThemeColor)
 

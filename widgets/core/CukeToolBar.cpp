@@ -1,4 +1,5 @@
 #include "CukeToolBar.h"
+#include "CukeToolBarStyle.h"
 #include "CukeToolBarPrivate.h"
 #include "CukeTheme.h"
 
@@ -6,6 +7,7 @@ CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeToolBar, CukeThemeType::ThemeMode, ThemeMode)
 CukeToolBar::CukeToolBar(QWidget *parent)
     : QToolBar(parent) {
+    setStyle(new CukeToolBarStyle());
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToolBar::onThemeChanged);
 }
 
