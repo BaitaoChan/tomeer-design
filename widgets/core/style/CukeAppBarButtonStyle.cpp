@@ -14,22 +14,22 @@ CukeAppBarButtonStyle::CukeAppBarButtonStyle(QStyle *style)
 CukeAppBarButtonStyle::~CukeAppBarButtonStyle() = default;
 
 void CukeAppBarButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto toolButton = qobject_cast<const CukeAppBarButton *>(widget);
+    const auto appBarButton = qobject_cast<const CukeAppBarButton *>(widget);
     if (element == PE_PanelButtonBevel) {
         painter->save();
         painter->setPen(Qt::NoPen);
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         // 背景
-        if (toolButton->getBgColorUsedFlag()) {
+        if (appBarButton->getBgColorUsedFlag()) {
             if (option->state & State_Sunken || option->state & State_MouseOver)
-                painter->setBrush(toolButton->getBgColor());
+                painter->setBrush(appBarButton->getBgColor());
         } else {
             if (option->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(toolButton->getThemeMode(), CukeThemeType::PressAlpha));
+                painter->setBrush(cTheme->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::PressAlpha));
             else if (option->state & State_MouseOver)
-                painter->setBrush(cTheme->getThemeColor(toolButton->getThemeMode(), CukeThemeType::HoverAlpha));
+                painter->setBrush(cTheme->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::HoverAlpha));
         }
-        cPainter->drawRoundedRect(option->rect, painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), toolButton->getSideFlag());
+        cPainter->drawRoundedRect(option->rect, painter, appBarButton->getBorderRadius(), appBarButton->getBorderRadius(), appBarButton->getSideFlag());
         painter->restore();
         return;
     }

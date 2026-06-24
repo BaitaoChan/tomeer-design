@@ -15,9 +15,9 @@ private:
     explicit CukeIcon(QObject *parent = nullptr);
     ~CukeIcon() override;
 public:
-    QIcon getCukeIcon(CukeIconType::Glyph glyph);
-    QIcon getCukeIcon(CukeIconType::Glyph glyph, QColor color);
-    QIcon getCukeIcon(CukeIconType::Glyph glyph, QColor color, int pixelSize);
+    QIcon getCukeIcon(CukeIconType::Icon glyph);
+    QIcon getCukeIcon(CukeIconType::Icon glyph, QColor color);
+    QIcon getCukeIcon(CukeIconType::Icon glyph, QColor color, int pixelSize);
 };
 
 CUKE_NAMESPACE_END(pub)

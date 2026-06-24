@@ -24,7 +24,7 @@ void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
 
         int _radius, _width, _height, x, y;
         _radius = 1;
-        if (toolBar->rect().width() > toolBar->rect().height()) {
+        if (toolBar->orientation() == Qt::Horizontal) {
             _width = 2, _height = toolBar->rect().height() / 2, x = option->rect.center().x() - _width / 2, y =
                     option->rect.center().y() - _height / 2;
         } else {
@@ -54,12 +54,6 @@ void CukeToolBarStyle::drawComplexControl(ComplexControl control, const QStyleOp
 }
 
 int CukeToolBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
-    // if (metric == PM_ToolBarHandleExtent)
-    //     return 0;
-    if (metric == PM_ToolBarFrameWidth)
-        return 8;
-    // if (metric == PM_ToolBarExtensionExtent)
-    //     return 0;
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 

@@ -8,7 +8,7 @@ CukeIcon::CukeIcon(QObject *parent)
 
 CukeIcon::~CukeIcon() = default;
 
-QIcon CukeIcon::getCukeIcon(CukeIconType::Glyph glyph) {
+QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph) {
     QPixmap pixmap(32, 32);
     pixmap.fill(Qt::transparent);
 
@@ -26,7 +26,7 @@ QIcon CukeIcon::getCukeIcon(CukeIconType::Glyph glyph) {
     return QIcon(pixmap);
 }
 
-QIcon CukeIcon::getCukeIcon(CukeIconType::Glyph glyph, QColor color) {
+QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph, QColor color) {
     QPixmap pixmap(32, 32);
     pixmap.fill(Qt::transparent);
 
@@ -45,7 +45,7 @@ QIcon CukeIcon::getCukeIcon(CukeIconType::Glyph glyph, QColor color) {
     return QIcon(pixmap);
 }
 
-QIcon CukeIcon::getCukeIcon(CukeIconType::Glyph glyph, QColor color, int pixelSize) {
+QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph, QColor color, int pixelSize) {
     QPixmap pixmap(pixelSize, pixelSize);
     pixmap.fill(Qt::transparent);
 

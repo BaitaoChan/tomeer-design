@@ -81,7 +81,7 @@ void CukeTheme::initThemeColor() {
     d->_darkThemeColorList[CukeThemeType::DefaultAlpha] = QColor(52, 52, 52, 32);
     d->_lightThemeColorList[CukeThemeType::HoverAlpha] = QColor(232, 232, 232, 128);
     d->_darkThemeColorList[CukeThemeType::HoverAlpha] = QColor(52, 52, 52, 128);
-    d->_lightThemeColorList[CukeThemeType::PressAlpha] = QColor(255, 255, 255, 200);
+    d->_lightThemeColorList[CukeThemeType::PressAlpha] = QColor(232, 232, 232, 200);
     d->_darkThemeColorList[CukeThemeType::PressAlpha] = QColor(52, 52, 52, 200);
     d->_lightThemeColorList[CukeThemeType::CheckAlpha] = QColor(0, 103, 192, 170);
     d->_darkThemeColorList[CukeThemeType::CheckAlpha] = QColor(0, 103, 192, 170);

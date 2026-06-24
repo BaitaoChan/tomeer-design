@@ -131,7 +131,7 @@ Q_ENUM(ThemeColor)
 CUKE_TYPE_END(CukeThemeType)
 
 CUKE_TYPE_BEGIN(CukeIconType)
-enum Glyph {
+enum Icon {
     None = 0x0,
     AccessTime = 0xE800,
     Accessibility = 0xE801,
@@ -1624,7 +1624,7 @@ enum Glyph {
     ZoomIn = 0xEDD0,
     ZoomOut = 0xEDD1,
 };
-Q_ENUM(Glyph)
+Q_ENUM(Icon)
 
 CUKE_TYPE_END(CukeIconType)
 

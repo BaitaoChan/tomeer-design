@@ -2,7 +2,6 @@
 #define CUKELINEEDITSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeObjectMap.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
