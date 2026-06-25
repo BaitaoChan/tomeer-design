@@ -1,3 +1,6 @@
+#include <QStyleOption>
+#include <QPainter>
+
 #include "CukeToolBar.h"
 #include "CukeToolBarStyle.h"
 #include "CukeToolBarPrivate.h"
@@ -8,6 +11,7 @@ CUKE_Q_PROPERTY_IMPL(CukeToolBar, CukeThemeType::ThemeMode, ThemeMode)
 CukeToolBar::CukeToolBar(QWidget *parent)
     : QToolBar(parent) {
     setStyle(new CukeToolBarStyle());
+    setAttribute(Qt::WA_TranslucentBackground);
     setOrientation(Qt::Horizontal);
     setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
     // 文字图标高度一致
@@ -16,6 +20,10 @@ CukeToolBar::CukeToolBar(QWidget *parent)
 }
 
 CukeToolBar::~CukeToolBar() = default;
+
+void CukeToolBar::paintEvent(QPaintEvent *event) {
+    QToolBar::paintEvent(event);
+}
 
 void CukeToolBar::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeToolBar);

@@ -16,6 +16,8 @@ public:
     ~CukeToolBar() override;
 
 protected:
+    void paintEvent(QPaintEvent *event) override;
+
     virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)

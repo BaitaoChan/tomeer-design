@@ -161,8 +161,12 @@ void CukeTheme::initThemeColor() {
     d->_darkThemeColorList[CukeThemeType::Dismiss] = QColor(232, 17, 35);
 
     // ToolBar
-    d->_lightThemeColorList[CukeThemeType::IndicatorToolBarHandle] = QColor(98, 238, 147);
-    d->_darkThemeColorList[CukeThemeType::IndicatorToolBarHandle] = QColor(98, 238, 147);
+    d->_lightThemeColorList[CukeThemeType::ToolBarHandle] = QColor(98, 238, 147);
+    d->_darkThemeColorList[CukeThemeType::ToolBarHandle] = QColor(98, 238, 147);
+    d->_lightThemeColorList[CukeThemeType::ToolBarBorder] = QColor(98, 238, 147);
+    d->_darkThemeColorList[CukeThemeType::ToolBarBorder] = QColor(98, 238, 147);
+    d->_lightThemeColorList[CukeThemeType::ToolBarBg] = QColor(248, 248, 248);
+    d->_darkThemeColorList[CukeThemeType::ToolBarBg] = QColor(42, 42, 42);
 }
 
 CUKE_NAMESPACE_END(pub)
