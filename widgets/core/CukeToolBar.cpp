@@ -22,6 +22,16 @@ CukeToolBar::CukeToolBar(QWidget *parent)
 CukeToolBar::~CukeToolBar() = default;
 
 void CukeToolBar::paintEvent(QPaintEvent *event) {
+    if (isFloating()) {
+        QPainter p(this);
+        QStyleOptionToolBar opt;
+        initStyleOption(&opt);
+        // ToolBar 区域
+        opt.rect = style()->subElementRect(QStyle::SE_ToolBarHandle, &opt, this);
+        style()->drawControl(QStyle::CE_ToolBar, &opt, &p, this);
+        style()->drawPrimitive(QStyle::PE_IndicatorToolBarHandle, &opt, &p, this);
+        return;
+    }
     QToolBar::paintEvent(event);
 }
 
