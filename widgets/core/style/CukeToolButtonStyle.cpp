@@ -38,9 +38,7 @@ void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption
     if (element == CE_ToolButtonLabel) {
         const auto opt = qstyleoption_cast<const QStyleOptionToolButton *>(option);
         painter->save();
-        painter->setRenderHints(QPainter::Antialiasing
-                                | QPainter::TextAntialiasing
-                                | QPainter::SmoothPixmapTransform);
+        painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         painter->setPen(cTheme->getThemeColor(toolButton->getThemeMode(), CukeThemeType::Text));
         painter->setBrush(cTheme->getThemeColor(toolButton->getThemeMode(), CukeThemeType::Text));
         // 文字图标绘制
@@ -50,8 +48,6 @@ void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption
             painter->drawText(opt->rect.adjusted(1, 1, -1, 0), Qt::AlignCenter, opt->text);
         }
         if (opt->toolButtonStyle == Qt::ToolButtonIconOnly) {
-            if (toolButton->getIconType() != CukeIconType::None) {
-            }
             QPoint center = opt->rect.center() - QPoint(opt->iconSize.width() / 2, opt->iconSize.height() / 2);
             QRect iRect(center, opt->iconSize);
 
