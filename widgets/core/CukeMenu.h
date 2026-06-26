@@ -12,6 +12,7 @@ class CUKE_EXPORT CukeMenu : public QMenu {
     CUKE_DECLARE_DPTR(CukeMenu)
 public:
     explicit CukeMenu(QWidget* parent = nullptr);
+    explicit CukeMenu(const QString &title, QWidget *parent = nullptr);
     ~CukeMenu() override;
 };
 

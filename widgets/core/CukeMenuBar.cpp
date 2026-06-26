@@ -13,7 +13,10 @@ CukeMenuBar::CukeMenuBar(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeMenuBar::onThemeChanged);
 }
 
-CukeMenuBar::~CukeMenuBar() = default;
+CukeMenuBar::~CukeMenuBar() {
+    Q_D(CukeMenuBar);
+    delete this->style();
+}
 
 void CukeMenuBar::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeMenuBar);

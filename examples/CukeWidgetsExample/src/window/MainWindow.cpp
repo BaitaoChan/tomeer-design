@@ -16,6 +16,7 @@
 #include <QFile>
 
 #include "CukeIcon.h"
+#include "CukeMenu.h"
 #include "CukeAppBar.h"
 #include "CukeMenuBar.h"
 #include "CukeToolBar.h"
@@ -52,6 +53,10 @@ MainWindow::MainWindow(QWidget *parent)
     toolButton4->setText("评论");
     toolButton4->setIcon(QIcon());
     toolButton4->setIconType(CukeIconType::CommentAdd);
+    auto *menu = new CukeMenu(this);
+    menu->addAction(new QAction("样例"));
+    toolButton4->setMenu(menu);
+    toolButton4->setPopupMode(QToolButton::InstantPopup);
     toolBar->addWidget(toolButton1);
     toolBar->addWidget(toolButton2);
     toolBar->addWidget(toolButton3);

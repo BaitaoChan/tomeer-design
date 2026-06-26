@@ -19,8 +19,7 @@ CukeAppBarButton::CukeAppBarButton(QWidget *parent)
     : QToolButton(parent),
       d_ptr(new CukeAppBarButtonPrivate(this)) {
     Q_D(CukeAppBarButton);
-    d->_style = new CukeAppBarButtonStyle();
-    setStyle(d->_style);
+    setStyle(new CukeAppBarButtonStyle());
 
     d->_bgAnim = new QPropertyAnimation(this, "_pBgColor", this);
     d->_bgAnim->setDuration(250);
@@ -35,7 +34,10 @@ CukeAppBarButton::CukeAppBarButton(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeAppBarButton::onThemeChanged);
 }
 
-CukeAppBarButton::~CukeAppBarButton() = default;
+CukeAppBarButton::~CukeAppBarButton() {
+    Q_D(CukeAppBarButton);
+    delete this->style();
+}
 
 void CukeAppBarButton::bgColorFrom(const QColor color) {
     Q_D(CukeAppBarButton);

@@ -18,8 +18,6 @@ public:
     Q_SLOT void onHoverChanged();
 
 private:
-    CukeAppBarButtonStyle *_style = nullptr;
-
     QPropertyAnimation *_bgAnim = nullptr;
     QColor *_bgColorFrom = nullptr;
     QColor *_bgColorTo = nullptr;

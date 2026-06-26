@@ -13,8 +13,7 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     : QToolButton(parent),
       d_ptr(new CukeToolButtonPrivate(this)) {
     Q_D(CukeToolButton);
-    d->_style = new CukeToolButtonStyle();
-    setStyle(d->_style);
+    setStyle(new CukeToolButtonStyle());
     setBorderRadius(4);
 
     connect(this, &CukeToolButton::pBorderRadiusChanged, this, QOverload<>::of(&CukeToolButton::update));
@@ -22,7 +21,10 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToolButton::onThemeChanged);
 }
 
-CukeToolButton::~CukeToolButton() = default;
+CukeToolButton::~CukeToolButton() {
+    Q_D(CukeToolButton);
+    delete this->style();
+}
 
 void CukeToolButton::setIconType(CukeIconType::Icon pIconType) {
     if (_pIconType != pIconType) {

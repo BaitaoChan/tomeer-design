@@ -9,8 +9,10 @@
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeToolBar, CukeThemeType::ThemeMode, ThemeMode)
 CukeToolBar::CukeToolBar(QWidget *parent)
-    : QToolBar(parent) {
-    setStyle(new CukeToolBarStyle());
+    : QToolBar(parent),
+      d_ptr(new CukeToolBarPrivate(this)) {
+    Q_D(CukeToolBar);
+    setStyle(new CukeToolBarStyle(style()));
     setAttribute(Qt::WA_TranslucentBackground);
     setOrientation(Qt::Horizontal);
     setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
@@ -19,7 +21,10 @@ CukeToolBar::CukeToolBar(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToolBar::onThemeChanged);
 }
 
-CukeToolBar::~CukeToolBar() = default;
+CukeToolBar::~CukeToolBar() {
+    Q_D(CukeToolBar);
+    delete this->style();
+}
 
 void CukeToolBar::paintEvent(QPaintEvent *event) {
     if (isFloating()) {

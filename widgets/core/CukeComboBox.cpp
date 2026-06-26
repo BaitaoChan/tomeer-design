@@ -41,6 +41,7 @@ CukeComboBox::CukeComboBox(QWidget *parent)
     : QComboBox(parent),
       _pBorderRadius(6),
       d_ptr(new CukeComboBoxPrivate(this)) {
+    Q_D(CukeComboBox);
     setStyleSheet(R"(
         QComboBox::drop-down { border: none; background: transparent; }
         QComboBox QAbstractItemView { background: transparent; border: none; }
@@ -72,7 +73,10 @@ CukeComboBox::CukeComboBox(QWidget *parent)
     setMaxVisibleItems(4);
 }
 
-CukeComboBox::~CukeComboBox() = default;
+CukeComboBox::~CukeComboBox() {
+    Q_D(CukeComboBox);
+    delete this->style();
+}
 
 void CukeComboBox::showPopup() {
     // 禁用原生绘制

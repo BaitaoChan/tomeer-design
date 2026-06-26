@@ -23,7 +23,8 @@ CUKE_Q_PROPERTY_IMPL(CukeWindow, CukeThemeType::ThemeMode, ThemeMode)
 CukeWindow::CukeWindow(QWidget *parent)
     : QMainWindow(parent),
       d_ptr(new CukeWindowPrivate(this)) {
-    d_ptr->_appBar = new CukeAppBar(this);
+    Q_D(CukeWindow);
+    d->_appBar = new CukeAppBar(this);
     setAttribute(Qt::WA_TranslucentBackground);
     // 保留窗口系统功能
     setWindowFlags(Qt::Window | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::WindowSystemMenuHint);
@@ -33,7 +34,10 @@ CukeWindow::CukeWindow(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeWindow::onThemeChanged);
 }
 
-CukeWindow::~CukeWindow() = default;
+CukeWindow::~CukeWindow() {
+    Q_D(CukeWindow);
+    delete this->style();
+}
 
 CukeAppBar *CukeWindow::appBar() {
     Q_D(CukeWindow);

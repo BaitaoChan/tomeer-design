@@ -15,7 +15,6 @@ CukeLineEdit::CukeLineEdit(QWidget *parent)
       _pBorderRadius(6),
       d_ptr(new CukeLineEditPrivate(this)) {
     Q_D(CukeLineEdit);
-
     setStyle(new CukeLineEditStyle(style()));
     setFixedHeight(30);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -37,7 +36,10 @@ CukeLineEdit::CukeLineEdit(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeLineEdit::onThemeChanged);
 }
 
-CukeLineEdit::~CukeLineEdit() = default;
+CukeLineEdit::~CukeLineEdit() {
+    Q_D(CukeLineEdit);
+    delete this->style();
+}
 
 void CukeLineEdit::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeLineEdit);
