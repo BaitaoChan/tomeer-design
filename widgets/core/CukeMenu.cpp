@@ -6,19 +6,15 @@ CUKE_NAMESPACE_BEGIN(pub)
 CukeMenu::CukeMenu(QWidget *parent)
     : QMenu(parent),
       d_ptr(new CukeMenuPrivate(this)) {
-    Q_D(CukeMenu);
+    // 确保应用基本样式
+    ensurePolished();
     setStyle(new CukeMenuStyle(style()));
 }
 
 CukeMenu::CukeMenu(const QString &title, QWidget *parent)
-    : QMenu(title, parent),
-      d_ptr(new CukeMenuPrivate(this)) {
-    Q_D(CukeMenu);
-    setStyle(new CukeMenuStyle(style()));
+    : CukeMenu(parent) {
+    setTitle(title);
 }
 
-CukeMenu::~CukeMenu() {
-    Q_D(CukeMenu);
-    delete this->style();
-}
+CukeMenu::~CukeMenu() = default;
 CUKE_NAMESPACE_END(pub)

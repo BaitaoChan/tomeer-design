@@ -36,10 +36,7 @@ CukeLineEdit::CukeLineEdit(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeLineEdit::onThemeChanged);
 }
 
-CukeLineEdit::~CukeLineEdit() {
-    Q_D(CukeLineEdit);
-    delete this->style();
-}
+CukeLineEdit::~CukeLineEdit() = default;
 
 void CukeLineEdit::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeLineEdit);

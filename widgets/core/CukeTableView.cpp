@@ -27,10 +27,7 @@ CukeTableView::CukeTableView(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeTableView::onThemeChanged);
 }
 
-CukeTableView::~CukeTableView() {
-    Q_D(CukeTableView);
-    delete this->style();
-}
+CukeTableView::~CukeTableView() = default;
 
 void CukeTableView::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeTableView);

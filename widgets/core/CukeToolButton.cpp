@@ -21,10 +21,7 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToolButton::onThemeChanged);
 }
 
-CukeToolButton::~CukeToolButton() {
-    Q_D(CukeToolButton);
-    delete this->style();
-}
+CukeToolButton::~CukeToolButton() = default;
 
 void CukeToolButton::setIconType(CukeIconType::Icon pIconType) {
     if (_pIconType != pIconType) {

@@ -21,10 +21,7 @@ CukeToolBar::CukeToolBar(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToolBar::onThemeChanged);
 }
 
-CukeToolBar::~CukeToolBar() {
-    Q_D(CukeToolBar);
-    delete this->style();
-}
+CukeToolBar::~CukeToolBar() = default;
 
 void CukeToolBar::paintEvent(QPaintEvent *event) {
     if (isFloating()) {

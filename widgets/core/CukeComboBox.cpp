@@ -73,10 +73,7 @@ CukeComboBox::CukeComboBox(QWidget *parent)
     setMaxVisibleItems(4);
 }
 
-CukeComboBox::~CukeComboBox() {
-    Q_D(CukeComboBox);
-    delete this->style();
-}
+CukeComboBox::~CukeComboBox() = default;
 
 void CukeComboBox::showPopup() {
     // 禁用原生绘制

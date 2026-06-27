@@ -34,10 +34,7 @@ CukeAppBarButton::CukeAppBarButton(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeAppBarButton::onThemeChanged);
 }
 
-CukeAppBarButton::~CukeAppBarButton() {
-    Q_D(CukeAppBarButton);
-    delete this->style();
-}
+CukeAppBarButton::~CukeAppBarButton() = default;
 
 void CukeAppBarButton::bgColorFrom(const QColor color) {
     Q_D(CukeAppBarButton);

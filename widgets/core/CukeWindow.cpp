@@ -34,10 +34,7 @@ CukeWindow::CukeWindow(QWidget *parent)
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeWindow::onThemeChanged);
 }
 
-CukeWindow::~CukeWindow() {
-    Q_D(CukeWindow);
-    delete this->style();
-}
+CukeWindow::~CukeWindow() = default;
 
 CukeAppBar *CukeWindow::appBar() {
     Q_D(CukeWindow);
