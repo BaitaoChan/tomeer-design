@@ -15,8 +15,11 @@ public:
     explicit CukeToolButtonPrivate(CukeToolButton *parent = nullptr);
     ~CukeToolButtonPrivate() override;
 
+    Q_SLOT void onMenuShow();
+    Q_SLOT void onMenuHide();
+
 private:
-    CukeToolButtonStyle *_style = nullptr;
+    QPropertyAnimation *_rotateAnim = nullptr;
 };
 CUKE_NAMESPACE_END(pub)
 
