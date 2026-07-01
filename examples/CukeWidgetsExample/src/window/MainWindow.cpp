@@ -21,6 +21,7 @@
 #include "CukeMenuBar.h"
 #include "CukeToolBar.h"
 #include "CukeToolButton.h"
+#include "CukeComboBox.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : CukeWindow(parent) {
@@ -63,6 +64,15 @@ MainWindow::MainWindow(QWidget *parent)
     toolBar->addWidget(toolButton3);
     toolBar->addWidget(toolButton4);
     this->addToolBar(toolBar);
+
+    auto center = new QWidget();
+    setCentralWidget(center);
+
+    auto *layout = new QHBoxLayout(center);
+    auto combo = new CukeComboBox(this);
+    combo->setFixedSize(60, 30);
+    combo->addItems({"一号", "二号", "三号"});
+    layout->addWidget(combo);
 }
 
 MainWindow::~MainWindow() = default;

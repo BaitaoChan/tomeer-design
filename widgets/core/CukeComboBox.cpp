@@ -6,14 +6,14 @@
 #include "CukeComboBoxView.h"
 #include "CukeComboBoxPrivate.h"
 
-#define CUKE_COMBOBOX_POPUP_ANIM_MODE 0
+#define CUKE_COMBOBOX_POPUP_ANIM_MODE 1
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, RotateAngle)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, LineHalfWidth)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, BorderRadius)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, PopupHeight)
 CUKE_Q_PROPERTY_IMPL(CukeComboBox, CukeThemeType::ThemeMode, ThemeMode)
-CUKE_NAMESPACE_BEGIN(pub)
+CUKE_NAMESPACE_END(pub)
 inline QPainterPath SingleArrow() {
     QPainterPath path;
 
@@ -35,7 +35,7 @@ inline QPainterPath SingleArrow() {
     return path;
 }
 
-CUKE_NAMESPACE_END(pub)
+CUKE_NAMESPACE_BEGIN(pub)
 
 CukeComboBox::CukeComboBox(QWidget *parent)
     : QComboBox(parent),
@@ -53,21 +53,21 @@ CukeComboBox::CukeComboBox(QWidget *parent)
     setView(view);
     setStyle(new CukeComboBoxStyle(style()));
     view->setSelectionMode(QAbstractItemView::SingleSelection);
-    d_ptr->_rotateAnim = new QPropertyAnimation(this, "_pRotateAngle", this);
-    d_ptr->_rotateAnim->setDuration(300);
-    d_ptr->_rotateAnim->setEasingCurve(QEasingCurve::InOutSine);
+    d->_rotateAnim = new QPropertyAnimation(this, "_pRotateAngle", this);
+    d->_rotateAnim->setDuration(300);
+    d->_rotateAnim->setEasingCurve(QEasingCurve::InOutSine);
 
-    d_ptr->_lineAnim = new QPropertyAnimation(this, "_pLineHalfWidth", this);
-    d_ptr->_lineAnim->setDuration(300);
-    d_ptr->_lineAnim->setEasingCurve(QEasingCurve::InOutCubic);
+    d->_lineAnim = new QPropertyAnimation(this, "_pLineHalfWidth", this);
+    d->_lineAnim->setDuration(300);
+    d->_lineAnim->setEasingCurve(QEasingCurve::InOutCubic);
 
-    d_ptr->_heightAnim = new QPropertyAnimation(this, "_pPopupHeight", this);
-    d_ptr->_heightAnim->setDuration(300);
-    d_ptr->_heightAnim->setEasingCurve(QEasingCurve::InOutCubic);
+    d->_heightAnim = new QPropertyAnimation(this, "_pPopupHeight", this);
+    d->_heightAnim->setDuration(300);
+    d->_heightAnim->setEasingCurve(QEasingCurve::InOutCubic);
 
     connect(this, &CukeComboBox::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
-    connect(d_ptr->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(d_ptr->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
     connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeComboBox::onThemeChanged);
 
     setMaxVisibleItems(4);
@@ -76,11 +76,12 @@ CukeComboBox::CukeComboBox(QWidget *parent)
 CukeComboBox::~CukeComboBox() = default;
 
 void CukeComboBox::showPopup() {
+    Q_D(CukeComboBox);
     // 禁用原生绘制
     qApp->setEffectEnabled(Qt::UI_AnimateCombo, false);
     QComboBox::showPopup();
     qApp->setEffectEnabled(Qt::UI_AnimateCombo, qApp->isEffectEnabled(Qt::UI_AnimateCombo));
-    QWidget* container = this->findChild<QFrame*>();
+    QWidget *container = this->findChild<QFrame *>();
     if (count() == 0 || !container)
         return;
 
@@ -109,19 +110,20 @@ void CukeComboBox::showPopup() {
 #endif
 
     // 箭头向上
-    d_ptr->_rotateAnim->stop();
-    d_ptr->_rotateAnim->setStartValue(_pRotateAngle);
-    d_ptr->_rotateAnim->setEndValue(-180);
-    d_ptr->_rotateAnim->start();
+    d->_rotateAnim->stop();
+    d->_rotateAnim->setStartValue(_pRotateAngle);
+    d->_rotateAnim->setEndValue(-180);
+    d->_rotateAnim->start();
 
     // 焦点展开
-    d_ptr->_lineAnim->stop();
-    d_ptr->_lineAnim->setStartValue(0);
-    d_ptr->_lineAnim->setEndValue((rect().right() - rect().left() - 8) / 2.0);
-    d_ptr->_lineAnim->start();
+    d->_lineAnim->stop();
+    d->_lineAnim->setStartValue(0);
+    d->_lineAnim->setEndValue((rect().right() - rect().left() - 8) / 2.0);
+    d->_lineAnim->start();
 }
 
 void CukeComboBox::hidePopup() {
+    Q_D(CukeComboBox);
     QWidget *container = this->findChild<QFrame *>();
     if (!container)
         return;
@@ -163,16 +165,16 @@ void CukeComboBox::hidePopup() {
 
 #endif
     // 箭头向下
-    d_ptr->_rotateAnim->stop();
-    d_ptr->_rotateAnim->setStartValue(_pRotateAngle);
-    d_ptr->_rotateAnim->setEndValue(0);
-    d_ptr->_rotateAnim->start();
+    d->_rotateAnim->stop();
+    d->_rotateAnim->setStartValue(_pRotateAngle);
+    d->_rotateAnim->setEndValue(0);
+    d->_rotateAnim->start();
 
     // 焦点收起
-    d_ptr->_lineAnim->stop();
-    d_ptr->_lineAnim->setStartValue(_pLineHalfWidth);
-    d_ptr->_lineAnim->setEndValue(0);
-    d_ptr->_lineAnim->start();
+    d->_lineAnim->stop();
+    d->_lineAnim->setStartValue(_pLineHalfWidth);
+    d->_lineAnim->setEndValue(0);
+    d->_lineAnim->start();
 }
 
 void CukeComboBox::paintEvent(QPaintEvent *event) {
@@ -211,7 +213,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
                                       rect().height() / 2.0 / 1024.0), true);
     p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
     p.setPen(QPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 1));
-    p.drawPath(cuke::pub::SingleArrow());
+    p.drawPath(SingleArrow());
 }
 
 void CukeComboBox::onThemeChanged(CukeThemeType::ThemeMode mode) {

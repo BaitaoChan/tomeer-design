@@ -18,7 +18,11 @@ void CukeComboBoxStyle::drawPrimitive(PrimitiveElement element, const QStyleOpti
 }
 
 void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto combo = qobject_cast<const CukeComboBox *>(widget);
+    const CukeComboBox *combo = nullptr;
+    for (const QWidget *w = widget; w; w = w->parentWidget()) {
+        combo = qobject_cast<const CukeComboBox *>(w);
+        if (combo) break;
+    }
     // QFrame
     if (element == CE_ShapedFrame) {
         if (widget && qobject_cast<const QFrame *>(widget)) {
@@ -38,8 +42,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
     }
 
     if (element == CE_ComboBoxLabel) {
-        const auto opt =
-                qstyleoption_cast<const QStyleOptionComboBox *>(option);
+        const auto opt = qstyleoption_cast<const QStyleOptionComboBox *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
         painter->setPen(cTheme->getThemeColor(combo->getThemeMode(), CukeThemeType::Text));
@@ -54,9 +57,9 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
 }
 
 void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
-    const auto combo = qobject_cast<const CukeComboBox *>(widget);
     if (control == CC_ComboBox) {
         const auto *opt = qstyleoption_cast<const QStyleOptionComboBox *>(option);
+        const auto combo = qobject_cast<const CukeComboBox *>(widget);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
         int _radius = 6;
