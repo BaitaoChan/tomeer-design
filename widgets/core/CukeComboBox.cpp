@@ -133,7 +133,7 @@ void CukeComboBox::hidePopup() {
     heightAnim->setStartValue(container->height());
     heightAnim->setEndValue(1);
     heightAnim->setDuration(350);
-    heightAnim->setEasingCurve(QEasingCurve::InCubic);
+    heightAnim->setEasingCurve(QEasingCurve::OutCubic);
 
     connect(heightAnim, &QPropertyAnimation::valueChanged, this,
             [=](const QVariant &h) {
@@ -187,16 +187,18 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
     // 底部横线
     p.setPen(Qt::NoPen);
     p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
-    p.drawRect(QRectF(rect().left() + 4,
-                      rect().bottom() * 0.82,
-                      rect().right() - rect().left() - 8,
-                      2));
+    p.drawRoundedRect(QRectF(rect().left() + 4,
+                             rect().bottom() * 0.9,
+                             rect().right() - rect().left() - 8,
+                             2),
+                      2,
+                      2);
 
     // 焦点指示
     p.setPen(Qt::NoPen);
     p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Check));
     p.drawRoundedRect(QRectF(rect().left() + 4 + (rect().right() - rect().left() - 8) / 2.0 - _pLineHalfWidth,
-                             rect().bottom() * 0.82,
+                             rect().bottom() * 0.9,
                              _pLineHalfWidth * 2,
                              3),
                       2,

@@ -26,7 +26,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
     // QFrame
     if (element == CE_ShapedFrame) {
         if (widget && qobject_cast<const QFrame *>(widget)) {
-            int _radius = 6;
+            int radius = 6;
             painter->save();
             painter->setRenderHints(QPainter::Antialiasing);
 
@@ -35,7 +35,7 @@ void CukeComboBoxStyle::drawControl(ControlElement element, const QStyleOption *
                     option->rect.width() - 12, option->rect.height() - 6);
             painter->setBrush(cTheme->getThemeColor(combo->getThemeMode(), CukeThemeType::ComboBoxView));
             painter->setPen(Qt::NoPen);
-            painter->drawRoundedRect(r, _radius, _radius);
+            painter->drawRoundedRect(r, radius, radius);
             painter->restore();
         }
         return;
@@ -62,7 +62,7 @@ void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleO
         const auto combo = qobject_cast<const CukeComboBox *>(widget);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        int _radius = 6;
+        int radius = 6;
         const QRect fr = subControlRect(
             CC_ComboBox, opt, SC_ComboBoxFrame, widget);
 
@@ -72,7 +72,7 @@ void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleO
         else
             painter->setBrush(cTheme->getThemeColor(combo->getThemeMode(), CukeThemeType::DefaultAlpha));
         painter->setPen(Qt::NoPen);
-        painter->drawRoundedRect(fr.adjusted(1, 1, -1, -1), _radius, _radius);
+        painter->drawRoundedRect(fr.adjusted(1, 1, -1, -1), radius, radius);
 
         painter->restore();
         return;

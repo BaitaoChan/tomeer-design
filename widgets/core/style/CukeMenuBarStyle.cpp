@@ -20,7 +20,7 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
     if (element == CE_MenuBarEmptyArea)
         return;
     if (element == CE_MenuBarItem) {
-        int _radius = 4;
+        int radius = 4;
         const auto opt =
                 qstyleoption_cast<const QStyleOptionMenuItem *>(option);
         painter->save();
@@ -33,7 +33,7 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
             else if (opt->state & State_Sunken)
                 painter->setBrush(cTheme->getThemeColor(menuBar->getThemeMode(), CukeThemeType::PressAlpha));
         }
-        painter->drawRoundedRect(opt->rect.adjusted(1, 1, -1, -1), _radius, _radius);
+        painter->drawRoundedRect(opt->rect.adjusted(1, 1, -1, -1), radius, radius);
 
         painter->setPen(cTheme->getThemeColor(menuBar->getThemeMode(), CukeThemeType::Text));
         painter->drawText(opt->rect.adjusted(1, 1, -1, -1), Qt::AlignCenter, opt->text);

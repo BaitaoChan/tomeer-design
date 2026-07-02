@@ -22,18 +22,18 @@ void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
         painter->setPen(Qt::NoPen);
         painter->setBrush(QBrush(cTheme->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarHandle)));
 
-        int _radius, _width, _height, x, y;
-        _radius = 1;
+        int radius, width, height, x, y;
+        radius = 1;
         if (toolBar->orientation() == Qt::Horizontal) {
-            _width = 2, _height = toolBar->rect().height() / 2, x = option->rect.center().x() - _width / 2, y =
-                    option->rect.center().y() - _height / 2;
+            width = 2, height = toolBar->rect().height() / 2, x = option->rect.center().x() - width / 2, y =
+                    option->rect.center().y() - height / 2;
         } else {
-            _width = toolBar->rect().width() / 2, _height = 2, x = option->rect.center().x() - _width / 2, y =
-                    option->rect.center().y() - _height / 2;
+            width = toolBar->rect().width() / 2, height = 2, x = option->rect.center().x() - width / 2, y =
+                    option->rect.center().y() - height / 2;
         }
 
-        cPainter->drawRoundedRect(QRect(x, y, _width, _height),
-                                  painter, _radius, _radius, CukeGeometryType::All);
+        cPainter->drawRoundedRect(QRect(x, y, width, height),
+                                  painter, radius, radius, CukeGeometryType::All);
         painter->restore();
         return;
     }
@@ -49,10 +49,10 @@ void CukeToolBarStyle::drawControl(ControlElement element, const QStyleOption *o
         painter->setRenderHints(QPainter::Antialiasing);
         if (toolBar && toolBar->isFloating()) {
             // 悬浮
-            int _radius = 4;
+            int radius = 4;
             painter->setPen(Qt::NoPen);
             painter->setBrush(cTheme->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarBg));
-            painter->drawRoundedRect(toolBar->rect(), _radius, _radius);
+            painter->drawRoundedRect(toolBar->rect(), radius, radius);
         } else {
             // 停靠
         }
