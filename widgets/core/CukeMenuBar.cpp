@@ -11,6 +11,7 @@ CukeMenuBar::CukeMenuBar(QWidget *parent)
     setStyle(new CukeMenuBarStyle(style()));
     setFixedHeight(24);
     connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeMenuBar::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
 CukeMenuBar::~CukeMenuBar() = default;

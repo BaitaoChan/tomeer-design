@@ -25,6 +25,7 @@ CukeTableView::CukeTableView(QWidget *parent)
     setShowGrid(false);
     setAlternatingRowColors(false);
     connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeTableView::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
 CukeTableView::~CukeTableView() = default;

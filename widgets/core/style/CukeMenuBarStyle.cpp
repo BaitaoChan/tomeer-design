@@ -29,13 +29,13 @@ void CukeMenuBarStyle::drawControl(ControlElement element, const QStyleOption *o
         painter->setPen(Qt::NoPen);
         if (opt->state & State_Enabled) {
             if (opt->state & State_Selected)
-                painter->setBrush(CUKE_THEME->getThemeColor(menuBar->getThemeMode(), CukeThemeType::HoverAlpha));
+                painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::HoverAlpha));
             else if (opt->state & State_Sunken)
-                painter->setBrush(CUKE_THEME->getThemeColor(menuBar->getThemeMode(), CukeThemeType::PressAlpha));
+                painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::PressAlpha));
         }
         painter->drawRoundedRect(opt->rect.adjusted(1, 1, -1, -1), radius, radius);
 
-        painter->setPen(CUKE_THEME->getThemeColor(menuBar->getThemeMode(), CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(CukeThemeType::Text));
         painter->drawText(opt->rect.adjusted(1, 1, -1, -1), Qt::AlignCenter, opt->text);
 
         painter->restore();

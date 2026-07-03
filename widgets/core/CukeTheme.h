@@ -21,9 +21,12 @@ public:
     CukeThemeType::ThemeMode getThemeMode();
 
     void addThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color, QColor newColor);
+
+    QColor getThemeColor(CukeThemeType::ThemeColor color);
     QColor getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color);
 signals:
     void themeModeChanged(CukeThemeType::ThemeMode mode);
+    void themeColorChanged();
 private:
     void initThemeColor();
 };

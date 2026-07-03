@@ -68,9 +68,9 @@ void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleO
 
         // 背景
         if (opt->state & State_MouseOver)
-            painter->setBrush(CUKE_THEME->getThemeColor(combo->getThemeMode(), CukeThemeType::HoverAlpha));
+            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::HoverAlpha));
         else
-            painter->setBrush(CUKE_THEME->getThemeColor(combo->getThemeMode(), CukeThemeType::DefaultAlpha));
+            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha));
         painter->setPen(Qt::NoPen);
         painter->drawRoundedRect(fr.adjusted(1, 1, -1, -1), radius, radius);
 

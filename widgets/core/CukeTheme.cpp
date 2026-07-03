@@ -1,6 +1,6 @@
 #include "CukeTheme.h"
 #include "CukeThemePrivate.h"
-#include <QVariant>
+#include <QPropertyAnimation>
 
 CUKE_NAMESPACE_BEGIN(pub)
 namespace {
@@ -9,6 +9,17 @@ namespace {
         QColor light;
         QColor dark;
     };
+
+    QColor mixColor(const QColor &dark, const QColor &light, qreal factor) {
+        factor = qBound<qreal>(0.0, factor, 1.0);
+
+        return {
+            qRound(dark.red() + (light.red() - dark.red()) * factor),
+            qRound(dark.green() + (light.green() - dark.green()) * factor),
+            qRound(dark.blue() + (light.blue() - dark.blue()) * factor),
+            qRound(dark.alpha() + (light.alpha() - dark.alpha()) * factor)
+        };
+    }
 
     const ThemeColor themeColors[] = {
         // Transparent
@@ -77,7 +88,7 @@ namespace {
         {CukeThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
 
         // ComboBox
-        {CukeThemeType::ComboBoxView, QColor(222, 222, 222), QColor(52, 52, 52)},
+        {CukeThemeType::ComboBoxView, QColor(242, 242, 242), QColor(42, 42, 42)},
         {CukeThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
 
         // AppBarButton
@@ -95,9 +106,13 @@ CukeTheme::CukeTheme(QObject *parent)
     : QObject(parent),
       d_ptr(new CukeThemePrivate(this)) {
     Q_D(CukeTheme);
-    setThemeMode(CukeThemeType::Dark);
+
+    d->_colorAnimation = new QPropertyAnimation(d, "_pColorFactor", this);
+    d->_colorAnimation->setDuration(250);
+    d->_colorAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
     initThemeColor();
+    connect(d, &CukeThemePrivate::pColorFactorChanged, this, &CukeTheme::themeColorChanged);
 }
 
 CukeTheme::~CukeTheme() = default;
@@ -105,6 +120,15 @@ CukeTheme::~CukeTheme() = default;
 void CukeTheme::setThemeMode(CukeThemeType::ThemeMode mode) {
     Q_D(CukeTheme);
     d->_themeMode = mode;
+
+    const qreal tFactor = mode == CukeThemeType::Light ? 1.0 : 0.0;
+
+    d->_colorAnimation->stop();
+    // 切换缓冲
+    d->_colorAnimation->setStartValue(d->getColorFactor());
+    d->_colorAnimation->setEndValue(tFactor);
+    d->_colorAnimation->start();
+
     emit themeModeChanged(d->_themeMode);
 }
 
@@ -120,6 +144,15 @@ void CukeTheme::addThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::Them
     } else if (mode == CukeThemeType::Dark) {
         d->_darkThemeColorList[color] = newColor;
     }
+}
+
+QColor CukeTheme::getThemeColor(CukeThemeType::ThemeColor color) {
+    Q_D(CukeTheme);
+
+    const QColor lightColor = d->_lightThemeColorList.value(color);
+    const QColor darkColor = d->_darkThemeColorList.value(color);
+
+    return mixColor(darkColor, lightColor, d->getColorFactor());
 }
 
 QColor CukeTheme::getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color) {

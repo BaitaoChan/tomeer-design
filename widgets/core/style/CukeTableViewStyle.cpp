@@ -43,7 +43,7 @@ void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption 
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(tableView->getThemeMode(), CukeThemeType::TableBg));
+        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::TableBg));
         painter->drawRoundedRect(r, 6, 6);
         painter->restore();
         return;

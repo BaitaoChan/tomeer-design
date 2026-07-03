@@ -20,7 +20,7 @@ void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
     if (element == PE_IndicatorToolBarHandle) {
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(QBrush(CUKE_THEME->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarHandle)));
+        painter->setBrush(QBrush(CUKE_THEME->getThemeColor(CukeThemeType::ToolBarHandle)));
 
         int radius, width, height, x, y;
         radius = 1;

@@ -12,6 +12,7 @@ CukeMenu::CukeMenu(QWidget *parent)
     ensurePolished();
     setStyle(new CukeMenuStyle(style()));
     connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeMenu::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
 CukeMenu::CukeMenu(const QString &title, QWidget *parent)

@@ -25,9 +25,9 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         // 背景
         if (option->state & State_Sunken)
-            painter->setBrush(CUKE_THEME->getThemeColor(toolButton->getThemeMode(), CukeThemeType::PressAlpha));
+            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::PressAlpha));
         else if (option->state & State_MouseOver)
-            painter->setBrush(CUKE_THEME->getThemeColor(toolButton->getThemeMode(), CukeThemeType::HoverAlpha));
+            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::HoverAlpha));
         CUKE_PAINTER->drawRoundedRect(widget->rect(), painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), CukeGeometryType::All);
         painter->restore();
         return;
@@ -35,8 +35,8 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
     if (element == PE_IndicatorArrowDown) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(toolButton->getThemeMode(), CukeThemeType::Text));
-        painter->setBrush(CUKE_THEME->getThemeColor(toolButton->getThemeMode(), CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
         constexpr int spacing = 4;
         QFont font("Cuke");
         font.setPixelSize(opt->iconSize.height());
@@ -67,7 +67,7 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         transform.rotate(toolButton->getRotateAngle());
         transform.translate(-path.boundingRect().center().x(), -path.boundingRect().center().y());
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(toolButton->getThemeMode(), CukeThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
         painter->setTransform(transform, true);
         painter->drawPath(path);
 
@@ -76,10 +76,9 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         painter->rotate(toolButton->getRotateAngle());
         painter->translate(-center);
         CUKE_PAINTER->drawIcon(center, painter,
-                           QIcon(CUKE_ICON->getCukeIcon(CukeIconType::ChevronDown,
-                                                    CUKE_THEME->getThemeColor(
-                                                        toolButton->getThemeMode(), CukeThemeType::Text), 64)),
-                           QSize(QFontMetrics(opt->font).height(), QFontMetrics(opt->font).height()));
+                               QIcon(CUKE_ICON->getCukeIcon(CukeIconType::ChevronDown,
+                                                            CUKE_THEME->getThemeColor(CukeThemeType::Text), 64)),
+                               QSize(QFontMetrics(opt->font).height(), QFontMetrics(opt->font).height()));
 #endif
         painter->restore();
         return;
@@ -94,8 +93,8 @@ void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption
         const auto opt = qstyleoption_cast<const QStyleOptionToolButton *>(option);
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(toolButton->getThemeMode(), CukeThemeType::Text));
-        painter->setBrush(CUKE_THEME->getThemeColor(toolButton->getThemeMode(), CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
         // 文字图标绘制
         constexpr int spacing = 4;
         constexpr qreal scale = 1.0;

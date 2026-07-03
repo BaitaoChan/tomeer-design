@@ -32,6 +32,7 @@ CukeWindow::CukeWindow(QWidget *parent)
     setStyle(new CukeWindowStyle(style()));
     setStyleSheet("QMainWindow { background: transparent; }");
     connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeWindow::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
 CukeWindow::~CukeWindow() = default;
@@ -245,7 +246,7 @@ void CukeWindow::paintEvent(QPaintEvent *event) {
     QPainterPath path;
     path.addRect(rect());
 
-    painter.fillPath(path, CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Window));
+    painter.fillPath(path, CUKE_THEME->getThemeColor(CukeThemeType::Window));
 
     QMainWindow::paintEvent(event);
 }

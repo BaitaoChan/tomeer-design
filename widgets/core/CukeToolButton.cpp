@@ -27,6 +27,7 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     connect(this, &CukeToolButton::pBorderRadiusChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pSideFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToolButton::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
 CukeToolButton::~CukeToolButton() = default;

@@ -15,6 +15,7 @@ class CukeAppBarButton : public QToolButton {
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
     CUKE_Q_PROPERTY_DECL(bool, BgColorUsedFlag)
+    CUKE_Q_PROPERTY_DECL(CukeIconType::Icon, IconType)
     CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
     CUKE_Q_PROPERTY_DECL(CukeGeometryType::SideFlag, SideFlag)
 public:

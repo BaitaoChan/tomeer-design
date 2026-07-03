@@ -13,6 +13,7 @@ CUKE_Q_PROPERTY_IMPL(CukeAppBarButton, bool, Pressed)
 CUKE_Q_PROPERTY_IMPL(CukeAppBarButton, QColor, BgColor)
 CUKE_Q_PROPERTY_IMPL(CukeAppBarButton, int, BorderRadius)
 CUKE_Q_PROPERTY_IMPL(CukeAppBarButton, bool, BgColorUsedFlag)
+CUKE_Q_PROPERTY_IMPL(CukeAppBarButton, CukeIconType::Icon, IconType)
 CUKE_Q_PROPERTY_IMPL(CukeAppBarButton, CukeThemeType::ThemeMode, ThemeMode)
 CUKE_Q_PROPERTY_IMPL(CukeAppBarButton, CukeGeometryType::SideFlag, SideFlag)
 CukeAppBarButton::CukeAppBarButton(QWidget *parent)
@@ -20,7 +21,7 @@ CukeAppBarButton::CukeAppBarButton(QWidget *parent)
       d_ptr(new CukeAppBarButtonPrivate(this)) {
     Q_D(CukeAppBarButton);
     setStyle(new CukeAppBarButtonStyle());
-
+    setToolButtonStyle(Qt::ToolButtonIconOnly);
     d->_bgAnim = new QPropertyAnimation(this, "_pBgColor", this);
     d->_bgAnim->setDuration(250);
     d->_bgAnim->setEasingCurve(QEasingCurve::InOutSine);
@@ -29,9 +30,11 @@ CukeAppBarButton::CukeAppBarButton(QWidget *parent)
     connect(this, &CukeAppBarButton::pBgColorUsedFlagChanged, this, QOverload<>::of(&CukeAppBarButton::update));
     connect(this, &CukeAppBarButton::pSideFlagChanged, this, QOverload<>::of(&CukeAppBarButton::update));
     connect(this, &CukeAppBarButton::pHoverChanged, d, &CukeAppBarButtonPrivate::onHoverChanged);
+    connect(this, &CukeAppBarButton::pIconTypeChanged, this, QOverload<>::of(&CukeAppBarButton::update));
     connect(this, &CukeAppBarButton::pHoverChanged, this, QOverload<>::of(&CukeAppBarButton::update));
     connect(this, &CukeAppBarButton::pPressedChanged, this, QOverload<>::of(&CukeAppBarButton::update));
     connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeAppBarButton::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
 CukeAppBarButton::~CukeAppBarButton() = default;

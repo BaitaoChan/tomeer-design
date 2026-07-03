@@ -23,7 +23,7 @@ void CukeMenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *
         const QRect rect = option->rect.adjusted(margin, 0, -margin, -margin);
 
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::ComboBoxView));
+        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBoxView));
         painter->drawRoundedRect(rect, radius, radius);
 
         painter->restore();
@@ -48,8 +48,7 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
         // 选中背景
         if (opt->state & State_Selected) {
             painter->setPen(Qt::NoPen);
-            painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(),
-                                                    CukeThemeType::ComboBoxItem));
+            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBoxItem));
             painter->drawRoundedRect(rect.adjusted(8, 2, -2, -2), 4, 4);
         }
 

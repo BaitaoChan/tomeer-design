@@ -42,12 +42,12 @@ MainWindow::MainWindow(QWidget *parent)
     auto *toolButton1 = new CukeToolButton(this);
     toolButton1->setText("开始");
     auto *toolButton2 = new CukeToolButton(this);
-    // toolButton2->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::CommentAdd, CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Text), 64));
+    // toolButton2->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::CommentAdd, CUKE_THEME->getThemeColor(CukeThemeType::Text), 64));
     toolButton2->setIconType(CukeIconType::BookCoins);
     auto *toolButton3 = new CukeToolButton(this);
     toolButton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolButton3->setText("统计");
-    // toolButton3->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::Dismiss, CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Text), 64));
+    // toolButton3->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::Dismiss, CUKE_THEME->getThemeColor(CukeThemeType::Text), 64));
     toolButton3->setIconType(CukeIconType::AppGeneric);
     auto *menu3 = new CukeMenu(this);
     menu3->addAction(new QAction("样例1"));

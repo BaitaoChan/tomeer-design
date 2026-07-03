@@ -61,7 +61,7 @@ void CukeLoopedRing::paintEvent(QPaintEvent *event) {
     const int widgetWidth = width();
     const int widgetHeight = height();
 
-    QColor colorBright = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::LoopRing);
+    QColor colorBright = CUKE_THEME->getThemeColor(CukeThemeType::LoopRing);
     const QColor colorMedium(colorBright.red(), colorBright.green(), colorBright.blue(), 200);
     const QColor colorDim(colorBright.red(), colorBright.green(), colorBright.blue(), 160);
 
