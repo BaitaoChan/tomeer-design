@@ -13,7 +13,6 @@ class CukeThemePrivate : public QObject {
 
 public:
     explicit CukeThemePrivate(CukeTheme *q);
-
     ~CukeThemePrivate() override;
 
 private:

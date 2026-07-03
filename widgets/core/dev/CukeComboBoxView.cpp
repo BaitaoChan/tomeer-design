@@ -22,7 +22,7 @@ int CukeComboBoxView::sizeHintForRow(const int row) const {
 void CukeComboBoxView::onThemeChanged(CukeThemeType::ThemeMode mode) {
     // 设置文字颜色
     QPalette pal = palette();
-    pal.setColor(QPalette::Text, cTheme->getThemeColor(cTheme->getThemeMode(), CukeThemeType::Text));
+    pal.setColor(QPalette::Text, CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), CukeThemeType::Text));
     setPalette(pal);
     update();
 }

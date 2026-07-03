@@ -23,7 +23,7 @@ void CukeMenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *
         const QRect rect = option->rect.adjusted(margin, 0, -margin, -margin);
 
         painter->setPen(Qt::NoPen);
-        painter->setBrush(cTheme->getThemeColor(menu->getThemeMode(), CukeThemeType::ComboBoxView));
+        painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::ComboBoxView));
         painter->drawRoundedRect(rect, radius, radius);
 
         painter->restore();
@@ -48,7 +48,7 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
         // 选中背景
         if (opt->state & State_Selected) {
             painter->setPen(Qt::NoPen);
-            painter->setBrush(cTheme->getThemeColor(menu->getThemeMode(),
+            painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(),
                                                     CukeThemeType::ComboBoxItem));
             painter->drawRoundedRect(rect.adjusted(8, 2, -2, -2), 4, 4);
         }
@@ -58,12 +58,12 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
             const QRect lRect(rect.left() + 10, rect.top() + 4, 3, rect.height() - 8);
 
             painter->setPen(Qt::NoPen);
-            painter->setBrush(cTheme->getThemeColor(menu->getThemeMode(), CukeThemeType::Check));
+            painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::Check));
             painter->drawRoundedRect(lRect, 2, 2);
         }
 
         // 文本
-        painter->setPen(cTheme->getThemeColor(menu->getThemeMode(), CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::Text));
         painter->drawText(rect.adjusted(16, 0, -2, 0),
                           Qt::AlignVCenter | Qt::AlignLeft,
                           opt->text);

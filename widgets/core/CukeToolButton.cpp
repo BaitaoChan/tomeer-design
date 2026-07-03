@@ -26,7 +26,7 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pBorderRadiusChanged, this, QOverload<>::of(&CukeToolButton::update));
     connect(this, &CukeToolButton::pSideFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToolButton::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToolButton::onThemeChanged);
 }
 
 CukeToolButton::~CukeToolButton() = default;
@@ -35,7 +35,7 @@ void CukeToolButton::setIconType(CukeIconType::Icon pIconType) {
     if (_pIconType != pIconType) {
         _pIconType = pIconType;
         pIconTypeChanged();
-        setIcon(cIcon->getCukeIcon(_pIconType));
+        setIcon(CUKE_ICON->getCukeIcon(_pIconType));
     }
 }
 

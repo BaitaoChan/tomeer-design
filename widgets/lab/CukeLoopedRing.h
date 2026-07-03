@@ -28,9 +28,9 @@ public:
     void setText(const QString &text);
 
 public slots:
-    void start() const;
-    void stop() const;
-    void exec() const;
+    void start();
+    void stop();
+    void exec();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

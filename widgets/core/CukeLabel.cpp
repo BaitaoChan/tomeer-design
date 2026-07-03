@@ -9,7 +9,7 @@ CukeLabel::CukeLabel(QWidget *parent)
     : QLabel(parent),
       d_ptr(new CukeLabelPrivate(this)) {
     setAttribute(Qt::WA_TranslucentBackground);
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeLabel::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeLabel::onThemeChanged);
 }
 
 CukeLabel::CukeLabel(const QString &text, QWidget *parent)
@@ -32,7 +32,7 @@ void CukeLabel::paintEvent(QPaintEvent *event) {
     if (_pTextColor.isValid())
         p.setPen(_pTextColor);
     else
-        p.setPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+        p.setPen(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
     p.drawText(rect(), alignment(), text());
 }

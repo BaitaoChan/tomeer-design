@@ -68,7 +68,7 @@ CukeComboBox::CukeComboBox(QWidget *parent)
     connect(this, &CukeComboBox::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
     connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
     connect(d->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeComboBox::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeComboBox::onThemeChanged);
 
     setMaxVisibleItems(4);
 }
@@ -186,7 +186,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 底部横线
     p.setPen(Qt::NoPen);
-    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
+    p.setBrush(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
     p.drawRoundedRect(QRectF(rect().left() + 4,
                              rect().bottom() * 0.9,
                              rect().right() - rect().left() - 8,
@@ -196,7 +196,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 焦点指示
     p.setPen(Qt::NoPen);
-    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Check));
+    p.setBrush(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Check));
     p.drawRoundedRect(QRectF(rect().left() + 4 + (rect().right() - rect().left() - 8) / 2.0 - _pLineHalfWidth,
                              rect().bottom() * 0.9,
                              _pLineHalfWidth * 2,
@@ -213,8 +213,8 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
     p.translate(-rect().height() / 4.0, -rect().height() / 4.0);
     p.setTransform(QTransform().scale(rect().height() / 2.0 / 1024.0,
                                       rect().height() / 2.0 / 1024.0), true);
-    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
-    p.setPen(QPen(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text), 1));
+    p.setBrush(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Text));
+    p.setPen(QPen(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Text), 1));
     p.drawPath(SingleArrow());
 }
 

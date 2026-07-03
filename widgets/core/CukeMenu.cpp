@@ -11,7 +11,7 @@ CukeMenu::CukeMenu(QWidget *parent)
     // 确保应用基本样式
     ensurePolished();
     setStyle(new CukeMenuStyle(style()));
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeMenu::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeMenu::onThemeChanged);
 }
 
 CukeMenu::CukeMenu(const QString &title, QWidget *parent)

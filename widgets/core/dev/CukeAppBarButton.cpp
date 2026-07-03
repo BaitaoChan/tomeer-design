@@ -31,7 +31,7 @@ CukeAppBarButton::CukeAppBarButton(QWidget *parent)
     connect(this, &CukeAppBarButton::pHoverChanged, d, &CukeAppBarButtonPrivate::onHoverChanged);
     connect(this, &CukeAppBarButton::pHoverChanged, this, QOverload<>::of(&CukeAppBarButton::update));
     connect(this, &CukeAppBarButton::pPressedChanged, this, QOverload<>::of(&CukeAppBarButton::update));
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeAppBarButton::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeAppBarButton::onThemeChanged);
 }
 
 CukeAppBarButton::~CukeAppBarButton() = default;

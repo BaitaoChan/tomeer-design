@@ -25,11 +25,11 @@ void CukeAppBarButtonStyle::drawPrimitive(PrimitiveElement element, const QStyle
                 painter->setBrush(appBarButton->getBgColor());
         } else {
             if (option->state & State_Sunken)
-                painter->setBrush(cTheme->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::PressAlpha));
+                painter->setBrush(CUKE_THEME->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::PressAlpha));
             else if (option->state & State_MouseOver)
-                painter->setBrush(cTheme->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::HoverAlpha));
+                painter->setBrush(CUKE_THEME->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::HoverAlpha));
         }
-        cPainter->drawRoundedRect(option->rect, painter, appBarButton->getBorderRadius(), appBarButton->getBorderRadius(), appBarButton->getSideFlag());
+        CUKE_PAINTER->drawRoundedRect(option->rect, painter, appBarButton->getBorderRadius(), appBarButton->getBorderRadius(), appBarButton->getSideFlag());
         painter->restore();
         return;
     }

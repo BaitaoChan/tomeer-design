@@ -17,7 +17,7 @@ CukeSlider::CukeSlider(QWidget *parent)
 
     connect(d->_handleDiameterAnimation, &QPropertyAnimation::valueChanged, this,
             QOverload<>::of(&QWidget::update));
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeSlider::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeSlider::onThemeChanged);
 }
 
 CukeSlider::CukeSlider(Qt::Orientation orientation, QWidget *parent)
@@ -135,23 +135,23 @@ void CukeSlider::paintEvent(QPaintEvent *event) {
     int grooveHeight = 5; // 滑轨厚度
     QRectF grooveRect(10, d->_handleCenter.y() - grooveHeight / 2.0, width() - 20, grooveHeight);
     p.setPen(Qt::NoPen);
-    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
+    p.setBrush(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha));
     p.drawRoundedRect(grooveRect, 3, 3);
 
     // 已滑过部分
     QRectF subRect = grooveRect;
     subRect.setRight(d->_handleCenter.x());
-    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha));
+    p.setBrush(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha));
     p.drawRoundedRect(subRect, 3, 3);
 
     // 滑块外圆
     p.setPen(Qt::NoPen);
-    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::SliderHandleBorder));
+    p.setBrush(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::SliderHandleBorder));
     p.drawEllipse(d->_handleCenter, d->_handleRect.width() / 2.5, d->_handleRect.width() / 2.5);
 
     // 滑块内圆
     p.setPen(Qt::NoPen);
-    p.setBrush(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Check));
+    p.setBrush(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Check));
     p.drawEllipse(d->_handleCenter, _pHandleDiameter, _pHandleDiameter);
 }
 

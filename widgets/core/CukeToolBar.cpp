@@ -18,7 +18,7 @@ CukeToolBar::CukeToolBar(QWidget *parent)
     setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
     // 文字图标高度一致
     setIconSize(QSize(QFontMetrics(font()).height(), QFontMetrics(font()).height()));
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToolBar::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToolBar::onThemeChanged);
 }
 
 CukeToolBar::~CukeToolBar() = default;

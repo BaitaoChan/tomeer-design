@@ -5,7 +5,7 @@
 #include "CukeProperty.h"
 #include "CukeType.h"
 
-#define cIcon CukeIcon::instance()
+#define CUKE_ICON CukeIcon::instance()
 
 CUKE_NAMESPACE_BEGIN(pub)
     class CUKE_EXPORT CukeIcon : public QObject {

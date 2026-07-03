@@ -12,7 +12,7 @@ CukePushButton::CukePushButton(QWidget *parent)
     _pBorderRadius = 6;
     setStyleSheet("border: none;");
     connect(this, &CukePushButton::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukePushButton::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukePushButton::onThemeChanged);
 }
 
 CukePushButton::CukePushButton(QString text, QWidget* parent)
@@ -52,11 +52,11 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QColor bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
+    QColor bgColor = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
     if (d->_isPressed) {
-        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha);
+        bgColor = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha);
     } else if (d->_isHovered) {
-        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha);
+        bgColor = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha);
     }
 
     painter.setBrush(bgColor);
@@ -65,7 +65,7 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
 
     if (!d->_isPressed) {
         QPen pen;
-        pen.setColor(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
+        pen.setColor(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
         pen.setWidthF(1.6);
         painter.setPen(pen);
 
@@ -88,7 +88,7 @@ void CukePushButton::paintEvent(QPaintEvent* event) {
     option.iconSize = icon().isNull() ? QSize() : this->iconSize();
 
     // 用当前的文字颜色
-    option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+    option.palette.setColor(QPalette::ButtonText, CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
     if (d->_isPressed) {
         option.state |= QStyle::State_Sunken;

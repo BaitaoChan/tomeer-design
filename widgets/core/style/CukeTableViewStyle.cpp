@@ -23,7 +23,7 @@ void CukeTableViewStyle::drawPrimitive(PrimitiveElement element, const QStyleOpt
         if (option->state & State_Selected) {
             painter->save();
             painter->setPen(Qt::NoPen);
-            painter->setBrush(cTheme->getThemeColor(tableView->getThemeMode(), CukeThemeType::SelectedItem));
+            painter->setBrush(CUKE_THEME->getThemeColor(tableView->getThemeMode(), CukeThemeType::SelectedItem));
             painter->drawRect(option->rect);
             painter->restore();
             return;
@@ -43,7 +43,7 @@ void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption 
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
         painter->setPen(Qt::NoPen);
-        painter->setBrush(cTheme->getThemeColor(tableView->getThemeMode(), CukeThemeType::TableBg));
+        painter->setBrush(CUKE_THEME->getThemeColor(tableView->getThemeMode(), CukeThemeType::TableBg));
         painter->drawRoundedRect(r, 6, 6);
         painter->restore();
         return;
@@ -70,7 +70,7 @@ void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption 
 
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(cTheme->getThemeColor(tableView->getThemeMode(), CukeThemeType::HeaderBg));
+        painter->setBrush(CUKE_THEME->getThemeColor(tableView->getThemeMode(), CukeThemeType::HeaderBg));
 
         if (isFirst && isLast) {
             painter->drawRoundedRect(r, radius, radius);
@@ -120,7 +120,7 @@ void CukeTableViewStyle::drawControl(ControlElement element, const QStyleOption 
                 qstyleoption_cast<const QStyleOptionHeader *>(option);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        painter->setPen(cTheme->getThemeColor(tableView->getThemeMode(), CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(tableView->getThemeMode(), CukeThemeType::Text));
         painter->drawText(
             option->rect, Qt::AlignVCenter | Qt::AlignHCenter, opt->text);
         painter->restore();

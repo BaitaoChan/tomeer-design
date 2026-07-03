@@ -3,12 +3,99 @@
 #include <QVariant>
 
 CUKE_NAMESPACE_BEGIN(pub)
+namespace {
+    struct ThemeColor {
+        CukeThemeType::ThemeColor role;
+        QColor light;
+        QColor dark;
+    };
+
+    const ThemeColor themeColors[] = {
+        // Transparent
+        {CukeThemeType::Transparent, QColor(255, 255, 255, 0), QColor(0, 0, 0, 0)},
+
+        // Basic
+        {CukeThemeType::Default, QColor(160, 160, 160), QColor(82, 82, 82)},
+        {CukeThemeType::Hover, QColor(240, 240, 240), QColor(52, 52, 52)},
+        {CukeThemeType::Press, QColor(230, 230, 230), QColor(32, 32, 32)},
+        {CukeThemeType::Check, QColor(0, 103, 192), QColor(0, 103, 192)},
+        {CukeThemeType::Text, QColor(0, 0, 0), QColor(255, 255, 255)},
+        {CukeThemeType::Border, QColor(128, 128, 128), QColor(53, 53, 53)},
+        {CukeThemeType::Error, QColor(220, 53, 69), QColor(220, 53, 69)},
+
+        // Window
+        {CukeThemeType::Window, QColor(252, 252, 252), QColor(32, 32, 32)},
+
+        // Disabled
+        {CukeThemeType::Disable, QColor(245, 245, 245, 60), QColor(0, 0, 0, 60)},
+        {CukeThemeType::TextDisable, QColor(182, 182, 182), QColor(167, 167, 167)},
+
+        // Alpha
+        {CukeThemeType::DefaultAlpha, QColor(160, 160, 160, 64), QColor(52, 52, 52, 32)},
+        {CukeThemeType::HoverAlpha, QColor(232, 232, 232, 128), QColor(52, 52, 52, 128)},
+        {CukeThemeType::PressAlpha, QColor(232, 232, 232, 200), QColor(52, 52, 52, 200)},
+        {CukeThemeType::CheckAlpha, QColor(0, 103, 192, 170), QColor(0, 103, 192, 170)},
+        {CukeThemeType::TextAlpha, QColor(0, 0, 0, 200), QColor(255, 255, 255, 200)},
+        {CukeThemeType::BorderAlpha, QColor(128, 128, 128, 120), QColor(53, 53, 53, 120)},
+
+        // Window Alpha
+        {CukeThemeType::WindowAlpha, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
+
+        // Panel Alpha
+        {CukeThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
+
+        // Pattern
+        {CukeThemeType::Pattern, QColor(200, 200, 200), QColor(10, 10, 10)},
+
+        // Focus
+        {CukeThemeType::FocusBorder, QColor(0, 120, 215), QColor(0, 120, 215)},
+
+        // ToggleSwitch
+        {CukeThemeType::ToggleSwitchKnob, QColor(252, 252, 252), QColor(60, 60, 60)},
+        {CukeThemeType::ToggleSwitchBorder, QColor(220, 220, 220), QColor(60, 60, 60)},
+
+        // Slider
+        {CukeThemeType::SliderHandleBorder, QColor(200, 200, 200), QColor(60, 60, 60)},
+
+        // Waveform
+        {CukeThemeType::WaveformLegendText, QColor(0, 0, 0), QColor(255, 255, 255)},
+        {CukeThemeType::WaveformLegendBorder, QColor(0, 0, 0, 255), QColor(255, 255, 255, 255)},
+        {CukeThemeType::WaveformX, QColor(0, 0, 0), QColor(255, 255, 255)},
+        {CukeThemeType::WaveformGrid, QColor(100, 100, 100, 100), QColor(140, 140, 140, 100)},
+
+        // LoopRing
+        {CukeThemeType::LoopRing, QColor(31, 155, 93), QColor(31, 155, 93)},
+        {CukeThemeType::LoopText, QColor(31, 155, 93), QColor(31, 155, 93)},
+
+        // Status
+        {CukeThemeType::Normal, Qt::darkGreen, Qt::darkGreen},
+        {CukeThemeType::Warning, Qt::darkYellow, Qt::darkYellow},
+
+        // TableView
+        {CukeThemeType::HeaderBg, QColor(0, 0, 0, 40), QColor(0, 0, 0, 40)},
+        {CukeThemeType::TableBg, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
+        {CukeThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
+
+        // ComboBox
+        {CukeThemeType::ComboBoxView, QColor(222, 222, 222), QColor(52, 52, 52)},
+        {CukeThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
+
+        // AppBarButton
+        {CukeThemeType::Dismiss, QColor(232, 17, 35), QColor(232, 17, 35)},
+
+        // ToolBar
+        {CukeThemeType::ToolBarHandle, QColor(98, 238, 147), QColor(98, 238, 147)},
+        {CukeThemeType::ToolBarBorder, QColor(98, 238, 147), QColor(98, 238, 147)},
+        {CukeThemeType::ToolBarBg, QColor(245, 245, 245), QColor(42, 42, 42)},
+    };
+}
+
 CUKE_Q_SINGLETON_IMPL(CukeTheme)
 CukeTheme::CukeTheme(QObject *parent)
     : QObject(parent),
       d_ptr(new CukeThemePrivate(this)) {
     Q_D(CukeTheme);
-    d->_themeMode = CukeThemeType::Dark;
+    setThemeMode(CukeThemeType::Dark);
 
     initThemeColor();
 }
@@ -35,138 +122,27 @@ void CukeTheme::addThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::Them
     }
 }
 
-const QColor &CukeTheme::getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color) {
+QColor CukeTheme::getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color) {
     Q_D(CukeTheme);
     if (mode == CukeThemeType::Light) {
         return d->_lightThemeColorList[color];
-    } else if (mode == CukeThemeType::Dark) {
+    }
+    if (mode == CukeThemeType::Dark) {
         return d->_darkThemeColorList[color];
     }
-    return QColor();
+    return {};
 }
 
 void CukeTheme::initThemeColor() {
     Q_D(CukeTheme);
-    // 透明
-    d->_lightThemeColorList[CukeThemeType::Transparent] = QColor(255, 255, 255, 0);
-    d->_darkThemeColorList[CukeThemeType::Transparent] = QColor(0, 0, 0, 0);
 
-    d->_lightThemeColorList[CukeThemeType::Default] = QColor(160, 160, 160);
-    d->_darkThemeColorList[CukeThemeType::Default] = QColor(82, 82, 82);
-    d->_lightThemeColorList[CukeThemeType::Hover] = QColor(240, 240, 240);
-    d->_darkThemeColorList[CukeThemeType::Hover] = QColor(52, 52, 52);
-    d->_lightThemeColorList[CukeThemeType::Press] = QColor(230, 230, 230);
-    d->_darkThemeColorList[CukeThemeType::Press] = QColor(32, 32, 32);
-    d->_lightThemeColorList[CukeThemeType::Check] = QColor(0, 103, 192);
-    d->_darkThemeColorList[CukeThemeType::Check] = QColor(0, 103, 192);
-    d->_lightThemeColorList[CukeThemeType::Text] = QColor(0, 0, 0);
-    d->_darkThemeColorList[CukeThemeType::Text] = QColor(255, 255, 255);
-    d->_lightThemeColorList[CukeThemeType::Border] = QColor(128, 128, 128);
-    d->_darkThemeColorList[CukeThemeType::Border] = QColor(53, 53, 53);
-    d->_lightThemeColorList[CukeThemeType::Error] = QColor(220, 53, 69);
-    d->_darkThemeColorList[CukeThemeType::Error] = QColor(220, 53, 69);
+    d->_lightThemeColorList.clear();
+    d->_darkThemeColorList.clear();
 
-    // 窗体
-    d->_lightThemeColorList[CukeThemeType::Window] = QColor(252, 252, 252);
-    d->_darkThemeColorList[CukeThemeType::Window] = QColor(32, 32, 32);
-
-    // 不使能
-    d->_lightThemeColorList[CukeThemeType::Disable] = QColor(245, 245, 245, 60);
-    d->_darkThemeColorList[CukeThemeType::Disable] = QColor(0, 0, 0, 60);
-    d->_lightThemeColorList[CukeThemeType::TextDisable] = QColor(182, 182, 182);
-    d->_darkThemeColorList[CukeThemeType::TextDisable] = QColor(167, 167, 167);
-
-    // 透明
-    d->_lightThemeColorList[CukeThemeType::DefaultAlpha] = QColor(160, 160, 160, 64);
-    d->_darkThemeColorList[CukeThemeType::DefaultAlpha] = QColor(52, 52, 52, 32);
-    d->_lightThemeColorList[CukeThemeType::HoverAlpha] = QColor(232, 232, 232, 128);
-    d->_darkThemeColorList[CukeThemeType::HoverAlpha] = QColor(52, 52, 52, 128);
-    d->_lightThemeColorList[CukeThemeType::PressAlpha] = QColor(232, 232, 232, 200);
-    d->_darkThemeColorList[CukeThemeType::PressAlpha] = QColor(52, 52, 52, 200);
-    d->_lightThemeColorList[CukeThemeType::CheckAlpha] = QColor(0, 103, 192, 170);
-    d->_darkThemeColorList[CukeThemeType::CheckAlpha] = QColor(0, 103, 192, 170);
-    d->_lightThemeColorList[CukeThemeType::TextAlpha] = QColor(0, 0, 0, 200);
-    d->_darkThemeColorList[CukeThemeType::TextAlpha] = QColor(255, 255, 255, 200);
-    d->_lightThemeColorList[CukeThemeType::BorderAlpha] = QColor(128, 128, 128, 120);
-    d->_darkThemeColorList[CukeThemeType::BorderAlpha] = QColor(53, 53, 53, 120);
-
-    // 窗体透明
-    d->_lightThemeColorList[CukeThemeType::WindowAlpha] = QColor(252, 252, 252, 120);
-    d->_darkThemeColorList[CukeThemeType::WindowAlpha] = QColor(0, 0, 0, 60);
-
-    // 面板透明
-    d->_lightThemeColorList[CukeThemeType::PanelAlpha] = QColor(252, 252, 252, 60);
-    d->_darkThemeColorList[CukeThemeType::PanelAlpha] = QColor(0, 0, 0, 40);
-
-    // 样式
-    d->_lightThemeColorList[CukeThemeType::Pattern] = QColor(200, 200, 200);
-    d->_darkThemeColorList[CukeThemeType::Pattern] = QColor(10, 10, 10);
-
-    // 焦点样式
-    d->_lightThemeColorList[CukeThemeType::FocusBorder] = QColor(0, 120, 215);
-    d->_darkThemeColorList[CukeThemeType::FocusBorder] = QColor(0, 120, 215);
-
-    // ToggleSwitch
-    d->_lightThemeColorList[CukeThemeType::ToggleSwitchKnob] = QColor(252, 252, 252);
-    d->_darkThemeColorList[CukeThemeType::ToggleSwitchKnob] = QColor(60, 60, 60);
-    d->_lightThemeColorList[CukeThemeType::ToggleSwitchBorder] = QColor(220, 220, 220);
-    d->_darkThemeColorList[CukeThemeType::ToggleSwitchBorder] = QColor(60, 60, 60);
-
-    // Slider
-    d->_lightThemeColorList[CukeThemeType::SliderHandleBorder] = QColor(200, 200, 200);
-    d->_darkThemeColorList[CukeThemeType::SliderHandleBorder] = QColor(60, 60, 60);
-
-    // Waveform
-    d->_lightThemeColorList[CukeThemeType::WaveformLegendText] = QColor(0, 0, 0);
-    d->_darkThemeColorList[CukeThemeType::WaveformLegendText] = QColor(255, 255, 255);
-    d->_lightThemeColorList[CukeThemeType::WaveformLegendBorder] = QColor(0, 0, 0, 255);
-    d->_darkThemeColorList[CukeThemeType::WaveformLegendBorder] = QColor(255, 255, 255, 255);
-    d->_lightThemeColorList[CukeThemeType::WaveformX] = QColor(0, 0, 0);
-    d->_darkThemeColorList[CukeThemeType::WaveformX] = QColor(255, 255, 255);
-    d->_lightThemeColorList[CukeThemeType::WaveformGrid] = QColor(100, 100, 100, 100);
-    d->_darkThemeColorList[CukeThemeType::WaveformGrid] = QColor(140, 140, 140, 100);
-
-    // LoopRing
-    d->_lightThemeColorList[CukeThemeType::LoopRing] = QColor(31, 155, 93);
-    d->_darkThemeColorList[CukeThemeType::LoopRing] = QColor(31, 155, 93);
-    d->_lightThemeColorList[CukeThemeType::LoopText] = QColor(31, 155, 93);
-    d->_darkThemeColorList[CukeThemeType::LoopText] = QColor(31, 155, 93);
-
-    // Status
-    d->_lightThemeColorList[CukeThemeType::Normal] = Qt::darkGreen;
-    d->_darkThemeColorList[CukeThemeType::Normal] = Qt::darkGreen;
-
-    d->_lightThemeColorList[CukeThemeType::Warning] = Qt::darkYellow;
-    d->_darkThemeColorList[CukeThemeType::Warning] = Qt::darkYellow;
-
-    d->_lightThemeColorList[CukeThemeType::Error] = Qt::red;
-    d->_darkThemeColorList[CukeThemeType::Error] = Qt::red;
-
-    // TableView
-    d->_lightThemeColorList[CukeThemeType::HeaderBg] = QColor(0, 0, 0, 40);
-    d->_darkThemeColorList[CukeThemeType::HeaderBg] = QColor(0, 0, 0, 40);
-    d->_lightThemeColorList[CukeThemeType::TableBg] = QColor(252, 252, 252, 60);
-    d->_darkThemeColorList[CukeThemeType::TableBg] = QColor(0, 0, 0, 40);
-    d->_lightThemeColorList[CukeThemeType::SelectedItem] = QColor(0, 0, 0, 10);
-    d->_darkThemeColorList[CukeThemeType::SelectedItem] = QColor(0, 0, 0, 10);
-
-    // ComboBox
-    d->_lightThemeColorList[CukeThemeType::ComboBoxView] = QColor(222, 222, 222);
-    d->_darkThemeColorList[CukeThemeType::ComboBoxView] = QColor(52, 52, 52);
-    d->_lightThemeColorList[CukeThemeType::ComboBoxItem] = QColor(252, 252, 252);
-    d->_darkThemeColorList[CukeThemeType::ComboBoxItem] = QColor(22, 22, 22);
-
-    // AppBarButton
-    d->_lightThemeColorList[CukeThemeType::Dismiss] = QColor(232, 17, 35);
-    d->_darkThemeColorList[CukeThemeType::Dismiss] = QColor(232, 17, 35);
-
-    // ToolBar
-    d->_lightThemeColorList[CukeThemeType::ToolBarHandle] = QColor(98, 238, 147);
-    d->_darkThemeColorList[CukeThemeType::ToolBarHandle] = QColor(98, 238, 147);
-    d->_lightThemeColorList[CukeThemeType::ToolBarBorder] = QColor(98, 238, 147);
-    d->_darkThemeColorList[CukeThemeType::ToolBarBorder] = QColor(98, 238, 147);
-    d->_lightThemeColorList[CukeThemeType::ToolBarBg] = QColor(245, 245, 245);
-    d->_darkThemeColorList[CukeThemeType::ToolBarBg] = QColor(42, 42, 42);
+    for (const auto &color: themeColors) {
+        d->_lightThemeColorList.insert(color.role, color.light);
+        d->_darkThemeColorList.insert(color.role, color.dark);
+    }
 }
 
 CUKE_NAMESPACE_END(pub)

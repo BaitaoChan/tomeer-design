@@ -24,7 +24,7 @@ void CukeTableItemDelegate::paint(QPainter *p,
     QRect r = opt.rect;
 
     // 文本
-    p->setPen(cTheme->getThemeColor(cTheme->getThemeMode(), CukeThemeType::Text));
+    p->setPen(CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), CukeThemeType::Text));
     p->setFont(index.data(Qt::FontRole).value<QFont>());
 
     r.adjust(8, 0, -8, 0);

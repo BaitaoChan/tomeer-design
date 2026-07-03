@@ -20,7 +20,7 @@ void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
     if (element == PE_IndicatorToolBarHandle) {
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(QBrush(cTheme->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarHandle)));
+        painter->setBrush(QBrush(CUKE_THEME->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarHandle)));
 
         int radius, width, height, x, y;
         radius = 1;
@@ -32,7 +32,7 @@ void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
                     option->rect.center().y() - height / 2;
         }
 
-        cPainter->drawRoundedRect(QRect(x, y, width, height),
+        CUKE_PAINTER->drawRoundedRect(QRect(x, y, width, height),
                                   painter, radius, radius, CukeGeometryType::All);
         painter->restore();
         return;
@@ -51,7 +51,7 @@ void CukeToolBarStyle::drawControl(ControlElement element, const QStyleOption *o
             // 悬浮
             int radius = 4;
             painter->setPen(Qt::NoPen);
-            painter->setBrush(cTheme->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarBg));
+            painter->setBrush(CUKE_THEME->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarBg));
             painter->drawRoundedRect(toolBar->rect(), radius, radius);
         } else {
             // 停靠

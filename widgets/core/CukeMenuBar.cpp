@@ -10,7 +10,7 @@ CukeMenuBar::CukeMenuBar(QWidget *parent)
     Q_D(CukeMenuBar);
     setStyle(new CukeMenuBarStyle(style()));
     setFixedHeight(24);
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeMenuBar::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeMenuBar::onThemeChanged);
 }
 
 CukeMenuBar::~CukeMenuBar() = default;

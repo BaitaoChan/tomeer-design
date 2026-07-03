@@ -11,7 +11,7 @@ CukeToggleButton::CukeToggleButton(QWidget *parent)
     setFlat(true);
     setStyleSheet("border: none;");
     setCheckable(true);
-    connect(cTheme, &CukeTheme::themeModeChanged, this, &CukeToggleButton::onThemeChanged);
+    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToggleButton::onThemeChanged);
 }
 
 CukeToggleButton::CukeToggleButton(const QString &text, QWidget *parent)
@@ -75,13 +75,13 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QColor bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
+    QColor bgColor = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::DefaultAlpha);
     if (d->_isToggled) {
-        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha);
+        bgColor = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::CheckAlpha);
     } else if (d->_isPressed) {
-        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha);
+        bgColor = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::PressAlpha);
     } else if (d->_isHovered) {
-        bgColor = cTheme->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha);
+        bgColor = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::HoverAlpha);
     }
 
     painter.setBrush(bgColor);
@@ -90,7 +90,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
 
     if (!d->_isPressed && !d->_isToggled) {
         QPen pen;
-        pen.setColor(cTheme->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
+        pen.setColor(CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Pattern));
         pen.setWidthF(1.6);
         painter.setPen(pen);
 
@@ -110,7 +110,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     option.text = text();
     option.icon = icon();
     option.iconSize = icon().isNull() ? QSize() : this->iconSize();
-    option.palette.setColor(QPalette::ButtonText, cTheme->getThemeColor(getThemeMode(), CukeThemeType::Text));
+    option.palette.setColor(QPalette::ButtonText, CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::Text));
 
     if (d->_isPressed) option.state |= QStyle::State_Sunken;
     if (d->_isHovered) option.state |= QStyle::State_MouseOver;

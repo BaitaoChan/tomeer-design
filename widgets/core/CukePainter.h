@@ -6,7 +6,7 @@
 #include "CukeProperty.h"
 #include "CukeType.h"
 
-#define cPainter CukePainter::instance()
+#define CUKE_PAINTER CukePainter::instance()
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CUKE_EXPORT CukePainter : public QObject {

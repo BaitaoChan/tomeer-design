@@ -32,9 +32,9 @@ void CukeAppBarPrivate::onWindowTitleChanged(const QString& title) const {
 void CukeAppBarPrivate::onThemeButtonClicked() {
     Q_Q(CukeAppBar);
     if (q->getThemeMode())
-        cTheme->setThemeMode(CukeThemeType::Light);
+        CUKE_THEME->setThemeMode(CukeThemeType::Light);
     else
-        cTheme->setThemeMode(CukeThemeType::Dark);
+        CUKE_THEME->setThemeMode(CukeThemeType::Dark);
 }
 
 void CukeAppBarPrivate::onMinimizeButtonClicked() {
@@ -48,10 +48,10 @@ void CukeAppBarPrivate::onMaximizeButtonClicked() {
     Q_Q(CukeAppBar);
     if (q->window()->windowState() & Qt::WindowMaximized) {
         q->window()->showNormal();
-        _maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize, cTheme->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
+        _maximizeButton->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::Maximize, CUKE_THEME->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
     } else {
         q->window()->showMaximized();
-        _maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::SquareMultiple, cTheme->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
+        _maximizeButton->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::SquareMultiple, CUKE_THEME->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
     }
 }
 
@@ -62,16 +62,16 @@ void CukeAppBarPrivate::onCloseButtonClicked() {
 
 void CukeAppBarPrivate::onHoverChanged() {
     Q_Q(CukeAppBar);
-    if (cTheme->getThemeMode() == CukeThemeType::Dark)
+    if (CUKE_THEME->getThemeMode() == CukeThemeType::Dark)
         return;
-    if (cTheme->getThemeMode() == CukeThemeType::Light) {
+    if (CUKE_THEME->getThemeMode() == CukeThemeType::Light) {
         if (_closeButton->getHover())
-            _closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss,
-                                                     cTheme->getThemeColor(
+            _closeButton->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::Dismiss,
+                                                     CUKE_THEME->getThemeColor(
                                                          CukeThemeType::Dark, CukeThemeType::Text)));
         else
-            _closeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Dismiss,
-                                                     cTheme->getThemeColor(
+            _closeButton->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::Dismiss,
+                                                     CUKE_THEME->getThemeColor(
                                                          q->getThemeMode(), CukeThemeType::Text)));
     }
 }
@@ -79,11 +79,11 @@ void CukeAppBarPrivate::onHoverChanged() {
 void CukeAppBarPrivate::onWindowStateChanged() {
     Q_Q(CukeAppBar);
     if (q->window()->windowState() & Qt::WindowMaximized)
-        _maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::Maximize,
-                                                    cTheme->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
+        _maximizeButton->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::Maximize,
+                                                    CUKE_THEME->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
     else
-        _maximizeButton->setIcon(cIcon->getCukeIcon(CukeIconType::SquareMultiple,
-                                                    cTheme->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
+        _maximizeButton->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::SquareMultiple,
+                                                    CUKE_THEME->getThemeColor(q->getThemeMode(), CukeThemeType::Text)));
 }
 
 CUKE_NAMESPACE_END(pub)

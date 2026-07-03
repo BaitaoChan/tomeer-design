@@ -8,41 +8,46 @@ CUKE_Q_PROPERTY_IMPL(CukeLoopedRing, CukeThemeType::ThemeMode, ThemeMode)
 CukeLoopedRing::CukeLoopedRing(QWidget *parent)
     : QWidget(parent),
       d_ptr(new CukeLoopedRingPrivate(this)) {
+    Q_D(CukeLoopedRing);
     setFixedSize(200, 200);
 
-    d_ptr->_animation = new QPropertyAnimation(this, "_pAngle");
-    d_ptr->_animation->setTargetObject(this);
-    d_ptr->_animation->setDuration(6000);
-    d_ptr->_animation->setLoopCount(-1);
-    d_ptr->_animation->setEasingCurve(QEasingCurve::Linear);
+    d->_animation = new QPropertyAnimation(this, "_pAngle");
+    d->_animation->setTargetObject(this);
+    d->_animation->setDuration(6000);
+    d->_animation->setLoopCount(-1);
+    d->_animation->setEasingCurve(QEasingCurve::Linear);
 
-    d_ptr->_font = new QFont();
-    d_ptr->_font->setPointSize(12);
-    d_ptr->_font->setWeight(QFont::Weight::Normal);
+    d->_font = new QFont();
+    d->_font->setPointSize(12);
+    d->_font->setWeight(QFont::Weight::Normal);
 
-    connect(d_ptr->_animation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_animation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
 }
 
 CukeLoopedRing::~CukeLoopedRing() = default;
 
 void CukeLoopedRing::setText(const QString &text) {
-    d_ptr->_text = text;
+    Q_D(CukeLoopedRing);
+    d->_text = text;
     update();
 }
 
-void CukeLoopedRing::start() const {
-    d_ptr->_animation->stop();
-    d_ptr->_animation->setStartValue(0);
-    d_ptr->_animation->setEndValue(360);
-    d_ptr->_animation->start();
+void CukeLoopedRing::start() {
+    Q_D(CukeLoopedRing);
+    d->_animation->stop();
+    d->_animation->setStartValue(0);
+    d->_animation->setEndValue(360);
+    d->_animation->start();
 }
 
-void CukeLoopedRing::stop() const {
-    d_ptr->_animation->stop();
+void CukeLoopedRing::stop() {
+    Q_D(CukeLoopedRing);
+    d->_animation->stop();
 }
 
-void CukeLoopedRing::exec() const {
-    if (d_ptr->_animation->state() == QAbstractAnimation::Stopped)
+void CukeLoopedRing::exec() {
+    Q_D(CukeLoopedRing);
+    if (d->_animation->state() == QAbstractAnimation::Stopped)
         start();
     else
         stop();
@@ -56,7 +61,7 @@ void CukeLoopedRing::paintEvent(QPaintEvent *event) {
     const int widgetWidth = width();
     const int widgetHeight = height();
 
-    QColor colorBright = cTheme->getThemeColor(getThemeMode(), CukeThemeType::LoopRing);
+    QColor colorBright = CUKE_THEME->getThemeColor(getThemeMode(), CukeThemeType::LoopRing);
     const QColor colorMedium(colorBright.red(), colorBright.green(), colorBright.blue(), 200);
     const QColor colorDim(colorBright.red(), colorBright.green(), colorBright.blue(), 160);
 
@@ -138,14 +143,14 @@ void CukeLoopedRing::paintEvent(QPaintEvent *event) {
 
 
     // Draw text & glow effect
-    painter.setFont(*d_ptr->_font);
+    painter.setFont(*d->_font);
 
     QPainterPath textClipPath;
     textClipPath.addText(
-        QPointF((widgetWidth - QFontMetrics(*d_ptr->_font).horizontalAdvance(d_ptr->_text)) / 2,
-            0.5 * widgetHeight + QFontMetrics(*d_ptr->_font).height() / 4),
-        *d_ptr->_font,
-        d_ptr->_text
+        QPointF((widgetWidth - QFontMetrics(*d->_font).horizontalAdvance(d->_text)) / 2,
+            0.5 * widgetHeight + QFontMetrics(*d->_font).height() / 4),
+        *d->_font,
+        d->_text
     );
 
     painter.setClipPath(textClipPath);
@@ -158,14 +163,14 @@ void CukeLoopedRing::paintEvent(QPaintEvent *event) {
     const qreal pixelPerDegree = widgetWidth / 360.0;
 
     QRadialGradient textGlow(QPointF(_pAngle * pixelPerDegree, 0),
-        QFontMetrics(*d_ptr->_font).height());
+        QFontMetrics(*d->_font).height());
     textGlow.setColorAt(0, colorBright);
     textGlow.setColorAt(1, colorDim);
 
     painter.setBrush(textGlow);
     painter.drawEllipse(QPointF(_pAngle * pixelPerDegree, 0),
-        QFontMetrics(*d_ptr->_font).height(),
-        QFontMetrics(*d_ptr->_font).height());
+        QFontMetrics(*d->_font).height(),
+        QFontMetrics(*d->_font).height());
 }
 
 CUKE_NAMESPACE_END(lab)

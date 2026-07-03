@@ -4,7 +4,7 @@
 #include "CukeType.h"
 #include "CukeProperty.h"
 
-#define cTheme CukeTheme::instance()
+#define CUKE_THEME CukeTheme::instance()
 
 CUKE_NAMESPACE_BEGIN(pub)
 class CukeThemePrivate;
@@ -21,10 +21,9 @@ public:
     CukeThemeType::ThemeMode getThemeMode();
 
     void addThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color, QColor newColor);
-    const QColor& getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color);
+    QColor getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color);
 signals:
     void themeModeChanged(CukeThemeType::ThemeMode mode);
-
 private:
     void initThemeColor();
 };
