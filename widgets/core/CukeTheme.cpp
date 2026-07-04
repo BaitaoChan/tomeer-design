@@ -74,10 +74,6 @@ namespace {
         {CukeThemeType::WaveformX, QColor(0, 0, 0), QColor(255, 255, 255)},
         {CukeThemeType::WaveformGrid, QColor(100, 100, 100, 100), QColor(140, 140, 140, 100)},
 
-        // LoopRing
-        {CukeThemeType::LoopRing, QColor(31, 155, 93), QColor(31, 155, 93)},
-        {CukeThemeType::LoopText, QColor(31, 155, 93), QColor(31, 155, 93)},
-
         // Status
         {CukeThemeType::Normal, Qt::darkGreen, Qt::darkGreen},
         {CukeThemeType::Warning, Qt::darkYellow, Qt::darkYellow},

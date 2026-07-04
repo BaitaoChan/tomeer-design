@@ -103,9 +103,6 @@ enum ThemeColor {
     WaveformX,
     WaveformGrid,
 
-    LoopRing,
-    LoopText,
-
     HeaderBg,
     TableBg,
     SelectedItem,
