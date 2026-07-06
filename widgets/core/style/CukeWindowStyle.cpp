@@ -3,6 +3,7 @@
 #include <QMainWindow>
 
 #include "CukeWindowStyle.h"
+#include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CukeWindowStyle::CukeWindowStyle(QStyle *style)
@@ -16,6 +17,15 @@ void CukeWindowStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
 }
 
 void CukeWindowStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    if (element == CE_RubberBand) {
+        painter->save();
+        painter->setRenderHint(QPainter::Antialiasing);
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::RubberBand));
+        painter->drawRect(option->rect);
+        painter->restore();
+        return;
+    }
     QProxyStyle::drawControl(element, option, painter, widget);
 }
 

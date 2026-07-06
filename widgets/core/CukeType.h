@@ -70,6 +70,7 @@ enum ThemeColor {
     Border,
 
     Window,
+    RubberBand,
 
     DefaultAlpha,
     HoverAlpha,

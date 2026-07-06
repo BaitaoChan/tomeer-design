@@ -36,6 +36,7 @@ namespace {
 
         // Window
         {CukeThemeType::Window, QColor(252, 252, 252), QColor(32, 32, 32)},
+        {CukeThemeType::RubberBand, QColor(238, 238, 238), QColor(42, 42, 42)},
 
         // Disabled
         {CukeThemeType::Disable, QColor(245, 245, 245, 60), QColor(0, 0, 0, 60)},
