@@ -53,7 +53,15 @@ MainWindow::MainWindow(QWidget *parent)
     menu3->addAction(new QAction("样例1"));
     menu3->addAction(new QAction("样例2"));
     menu3->addAction(new QAction("样例3"));
-    menu3->addAction(new QAction("样例4"));
+
+    auto sample4Action = new QAction("样例4", menu3);
+    sample4Action->setShortcut(QKeySequence("Ctrl+4"));
+    sample4Action->setCheckable(true);
+    sample4Action->setToolTip("这是样例4，用于测试 QAction");
+    sample4Action->setStatusTip("触发样例4 QAction");
+    sample4Action->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::CommentAdd, CUKE_THEME->getThemeColor(CukeThemeType::Text),64));
+    menu3->addAction(sample4Action);
+
     toolButton3->setMenu(menu3);
     auto *toolButton4 = new CukeToolButton(this);
     toolButton4->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

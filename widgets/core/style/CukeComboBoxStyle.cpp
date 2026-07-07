@@ -62,16 +62,15 @@ void CukeComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleO
         const auto combo = qobject_cast<const CukeComboBox *>(widget);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        int radius = 6;
-        const QRect fr = subControlRect(
-            CC_ComboBox, opt, SC_ComboBoxFrame, widget);
+        int radius = 4;
+        const QRect fr = subControlRect(CC_ComboBox, opt, SC_ComboBoxFrame, widget);
 
         // 背景
+        painter->setPen(QPen(CUKE_THEME->getThemeColor(CukeThemeType::Pattern), 1));
         if (opt->state & State_MouseOver)
-            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::HoverAlpha));
+            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBoxHover));
         else
-            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha));
-        painter->setPen(Qt::NoPen);
+            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBox));
         painter->drawRoundedRect(fr.adjusted(1, 1, -1, -1), radius, radius);
 
         painter->restore();

@@ -10,7 +10,7 @@ class CukeAppBarButton;
 class CukeAppBarButtonStyle;
 class CukeAppBarButtonPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeAppBarButton);
+    CUKE_DECLARE_QPTR(CukeAppBarButton)
 public:
     explicit CukeAppBarButtonPrivate(CukeAppBarButton *q);
     ~CukeAppBarButtonPrivate() override;

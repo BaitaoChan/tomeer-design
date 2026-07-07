@@ -20,7 +20,7 @@ void CukeMenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *
         constexpr int radius = 6;
         constexpr int margin = 6;
 
-        const QRect rect = option->rect.adjusted(margin, 0, -margin, -margin);
+        const QRect rect = option->rect.adjusted(margin, 0, -2 * margin, -margin);
 
         painter->setPen(Qt::NoPen);
         painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBoxView));
@@ -37,7 +37,7 @@ void CukeMenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *
 void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     const auto menu = qobject_cast<const CukeMenu *>(widget);
 
-    if (element == CE_MenuItem && menu) {
+    if (element == CE_MenuItem) {
         const auto opt = qstyleoption_cast<const QStyleOptionMenuItem *>(option);
 
         painter->save();
@@ -49,12 +49,12 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
         if (opt->state & State_Selected) {
             painter->setPen(Qt::NoPen);
             painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBoxItem));
-            painter->drawRoundedRect(rect.adjusted(8, 2, -2, -2), 4, 4);
+            painter->drawRoundedRect(rect.adjusted(6, 1, -2, -1), 4, 4);
         }
 
         // 左侧激光指示
         if (opt->state & State_Selected) {
-            const QRect lRect(rect.left() + 10, rect.top() + 4, 3, rect.height() - 8);
+            const QRect lRect(rect.left() + 8, rect.top() + 4, 3, rect.height() - 8);
 
             painter->setPen(Qt::NoPen);
             painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::Check));
@@ -63,9 +63,7 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
 
         // 文本
         painter->setPen(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::Text));
-        painter->drawText(rect.adjusted(16, 0, -2, 0),
-                          Qt::AlignVCenter | Qt::AlignLeft,
-                          opt->text);
+        painter->drawText(rect.adjusted(16, 0, -2, 0), Qt::AlignVCenter | Qt::AlignLeft, opt->text);
 
         painter->restore();
         return;

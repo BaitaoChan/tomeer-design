@@ -9,6 +9,7 @@ class CukeComboBox;
 class CukeComboBoxPrivate : public QObject {
     Q_OBJECT
     CUKE_DECLARE_QPTR(CukeComboBox)
+    CUKE_Q_PROPERTY_DECL(bool, IsPopup)
 public:
     explicit CukeComboBoxPrivate(CukeComboBox *q);
     ~CukeComboBoxPrivate() override;

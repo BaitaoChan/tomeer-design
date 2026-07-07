@@ -17,6 +17,8 @@ public:
     ~CukeMenu() override;
 
 protected:
+    void showEvent(QShowEvent *event) override;
+
     virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
 };
 

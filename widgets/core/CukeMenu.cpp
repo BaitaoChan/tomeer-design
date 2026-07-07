@@ -20,6 +20,12 @@ CukeMenu::CukeMenu(const QString &title, QWidget *parent)
     setTitle(title);
 }
 
+void CukeMenu::showEvent(QShowEvent *event) {
+    Q_D(CukeMenu);
+    QMenu::showEvent(event);
+    move(pos().x() - 6, pos().y());
+}
+
 void CukeMenu::onThemeChanged(CukeThemeType::ThemeMode mode) {
     Q_D(CukeMenu);
     setThemeMode(mode);

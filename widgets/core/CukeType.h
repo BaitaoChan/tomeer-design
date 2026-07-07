@@ -112,6 +112,8 @@ enum ThemeColor {
     Warning,
     Error,
 
+    ComboBox,
+    ComboBoxHover,
     ComboBoxView,
     ComboBoxItem,
 

@@ -57,7 +57,7 @@ namespace {
         {CukeThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
 
         // Pattern
-        {CukeThemeType::Pattern, QColor(200, 200, 200), QColor(10, 10, 10)},
+        {CukeThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
 
         // Focus
         {CukeThemeType::FocusBorder, QColor(0, 120, 215), QColor(0, 120, 215)},
@@ -85,6 +85,8 @@ namespace {
         {CukeThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
 
         // ComboBox
+        {CukeThemeType::ComboBox, QColor(252, 252, 252), QColor(42, 42, 42)},
+        {CukeThemeType::ComboBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)},
         {CukeThemeType::ComboBoxView, QColor(242, 242, 242), QColor(42, 42, 42)},
         {CukeThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
 
