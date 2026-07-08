@@ -4,13 +4,13 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeMenuBar;
-class CukeMenuBarPrivate : public QObject {
+class MenuBar;
+class MenuBarPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeMenuBar)
+    CUKE_DECLARE_QPTR(MenuBar)
 public:
-    explicit CukeMenuBarPrivate(CukeMenuBar *q);
-    ~CukeMenuBarPrivate() override;
+    explicit MenuBarPrivate(MenuBar *q);
+    ~MenuBarPrivate() override;
 };
 CUKE_NAMESPACE_END(pub)
 

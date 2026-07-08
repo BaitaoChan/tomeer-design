@@ -7,24 +7,24 @@
 #include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeToolBar, CukeThemeType::ThemeMode, ThemeMode)
-CukeToolBar::CukeToolBar(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(ToolBar, ThemeType::ThemeMode, ThemeMode)
+ToolBar::ToolBar(QWidget *parent)
     : QToolBar(parent),
-      d_ptr(new CukeToolBarPrivate(this)) {
-    Q_D(CukeToolBar);
-    setStyle(new CukeToolBarStyle(style()));
+      d_ptr(new ToolBarPrivate(this)) {
+    Q_D(ToolBar);
+    setStyle(new ToolBarStyle(style()));
     setAttribute(Qt::WA_TranslucentBackground);
     setOrientation(Qt::Horizontal);
     setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
     // 文字图标高度一致
     setIconSize(QSize(QFontMetrics(font()).height(), QFontMetrics(font()).height()));
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToolBar::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &ToolBar::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeToolBar::~CukeToolBar() = default;
+ToolBar::~ToolBar() = default;
 
-void CukeToolBar::paintEvent(QPaintEvent *event) {
+void ToolBar::paintEvent(QPaintEvent *event) {
     if (isFloating()) {
         QPainter p(this);
         QStyleOptionToolBar opt;
@@ -38,8 +38,8 @@ void CukeToolBar::paintEvent(QPaintEvent *event) {
     QToolBar::paintEvent(event);
 }
 
-void CukeToolBar::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeToolBar);
+void ToolBar::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(ToolBar);
     setThemeMode(mode);
     update();
 }

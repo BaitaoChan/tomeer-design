@@ -6,14 +6,14 @@
 class QPropertyAnimation;
 class QColor;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToolButton;
-class CukeToolButtonStyle;
-class CukeToolButtonPrivate : public QObject {
+class ToolButton;
+class ToolButtonStyle;
+class ToolButtonPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeToolButton)
+    CUKE_DECLARE_QPTR(ToolButton)
 public:
-    explicit CukeToolButtonPrivate(CukeToolButton *parent = nullptr);
-    ~CukeToolButtonPrivate() override;
+    explicit ToolButtonPrivate(ToolButton *parent = nullptr);
+    ~ToolButtonPrivate() override;
 
     Q_SLOT void onMenuShow();
     Q_SLOT void onMenuHide();

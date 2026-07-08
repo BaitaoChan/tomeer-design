@@ -6,14 +6,14 @@
 #include "CukeIcon.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeAppBarPrivate::CukeAppBarPrivate(CukeAppBar *q)
+AppBarPrivate::AppBarPrivate(AppBar *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeAppBarPrivate::~CukeAppBarPrivate() = default;
+AppBarPrivate::~AppBarPrivate() = default;
 
-void CukeAppBarPrivate::onWindowIconChanged(const QIcon &icon) const {
+void AppBarPrivate::onWindowIconChanged(const QIcon &icon) const {
     if (icon.isNull())
         return;
     if (!_windowIcon->isVisible())
@@ -21,7 +21,7 @@ void CukeAppBarPrivate::onWindowIconChanged(const QIcon &icon) const {
     _windowIcon->setPixmap(icon.pixmap(18, 18));
 }
 
-void CukeAppBarPrivate::onWindowTitleChanged(const QString& title) const {
+void AppBarPrivate::onWindowTitleChanged(const QString& title) const {
     if (title.isEmpty())
         return;
     if (!_windowTitle->isVisible())
@@ -29,23 +29,23 @@ void CukeAppBarPrivate::onWindowTitleChanged(const QString& title) const {
     _windowTitle->setText(title);
 }
 
-void CukeAppBarPrivate::onThemeButtonClicked() {
-    Q_Q(CukeAppBar);
+void AppBarPrivate::onThemeButtonClicked() {
+    Q_Q(AppBar);
 
-    CUKE_THEME->setThemeMode(CUKE_THEME->getThemeMode() == CukeThemeType::Dark
-                                 ? CukeThemeType::Light
-                                 : CukeThemeType::Dark);
+    CUKE_THEME->setThemeMode(CUKE_THEME->getThemeMode() == ThemeType::Dark
+                                 ? ThemeType::Light
+                                 : ThemeType::Dark);
 }
 
-void CukeAppBarPrivate::onMinimizeButtonClicked() {
-    Q_Q(CukeAppBar);
+void AppBarPrivate::onMinimizeButtonClicked() {
+    Q_Q(AppBar);
     if (!(q->window()->windowState() & Qt::WindowMinimized)) {
         q->window()->showMinimized();
     }
 }
 
-void CukeAppBarPrivate::onMaximizeButtonClicked() {
-    Q_Q(CukeAppBar);
+void AppBarPrivate::onMaximizeButtonClicked() {
+    Q_Q(AppBar);
 
     if (q->window()->windowState() & Qt::WindowMaximized)
         q->window()->showNormal();
@@ -53,27 +53,27 @@ void CukeAppBarPrivate::onMaximizeButtonClicked() {
         q->window()->showMaximized();
 
     if (q->window()->windowState() & Qt::WindowMaximized)
-        _maximizeButton->setIconType(CukeIconType::SquareMultiple);
+        _maximizeButton->setIconType(IconType::SquareMultiple);
     else
-        _maximizeButton->setIconType(CukeIconType::Maximize);
+        _maximizeButton->setIconType(IconType::Maximize);
 }
 
-void CukeAppBarPrivate::onCloseButtonClicked() {
-    Q_Q(CukeAppBar);
+void AppBarPrivate::onCloseButtonClicked() {
+    Q_Q(AppBar);
     q->window()->close();
 }
 
-void CukeAppBarPrivate::onHoverChanged() {
-    Q_Q(CukeAppBar);
+void AppBarPrivate::onHoverChanged() {
+    Q_Q(AppBar);
     _closeButton->update();
 }
 
-void CukeAppBarPrivate::onWindowStateChanged() {
-    Q_Q(CukeAppBar);
+void AppBarPrivate::onWindowStateChanged() {
+    Q_Q(AppBar);
     if (q->window()->windowState() & Qt::WindowMaximized)
-        _maximizeButton->setIconType(CukeIconType::SquareMultiple);
+        _maximizeButton->setIconType(IconType::SquareMultiple);
     else
-        _maximizeButton->setIconType(CukeIconType::Maximize);
+        _maximizeButton->setIconType(IconType::Maximize);
 }
 
 CUKE_NAMESPACE_END(pub)

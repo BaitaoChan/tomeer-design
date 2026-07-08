@@ -10,14 +10,14 @@
 
 #define CUKE_ARROW_DRAW_MODE 1
 CUKE_NAMESPACE_BEGIN(pub)
-CukeToolButtonStyle::CukeToolButtonStyle(QStyle *style)
+ToolButtonStyle::ToolButtonStyle(QStyle *style)
     : QProxyStyle(style) {
 }
 
-CukeToolButtonStyle::~CukeToolButtonStyle() = default;
+ToolButtonStyle::~ToolButtonStyle() = default;
 
-void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto toolButton = qobject_cast<const CukeToolButton *>(widget);
+void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto toolButton = qobject_cast<const ToolButton *>(widget);
     const auto opt = qstyleoption_cast<const QStyleOptionToolButton *>(option);
     if (element == PE_PanelButtonTool) {
         painter->save();
@@ -25,18 +25,18 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         // 背景
         if (option->state & State_Sunken)
-            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::PressAlpha));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::PressAlpha));
         else if (option->state & State_MouseOver)
-            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::HoverAlpha));
-        CUKE_PAINTER->drawRoundedRect(widget->rect(), painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), CukeGeometryType::All);
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::HoverAlpha));
+        CUKE_PAINTER->drawRoundedRect(widget->rect(), painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), GeometryType::All);
         painter->restore();
         return;
     }
     if (element == PE_IndicatorArrowDown) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(CukeThemeType::Text));
-        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
         constexpr int spacing = 4;
         QFont font("Cuke");
         font.setPixelSize(opt->iconSize.height());
@@ -57,17 +57,17 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         painter->translate(center);
         painter->rotate(toolButton->getRotateAngle());
         painter->translate(-center);
-        painter->drawText(rect, Qt::AlignCenter, QString(QChar(CukeIconType::ChevronDown)));
+        painter->drawText(rect, Qt::AlignCenter, QString(QChar(IconType::ChevronDown)));
 #elif CUKE_ARROW_DRAW_MODE == 1
         QPainterPath path;
         QTransform transform;
         path.addText(QPointF(0, 0), font,
-                      QString(QChar(CukeIconType::ChevronDown)));
+                      QString(QChar(IconType::ChevronDown)));
         transform.translate(center.x(), center.y());
         transform.rotate(toolButton->getRotateAngle());
         transform.translate(-path.boundingRect().center().x(), -path.boundingRect().center().y());
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
         painter->setTransform(transform, true);
         painter->drawPath(path);
 
@@ -76,8 +76,8 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
         painter->rotate(toolButton->getRotateAngle());
         painter->translate(-center);
         CUKE_PAINTER->drawIcon(center, painter,
-                               QIcon(CUKE_ICON->getCukeIcon(CukeIconType::ChevronDown,
-                                                            CUKE_THEME->getThemeColor(CukeThemeType::Text), 64)),
+                               QIcon(CUKE_ICON->getCukeIcon(IconType::ChevronDown,
+                                                            CUKE_THEME->getThemeColor(ThemeType::Text), 64)),
                                QSize(QFontMetrics(opt->font).height(), QFontMetrics(opt->font).height()));
 #endif
         painter->restore();
@@ -86,15 +86,15 @@ void CukeToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOp
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto toolButton = qobject_cast<const CukeToolButton *>(widget);
+void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto toolButton = qobject_cast<const ToolButton *>(widget);
 
     if (element == CE_ToolButtonLabel) {
         const auto opt = qstyleoption_cast<const QStyleOptionToolButton *>(option);
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(CukeThemeType::Text));
-        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
         // 文字图标绘制
         constexpr int spacing = 4;
         constexpr qreal scale = 1.0;
@@ -111,7 +111,7 @@ void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption
             QPoint center = rect.center() - QPoint(opt->iconSize.width() / 2, opt->iconSize.height() / 2);
             QRect iRect(center, opt->iconSize);
 
-            if (toolButton->getIconType() != CukeIconType::None) {
+            if (toolButton->getIconType() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
@@ -133,7 +133,7 @@ void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption
                          iSize.height());
             QRect tRect(iRect.right() + spacing, lRect.top(), tSize.width(), lRect.height());
 
-            if (toolButton->getIconType() != CukeIconType::None) {
+            if (toolButton->getIconType() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
@@ -156,7 +156,7 @@ void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption
                          iSize.height());
             QRect tRect(lRect.left(), iRect.bottom() + spacing, _width, tSize.height());
 
-            if (toolButton->getIconType() != CukeIconType::None) {
+            if (toolButton->getIconType() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
@@ -173,11 +173,11 @@ void CukeToolButtonStyle::drawControl(ControlElement element, const QStyleOption
     QProxyStyle::drawControl(element, option, painter, widget);
 }
 
-void CukeToolButtonStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
+void ToolButtonStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
     QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 
-QSize CukeToolButtonStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
+QSize ToolButtonStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
     QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
     constexpr int spacing = 4;
 

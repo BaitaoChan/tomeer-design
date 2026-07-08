@@ -7,14 +7,16 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CUKE_EXPORT CukeAction : public QAction {
+class ActionPrivate;
+class CUKE_EXPORT Action : public QAction {
     Q_OBJECT
-    CUKE_Q_PROPERTY_DECL(CukeIconType::Icon, IconType)
+    CUKE_DECLARE_DPTR(Action)
+    CUKE_Q_PROPERTY_DECL(IconType::Icon, IconType)
 public:
-    explicit CukeAction(QObject *parent = nullptr);
-    explicit CukeAction(const QString &text, QObject *parent = nullptr);
-    explicit CukeAction(const CukeIconType::Icon &icon, const QString &text, QObject *parent = nullptr);
-    ~CukeAction() override;
+    explicit Action(QObject *parent = nullptr);
+    explicit Action(const QString &text, QObject *parent = nullptr);
+    explicit Action(const IconType::Icon &icon, const QString &text, QObject *parent = nullptr);
+    ~Action() override;
 };
 CUKE_NAMESPACE_END(pub)
 

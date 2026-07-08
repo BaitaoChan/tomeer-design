@@ -6,17 +6,17 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeLineEditPrivate;
-class CUKE_EXPORT CukeLineEdit : public QLineEdit {
+class LineEditPrivate;
+class CUKE_EXPORT LineEdit : public QLineEdit {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeLineEdit)
+    CUKE_DECLARE_DPTR(LineEdit)
     CUKE_Q_PROPERTY_DECL(QColor, BorderColor)
     CUKE_Q_PROPERTY_DECL(int, LineHalfWidth)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeLineEdit(QWidget *parent = nullptr);
-    ~CukeLineEdit() override;
+    explicit LineEdit(QWidget *parent = nullptr);
+    ~LineEdit() override;
 
 protected:
     void focusInEvent(QFocusEvent *event) override;
@@ -24,7 +24,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

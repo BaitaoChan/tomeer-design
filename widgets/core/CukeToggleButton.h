@@ -9,15 +9,15 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToggleButtonPrivate;
-class CUKE_EXPORT CukeToggleButton : public QPushButton {
+class ToggleButtonPrivate;
+class CUKE_EXPORT ToggleButton : public QPushButton {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeToggleButton)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_DECLARE_DPTR(ToggleButton)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeToggleButton(QWidget* parent = nullptr);
-    explicit CukeToggleButton(const QString& text, QWidget* parent = nullptr);
-    ~CukeToggleButton() override;
+    explicit ToggleButton(QWidget* parent = nullptr);
+    explicit ToggleButton(const QString& text, QWidget* parent = nullptr);
+    ~ToggleButton() override;
 
     void setBorderRadius(int radius);
 
@@ -34,7 +34,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

@@ -6,13 +6,13 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToggleButton;
-class CukeToggleButtonPrivate : public QObject {
+class ToggleButton;
+class ToggleButtonPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeToggleButton)
+    CUKE_DECLARE_QPTR(ToggleButton)
 public:
-    explicit CukeToggleButtonPrivate(CukeToggleButton *q);
-    ~CukeToggleButtonPrivate() override;
+    explicit ToggleButtonPrivate(ToggleButton *q);
+    ~ToggleButtonPrivate() override;
 
 private:
 

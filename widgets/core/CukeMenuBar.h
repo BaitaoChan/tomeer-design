@@ -6,17 +6,17 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeMenuBarPrivate;
-class CUKE_EXPORT CukeMenuBar : public QMenuBar {
+class MenuBarPrivate;
+class CUKE_EXPORT MenuBar : public QMenuBar {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeMenuBar)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_DECLARE_DPTR(MenuBar)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeMenuBar(QWidget* parent = nullptr);
-    ~CukeMenuBar() override;
+    explicit MenuBar(QWidget* parent = nullptr);
+    ~MenuBar() override;
 
 protected:
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

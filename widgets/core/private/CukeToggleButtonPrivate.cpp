@@ -2,11 +2,11 @@
 #include "CukeToggleButton.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeToggleButtonPrivate::CukeToggleButtonPrivate(CukeToggleButton *q)
+ToggleButtonPrivate::ToggleButtonPrivate(ToggleButton *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeToggleButtonPrivate::~CukeToggleButtonPrivate() = default;
+ToggleButtonPrivate::~ToggleButtonPrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

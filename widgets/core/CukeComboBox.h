@@ -13,25 +13,25 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBoxPrivate;
-class CUKE_EXPORT CukeComboBox : public QComboBox {
+class ComboBoxPrivate;
+class CUKE_EXPORT ComboBox : public QComboBox {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeComboBox)
+    CUKE_DECLARE_DPTR(ComboBox)
     CUKE_Q_PROPERTY_DECL(int, RotateAngle)
     CUKE_Q_PROPERTY_DECL(int, LineHalfWidth)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
     CUKE_Q_PROPERTY_DECL(int, PopupHeight)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeComboBox(QWidget *parent = nullptr);
-    ~CukeComboBox() override;
+    explicit ComboBox(QWidget *parent = nullptr);
+    ~ComboBox() override;
 
 protected:
     void showPopup() override;
     void hidePopup() override;
     void paintEvent(QPaintEvent *event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

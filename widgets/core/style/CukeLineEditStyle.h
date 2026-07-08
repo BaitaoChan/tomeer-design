@@ -5,11 +5,11 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeLineEditStyle : public QProxyStyle {
+class LineEditStyle : public QProxyStyle {
     Q_OBJECT
 public:
-    explicit CukeLineEditStyle(QStyle *style = nullptr);
-    ~CukeLineEditStyle() override;
+    explicit LineEditStyle(QStyle *style = nullptr);
+    ~LineEditStyle() override;
 };
 CUKE_NAMESPACE_END(pub)
 

@@ -8,13 +8,13 @@
 
 class QPropertyAnimation;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeSlider;
-class CukeSliderPrivate : public QObject {
+class Slider;
+class SliderPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeSlider)
+    CUKE_DECLARE_QPTR(Slider)
 public:
-    explicit CukeSliderPrivate(CukeSlider* q);
-    ~CukeSliderPrivate() override;
+    explicit SliderPrivate(Slider* q);
+    ~SliderPrivate() override;
 
 private:
     bool _isPressed = false;

@@ -10,16 +10,16 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeSliderPrivate;
-class CUKE_EXPORT CukeSlider : public QSlider {
+class SliderPrivate;
+class CUKE_EXPORT Slider : public QSlider {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeSlider)
+    CUKE_DECLARE_DPTR(Slider)
     CUKE_Q_PROPERTY_DECL(qreal, HandleDiameter)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeSlider(QWidget *parent = nullptr);
-    explicit CukeSlider(Qt::Orientation orientation, QWidget *parent = nullptr);
-    ~CukeSlider() override;
+    explicit Slider(QWidget *parent = nullptr);
+    explicit Slider(Qt::Orientation orientation, QWidget *parent = nullptr);
+    ~Slider() override;
 
 protected:
     void enterEvent(QEnterEvent *event) override;
@@ -30,7 +30,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

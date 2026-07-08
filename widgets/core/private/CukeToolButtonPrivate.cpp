@@ -4,22 +4,22 @@
 #include "CukeToolButton.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeToolButtonPrivate::CukeToolButtonPrivate(CukeToolButton *q)
+ToolButtonPrivate::ToolButtonPrivate(ToolButton *q)
     : QObject(q), q_ptr(q) {
 }
 
-CukeToolButtonPrivate::~CukeToolButtonPrivate() = default;
+ToolButtonPrivate::~ToolButtonPrivate() = default;
 
-void CukeToolButtonPrivate::onMenuShow() {
-    Q_Q(CukeToolButton);
+void ToolButtonPrivate::onMenuShow() {
+    Q_Q(ToolButton);
     _rotateAnim->stop();
     _rotateAnim->setStartValue(q->getRotateAngle());
     _rotateAnim->setEndValue(-180);
     _rotateAnim->start();
 }
 
-void CukeToolButtonPrivate::onMenuHide() {
-    Q_Q(CukeToolButton);
+void ToolButtonPrivate::onMenuHide() {
+    Q_Q(ToolButton);
     _rotateAnim->stop();
     _rotateAnim->setStartValue(q->getRotateAngle());
     _rotateAnim->setEndValue(0);

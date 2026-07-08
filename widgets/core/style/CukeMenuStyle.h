@@ -5,11 +5,11 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeMenuStyle : public QProxyStyle {
+class MenuStyle : public QProxyStyle {
     Q_OBJECT
 public:
-    explicit CukeMenuStyle(QStyle *style = nullptr);
-    ~CukeMenuStyle() override;
+    explicit MenuStyle(QStyle *style = nullptr);
+    ~MenuStyle() override;
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
     void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;

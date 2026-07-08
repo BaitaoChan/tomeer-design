@@ -2,10 +2,10 @@
 #include "CukeToolBar.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeToolBarPrivate::CukeToolBarPrivate(CukeToolBar *q)
+ToolBarPrivate::ToolBarPrivate(ToolBar *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeToolBarPrivate::~CukeToolBarPrivate() = default;
+ToolBarPrivate::~ToolBarPrivate() = default;
 CUKE_NAMESPACE_END(pub)

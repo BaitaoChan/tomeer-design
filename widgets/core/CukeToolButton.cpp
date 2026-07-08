@@ -7,15 +7,15 @@
 #include "CukeToolButtonStyle.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeToolButton, int, BorderRadius)
-CUKE_Q_PROPERTY_IMPL(CukeToolButton, qreal, RotateAngle)
-CUKE_Q_PROPERTY_IMPL(CukeToolButton, CukeThemeType::ThemeMode, ThemeMode)
-CUKE_Q_PROPERTY_IMPL(CukeToolButton, CukeGeometryType::SideFlag, SideFlag)
-CukeToolButton::CukeToolButton(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(ToolButton, int, BorderRadius)
+CUKE_Q_PROPERTY_IMPL(ToolButton, qreal, RotateAngle)
+CUKE_Q_PROPERTY_IMPL(ToolButton, ThemeType::ThemeMode, ThemeMode)
+CUKE_Q_PROPERTY_IMPL(ToolButton, GeometryType::SideFlag, SideFlag)
+ToolButton::ToolButton(QWidget *parent)
     : QToolButton(parent),
-      d_ptr(new CukeToolButtonPrivate(this)) {
-    Q_D(CukeToolButton);
-    setStyle(new CukeToolButtonStyle());
+      d_ptr(new ToolButtonPrivate(this)) {
+    Q_D(ToolButton);
+    setStyle(new ToolButtonStyle());
     setPopupMode(InstantPopup);
     setBorderRadius(4);
 
@@ -23,16 +23,16 @@ CukeToolButton::CukeToolButton(QWidget *parent)
     d->_rotateAnim->setDuration(300);
     d->_rotateAnim->setEasingCurve(QEasingCurve::InOutSine);
 
-    connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&CukeToolButton::update));
-    connect(this, &CukeToolButton::pBorderRadiusChanged, this, QOverload<>::of(&CukeToolButton::update));
-    connect(this, &CukeToolButton::pSideFlagChanged, this, QOverload<>::of(&CukeToolButton::update));
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToolButton::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&ToolButton::update));
+    connect(this, &ToolButton::pBorderRadiusChanged, this, QOverload<>::of(&ToolButton::update));
+    connect(this, &ToolButton::pSideFlagChanged, this, QOverload<>::of(&ToolButton::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &ToolButton::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeToolButton::~CukeToolButton() = default;
+ToolButton::~ToolButton() = default;
 
-void CukeToolButton::setIconType(CukeIconType::Icon pIconType) {
+void ToolButton::setIconType(IconType::Icon pIconType) {
     if (_pIconType != pIconType) {
         _pIconType = pIconType;
         pIconTypeChanged();
@@ -40,27 +40,27 @@ void CukeToolButton::setIconType(CukeIconType::Icon pIconType) {
     }
 }
 
-CukeIconType::Icon CukeToolButton::getIconType() const {
+IconType::Icon ToolButton::getIconType() const {
     return _pIconType;
 }
 
-void CukeToolButton::setMenu(QMenu *menu) {
-    Q_D(CukeToolButton);
+void ToolButton::setMenu(QMenu *menu) {
+    Q_D(ToolButton);
     if (QMenu *menu = QToolButton::menu()) {
         disconnect(menu, nullptr, d, nullptr);
     }
     QToolButton::setMenu(menu);
 
-    connect(menu, &QMenu::aboutToShow, d, &CukeToolButtonPrivate::onMenuShow);
-    connect(menu, &QMenu::aboutToHide, d, &CukeToolButtonPrivate::onMenuHide);
+    connect(menu, &QMenu::aboutToShow, d, &ToolButtonPrivate::onMenuShow);
+    connect(menu, &QMenu::aboutToHide, d, &ToolButtonPrivate::onMenuHide);
 }
 
-QMenu *CukeToolButton::menu() const {
+QMenu *ToolButton::menu() const {
     return QToolButton::menu();
 }
 
-void CukeToolButton::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeToolButton);
+void ToolButton::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(ToolButton);
     setThemeMode(mode);
     update();
 }

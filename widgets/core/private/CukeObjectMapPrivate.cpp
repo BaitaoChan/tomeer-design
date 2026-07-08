@@ -2,10 +2,10 @@
 #include "CukeObjectMap.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeObjectMapPrivate::CukeObjectMapPrivate(CukeObjectMap *q)
+ObjectMapPrivate::ObjectMapPrivate(ObjectMap *q)
     : q_ptr(q) {
 }
 
-CukeObjectMapPrivate::~CukeObjectMapPrivate() = default;
+ObjectMapPrivate::~ObjectMapPrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

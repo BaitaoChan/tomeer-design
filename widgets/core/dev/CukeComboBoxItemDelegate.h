@@ -3,15 +3,14 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 
-#include "CukeObjectMap.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBoxItemDelegate : public QStyledItemDelegate {
+class ComboBoxItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
 public:
-    explicit CukeComboBoxItemDelegate(QObject *parent = nullptr);
-    ~CukeComboBoxItemDelegate() override;
+    explicit ComboBoxItemDelegate(QObject *parent = nullptr);
+    ~ComboBoxItemDelegate() override;
 
 protected:
     void paint(QPainter *painter,

@@ -6,22 +6,22 @@
 #include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeWindowStyle::CukeWindowStyle(QStyle *style)
+WindowStyle::WindowStyle(QStyle *style)
     : QProxyStyle(style) {
 }
 
-CukeWindowStyle::~CukeWindowStyle() = default;
+WindowStyle::~WindowStyle() = default;
 
-void CukeWindowStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+void WindowStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-void CukeWindowStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+void WindowStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
     if (element == CE_RubberBand) {
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::RubberBand));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::RubberBand));
         painter->drawRect(option->rect);
         painter->restore();
         return;
@@ -29,11 +29,11 @@ void CukeWindowStyle::drawControl(ControlElement element, const QStyleOption *op
     QProxyStyle::drawControl(element, option, painter, widget);
 }
 
-void CukeWindowStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
+void WindowStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
     QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 
-int CukeWindowStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
+int WindowStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 

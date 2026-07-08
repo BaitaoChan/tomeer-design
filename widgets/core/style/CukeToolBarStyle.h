@@ -2,15 +2,15 @@
 #define CUKETOOLBARSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeObjectMap.h"
+#include "../dev/CukeObjectMap.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToolBarStyle : public QProxyStyle {
+class ToolBarStyle : public QProxyStyle {
     Q_OBJECT
 public:
-    explicit CukeToolBarStyle(QStyle *style = nullptr);
-    ~CukeToolBarStyle() override;
+    explicit ToolBarStyle(QStyle *style = nullptr);
+    ~ToolBarStyle() override;
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
     void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;

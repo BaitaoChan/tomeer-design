@@ -3,12 +3,12 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeObjectMapPrivate;
-class CUKE_EXPORT CukeObjectMap {
-    CUKE_DECLARE_DPTR(CukeObjectMap);
+class ObjectMapPrivate;
+class CUKE_EXPORT ObjectMap {
+    CUKE_DECLARE_DPTR(ObjectMap);
 public:
-    explicit CukeObjectMap(QObject *child);
-    virtual ~CukeObjectMap();
+    explicit ObjectMap(QObject *child);
+    virtual ~ObjectMap();
 
     void add(int key, void *child) const;
     void *object(int key) const;

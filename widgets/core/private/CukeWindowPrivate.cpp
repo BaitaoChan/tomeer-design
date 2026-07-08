@@ -2,13 +2,13 @@
 #include "CukeWindow.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeWindowPrivate, bool, IsResize)
-CUKE_Q_PROPERTY_IMPL(CukeWindowPrivate, bool, IsDrag)
-CukeWindowPrivate::CukeWindowPrivate(CukeWindow *q)
+CUKE_Q_PROPERTY_IMPL(WindowPrivate, bool, IsResize)
+CUKE_Q_PROPERTY_IMPL(WindowPrivate, bool, IsDrag)
+WindowPrivate::WindowPrivate(Window *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeWindowPrivate::~CukeWindowPrivate() = default;
+WindowPrivate::~WindowPrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

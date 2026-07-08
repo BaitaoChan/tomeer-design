@@ -4,14 +4,14 @@
 #include "CukeObjectMapPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeObjectMap::CukeObjectMap(QObject *child)
-    : d_ptr(new CukeObjectMapPrivate(this)) {
+ObjectMap::ObjectMap(QObject *child)
+    : d_ptr(new ObjectMapPrivate(this)) {
     d_ptr->_child = child;
 }
 
-CukeObjectMap::~CukeObjectMap() = default;
+ObjectMap::~ObjectMap() = default;
 
-void CukeObjectMap::add(const int key, void *child) const {
+void ObjectMap::add(const int key, void *child) const {
     if (!child) {
         return;
     }
@@ -20,20 +20,20 @@ void CukeObjectMap::add(const int key, void *child) const {
     d_ptr->_children.insert(key, child);
 }
 
-void *CukeObjectMap::object(const int key) const {
+void *ObjectMap::object(const int key) const {
     if (!d_ptr->_children.contains(key)) {
         return nullptr;
     }
     return d_ptr->_children.value(key);
 }
 
-QList<void *> CukeObjectMap::objects() const {
+QList<void *> ObjectMap::objects() const {
     if (d_ptr->_children.isEmpty()) {
     }
     return d_ptr->_children.values();
 }
 
-bool CukeObjectMap::contains(const int key) const {
+bool ObjectMap::contains(const int key) const {
     return d_ptr->_children.contains(key);
 }
 

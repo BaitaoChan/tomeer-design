@@ -5,13 +5,13 @@
 
 class QVariantAnimation;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeCheckBox;
-class CukeCheckBoxPrivate : public QObject {
+class CheckBox;
+class CheckBoxPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeCheckBox)
+    CUKE_DECLARE_QPTR(CheckBox)
 public:
-    explicit CukeCheckBoxPrivate(CukeCheckBox *q);
-    ~CukeCheckBoxPrivate() override;
+    explicit CheckBoxPrivate(CheckBox *q);
+    ~CheckBoxPrivate() override;
 
     Q_SLOT void onToggled(bool checked);
 

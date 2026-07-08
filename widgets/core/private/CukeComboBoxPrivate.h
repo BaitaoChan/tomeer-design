@@ -5,14 +5,14 @@
 
 class QPropertyAnimation;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeComboBox;
-class CukeComboBoxPrivate : public QObject {
+class ComboBox;
+class ComboBoxPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeComboBox)
+    CUKE_DECLARE_QPTR(ComboBox)
     CUKE_Q_PROPERTY_DECL(bool, IsPopup)
 public:
-    explicit CukeComboBoxPrivate(CukeComboBox *q);
-    ~CukeComboBoxPrivate() override;
+    explicit ComboBoxPrivate(ComboBox *q);
+    ~ComboBoxPrivate() override;
 
 private:
     QPropertyAnimation *_rotateAnim = nullptr;

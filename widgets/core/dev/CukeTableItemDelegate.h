@@ -3,16 +3,15 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 
-#include "CukeObjectMap.h"
 #include "CukeProperty.h"
 #include "CukeLineEdit.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeTableItemDelegate : public QStyledItemDelegate {
+class TableItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
 public:
-    explicit CukeTableItemDelegate(QObject *parent = nullptr);
-    ~CukeTableItemDelegate() override;
+    explicit TableItemDelegate(QObject *parent = nullptr);
+    ~TableItemDelegate() override;
 
 protected:
     QWidget *createEditor(QWidget *parent,

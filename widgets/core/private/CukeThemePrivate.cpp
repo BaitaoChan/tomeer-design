@@ -2,12 +2,12 @@
 #include "CukeCheckBox.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeThemePrivate, qreal, ColorFactor)
-CukeThemePrivate::CukeThemePrivate(CukeTheme *q)
+CUKE_Q_PROPERTY_IMPL(ThemePrivate, qreal, ColorFactor)
+ThemePrivate::ThemePrivate(Theme *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeThemePrivate::~CukeThemePrivate() = default;
+ThemePrivate::~ThemePrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

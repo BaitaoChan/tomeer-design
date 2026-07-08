@@ -5,13 +5,13 @@
 
 class QPropertyAnimation;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeLineEdit;
-class CukeLineEditPrivate : public QObject {
+class LineEdit;
+class LineEditPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeLineEdit)
+    CUKE_DECLARE_QPTR(LineEdit)
 public:
-    explicit CukeLineEditPrivate(CukeLineEdit *q);
-    ~CukeLineEditPrivate() override;
+    explicit LineEditPrivate(LineEdit *q);
+    ~LineEditPrivate() override;
 
     Q_SLOT void onLineAnimFinished();
 

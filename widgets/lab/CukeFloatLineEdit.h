@@ -6,13 +6,13 @@
 using namespace cuke::pub;
 
 CUKE_NAMESPACE_BEGIN(lab)
-class CukeFloatLineEditPrivate;
-class CUKE_EXPORT CukeFloatLineEdit : public CukeLineEdit {
+class FloatLineEditPrivate;
+class CUKE_EXPORT FloatLineEdit : public LineEdit {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeFloatLineEdit)
+    CUKE_DECLARE_DPTR(FloatLineEdit)
 public:
-    explicit CukeFloatLineEdit(QWidget *parent = nullptr);
-    ~CukeFloatLineEdit() override;
+    explicit FloatLineEdit(QWidget *parent = nullptr);
+    ~FloatLineEdit() override;
 
     void setRange(float min, float max);
 

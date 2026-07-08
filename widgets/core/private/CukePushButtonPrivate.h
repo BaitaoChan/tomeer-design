@@ -4,13 +4,13 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukePushButton;
-class CukePushButtonPrivate : public QObject {
+class PushButton;
+class PushButtonPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukePushButton)
+    CUKE_DECLARE_QPTR(PushButton)
 public:
-    explicit CukePushButtonPrivate(CukePushButton *q);
-    ~CukePushButtonPrivate() override;
+    explicit PushButtonPrivate(PushButton *q);
+    ~PushButtonPrivate() override;
 
 private:
     bool _isPressed = false;

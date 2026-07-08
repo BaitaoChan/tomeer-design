@@ -5,7 +5,7 @@
 CUKE_NAMESPACE_BEGIN(pub)
 namespace {
     struct ThemeColor {
-        CukeThemeType::ThemeColor role;
+        ThemeType::ThemeColor role;
         QColor light;
         QColor dark;
     };
@@ -23,104 +23,104 @@ namespace {
 
     const ThemeColor themeColors[] = {
         // Transparent
-        {CukeThemeType::Transparent, QColor(255, 255, 255, 0), QColor(0, 0, 0, 0)},
+        {ThemeType::Transparent, QColor(255, 255, 255, 0), QColor(0, 0, 0, 0)},
 
         // Basic
-        {CukeThemeType::Default, QColor(160, 160, 160), QColor(82, 82, 82)},
-        {CukeThemeType::Hover, QColor(240, 240, 240), QColor(52, 52, 52)},
-        {CukeThemeType::Press, QColor(230, 230, 230), QColor(32, 32, 32)},
-        {CukeThemeType::Check, QColor(0, 103, 192), QColor(0, 103, 192)},
-        {CukeThemeType::Text, QColor(0, 0, 0), QColor(255, 255, 255)},
-        {CukeThemeType::Border, QColor(128, 128, 128), QColor(53, 53, 53)},
-        {CukeThemeType::Error, QColor(220, 53, 69), QColor(220, 53, 69)},
+        {ThemeType::Default, QColor(160, 160, 160), QColor(82, 82, 82)},
+        {ThemeType::Hover, QColor(240, 240, 240), QColor(52, 52, 52)},
+        {ThemeType::Press, QColor(230, 230, 230), QColor(32, 32, 32)},
+        {ThemeType::Check, QColor(0, 103, 192), QColor(0, 103, 192)},
+        {ThemeType::Text, QColor(0, 0, 0), QColor(255, 255, 255)},
+        {ThemeType::Border, QColor(128, 128, 128), QColor(53, 53, 53)},
+        {ThemeType::Error, QColor(220, 53, 69), QColor(220, 53, 69)},
 
         // Window
-        {CukeThemeType::Window, QColor(252, 252, 252), QColor(32, 32, 32)},
-        {CukeThemeType::RubberBand, QColor(238, 238, 238), QColor(42, 42, 42)},
+        {ThemeType::Window, QColor(252, 252, 252), QColor(32, 32, 32)},
+        {ThemeType::RubberBand, QColor(238, 238, 238), QColor(42, 42, 42)},
 
         // Disabled
-        {CukeThemeType::Disable, QColor(245, 245, 245, 60), QColor(0, 0, 0, 60)},
-        {CukeThemeType::TextDisable, QColor(182, 182, 182), QColor(167, 167, 167)},
+        {ThemeType::Disable, QColor(245, 245, 245, 60), QColor(0, 0, 0, 60)},
+        {ThemeType::TextDisable, QColor(182, 182, 182), QColor(167, 167, 167)},
 
         // Alpha
-        {CukeThemeType::DefaultAlpha, QColor(160, 160, 160, 64), QColor(52, 52, 52, 32)},
-        {CukeThemeType::HoverAlpha, QColor(232, 232, 232, 128), QColor(52, 52, 52, 128)},
-        {CukeThemeType::PressAlpha, QColor(232, 232, 232, 200), QColor(52, 52, 52, 200)},
-        {CukeThemeType::CheckAlpha, QColor(0, 103, 192, 170), QColor(0, 103, 192, 170)},
-        {CukeThemeType::TextAlpha, QColor(0, 0, 0, 200), QColor(255, 255, 255, 200)},
-        {CukeThemeType::BorderAlpha, QColor(128, 128, 128, 120), QColor(53, 53, 53, 120)},
+        {ThemeType::DefaultAlpha, QColor(160, 160, 160, 64), QColor(52, 52, 52, 32)},
+        {ThemeType::HoverAlpha, QColor(232, 232, 232, 128), QColor(52, 52, 52, 128)},
+        {ThemeType::PressAlpha, QColor(232, 232, 232, 200), QColor(52, 52, 52, 200)},
+        {ThemeType::CheckAlpha, QColor(0, 103, 192, 170), QColor(0, 103, 192, 170)},
+        {ThemeType::TextAlpha, QColor(0, 0, 0, 200), QColor(255, 255, 255, 200)},
+        {ThemeType::BorderAlpha, QColor(128, 128, 128, 120), QColor(53, 53, 53, 120)},
 
         // Window Alpha
-        {CukeThemeType::WindowAlpha, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
+        {ThemeType::WindowAlpha, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
 
         // Panel Alpha
-        {CukeThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
+        {ThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
 
         // Pattern
-        {CukeThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
+        {ThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
 
         // Focus
-        {CukeThemeType::FocusBorder, QColor(0, 120, 215), QColor(0, 120, 215)},
+        {ThemeType::FocusBorder, QColor(0, 120, 215), QColor(0, 120, 215)},
 
         // ToggleSwitch
-        {CukeThemeType::ToggleSwitchKnob, QColor(252, 252, 252), QColor(60, 60, 60)},
-        {CukeThemeType::ToggleSwitchBorder, QColor(220, 220, 220), QColor(60, 60, 60)},
+        {ThemeType::ToggleSwitchKnob, QColor(252, 252, 252), QColor(60, 60, 60)},
+        {ThemeType::ToggleSwitchBorder, QColor(220, 220, 220), QColor(60, 60, 60)},
 
         // Slider
-        {CukeThemeType::SliderHandleBorder, QColor(200, 200, 200), QColor(60, 60, 60)},
+        {ThemeType::SliderHandleBorder, QColor(200, 200, 200), QColor(60, 60, 60)},
 
         // Waveform
-        {CukeThemeType::WaveformLegendText, QColor(0, 0, 0), QColor(255, 255, 255)},
-        {CukeThemeType::WaveformLegendBorder, QColor(0, 0, 0, 255), QColor(255, 255, 255, 255)},
-        {CukeThemeType::WaveformX, QColor(0, 0, 0), QColor(255, 255, 255)},
-        {CukeThemeType::WaveformGrid, QColor(100, 100, 100, 100), QColor(140, 140, 140, 100)},
+        {ThemeType::WaveformLegendText, QColor(0, 0, 0), QColor(255, 255, 255)},
+        {ThemeType::WaveformLegendBorder, QColor(0, 0, 0, 255), QColor(255, 255, 255, 255)},
+        {ThemeType::WaveformX, QColor(0, 0, 0), QColor(255, 255, 255)},
+        {ThemeType::WaveformGrid, QColor(100, 100, 100, 100), QColor(140, 140, 140, 100)},
 
         // Status
-        {CukeThemeType::Normal, Qt::darkGreen, Qt::darkGreen},
-        {CukeThemeType::Warning, Qt::darkYellow, Qt::darkYellow},
+        {ThemeType::Normal, Qt::darkGreen, Qt::darkGreen},
+        {ThemeType::Warning, Qt::darkYellow, Qt::darkYellow},
 
         // TableView
-        {CukeThemeType::HeaderBg, QColor(0, 0, 0, 40), QColor(0, 0, 0, 40)},
-        {CukeThemeType::TableBg, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
-        {CukeThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
+        {ThemeType::HeaderBg, QColor(0, 0, 0, 40), QColor(0, 0, 0, 40)},
+        {ThemeType::TableBg, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
+        {ThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
 
         // ComboBox
-        {CukeThemeType::ComboBox, QColor(252, 252, 252), QColor(42, 42, 42)},
-        {CukeThemeType::ComboBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)},
-        {CukeThemeType::ComboBoxView, QColor(242, 242, 242), QColor(42, 42, 42)},
-        {CukeThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
+        {ThemeType::ComboBox, QColor(252, 252, 252), QColor(42, 42, 42)},
+        {ThemeType::ComboBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)},
+        {ThemeType::ComboBoxView, QColor(242, 242, 242), QColor(42, 42, 42)},
+        {ThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
 
         // AppBarButton
-        {CukeThemeType::Dismiss, QColor(232, 17, 35), QColor(232, 17, 35)},
+        {ThemeType::Dismiss, QColor(232, 17, 35), QColor(232, 17, 35)},
 
         // ToolBar
-        {CukeThemeType::ToolBarHandle, QColor(98, 238, 147), QColor(98, 238, 147)},
-        {CukeThemeType::ToolBarBorder, QColor(98, 238, 147), QColor(98, 238, 147)},
-        {CukeThemeType::ToolBarBg, QColor(245, 245, 245), QColor(42, 42, 42)},
+        {ThemeType::ToolBarHandle, QColor(98, 238, 147), QColor(98, 238, 147)},
+        {ThemeType::ToolBarBorder, QColor(98, 238, 147), QColor(98, 238, 147)},
+        {ThemeType::ToolBarBg, QColor(245, 245, 245), QColor(42, 42, 42)},
     };
 }
 
-CUKE_Q_SINGLETON_IMPL(CukeTheme)
-CukeTheme::CukeTheme(QObject *parent)
+CUKE_Q_SINGLETON_IMPL(Theme)
+Theme::Theme(QObject *parent)
     : QObject(parent),
-      d_ptr(new CukeThemePrivate(this)) {
-    Q_D(CukeTheme);
+      d_ptr(new ThemePrivate(this)) {
+    Q_D(Theme);
 
     d->_colorAnimation = new QPropertyAnimation(d, "_pColorFactor", this);
     d->_colorAnimation->setDuration(250);
     d->_colorAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
     initThemeColor();
-    connect(d, &CukeThemePrivate::pColorFactorChanged, this, &CukeTheme::themeColorChanged);
+    connect(d, &ThemePrivate::pColorFactorChanged, this, &Theme::themeColorChanged);
 }
 
-CukeTheme::~CukeTheme() = default;
+Theme::~Theme() = default;
 
-void CukeTheme::setThemeMode(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeTheme);
+void Theme::setThemeMode(ThemeType::ThemeMode mode) {
+    Q_D(Theme);
     d->_themeMode = mode;
 
-    const qreal tFactor = mode == CukeThemeType::Light ? 1.0 : 0.0;
+    const qreal tFactor = mode == ThemeType::Light ? 1.0 : 0.0;
 
     d->_colorAnimation->stop();
     // 切换缓冲
@@ -131,22 +131,22 @@ void CukeTheme::setThemeMode(CukeThemeType::ThemeMode mode) {
     emit themeModeChanged(d->_themeMode);
 }
 
-CukeThemeType::ThemeMode CukeTheme::getThemeMode() {
-    Q_D(CukeTheme);
+ThemeType::ThemeMode Theme::getThemeMode() {
+    Q_D(Theme);
     return d->_themeMode;
 }
 
-void CukeTheme::addThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color, QColor newColor) {
-    Q_D(CukeTheme);
-    if (mode == CukeThemeType::Light) {
+void Theme::addThemeColor(ThemeType::ThemeMode mode, ThemeType::ThemeColor color, QColor newColor) {
+    Q_D(Theme);
+    if (mode == ThemeType::Light) {
         d->_lightThemeColorList[color] = newColor;
-    } else if (mode == CukeThemeType::Dark) {
+    } else if (mode == ThemeType::Dark) {
         d->_darkThemeColorList[color] = newColor;
     }
 }
 
-QColor CukeTheme::getThemeColor(CukeThemeType::ThemeColor color) {
-    Q_D(CukeTheme);
+QColor Theme::getThemeColor(ThemeType::ThemeColor color) {
+    Q_D(Theme);
 
     const QColor lightColor = d->_lightThemeColorList.value(color);
     const QColor darkColor = d->_darkThemeColorList.value(color);
@@ -154,19 +154,19 @@ QColor CukeTheme::getThemeColor(CukeThemeType::ThemeColor color) {
     return mixColor(darkColor, lightColor, d->getColorFactor());
 }
 
-QColor CukeTheme::getThemeColor(CukeThemeType::ThemeMode mode, CukeThemeType::ThemeColor color) {
-    Q_D(CukeTheme);
-    if (mode == CukeThemeType::Light) {
+QColor Theme::getThemeColor(ThemeType::ThemeMode mode, ThemeType::ThemeColor color) {
+    Q_D(Theme);
+    if (mode == ThemeType::Light) {
         return d->_lightThemeColorList[color];
     }
-    if (mode == CukeThemeType::Dark) {
+    if (mode == ThemeType::Dark) {
         return d->_darkThemeColorList[color];
     }
     return {};
 }
 
-void CukeTheme::initThemeColor() {
-    Q_D(CukeTheme);
+void Theme::initThemeColor() {
+    Q_D(Theme);
 
     d->_lightThemeColorList.clear();
     d->_darkThemeColorList.clear();

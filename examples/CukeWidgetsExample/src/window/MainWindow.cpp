@@ -16,6 +16,7 @@
 #include <QFile>
 
 #include "CukeIcon.h"
+#include "CukeAction.h"
 #include "CukeMenu.h"
 #include "CukeAppBar.h"
 #include "CukeMenuBar.h"
@@ -24,11 +25,11 @@
 #include "CukeComboBox.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : CukeWindow(parent) {
-    // setWindowTitle("CukeWidgets");
+    : Window(parent) {
+    // setWindowTitle("Widgets");
     setWindowIcon(QIcon(":/images/GreenSun.svg"));
 
-    auto menuBar = new CukeMenuBar(this);
+    auto menuBar = new MenuBar(this);
     menuBar->addAction(new QAction("文件"));
     menuBar->addAction(new QAction("编辑"));
     menuBar->addAction(new QAction("视图"));
@@ -36,38 +37,37 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar->addAction(new QAction("生成"));
     menuBar->addAction(new QAction("调试"));
     menuBar->addAction(new QAction("拓展"));
-    appBar()->addCustomWidget(menuBar, CukeAppBarType::LeftArea);
+    appBar()->addCustomWidget(menuBar, AppBarType::LeftArea);
 
-    auto toolBar = new CukeToolBar(this);
-    auto *toolButton1 = new CukeToolButton(this);
+    auto toolBar = new ToolBar(this);
+    auto *toolButton1 = new ToolButton(this);
     toolButton1->setText("开始");
-    auto *toolButton2 = new CukeToolButton(this);
-    // toolButton2->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::CommentAdd, CUKE_THEME->getThemeColor(CukeThemeType::Text), 64));
-    toolButton2->setIconType(CukeIconType::BookCoins);
-    auto *toolButton3 = new CukeToolButton(this);
+    auto *toolButton2 = new ToolButton(this);
+    // toolButton2->setIcon(CUKE_ICON->getCukeIcon(IconType::CommentAdd, CUKE_THEME->getThemeColor(ThemeType::Text), 64));
+    toolButton2->setIconType(IconType::BookCoins);
+    auto *toolButton3 = new ToolButton(this);
     toolButton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolButton3->setText("统计");
-    // toolButton3->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::Dismiss, CUKE_THEME->getThemeColor(CukeThemeType::Text), 64));
-    toolButton3->setIconType(CukeIconType::AppGeneric);
-    auto *menu3 = new CukeMenu(this);
+    // toolButton3->setIcon(CUKE_ICON->getCukeIcon(IconType::Dismiss, CUKE_THEME->getThemeColor(ThemeType::Text), 64));
+    toolButton3->setIconType(IconType::AppGeneric);
+    auto *menu3 = new Menu(this);
     menu3->addAction(new QAction("样例1"));
     menu3->addAction(new QAction("样例2"));
     menu3->addAction(new QAction("样例3"));
 
-    auto sample4Action = new QAction("样例4", menu3);
+    auto sample4Action = new Action(IconType::CommentAdd, "样例4", menu3);
     sample4Action->setShortcut(QKeySequence("Ctrl+4"));
     sample4Action->setCheckable(true);
-    sample4Action->setToolTip("这是样例4，用于测试 QAction");
-    sample4Action->setStatusTip("触发样例4 QAction");
-    sample4Action->setIcon(CUKE_ICON->getCukeIcon(CukeIconType::CommentAdd, CUKE_THEME->getThemeColor(CukeThemeType::Text),64));
+    sample4Action->setToolTip("这是样例4，用于测试 Action");
+    sample4Action->setStatusTip("触发样例4 Action");
     menu3->addAction(sample4Action);
 
     toolButton3->setMenu(menu3);
-    auto *toolButton4 = new CukeToolButton(this);
+    auto *toolButton4 = new ToolButton(this);
     toolButton4->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolButton4->setText("评论");
-    toolButton4->setIconType(CukeIconType::CommentAdd);
-    auto *menu4 = new CukeMenu(this);
+    toolButton4->setIconType(IconType::CommentAdd);
+    auto *menu4 = new Menu(this);
     menu4->addAction(new QAction("样例1"));
     toolButton4->setMenu(menu4);
     toolBar->addWidget(toolButton1);
@@ -80,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(center);
 
     auto *layout = new QHBoxLayout(center);
-    auto combo = new CukeComboBox(this);
+    auto combo = new ComboBox(this);
     combo->setFixedSize(60, 30);
     combo->addItems({"一号", "二号", "三号"});
     layout->addWidget(combo);

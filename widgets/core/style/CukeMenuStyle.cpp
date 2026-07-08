@@ -5,14 +5,14 @@
 #include "CukeMenu.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeMenuStyle::CukeMenuStyle(QStyle *style)
+MenuStyle::MenuStyle(QStyle *style)
     : QProxyStyle(style) {
 }
 
-CukeMenuStyle::~CukeMenuStyle() = default;
+MenuStyle::~MenuStyle() = default;
 
-void CukeMenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto menu = qobject_cast<const CukeMenu *>(widget);
+void MenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto menu = qobject_cast<const Menu *>(widget);
     if (element == PE_PanelMenu) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
@@ -23,7 +23,7 @@ void CukeMenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *
         const QRect rect = option->rect.adjusted(margin, 0, -2 * margin, -margin);
 
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBoxView));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::ComboBoxView));
         painter->drawRoundedRect(rect, radius, radius);
 
         painter->restore();
@@ -34,8 +34,8 @@ void CukeMenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto menu = qobject_cast<const CukeMenu *>(widget);
+void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto menu = qobject_cast<const Menu *>(widget);
 
     if (element == CE_MenuItem) {
         const auto opt = qstyleoption_cast<const QStyleOptionMenuItem *>(option);
@@ -48,7 +48,7 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
         // 选中背景
         if (opt->state & State_Selected) {
             painter->setPen(Qt::NoPen);
-            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::ComboBoxItem));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::ComboBoxItem));
             painter->drawRoundedRect(rect.adjusted(6, 1, -2, -1), 4, 4);
         }
 
@@ -57,12 +57,12 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
             const QRect lRect(rect.left() + 8, rect.top() + 4, 3, rect.height() - 8);
 
             painter->setPen(Qt::NoPen);
-            painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::Check));
+            painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(), ThemeType::Check));
             painter->drawRoundedRect(lRect, 2, 2);
         }
 
         // 文本
-        painter->setPen(CUKE_THEME->getThemeColor(menu->getThemeMode(), CukeThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(menu->getThemeMode(), ThemeType::Text));
         painter->drawText(rect.adjusted(16, 0, -2, 0), Qt::AlignVCenter | Qt::AlignLeft, opt->text);
 
         painter->restore();
@@ -73,13 +73,13 @@ void CukeMenuStyle::drawControl(ControlElement element, const QStyleOption *opti
     QProxyStyle::drawControl(element, option, painter, widget);
 }
 
-int CukeMenuStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
+int MenuStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
     if (metric == PM_MenuPanelWidth)
         ;
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-QSize CukeMenuStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
+QSize MenuStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
     QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
     if (type == CT_Menu) {
         s.rheight() += 6;

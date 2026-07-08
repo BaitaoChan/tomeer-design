@@ -1,22 +1,22 @@
 #include "CukeTableItemDelegate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeTableItemDelegate::CukeTableItemDelegate(QObject *parent)
+TableItemDelegate::TableItemDelegate(QObject *parent)
     : QStyledItemDelegate(parent) {
 }
 
-CukeTableItemDelegate::~CukeTableItemDelegate() = default;
+TableItemDelegate::~TableItemDelegate() = default;
 
-QWidget *CukeTableItemDelegate::createEditor(QWidget *parent,
+QWidget *TableItemDelegate::createEditor(QWidget *parent,
                                       const QStyleOptionViewItem &option,
                                       const QModelIndex &index) const {
-    auto *editor = new CukeLineEdit(parent);
+    auto *editor = new LineEdit(parent);
     editor->setBorderRadius(0);
     editor->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     return editor;
 }
 
-void CukeTableItemDelegate::paint(QPainter *p,
+void TableItemDelegate::paint(QPainter *p,
                            const QStyleOptionViewItem &opt,
                            const QModelIndex &index) const {
     p->save();
@@ -24,7 +24,7 @@ void CukeTableItemDelegate::paint(QPainter *p,
     QRect r = opt.rect;
 
     // 文本
-    p->setPen(CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), CukeThemeType::Text));
+    p->setPen(CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), ThemeType::Text));
     p->setFont(index.data(Qt::FontRole).value<QFont>());
 
     r.adjust(8, 0, -8, 0);
@@ -35,7 +35,7 @@ void CukeTableItemDelegate::paint(QPainter *p,
     p->restore();
 }
 
-QSize CukeTableItemDelegate::sizeHint(const QStyleOptionViewItem &opt,
+QSize TableItemDelegate::sizeHint(const QStyleOptionViewItem &opt,
                                const QModelIndex &index) const {
     return QStyledItemDelegate::sizeHint(opt, index);
 }

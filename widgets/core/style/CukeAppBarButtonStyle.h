@@ -5,11 +5,11 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeAppBarButtonStyle : public QProxyStyle {
+class AppBarButtonStyle : public QProxyStyle {
     Q_OBJECT
 public:
-    explicit CukeAppBarButtonStyle(QStyle *style = nullptr);
-    ~CukeAppBarButtonStyle() override;
+    explicit AppBarButtonStyle(QStyle *style = nullptr);
+    ~AppBarButtonStyle() override;
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
     void drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget = nullptr) const override;

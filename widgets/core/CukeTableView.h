@@ -8,17 +8,17 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeTableViewPrivate;
-class CUKE_EXPORT CukeTableView : public QTableView {
+class TableViewPrivate;
+class CUKE_EXPORT TableView : public QTableView {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeTableView)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_DECLARE_DPTR(TableView)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeTableView(QWidget *parent = nullptr);
-    ~CukeTableView() override;
+    explicit TableView(QWidget *parent = nullptr);
+    ~TableView() override;
 
 protected:
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

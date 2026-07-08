@@ -3,21 +3,21 @@
 #include "CukeMenuBarPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeMenuBar, CukeThemeType::ThemeMode, ThemeMode)
-CukeMenuBar::CukeMenuBar(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(MenuBar, ThemeType::ThemeMode, ThemeMode)
+MenuBar::MenuBar(QWidget *parent)
     : QMenuBar(parent),
-      d_ptr(new CukeMenuBarPrivate(this)) {
-    Q_D(CukeMenuBar);
-    setStyle(new CukeMenuBarStyle(style()));
+      d_ptr(new MenuBarPrivate(this)) {
+    Q_D(MenuBar);
+    setStyle(new MenuBarStyle(style()));
     setFixedHeight(24);
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeMenuBar::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &MenuBar::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeMenuBar::~CukeMenuBar() = default;
+MenuBar::~MenuBar() = default;
 
-void CukeMenuBar::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeMenuBar);
+void MenuBar::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(MenuBar);
     setThemeMode(mode);
     update();
 }

@@ -5,6 +5,8 @@
 #include <QMetaType>
 #include "CukeProperty.h"
 
+CUKE_NAMESPACE_BEGIN(pub)
+
 // 宏开始：声明一个带 Q_GADGET 的类
 #define CUKE_TYPE_BEGIN(CLASS)                              \
 class CUKE_EXPORT CLASS : public QObject {                  \
@@ -15,7 +17,7 @@ public:
 #define CUKE_TYPE_END(CLASS)                                \
 };
 
-CUKE_TYPE_BEGIN(CukeAppBarType)
+CUKE_TYPE_BEGIN(AppBarType)
 enum Object {
     InvalidObject = -1,
     WindowIcon = 0,
@@ -37,9 +39,9 @@ enum CustomArea {
 };
 Q_ENUM(CustomArea)
 
-CUKE_TYPE_END(CukeAppBarType)
+CUKE_TYPE_END(AppBarType)
 
-CUKE_TYPE_BEGIN(CukeGeometryType)
+CUKE_TYPE_BEGIN(GeometryType)
 enum SideFlag {
     None = 0x00,
     TopLeft = 0x01,
@@ -50,9 +52,9 @@ enum SideFlag {
 };
 Q_ENUM(SideFlag)
 
-CUKE_TYPE_END(CukeGeometryType)
+CUKE_TYPE_END(GeometryType)
 
-CUKE_TYPE_BEGIN(CukeThemeType)
+CUKE_TYPE_BEGIN(ThemeType)
 enum ThemeMode {
     Light = 0x0000,
     Dark = 0x0001,
@@ -130,9 +132,9 @@ enum ThemeColor {
 };
 Q_ENUM(ThemeColor)
 
-CUKE_TYPE_END(CukeThemeType)
+CUKE_TYPE_END(ThemeType)
 
-CUKE_TYPE_BEGIN(CukeIconType)
+CUKE_TYPE_BEGIN(IconType)
 enum Icon {
     None = 0x0,
     AccessTime = 0xE800,
@@ -1628,6 +1630,8 @@ enum Icon {
 };
 Q_ENUM(Icon)
 
-CUKE_TYPE_END(CukeIconType)
+CUKE_TYPE_END(IconType)
+
+CUKE_NAMESPACE_END(pub)
 
 #endif // CUKETYPE_H

@@ -14,15 +14,15 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToggleSwitchPrivate;
-class CUKE_EXPORT CukeToggleSwitch : public QWidget {
+class ToggleSwitchPrivate;
+class CUKE_EXPORT ToggleSwitch : public QWidget {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeToggleSwitch)
+    CUKE_DECLARE_DPTR(ToggleSwitch)
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeToggleSwitch(QWidget *parent = nullptr);
-    ~CukeToggleSwitch() override;
+    explicit ToggleSwitch(QWidget *parent = nullptr);
+    ~ToggleSwitch() override;
 
     void bgColorFrom(QColor color);
     void bgColorTo(QColor color);
@@ -45,7 +45,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent* event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

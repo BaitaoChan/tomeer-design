@@ -2,15 +2,15 @@
 #include "CukeLineEdit.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeLineEditPrivate::CukeLineEditPrivate(CukeLineEdit *q)
+LineEditPrivate::LineEditPrivate(LineEdit *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeLineEditPrivate::~CukeLineEditPrivate() = default;
+LineEditPrivate::~LineEditPrivate() = default;
 
-void CukeLineEditPrivate::onLineAnimFinished() {
-    Q_Q(CukeLineEdit);
+void LineEditPrivate::onLineAnimFinished() {
+    Q_Q(LineEdit);
     if (!_isFocused) {
         _hasFocusVisible = false;
         q->update();

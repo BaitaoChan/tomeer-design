@@ -6,25 +6,25 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeAppBar;
-class CukeWindowPrivate;
-class CUKE_EXPORT CukeWindow : public QMainWindow {
+class AppBar;
+class WindowPrivate;
+class CUKE_EXPORT Window : public QMainWindow {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeWindow)
+    CUKE_DECLARE_DPTR(Window)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukeWindow(QWidget *parent = nullptr);
-    ~CukeWindow() override;
+    explicit Window(QWidget *parent = nullptr);
+    ~Window() override;
 
-    CukeAppBar *appBar();
+    AppBar *appBar();
 
 protected:
     bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result) override;
     void resizeEvent(QResizeEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

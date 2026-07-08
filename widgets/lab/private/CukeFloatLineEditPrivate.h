@@ -4,13 +4,13 @@
 
 class QDoubleValidator;
 CUKE_NAMESPACE_BEGIN(lab)
-class CukeFloatLineEdit;
-class CukeFloatLineEditPrivate : public QObject {
+class FloatLineEdit;
+class FloatLineEditPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeFloatLineEdit)
+    CUKE_DECLARE_QPTR(FloatLineEdit)
 public:
-    explicit CukeFloatLineEditPrivate(CukeFloatLineEdit *q);
-    ~CukeFloatLineEditPrivate() override;
+    explicit FloatLineEditPrivate(FloatLineEdit *q);
+    ~FloatLineEditPrivate() override;
 
 private:
     float _min = -1e9f;

@@ -6,21 +6,21 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeAppBarButtonPrivate;
-class CukeAppBarButton : public QToolButton {
+class AppBarButtonPrivate;
+class AppBarButton : public QToolButton {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeAppBarButton)
+    CUKE_DECLARE_DPTR(AppBarButton)
     CUKE_Q_PROPERTY_DECL(bool, Hover)
     CUKE_Q_PROPERTY_DECL(bool, Pressed)
     CUKE_Q_PROPERTY_DECL(QColor, BgColor)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
     CUKE_Q_PROPERTY_DECL(bool, BgColorUsedFlag)
-    CUKE_Q_PROPERTY_DECL(CukeIconType::Icon, IconType)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
-    CUKE_Q_PROPERTY_DECL(CukeGeometryType::SideFlag, SideFlag)
+    CUKE_Q_PROPERTY_DECL(IconType::Icon, IconType)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(GeometryType::SideFlag, SideFlag)
 public:
-    explicit CukeAppBarButton(QWidget *parent = nullptr);
-    ~CukeAppBarButton() override;
+    explicit AppBarButton(QWidget *parent = nullptr);
+    ~AppBarButton() override;
 
     void bgColorFrom(QColor color);
     void bgColorTo(QColor color);
@@ -31,7 +31,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

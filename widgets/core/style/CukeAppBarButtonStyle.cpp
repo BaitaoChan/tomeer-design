@@ -7,14 +7,14 @@
 #include "CukePainter.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeAppBarButtonStyle::CukeAppBarButtonStyle(QStyle *style)
+AppBarButtonStyle::AppBarButtonStyle(QStyle *style)
     : QProxyStyle(style) {
 }
 
-CukeAppBarButtonStyle::~CukeAppBarButtonStyle() = default;
+AppBarButtonStyle::~AppBarButtonStyle() = default;
 
-void CukeAppBarButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto appBarButton = qobject_cast<const CukeAppBarButton *>(widget);
+void AppBarButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto appBarButton = qobject_cast<const AppBarButton *>(widget);
     if (element == PE_PanelButtonBevel) {
         painter->save();
         painter->setPen(Qt::NoPen);
@@ -25,9 +25,9 @@ void CukeAppBarButtonStyle::drawPrimitive(PrimitiveElement element, const QStyle
                 painter->setBrush(appBarButton->getBgColor());
         } else {
             if (option->state & State_Sunken)
-                painter->setBrush(CUKE_THEME->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::PressAlpha));
+                painter->setBrush(CUKE_THEME->getThemeColor(appBarButton->getThemeMode(), ThemeType::PressAlpha));
             else if (option->state & State_MouseOver)
-                painter->setBrush(CUKE_THEME->getThemeColor(appBarButton->getThemeMode(), CukeThemeType::HoverAlpha));
+                painter->setBrush(CUKE_THEME->getThemeColor(appBarButton->getThemeMode(), ThemeType::HoverAlpha));
         }
         CUKE_PAINTER->drawRoundedRect(option->rect, painter, appBarButton->getBorderRadius(), appBarButton->getBorderRadius(), appBarButton->getSideFlag());
         painter->restore();
@@ -36,8 +36,8 @@ void CukeAppBarButtonStyle::drawPrimitive(PrimitiveElement element, const QStyle
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-void CukeAppBarButtonStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto appBarButton = qobject_cast<const CukeAppBarButton *>(widget);
+void AppBarButtonStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto appBarButton = qobject_cast<const AppBarButton *>(widget);
     const auto opt = qstyleoption_cast<const QStyleOptionToolButton *>(option);
 
     if (element == CE_ToolButtonLabel && appBarButton && opt) {
@@ -45,12 +45,12 @@ void CukeAppBarButtonStyle::drawControl(ControlElement element, const QStyleOpti
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 
         // 关闭图标特殊处理
-        if (appBarButton->getIconType() == CukeIconType::Dismiss && CUKE_THEME->getThemeMode() == CukeThemeType::Light && appBarButton->getHover()) {
-            painter->setPen(CUKE_THEME->getThemeColor(CukeThemeType::Dark, CukeThemeType::Text));
-            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Dark, CukeThemeType::Text));
+        if (appBarButton->getIconType() == IconType::Dismiss && CUKE_THEME->getThemeMode() == ThemeType::Light && appBarButton->getHover()) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
         } else {
-            painter->setPen(CUKE_THEME->getThemeColor(CukeThemeType::Text));
-            painter->setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
         }
 
         QRect rect = opt->rect;
@@ -59,7 +59,7 @@ void CukeAppBarButtonStyle::drawControl(ControlElement element, const QStyleOpti
         QPoint center = rect.center() - QPoint(iSize.width() / 2, iSize.height() / 2);
         QRect iRect(center, iSize);
 
-        if (appBarButton->getIconType() != CukeIconType::None) {
+        if (appBarButton->getIconType() != IconType::None) {
             QFont font("Cuke");
             font.setPixelSize(iSize.height());
             painter->setFont(font);
@@ -75,11 +75,11 @@ void CukeAppBarButtonStyle::drawControl(ControlElement element, const QStyleOpti
     QProxyStyle::drawControl(element, option, painter, widget);
 }
 
-void CukeAppBarButtonStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
+void AppBarButtonStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
     QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 
-int CukeAppBarButtonStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
+int AppBarButtonStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 

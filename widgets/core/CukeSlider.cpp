@@ -2,12 +2,12 @@
 #include "CukeSliderPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeSlider, qreal, HandleDiameter)
-CUKE_Q_PROPERTY_IMPL(CukeSlider, CukeThemeType::ThemeMode, ThemeMode)
-CukeSlider::CukeSlider(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(Slider, qreal, HandleDiameter)
+CUKE_Q_PROPERTY_IMPL(Slider, ThemeType::ThemeMode, ThemeMode)
+Slider::Slider(QWidget *parent)
     : QSlider(parent),
-      d_ptr(new CukeSliderPrivate(this)) {
-    Q_D(CukeSlider);
+      d_ptr(new SliderPrivate(this)) {
+    Q_D(Slider);
     setOrientation(Qt::Horizontal);
     setContentsMargins(4, 0, 4, 0);
 
@@ -17,24 +17,24 @@ CukeSlider::CukeSlider(QWidget *parent)
 
     connect(d->_handleDiameterAnimation, &QPropertyAnimation::valueChanged, this,
             QOverload<>::of(&QWidget::update));
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeSlider::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &Slider::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeSlider::CukeSlider(Qt::Orientation orientation, QWidget *parent)
-    : CukeSlider(parent) {
+Slider::Slider(Qt::Orientation orientation, QWidget *parent)
+    : Slider(parent) {
     setOrientation(orientation);
 }
 
-CukeSlider::~CukeSlider() = default;
+Slider::~Slider() = default;
 
-void CukeSlider::enterEvent(QEnterEvent *event) {
+void Slider::enterEvent(QEnterEvent *event) {
     setMouseTracking(true);
     QSlider::enterEvent(event);
 }
 
-void CukeSlider::leaveEvent(QEvent *event) {
-    Q_D(CukeSlider);
+void Slider::leaveEvent(QEvent *event) {
+    Q_D(Slider);
     setMouseTracking(false);
     d->_handleDiameterAnimation->stop();
     d->_handleDiameterAnimation->setStartValue(_pHandleDiameter);
@@ -43,8 +43,8 @@ void CukeSlider::leaveEvent(QEvent *event) {
     QSlider::leaveEvent(event);
 }
 
-void CukeSlider::mouseMoveEvent(QMouseEvent *event) {
-    Q_D(CukeSlider);
+void Slider::mouseMoveEvent(QMouseEvent *event) {
+    Q_D(Slider);
     if (d->_isPressed) {
         // 拖动过程中保持 Press 大小
         if (_pHandleDiameter != d->handleDiameterPress) {
@@ -70,8 +70,8 @@ void CukeSlider::mouseMoveEvent(QMouseEvent *event) {
     QSlider::mouseMoveEvent(event);
 }
 
-void CukeSlider::mousePressEvent(QMouseEvent *event) {
-    Q_D(CukeSlider);
+void Slider::mousePressEvent(QMouseEvent *event) {
+    Q_D(Slider);
     if (event->button() == Qt::LeftButton && d->_handleRect.contains(event->pos())) {
         d->_isPressed = true;
         d->_handleDiameterAnimation->stop();
@@ -82,8 +82,8 @@ void CukeSlider::mousePressEvent(QMouseEvent *event) {
     QSlider::mousePressEvent(event);
 }
 
-void CukeSlider::mouseReleaseEvent(QMouseEvent *event) {
-    Q_D(CukeSlider);
+void Slider::mouseReleaseEvent(QMouseEvent *event) {
+    Q_D(Slider);
     if (event->button() == Qt::LeftButton) {
         d->_isPressed = false;
         // 松开后，如果还在 handle 上，回到 hover，否则回到默认
@@ -102,8 +102,8 @@ void CukeSlider::mouseReleaseEvent(QMouseEvent *event) {
     QSlider::mouseReleaseEvent(event);
 }
 
-void CukeSlider::resizeEvent(QResizeEvent *event) {
-    Q_D(CukeSlider);
+void Slider::resizeEvent(QResizeEvent *event) {
+    Q_D(Slider);
     QSlider::resizeEvent(event);
 
     QStyleOptionSlider opt;
@@ -120,8 +120,8 @@ void CukeSlider::resizeEvent(QResizeEvent *event) {
     }
 }
 
-void CukeSlider::paintEvent(QPaintEvent *event) {
-    Q_D(CukeSlider);
+void Slider::paintEvent(QPaintEvent *event) {
+    Q_D(Slider);
     QStyleOptionSlider opt;
     initStyleOption(&opt);
 
@@ -136,28 +136,28 @@ void CukeSlider::paintEvent(QPaintEvent *event) {
     int grooveHeight = 5; // 滑轨厚度
     QRectF grooveRect(10, d->_handleCenter.y() - grooveHeight / 2.0, width() - 20, grooveHeight);
     p.setPen(Qt::NoPen);
-    p.setBrush(CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha));
+    p.setBrush(CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha));
     p.drawRoundedRect(grooveRect, 3, 3);
 
     // 已滑过部分
     QRectF subRect = grooveRect;
     subRect.setRight(d->_handleCenter.x());
-    p.setBrush(CUKE_THEME->getThemeColor(CukeThemeType::CheckAlpha));
+    p.setBrush(CUKE_THEME->getThemeColor(ThemeType::CheckAlpha));
     p.drawRoundedRect(subRect, 3, 3);
 
     // 滑块外圆
     p.setPen(Qt::NoPen);
-    p.setBrush(CUKE_THEME->getThemeColor(CukeThemeType::SliderHandleBorder));
+    p.setBrush(CUKE_THEME->getThemeColor(ThemeType::SliderHandleBorder));
     p.drawEllipse(d->_handleCenter, d->_handleRect.width() / 2.5, d->_handleRect.width() / 2.5);
 
     // 滑块内圆
     p.setPen(Qt::NoPen);
-    p.setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Check));
+    p.setBrush(CUKE_THEME->getThemeColor(ThemeType::Check));
     p.drawEllipse(d->_handleCenter, _pHandleDiameter, _pHandleDiameter);
 }
 
-void CukeSlider::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeSlider);
+void Slider::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(Slider);
     setThemeMode(mode);
     update();
 }

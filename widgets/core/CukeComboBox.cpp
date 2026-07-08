@@ -8,26 +8,26 @@
 
 #define CUKE_COMBOBOX_POPUP_ANIM_MODE 1
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, RotateAngle)
-CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, LineHalfWidth)
-CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, BorderRadius)
-CUKE_Q_PROPERTY_IMPL(CukeComboBox, int, PopupHeight)
-CUKE_Q_PROPERTY_IMPL(CukeComboBox, CukeThemeType::ThemeMode, ThemeMode)
-CukeComboBox::CukeComboBox(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(ComboBox, int, RotateAngle)
+CUKE_Q_PROPERTY_IMPL(ComboBox, int, LineHalfWidth)
+CUKE_Q_PROPERTY_IMPL(ComboBox, int, BorderRadius)
+CUKE_Q_PROPERTY_IMPL(ComboBox, int, PopupHeight)
+CUKE_Q_PROPERTY_IMPL(ComboBox, ThemeType::ThemeMode, ThemeMode)
+ComboBox::ComboBox(QWidget *parent)
     : QComboBox(parent),
       _pBorderRadius(6),
-      d_ptr(new CukeComboBoxPrivate(this)) {
-    Q_D(CukeComboBox);
+      d_ptr(new ComboBoxPrivate(this)) {
+    Q_D(ComboBox);
     setStyleSheet(R"(
         QComboBox::drop-down { border: none; background: transparent; }
         QComboBox QAbstractItemView { background: transparent; border: none; }
     )");
-    const auto view = new CukeComboBoxView(this);
-    view->setItemDelegate(new CukeComboBoxItemDelegate(view));
+    const auto view = new ComboBoxView(this);
+    view->setItemDelegate(new ComboBoxItemDelegate(view));
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setView(view);
-    setStyle(new CukeComboBoxStyle(style()));
+    setStyle(new ComboBoxStyle(style()));
     view->setSelectionMode(QAbstractItemView::SingleSelection);
     d->_rotateAnim = new QPropertyAnimation(this, "_pRotateAngle", this);
     d->_rotateAnim->setDuration(300);
@@ -41,19 +41,19 @@ CukeComboBox::CukeComboBox(QWidget *parent)
     d->_heightAnim->setDuration(300);
     d->_heightAnim->setEasingCurve(QEasingCurve::InOutSine);
 
-    connect(this, &CukeComboBox::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
+    connect(this, &ComboBox::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
     connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
     connect(d->_lineAnim, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeComboBox::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &ComboBox::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 
     setMaxVisibleItems(4);
 }
 
-CukeComboBox::~CukeComboBox() = default;
+ComboBox::~ComboBox() = default;
 
-void CukeComboBox::showPopup() {
-    Q_D(CukeComboBox);
+void ComboBox::showPopup() {
+    Q_D(ComboBox);
     if (d->getIsPopup())
         return;
     d->setIsPopup(true);
@@ -106,8 +106,8 @@ void CukeComboBox::showPopup() {
     d->_lineAnim->start();
 }
 
-void CukeComboBox::hidePopup() {
-    Q_D(CukeComboBox);
+void ComboBox::hidePopup() {
+    Q_D(ComboBox);
     if (d->getIsPopup())
         return;
     d->setIsPopup(true);
@@ -165,8 +165,8 @@ void CukeComboBox::hidePopup() {
     d->_lineAnim->start();
 }
 
-void CukeComboBox::paintEvent(QPaintEvent *event) {
-    Q_D(CukeComboBox);
+void ComboBox::paintEvent(QPaintEvent *event) {
+    Q_D(ComboBox);
     QComboBox::paintEvent(event);
 
     QPainter p(this);
@@ -174,7 +174,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 底部横线
     p.setPen(Qt::NoPen);
-    p.setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Pattern));
+    p.setBrush(CUKE_THEME->getThemeColor(ThemeType::Pattern));
     p.drawRoundedRect(QRectF(rect().left() + 4,
                              rect().bottom() * 0.9,
                              rect().right() - rect().left() - 8,
@@ -184,7 +184,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 焦点指示
     p.setPen(Qt::NoPen);
-    p.setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Check));
+    p.setBrush(CUKE_THEME->getThemeColor(ThemeType::Check));
     p.drawRoundedRect(QRectF(rect().left() + 4 + (rect().right() - rect().left() - 8) / 2.0 - _pLineHalfWidth,
                              rect().bottom() * 0.9,
                              _pLineHalfWidth * 2,
@@ -194,7 +194,7 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
 
     // 箭头
     QPainterPath path;
-    path.addText(QPointF(0, 0), QFont("Cuke"), QString(QChar(CukeIconType::ChevronDown)));
+    path.addText(QPointF(0, 0), QFont("Cuke"), QString(QChar(IconType::ChevronDown)));
 
     const QPointF center = QRectF(rect().right() - 20, rect().center().y() - rect().height() / 4.0, rect().height() / 2.0, rect().height() / 2.0).center();
 
@@ -206,13 +206,13 @@ void CukeComboBox::paintEvent(QPaintEvent *event) {
     p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 
     p.setPen(Qt::NoPen);
-    p.setBrush(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+    p.setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
     p.setTransform(transform, true);
     p.drawPath(path);
 }
 
-void CukeComboBox::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeComboBox);
+void ComboBox::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(ComboBox);
     setThemeMode(mode);
     update();
 }

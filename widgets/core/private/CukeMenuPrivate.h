@@ -5,13 +5,13 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeMenu;
-class CukeMenuPrivate : public QObject {
+class Menu;
+class MenuPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeMenu)
+    CUKE_DECLARE_QPTR(Menu)
 public:
-    explicit CukeMenuPrivate(CukeMenu *q);
-    ~CukeMenuPrivate() override;
+    explicit MenuPrivate(Menu *q);
+    ~MenuPrivate() override;
 
 };
 CUKE_NAMESPACE_END(pub)

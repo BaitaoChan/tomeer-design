@@ -2,11 +2,11 @@
 #include "CukeTableView.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeTableViewPrivate::CukeTableViewPrivate(CukeTableView *q)
+TableViewPrivate::TableViewPrivate(TableView *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeTableViewPrivate::~CukeTableViewPrivate() = default;
+TableViewPrivate::~TableViewPrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

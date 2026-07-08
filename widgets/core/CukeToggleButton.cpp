@@ -3,33 +3,33 @@
 #include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeToggleButton, CukeThemeType::ThemeMode, ThemeMode)
-CukeToggleButton::CukeToggleButton(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(ToggleButton, ThemeType::ThemeMode, ThemeMode)
+ToggleButton::ToggleButton(QWidget *parent)
     : QPushButton(parent),
-      d_ptr(new CukeToggleButtonPrivate(this)) {
-    Q_D(CukeToggleButton);
+      d_ptr(new ToggleButtonPrivate(this)) {
+    Q_D(ToggleButton);
     setFlat(true);
     setStyleSheet("border: none;");
     setCheckable(true);
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToggleButton::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &ToggleButton::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeToggleButton::CukeToggleButton(const QString &text, QWidget *parent)
-    : CukeToggleButton(parent) {
+ToggleButton::ToggleButton(const QString &text, QWidget *parent)
+    : ToggleButton(parent) {
     setText(text);
 }
 
-CukeToggleButton::~CukeToggleButton() = default;
+ToggleButton::~ToggleButton() = default;
 
-void CukeToggleButton::setBorderRadius(const int radius) {
-    Q_D(CukeToggleButton);
+void ToggleButton::setBorderRadius(const int radius) {
+    Q_D(ToggleButton);
     d->_borderRadius = radius;
     update();
 }
 
-void CukeToggleButton::setIsToggled(const bool isToggled) {
-    Q_D(CukeToggleButton);
+void ToggleButton::setIsToggled(const bool isToggled) {
+    Q_D(ToggleButton);
     if (d->_isToggled != isToggled) {
         d->_isToggled = isToggled;
         emit toggled(d->_isToggled);
@@ -37,31 +37,31 @@ void CukeToggleButton::setIsToggled(const bool isToggled) {
     }
 }
 
-bool CukeToggleButton::getIsToggled() {
-    Q_D(CukeToggleButton);
+bool ToggleButton::getIsToggled() {
+    Q_D(ToggleButton);
     return d->_isToggled;
 }
 
-void CukeToggleButton::enterEvent(QEnterEvent *event) {
-    Q_D(CukeToggleButton);
+void ToggleButton::enterEvent(QEnterEvent *event) {
+    Q_D(ToggleButton);
     d->_isHovered = true;
     QPushButton::enterEvent(event);
 }
 
-void CukeToggleButton::leaveEvent(QEvent *event) {
-    Q_D(CukeToggleButton);
+void ToggleButton::leaveEvent(QEvent *event) {
+    Q_D(ToggleButton);
     d->_isHovered = false;
     QPushButton::leaveEvent(event);
 }
 
-void CukeToggleButton::mousePressEvent(QMouseEvent *event) {
-    Q_D(CukeToggleButton);
+void ToggleButton::mousePressEvent(QMouseEvent *event) {
+    Q_D(ToggleButton);
     d->_isPressed = true;
     QPushButton::mousePressEvent(event);
 }
 
-void CukeToggleButton::mouseReleaseEvent(QMouseEvent *event) {
-    Q_D(CukeToggleButton);
+void ToggleButton::mouseReleaseEvent(QMouseEvent *event) {
+    Q_D(ToggleButton);
     d->_isPressed = false;
     // 点击切换状态
     if (rect().contains(event->pos())) {
@@ -70,19 +70,19 @@ void CukeToggleButton::mouseReleaseEvent(QMouseEvent *event) {
     QPushButton::mouseReleaseEvent(event);
 }
 
-void CukeToggleButton::paintEvent(QPaintEvent *event) {
-    Q_D(CukeToggleButton);
+void ToggleButton::paintEvent(QPaintEvent *event) {
+    Q_D(ToggleButton);
     Q_UNUSED(event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QColor bgColor = CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha);
+    QColor bgColor = CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha);
     if (d->_isToggled) {
-        bgColor = CUKE_THEME->getThemeColor(CukeThemeType::CheckAlpha);
+        bgColor = CUKE_THEME->getThemeColor(ThemeType::CheckAlpha);
     } else if (d->_isPressed) {
-        bgColor = CUKE_THEME->getThemeColor(CukeThemeType::PressAlpha);
+        bgColor = CUKE_THEME->getThemeColor(ThemeType::PressAlpha);
     } else if (d->_isHovered) {
-        bgColor = CUKE_THEME->getThemeColor(CukeThemeType::HoverAlpha);
+        bgColor = CUKE_THEME->getThemeColor(ThemeType::HoverAlpha);
     }
 
     painter.setBrush(bgColor);
@@ -91,7 +91,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
 
     if (!d->_isPressed && !d->_isToggled) {
         QPen pen;
-        pen.setColor(CUKE_THEME->getThemeColor(CukeThemeType::Pattern));
+        pen.setColor(CUKE_THEME->getThemeColor(ThemeType::Pattern));
         pen.setWidthF(1.6);
         painter.setPen(pen);
 
@@ -111,7 +111,7 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     option.text = text();
     option.icon = icon();
     option.iconSize = icon().isNull() ? QSize() : this->iconSize();
-    option.palette.setColor(QPalette::ButtonText, CUKE_THEME->getThemeColor(CukeThemeType::Text));
+    option.palette.setColor(QPalette::ButtonText, CUKE_THEME->getThemeColor(ThemeType::Text));
 
     if (d->_isPressed) option.state |= QStyle::State_Sunken;
     if (d->_isHovered) option.state |= QStyle::State_MouseOver;
@@ -120,8 +120,8 @@ void CukeToggleButton::paintEvent(QPaintEvent *event) {
     style()->drawControl(QStyle::CE_PushButtonLabel, &option, &painter, this);
 }
 
-void CukeToggleButton::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeToggleButton);
+void ToggleButton::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(ToggleButton);
     setThemeMode(mode);
     update();
 }

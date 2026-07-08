@@ -4,13 +4,13 @@
 #include "CukeTableViewPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeTableView, CukeThemeType::ThemeMode, ThemeMode)
-CukeTableView::CukeTableView(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(TableView, ThemeType::ThemeMode, ThemeMode)
+TableView::TableView(QWidget *parent)
     : QTableView(parent),
-      d_ptr(new CukeTableViewPrivate(this)) {
-    Q_D(CukeTableView);
-    setStyle(new CukeTableViewStyle(style()));
-    setItemDelegate(new CukeTableItemDelegate(this));
+      d_ptr(new TableViewPrivate(this)) {
+    Q_D(TableView);
+    setStyle(new TableViewStyle(style()));
+    setItemDelegate(new TableItemDelegate(this));
 
     setStyleSheet(R"(
         QTableView {
@@ -24,14 +24,14 @@ CukeTableView::CukeTableView(QWidget *parent)
 
     setShowGrid(false);
     setAlternatingRowColors(false);
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeTableView::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &TableView::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeTableView::~CukeTableView() = default;
+TableView::~TableView() = default;
 
-void CukeTableView::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeTableView);
+void TableView::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(TableView);
     setThemeMode(mode);
     update();
 }

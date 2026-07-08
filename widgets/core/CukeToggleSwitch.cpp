@@ -4,22 +4,22 @@
 #include "CukeIcon.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, QColor, BgColor)
-CUKE_Q_PROPERTY_IMPL(CukeToggleSwitch, CukeThemeType::ThemeMode, ThemeMode)
-CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(ToggleSwitch, QColor, BgColor)
+CUKE_Q_PROPERTY_IMPL(ToggleSwitch, ThemeType::ThemeMode, ThemeMode)
+ToggleSwitch::ToggleSwitch(QWidget *parent)
     : QWidget(parent),
-      d_ptr(new CukeToggleSwitchPrivate(this)) {
-    Q_D(CukeToggleSwitch);
+      d_ptr(new ToggleSwitchPrivate(this)) {
+    Q_D(ToggleSwitch);
     d->_pKnobCenterX = -1;
     setFixedSize(44, 22);
-    d->_pKnobColor = CUKE_THEME->getThemeColor(CukeThemeType::ToggleSwitchKnob);
+    d->_pKnobColor = CUKE_THEME->getThemeColor(ThemeType::ToggleSwitchKnob);
     _pBgColor = d->_isToggled
                     ? (d->_bgColorTo
                            ? *d->_bgColorTo
-                           : CUKE_THEME->getThemeColor(CukeThemeType::CheckAlpha))
+                           : CUKE_THEME->getThemeColor(ThemeType::CheckAlpha))
                     : d->_bgColorFrom
                           ? *d->_bgColorFrom
-                          : CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha);
+                          : CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha);
 
     // 属性名与 Q_PROPERTY 中的一致
     d->_bgAnimation = new QPropertyAnimation(this, "_pBgColor", this);
@@ -43,14 +43,14 @@ CukeToggleSwitch::CukeToggleSwitch(QWidget *parent)
     connect(d->_knobDiameterAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
     connect(d->_moveAnimation, &QPropertyAnimation::valueChanged, this, QOverload<>::of(&QWidget::update));
 
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeToggleSwitch::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &ToggleSwitch::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeToggleSwitch::~CukeToggleSwitch() = default;
+ToggleSwitch::~ToggleSwitch() = default;
 
-void CukeToggleSwitch::bgColorFrom(const QColor color) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::bgColorFrom(const QColor color) {
+    Q_D(ToggleSwitch);
     if (d->_bgColorFrom) {
         delete d->_bgColorFrom;
         d->_bgColorFrom = nullptr;
@@ -58,8 +58,8 @@ void CukeToggleSwitch::bgColorFrom(const QColor color) {
     d->_bgColorFrom = new QColor(color);
 }
 
-void CukeToggleSwitch::bgColorTo(const QColor color) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::bgColorTo(const QColor color) {
+    Q_D(ToggleSwitch);
     if (d->_bgColorTo) {
         delete d->_bgColorTo;
         d->_bgColorTo = nullptr;
@@ -67,25 +67,25 @@ void CukeToggleSwitch::bgColorTo(const QColor color) {
     d->_bgColorTo = new QColor(color);
 }
 
-void CukeToggleSwitch::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(ToggleSwitch);
 
-    d->_pKnobColor = (getThemeMode() == CukeThemeType::Light) || d->_isToggled
-                         ? CUKE_THEME->getThemeColor(CukeThemeType::Light, CukeThemeType::ToggleSwitchKnob)
-                         : CUKE_THEME->getThemeColor(CukeThemeType::Dark, CukeThemeType::ToggleSwitchKnob);
+    d->_pKnobColor = (getThemeMode() == ThemeType::Light) || d->_isToggled
+                         ? CUKE_THEME->getThemeColor(ThemeType::Light, ThemeType::ToggleSwitchKnob)
+                         : CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::ToggleSwitchKnob);
     _pBgColor = d->_isToggled
                     ? (d->_bgColorTo
                            ? *d->_bgColorTo
-                           : CUKE_THEME->getThemeColor(CukeThemeType::CheckAlpha))
+                           : CUKE_THEME->getThemeColor(ThemeType::CheckAlpha))
                     : d->_bgColorFrom
                           ? *d->_bgColorFrom
-                          : CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha);
+                          : CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha);
     setThemeMode(mode);
     update();
 }
 
-void CukeToggleSwitch::setIsToggled(bool isToggled) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::setIsToggled(bool isToggled) {
+    Q_D(ToggleSwitch);
     if (d->_isToggled == isToggled) return;
     d->_isToggled = isToggled;
     // 立即跳到对应位置
@@ -94,20 +94,20 @@ void CukeToggleSwitch::setIsToggled(bool isToggled) {
     _pBgColor = d->_isToggled
                     ? (d->_bgColorTo
                            ? *d->_bgColorTo
-                           : CUKE_THEME->getThemeColor(CukeThemeType::CheckAlpha))
+                           : CUKE_THEME->getThemeColor(ThemeType::CheckAlpha))
                     : d->_bgColorFrom
                           ? *d->_bgColorFrom
-                          : CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha);
+                          : CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha);
     update();
 }
 
-bool CukeToggleSwitch::getIsToggled() {
-    Q_D(CukeToggleSwitch);
+bool ToggleSwitch::getIsToggled() {
+    Q_D(ToggleSwitch);
     return d->_isToggled;
 }
 
-void CukeToggleSwitch::setIcon(const QIcon &icon) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::setIcon(const QIcon &icon) {
+    Q_D(ToggleSwitch);
     if (d->_icon) {
         delete d->_icon;
         d->_icon = nullptr;
@@ -115,13 +115,13 @@ void CukeToggleSwitch::setIcon(const QIcon &icon) {
     d->_icon = new QIcon(icon);
     update();
 }
-QIcon CukeToggleSwitch::getIcon() {
-    Q_D(CukeToggleSwitch);
+QIcon ToggleSwitch::getIcon() {
+    Q_D(ToggleSwitch);
     return *d->_icon;
 }
 
-void CukeToggleSwitch::mousePressEvent(QMouseEvent *event) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::mousePressEvent(QMouseEvent *event) {
+    Q_D(ToggleSwitch);
     d->_isPressed = true;
     QPointF mousePos = event->pos();
     qreal radius = d->_pKnobDiameter * 0.5;
@@ -140,8 +140,8 @@ void CukeToggleSwitch::mousePressEvent(QMouseEvent *event) {
     QWidget::mousePressEvent(event);
 }
 
-void CukeToggleSwitch::mouseReleaseEvent(QMouseEvent *event) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::mouseReleaseEvent(QMouseEvent *event) {
+    Q_D(ToggleSwitch);
     d->_isPressed = false;
 
     // 松开
@@ -167,17 +167,17 @@ void CukeToggleSwitch::mouseReleaseEvent(QMouseEvent *event) {
     d->_bgAnimation->setEndValue(d->_isToggled
                                      ? (d->_bgColorTo
                                             ? *d->_bgColorTo
-                                            : CUKE_THEME->getThemeColor(CukeThemeType::CheckAlpha))
+                                            : CUKE_THEME->getThemeColor(ThemeType::CheckAlpha))
                                      : d->_bgColorFrom
                                            ? *d->_bgColorFrom
-                                           : CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha));
+                                           : CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha));
     d->_bgAnimation->start();
 
     d->_knobColorAnimation->stop();
     d->_knobColorAnimation->setStartValue(d->_pKnobColor);
-    d->_knobColorAnimation->setEndValue((getThemeMode() == CukeThemeType::Light) || d->_isToggled
-                                                ? CUKE_THEME->getThemeColor(CukeThemeType::Light, CukeThemeType::ToggleSwitchKnob)
-                                                : CUKE_THEME->getThemeColor(CukeThemeType::Dark, CukeThemeType::ToggleSwitchKnob));
+    d->_knobColorAnimation->setEndValue((getThemeMode() == ThemeType::Light) || d->_isToggled
+                                                ? CUKE_THEME->getThemeColor(ThemeType::Light, ThemeType::ToggleSwitchKnob)
+                                                : CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::ToggleSwitchKnob));
     d->_knobColorAnimation->start();
 
     // 使用当前 knobX 作为起点，目标为左右位置
@@ -189,18 +189,18 @@ void CukeToggleSwitch::mouseReleaseEvent(QMouseEvent *event) {
     QWidget::mouseReleaseEvent(event);
 }
 
-void CukeToggleSwitch::enterEvent(QEnterEvent *event) {
+void ToggleSwitch::enterEvent(QEnterEvent *event) {
     setMouseTracking(true);
     QWidget::enterEvent(event);
 }
 
-void CukeToggleSwitch::leaveEvent(QEvent *event) {
+void ToggleSwitch::leaveEvent(QEvent *event) {
     setMouseTracking(false);
     QWidget::leaveEvent(event);
 }
 
-void CukeToggleSwitch::mouseMoveEvent(QMouseEvent *event) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::mouseMoveEvent(QMouseEvent *event) {
+    Q_D(ToggleSwitch);
     QPointF mousePos = event->pos();
 
     qreal radius = d->_pKnobDiameter * 0.5;
@@ -226,8 +226,8 @@ void CukeToggleSwitch::mouseMoveEvent(QMouseEvent *event) {
 }
 
 
-void CukeToggleSwitch::resizeEvent(QResizeEvent *event) {
-    Q_D(CukeToggleSwitch);
+void ToggleSwitch::resizeEvent(QResizeEvent *event) {
+    Q_D(ToggleSwitch);
     QWidget::resizeEvent(event);
 
     const qreal margin = 4.0;
@@ -258,9 +258,9 @@ void CukeToggleSwitch::resizeEvent(QResizeEvent *event) {
 }
 
 
-void CukeToggleSwitch::paintEvent(QPaintEvent *event) {
+void ToggleSwitch::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
-    Q_D(CukeToggleSwitch);
+    Q_D(ToggleSwitch);
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
 
@@ -277,14 +277,14 @@ void CukeToggleSwitch::paintEvent(QPaintEvent *event) {
     p.drawRoundedRect(pRect, h / 2.0, h / 2.0);
 
     // 边框
-    p.setPen(QPen(CUKE_THEME->getThemeColor(CukeThemeType::ToggleSwitchBorder), pWidth));
+    p.setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::ToggleSwitchBorder), pWidth));
     p.setBrush(Qt::NoBrush);
     p.drawRoundedRect(pRect, h / 2.0, h / 2.0);
 
     // 圆钮
     const qreal radius = d->_pKnobDiameter * 0.65;
     p.setPen(Qt::NoPen);
-    p.setBrush(isEnabled() ? d->_pKnobColor : CUKE_THEME->getThemeColor(CukeThemeType::TextDisable));
+    p.setBrush(isEnabled() ? d->_pKnobColor : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
     p.drawEllipse(QPointF(d->_pKnobCenterX, d->_pKnobCenterY), radius, radius);
 
     // 图标

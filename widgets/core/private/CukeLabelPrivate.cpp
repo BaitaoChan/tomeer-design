@@ -2,11 +2,11 @@
 #include "CukeLabel.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeLabelPrivate::CukeLabelPrivate(CukeLabel *q)
+LabelPrivate::LabelPrivate(Label *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeLabelPrivate::~CukeLabelPrivate() = default;
+LabelPrivate::~LabelPrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

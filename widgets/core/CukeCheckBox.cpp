@@ -3,12 +3,12 @@
 #include <QPainter>
 #include <QStyleOptionButton>
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeCheckBox, qreal, CheckProgress)
-CUKE_Q_PROPERTY_IMPL(CukeCheckBox, CukeThemeType::ThemeMode, ThemeMode)
-CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(CheckBox, qreal, CheckProgress)
+CUKE_Q_PROPERTY_IMPL(CheckBox, ThemeType::ThemeMode, ThemeMode)
+CheckBox::CheckBox(const QString &text, QWidget *parent)
     : QCheckBox(parent),
-      d_ptr(new CukeCheckBoxPrivate(this)) {
-    Q_D(CukeCheckBox);
+      d_ptr(new CheckBoxPrivate(this)) {
+    Q_D(CheckBox);
     setCursor(Qt::PointingHandCursor);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     setMinimumHeight(24);
@@ -24,17 +24,17 @@ CukeCheckBox::CukeCheckBox(const QString &text, QWidget *parent)
         update();
     });
 
-    connect(this, &QCheckBox::toggled, d, &CukeCheckBoxPrivate::onToggled);
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeCheckBox::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(this, &QCheckBox::toggled, d, &CheckBoxPrivate::onToggled);
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &CheckBox::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 
     _pCheckProgress = isChecked() ? 1.0 : 0.0;
 }
 
-CukeCheckBox::~CukeCheckBox() = default;
+CheckBox::~CheckBox() = default;
 
-void CukeCheckBox::paintEvent(QPaintEvent *event) {
-    Q_D(CukeCheckBox);
+void CheckBox::paintEvent(QPaintEvent *event) {
+    Q_D(CheckBox);
     QPainter p(this);
     p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
@@ -64,17 +64,17 @@ void CukeCheckBox::paintEvent(QPaintEvent *event) {
     const QColor bgColor =
             enabled
                 ? (hovered
-                       ? CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha)
-                       : CUKE_THEME->getThemeColor(CukeThemeType::DefaultAlpha))
-                : CUKE_THEME->getThemeColor(CukeThemeType::Disable);
+                       ? CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha)
+                       : CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha))
+                : CUKE_THEME->getThemeColor(ThemeType::Disable);
 
-    const QColor checkBgColor = CUKE_THEME->getThemeColor(CukeThemeType::CheckAlpha);
+    const QColor checkBgColor = CUKE_THEME->getThemeColor(ThemeType::CheckAlpha);
     const QColor borderColor = enabled
-                                   ? CUKE_THEME->getThemeColor(CukeThemeType::Border)
-                                   : CUKE_THEME->getThemeColor(CukeThemeType::Disable);
+                                   ? CUKE_THEME->getThemeColor(ThemeType::Border)
+                                   : CUKE_THEME->getThemeColor(ThemeType::Disable);
     const QColor textColor = enabled
-                                 ? CUKE_THEME->getThemeColor(CukeThemeType::Text)
-                                 : CUKE_THEME->getThemeColor(CukeThemeType::TextDisable);
+                                 ? CUKE_THEME->getThemeColor(ThemeType::Text)
+                                 : CUKE_THEME->getThemeColor(ThemeType::TextDisable);
 
     // 背景
     const QColor finalBg =
@@ -91,7 +91,7 @@ void CukeCheckBox::paintEvent(QPaintEvent *event) {
 
     // 勾选动画
     if (_pCheckProgress > 0.0) {
-        p.setPen(QPen(CUKE_THEME->getThemeColor(CukeThemeType::Text), penW, Qt::SolidLine, Qt::RoundCap));
+        p.setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::Text), penW, Qt::SolidLine, Qt::RoundCap));
 
         QPointF p1(boxRect.left() + boxSize * 0.25,
                    boxRect.top() + boxSize * 0.55);
@@ -117,8 +117,8 @@ void CukeCheckBox::paintEvent(QPaintEvent *event) {
     p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
 }
 
-void CukeCheckBox::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeCheckBox);
+void CheckBox::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(CheckBox);
     setThemeMode(mode);
     update();
 }

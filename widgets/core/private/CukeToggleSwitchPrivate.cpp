@@ -2,24 +2,24 @@
 #include "CukeToggleSwitch.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeToggleSwitchPrivate, QColor, KnobColor)
-CUKE_Q_PROPERTY_IMPL(CukeToggleSwitchPrivate, qreal, KnobDiameter)
-CUKE_Q_PROPERTY_IMPL(CukeToggleSwitchPrivate, qreal, KnobCenterY)
-CukeToggleSwitchPrivate::CukeToggleSwitchPrivate(CukeToggleSwitch *q)
+CUKE_Q_PROPERTY_IMPL(ToggleSwitchPrivate, QColor, KnobColor)
+CUKE_Q_PROPERTY_IMPL(ToggleSwitchPrivate, qreal, KnobDiameter)
+CUKE_Q_PROPERTY_IMPL(ToggleSwitchPrivate, qreal, KnobCenterY)
+ToggleSwitchPrivate::ToggleSwitchPrivate(ToggleSwitch *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeToggleSwitchPrivate::~CukeToggleSwitchPrivate() = default;
+ToggleSwitchPrivate::~ToggleSwitchPrivate() = default;
 
-void CukeToggleSwitchPrivate::setKnobCenterX(qreal knobX) {
+void ToggleSwitchPrivate::setKnobCenterX(qreal knobX) {
     if (!qFuzzyCompare(_pKnobCenterX + 1.0, knobX + 1.0)) {
         // qFuzzyCompare 对 qreal 比较
         _pKnobCenterX = knobX;
     }
 }
 
-qreal CukeToggleSwitchPrivate::getKnobCenterX() const {
+qreal ToggleSwitchPrivate::getKnobCenterX() const {
     return _pKnobCenterX;
 }
 

@@ -4,13 +4,13 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeLabel;
-class CukeLabelPrivate : public QObject {
+class Label;
+class LabelPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeLabel)
+    CUKE_DECLARE_QPTR(Label)
 public:
-    explicit CukeLabelPrivate(CukeLabel *q);
-    ~CukeLabelPrivate() override;
+    explicit LabelPrivate(Label *q);
+    ~LabelPrivate() override;
 };
 CUKE_NAMESPACE_END(pub)
 

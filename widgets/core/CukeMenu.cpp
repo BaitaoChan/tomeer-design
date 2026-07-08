@@ -3,34 +3,34 @@
 #include "CukeMenuPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeMenu, CukeThemeType::ThemeMode, ThemeMode)
-CukeMenu::CukeMenu(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(Menu, ThemeType::ThemeMode, ThemeMode)
+Menu::Menu(QWidget *parent)
     : QMenu(parent),
-      d_ptr(new CukeMenuPrivate(this)) {
-    Q_D(CukeMenu);
+      d_ptr(new MenuPrivate(this)) {
+    Q_D(Menu);
     // 确保应用基本样式
     ensurePolished();
-    setStyle(new CukeMenuStyle(style()));
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeMenu::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    setStyle(new MenuStyle(style()));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &Menu::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeMenu::CukeMenu(const QString &title, QWidget *parent)
-    : CukeMenu(parent) {
+Menu::Menu(const QString &title, QWidget *parent)
+    : Menu(parent) {
     setTitle(title);
 }
 
-void CukeMenu::showEvent(QShowEvent *event) {
-    Q_D(CukeMenu);
+void Menu::showEvent(QShowEvent *event) {
+    Q_D(Menu);
     QMenu::showEvent(event);
     move(pos().x() - 6, pos().y());
 }
 
-void CukeMenu::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeMenu);
+void Menu::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(Menu);
     setThemeMode(mode);
     update();
 }
 
-CukeMenu::~CukeMenu() = default;
+Menu::~Menu() = default;
 CUKE_NAMESPACE_END(pub)

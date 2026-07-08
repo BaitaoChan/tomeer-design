@@ -6,23 +6,23 @@
 class QVBoxLayout;
 class QMainWindow;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeAppBar;
-class CukeWindow;
-class CukeWindowPrivate : public QObject {
+class AppBar;
+class Window;
+class WindowPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeWindow)
+    CUKE_DECLARE_QPTR(Window)
     CUKE_Q_PROPERTY_DECL(bool, IsResize)
     CUKE_Q_PROPERTY_DECL(bool, IsDrag)
 public:
-    explicit CukeWindowPrivate(CukeWindow *q = nullptr);
-    ~CukeWindowPrivate() override;
+    explicit WindowPrivate(Window *q = nullptr);
+    ~WindowPrivate() override;
 
 private:
-    CukeAppBar *_appBar = nullptr;
+    AppBar *_appBar = nullptr;
 
     void *_widget = nullptr;
 
-    CukeThemeType::ThemeMode _themeMode = CukeThemeType::Dark;
+    ThemeType::ThemeMode _themeMode = ThemeType::Dark;
 };
 CUKE_NAMESPACE_END(pub)
 

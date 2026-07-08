@@ -9,17 +9,17 @@ class QVBoxLayout;
 class QIcon;
 class QLabel;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeAppBar;
-class CukeLabel;
-class CukeObjectMap;
-class CukeAppBarButton;
-class CukeToggleSwitch;
-class CukeAppBarPrivate : public QObject {
+class AppBar;
+class Label;
+class ObjectMap;
+class AppBarButton;
+class ToggleSwitch;
+class AppBarPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeAppBar)
+    CUKE_DECLARE_QPTR(AppBar)
 public:
-    explicit CukeAppBarPrivate(CukeAppBar *q);
-    ~CukeAppBarPrivate() override;
+    explicit AppBarPrivate(AppBar *q);
+    ~AppBarPrivate() override;
 
     Q_SLOT void onWindowIconChanged(const QIcon &icon) const;
     Q_SLOT void onWindowTitleChanged(const QString& title) const;
@@ -34,7 +34,7 @@ private:
     QHBoxLayout *_mainLayout = nullptr;
 
     QLabel *_windowIcon = nullptr;
-    CukeLabel *_windowTitle = nullptr;
+    Label *_windowTitle = nullptr;
 
     QWidget *_widget = nullptr;
     QHBoxLayout *_layout = nullptr;
@@ -45,12 +45,12 @@ private:
     QWidget *_container = nullptr;
     QHBoxLayout *_containerLayout = nullptr;
 
-    CukeAppBarButton *_themeButton = nullptr;
-    CukeAppBarButton *_minimizeButton = nullptr;
-    CukeAppBarButton *_maximizeButton = nullptr;
-    CukeAppBarButton *_closeButton = nullptr;
+    AppBarButton *_themeButton = nullptr;
+    AppBarButton *_minimizeButton = nullptr;
+    AppBarButton *_maximizeButton = nullptr;
+    AppBarButton *_closeButton = nullptr;
 
-    CukeObjectMap *_objectMap = nullptr;
+    ObjectMap *_objectMap = nullptr;
 };
 CUKE_NAMESPACE_END(pub)
 

@@ -2,11 +2,11 @@
 #include "CukeMenuBar.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeMenuBarPrivate::CukeMenuBarPrivate(CukeMenuBar *q)
+MenuBarPrivate::MenuBarPrivate(MenuBar *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeMenuBarPrivate::~CukeMenuBarPrivate() = default;
+MenuBarPrivate::~MenuBarPrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

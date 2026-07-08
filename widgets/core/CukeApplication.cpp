@@ -4,14 +4,14 @@
 #include "CukeApplication.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-    CUKE_Q_SINGLETON_IMPL(CukeApplication)
-CukeApplication::CukeApplication(QObject *parent)
+    CUKE_Q_SINGLETON_IMPL(Application)
+Application::Application(QObject *parent)
     : QObject(parent) {
 }
 
-CukeApplication::~CukeApplication() = default;
+Application::~Application() = default;
 
-void CukeApplication::init() {
+void Application::init() {
     QFontDatabase::addApplicationFont(":/CukeGlyphs.ttf");
 
     QFont font("Microsoft YaHei");

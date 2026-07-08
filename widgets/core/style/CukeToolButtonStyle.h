@@ -2,16 +2,16 @@
 #define CUKETOOLBUTTONSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeObjectMap.h"
+#include "../dev/CukeObjectMap.h"
 #include "CukeProperty.h"
 #include "CukeToolButton.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-    class CukeToolButtonStyle : public QProxyStyle {
+    class ToolButtonStyle : public QProxyStyle {
     Q_OBJECT
 public:
-    explicit CukeToolButtonStyle(QStyle *style = nullptr);
-    ~CukeToolButtonStyle() override;
+    explicit ToolButtonStyle(QStyle *style = nullptr);
+    ~ToolButtonStyle() override;
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
     void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;

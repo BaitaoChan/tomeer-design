@@ -6,7 +6,7 @@
 
 using namespace cuke::pub;
 
-class MainWindow : public CukeWindow {
+class MainWindow : public Window {
     Q_OBJECT
 
 public:

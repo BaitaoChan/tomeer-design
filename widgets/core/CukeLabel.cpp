@@ -3,43 +3,43 @@
 #include "CukeLabelPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeLabel, QColor, TextColor)
-CUKE_Q_PROPERTY_IMPL(CukeLabel, CukeThemeType::ThemeMode, ThemeMode)
-CukeLabel::CukeLabel(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(Label, QColor, TextColor)
+CUKE_Q_PROPERTY_IMPL(Label, ThemeType::ThemeMode, ThemeMode)
+Label::Label(QWidget *parent)
     : QLabel(parent),
-      d_ptr(new CukeLabelPrivate(this)) {
+      d_ptr(new LabelPrivate(this)) {
     setAttribute(Qt::WA_TranslucentBackground);
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeLabel::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &Label::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeLabel::CukeLabel(const QString &text, QWidget *parent)
-    : CukeLabel(parent) {
+Label::Label(const QString &text, QWidget *parent)
+    : Label(parent) {
     setText(text);
 }
 
-CukeLabel::CukeLabel(const QString &text, const QColor &color, QWidget *parent)
-    : CukeLabel(parent) {
+Label::Label(const QString &text, const QColor &color, QWidget *parent)
+    : Label(parent) {
     setText(text);
     _pTextColor = color;
 }
 
-CukeLabel::~CukeLabel() = default;
+Label::~Label() = default;
 
-void CukeLabel::paintEvent(QPaintEvent *event) {
-    Q_D(CukeLabel);
+void Label::paintEvent(QPaintEvent *event) {
+    Q_D(Label);
     QPainter p(this);
     p.setRenderHint(QPainter::TextAntialiasing, true);
     if (_pTextColor.isValid())
         p.setPen(_pTextColor);
     else
-        p.setPen(CUKE_THEME->getThemeColor(CukeThemeType::Text));
+        p.setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
 
     p.drawText(rect(), alignment(), text());
 }
 
-void CukeLabel::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeLabel);
+void Label::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(Label);
     setThemeMode(mode);
     update();
 }

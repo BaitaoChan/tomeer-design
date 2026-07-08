@@ -9,17 +9,17 @@
 class QIcon;
 class QPropertyAnimation;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToggleSwitch;
-class CukeToggleSwitchPrivate : public QObject {
+class ToggleSwitch;
+class ToggleSwitchPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeToggleSwitch)
+    CUKE_DECLARE_QPTR(ToggleSwitch)
     CUKE_Q_PROPERTY_DECL(QColor, KnobColor)
     CUKE_Q_PROPERTY_DECL(qreal, KnobDiameter)
     CUKE_Q_PROPERTY_DECL(qreal, KnobCenterY)
     CUKE_Q_PROPERTY_DECL(qreal, KnobCenterX)
 public:
-    explicit CukeToggleSwitchPrivate(CukeToggleSwitch *q);
-    ~CukeToggleSwitchPrivate() override;
+    explicit ToggleSwitchPrivate(ToggleSwitch *q);
+    ~ToggleSwitchPrivate() override;
 
 private:
     bool _isToggled = false;

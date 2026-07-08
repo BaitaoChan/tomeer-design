@@ -6,24 +6,24 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeToolButtonPrivate;
-class CUKE_EXPORT CukeToolButton : public QToolButton {
+class ToolButtonPrivate;
+class CUKE_EXPORT ToolButton : public QToolButton {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukeToolButton)
+    CUKE_DECLARE_DPTR(ToolButton)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
     CUKE_Q_PROPERTY_DECL(qreal, RotateAngle)
-    CUKE_Q_PROPERTY_DECL(CukeIconType::Icon, IconType)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
-    CUKE_Q_PROPERTY_DECL(CukeGeometryType::SideFlag, SideFlag)
+    CUKE_Q_PROPERTY_DECL(IconType::Icon, IconType)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(GeometryType::SideFlag, SideFlag)
 public:
-    explicit CukeToolButton(QWidget *parent = nullptr);
-    ~CukeToolButton() override;
+    explicit ToolButton(QWidget *parent = nullptr);
+    ~ToolButton() override;
 
     void setMenu(QMenu *menu);
     QMenu *menu() const;
 
 protected:
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

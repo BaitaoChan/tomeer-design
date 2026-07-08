@@ -7,11 +7,11 @@ using namespace cuke::pub;
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    cApp->init();
+    CUKE_APP->init();
 
     MainWindow w;
     w.show();
-    CUKE_THEME->setThemeMode(CukeThemeType::Dark);
+    CUKE_THEME->setThemeMode(ThemeType::Dark);
 
     return app.exec();
 }

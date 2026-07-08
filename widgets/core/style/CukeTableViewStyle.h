@@ -5,12 +5,12 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeTableViewStyle : public QProxyStyle {
+class TableViewStyle : public QProxyStyle {
     Q_OBJECT
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
 public:
-    explicit CukeTableViewStyle(QStyle *style = nullptr);
-    ~CukeTableViewStyle() override;
+    explicit TableViewStyle(QStyle *style = nullptr);
+    ~TableViewStyle() override;
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
     void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;

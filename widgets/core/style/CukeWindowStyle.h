@@ -2,15 +2,15 @@
 #define CUKEWINDOWSTYLE_H
 #include <QProxyStyle>
 
-#include "CukeObjectMap.h"
+#include "../dev/CukeObjectMap.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeWindowStyle : public QProxyStyle {
+class WindowStyle : public QProxyStyle {
     Q_OBJECT
 public:
-    explicit CukeWindowStyle(QStyle *style = nullptr);
-    ~CukeWindowStyle() override;
+    explicit WindowStyle(QStyle *style = nullptr);
+    ~WindowStyle() override;
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
     void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;

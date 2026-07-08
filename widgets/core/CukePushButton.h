@@ -11,16 +11,16 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukePushButtonPrivate;
-class CUKE_EXPORT CukePushButton : public QPushButton {
+class PushButtonPrivate;
+class CUKE_EXPORT PushButton : public QPushButton {
     Q_OBJECT
-    CUKE_DECLARE_DPTR(CukePushButton)
+    CUKE_DECLARE_DPTR(PushButton)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
-    CUKE_Q_PROPERTY_DECL(CukeThemeType::ThemeMode, ThemeMode)
+    CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
-    explicit CukePushButton(QWidget* parent = nullptr);
-    explicit CukePushButton(QString text, QWidget* parent = nullptr);
-    ~CukePushButton() override;
+    explicit PushButton(QWidget* parent = nullptr);
+    explicit PushButton(QString text, QWidget* parent = nullptr);
+    ~PushButton() override;
 
 protected:
     void enterEvent(QEnterEvent *event) override;
@@ -29,7 +29,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
 
-    virtual void onThemeChanged(CukeThemeType::ThemeMode mode);
+    virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)
 

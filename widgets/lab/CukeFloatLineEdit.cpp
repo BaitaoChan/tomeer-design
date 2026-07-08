@@ -5,9 +5,9 @@
 #include "CukeFloatLineEditPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(lab)
-CukeFloatLineEdit::CukeFloatLineEdit(QWidget *parent)
-    : CukeLineEdit(parent),
-      d_ptr(new CukeFloatLineEditPrivate(this)) {
+FloatLineEdit::FloatLineEdit(QWidget *parent)
+    : LineEdit(parent),
+      d_ptr(new FloatLineEditPrivate(this)) {
 
     d_ptr->_validator = new QDoubleValidator(d_ptr->_min, d_ptr->_max, d_ptr->_inputDecimals, this);
     d_ptr->_validator->setNotation(QDoubleValidator::StandardNotation);
@@ -18,9 +18,9 @@ CukeFloatLineEdit::CukeFloatLineEdit(QWidget *parent)
     setDefaultValue(0.0f);
 }
 
-CukeFloatLineEdit::~CukeFloatLineEdit() = default;
+FloatLineEdit::~FloatLineEdit() = default;
 
-void CukeFloatLineEdit::setRange(float min, float max) {
+void FloatLineEdit::setRange(float min, float max) {
     d_ptr->_min = min;
     d_ptr->_max = max;
     d_ptr->_validator->setRange(min, max);
@@ -28,46 +28,46 @@ void CukeFloatLineEdit::setRange(float min, float max) {
     updateRangeToolTip();
 }
 
-void CukeFloatLineEdit::setDefaultValue(float value) {
+void FloatLineEdit::setDefaultValue(float value) {
     value = qBound(d_ptr->_min, value, d_ptr->_max);
     d_ptr->_lastValidValue = value;
     setText(QString::number(value, 'f', d_ptr->_displayDecimals));
 }
 
-void CukeFloatLineEdit::setDisplayDecimals(int decimals) {
+void FloatLineEdit::setDisplayDecimals(int decimals) {
     d_ptr->_displayDecimals = qMax(0, decimals);
     setText(QString::number(d_ptr->_lastValidValue, 'f', d_ptr->_displayDecimals));
 
     updateRangeToolTip();
 }
 
-int CukeFloatLineEdit::displayDecimals() const {
+int FloatLineEdit::displayDecimals() const {
     return d_ptr->_displayDecimals;
 }
 
-void CukeFloatLineEdit::setRangeToolTipEnabled(bool enable) {
+void FloatLineEdit::setRangeToolTipEnabled(bool enable) {
     d_ptr->_rangeToolTipEnabled = enable;
     updateRangeToolTip();
 }
 
-bool CukeFloatLineEdit::isRangeToolTipEnabled() const {
+bool FloatLineEdit::isRangeToolTipEnabled() const {
     return d_ptr->_rangeToolTipEnabled;
 }
 
-float CukeFloatLineEdit::value() const {
+float FloatLineEdit::value() const {
     return text().toFloat();
 }
 
-float CukeFloatLineEdit::lastValidValue() const {
+float FloatLineEdit::lastValidValue() const {
     return d_ptr->_lastValidValue;
 }
 
-void CukeFloatLineEdit::focusOutEvent(QFocusEvent *event) {
+void FloatLineEdit::focusOutEvent(QFocusEvent *event) {
     validateAndFix();
-    CukeLineEdit::focusOutEvent(event);
+    LineEdit::focusOutEvent(event);
 }
 
-void CukeFloatLineEdit::keyPressEvent(QKeyEvent *event) {
+void FloatLineEdit::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Return ||
         event->key() == Qt::Key_Enter) {
 
@@ -75,10 +75,10 @@ void CukeFloatLineEdit::keyPressEvent(QKeyEvent *event) {
         clearFocus();
         return;
     }
-    CukeLineEdit::keyPressEvent(event);
+    LineEdit::keyPressEvent(event);
 }
 
-void CukeFloatLineEdit::validateAndFix(bool forceEmit) {
+void FloatLineEdit::validateAndFix(bool forceEmit) {
     bool ok = false;
     float v = text().toFloat(&ok);
 
@@ -97,7 +97,7 @@ void CukeFloatLineEdit::validateAndFix(bool forceEmit) {
     }
 }
 
-void CukeFloatLineEdit::updateRangeToolTip() {
+void FloatLineEdit::updateRangeToolTip() {
     if (!d_ptr->_rangeToolTipEnabled) {
         setToolTip(QString());
         return;

@@ -1,14 +1,14 @@
 #include <QPainter>
 #include "CukeIcon.h"
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_SINGLETON_IMPL(CukeIcon)
-CukeIcon::CukeIcon(QObject *parent)
+CUKE_Q_SINGLETON_IMPL(Icon)
+Icon::Icon(QObject *parent)
     : QObject(parent) {
 }
 
-CukeIcon::~CukeIcon() = default;
+Icon::~Icon() = default;
 
-QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph) {
+QIcon Icon::getCukeIcon(IconType::Icon glyph) {
     QPixmap pixmap(32, 32);
     pixmap.fill(Qt::transparent);
 
@@ -26,7 +26,7 @@ QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph) {
     return QIcon(pixmap);
 }
 
-QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph, QColor color) {
+QIcon Icon::getCukeIcon(IconType::Icon glyph, QColor color) {
     QPixmap pixmap(32, 32);
     pixmap.fill(Qt::transparent);
 
@@ -45,7 +45,7 @@ QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph, QColor color) {
     return QIcon(pixmap);
 }
 
-QIcon CukeIcon::getCukeIcon(CukeIconType::Icon glyph, QColor color, int pixelSize) {
+QIcon Icon::getCukeIcon(IconType::Icon glyph, QColor color, int pixelSize) {
     QPixmap pixmap(pixelSize, pixelSize);
     pixmap.fill(Qt::transparent);
 

@@ -4,15 +4,15 @@
 
 #include "CukeProperty.h"
 
-#define cApp CukeApplication::instance()
+#define CUKE_APP Application::instance()
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CUKE_EXPORT CukeApplication : public QObject {
+class CUKE_EXPORT Application : public QObject {
     Q_OBJECT
-    CUKE_Q_SINGLETON_DECL(CukeApplication)
+    CUKE_Q_SINGLETON_DECL(Application)
 private:
-    explicit CukeApplication(QObject *parent = nullptr);
-    ~CukeApplication() override;
+    explicit Application(QObject *parent = nullptr);
+    ~Application() override;
 public:
     void init();
 };

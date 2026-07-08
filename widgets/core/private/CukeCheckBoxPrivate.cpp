@@ -2,15 +2,15 @@
 #include "CukeCheckBox.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeCheckBoxPrivate::CukeCheckBoxPrivate(CukeCheckBox *q)
+CheckBoxPrivate::CheckBoxPrivate(CheckBox *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeCheckBoxPrivate::~CukeCheckBoxPrivate() = default;
+CheckBoxPrivate::~CheckBoxPrivate() = default;
 
-void CukeCheckBoxPrivate::onToggled(const bool checked) {
-    Q_Q(CukeCheckBox);
+void CheckBoxPrivate::onToggled(const bool checked) {
+    Q_Q(CheckBox);
     _checkAnim->stop();
     _checkAnim->setStartValue(q->_pCheckProgress);
     _checkAnim->setEndValue(checked ? 1.0 : 0.0);

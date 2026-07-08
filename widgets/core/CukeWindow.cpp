@@ -18,32 +18,32 @@
 #endif
 
 CUKE_NAMESPACE_BEGIN(pub)
-CUKE_Q_PROPERTY_IMPL(CukeWindow, int, BorderRadius)
-CUKE_Q_PROPERTY_IMPL(CukeWindow, CukeThemeType::ThemeMode, ThemeMode)
-CukeWindow::CukeWindow(QWidget *parent)
+CUKE_Q_PROPERTY_IMPL(Window, int, BorderRadius)
+CUKE_Q_PROPERTY_IMPL(Window, ThemeType::ThemeMode, ThemeMode)
+Window::Window(QWidget *parent)
     : QMainWindow(parent),
-      d_ptr(new CukeWindowPrivate(this)) {
-    Q_D(CukeWindow);
-    d->_appBar = new CukeAppBar(this);
+      d_ptr(new WindowPrivate(this)) {
+    Q_D(Window);
+    d->_appBar = new AppBar(this);
     setAttribute(Qt::WA_TranslucentBackground);
     // 保留窗口系统功能
     setWindowFlags(Qt::Window | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::WindowSystemMenuHint);
     resize(1280, 720);
-    setStyle(new CukeWindowStyle(style()));
+    setStyle(new WindowStyle(style()));
     setStyleSheet("QMainWindow { background: transparent; }");
-    connect(CUKE_THEME, &CukeTheme::themeModeChanged, this, &CukeWindow::onThemeChanged);
-    connect(CUKE_THEME, &CukeTheme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+    connect(CUKE_THEME, &Theme::themeModeChanged, this, &Window::onThemeChanged);
+    connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-CukeWindow::~CukeWindow() = default;
+Window::~Window() = default;
 
-CukeAppBar *CukeWindow::appBar() {
-    Q_D(CukeWindow);
+AppBar *Window::appBar() {
+    Q_D(Window);
     return d->_appBar;
 }
 
-bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
-    Q_D(CukeWindow);
+bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
+    Q_D(Window);
     d->setIsResize(false);
     d->setIsDrag(false);
 #ifdef Q_OS_WIN
@@ -136,7 +136,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
                 );
                 if (qRect.contains(QPoint(hCursor.x, hCursor.y))) {
                     d->setIsDrag(false);
-                    if (widget == static_cast<CukeToolButton *>(d->_appBar->object(CukeAppBarType::MaximizeButton))) {
+                    if (widget == static_cast<ToolButton *>(d->_appBar->object(AppBarType::MaximizeButton))) {
                         *result = HTMAXBUTTON;
                         return true;
                     }
@@ -152,9 +152,9 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
     // 非客户区光标事件
     if (pMsg->message == WM_NCMOUSEMOVE) {
         if (pMsg->wParam == HTMAXBUTTON) {
-            if ((d->_widget = static_cast<CukeToolButton *>(d->_appBar->object(CukeAppBarType::MaximizeButton)))) {
+            if ((d->_widget = static_cast<ToolButton *>(d->_appBar->object(AppBarType::MaximizeButton)))) {
                 QEvent enterEvent(QEvent::Enter);
-                QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &enterEvent);
+                QCoreApplication::sendEvent(static_cast<ToolButton *>(d->_widget), &enterEvent);
                 *result = NULL;
                 return true;
             }
@@ -171,7 +171,7 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
     if (pMsg->message == WM_MOUSEMOVE) {
         if (d->_widget) {
             QEvent leaveEvent(QEvent::Leave);
-            QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &leaveEvent);
+            QCoreApplication::sendEvent(static_cast<ToolButton *>(d->_widget), &leaveEvent);
 
             d->_widget = nullptr;
         }
@@ -182,14 +182,14 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
                 // QCursor::pos() 全局坐标
                 QMouseEvent pressEvent(
                     QEvent::MouseButtonPress,
-                    static_cast<CukeToolButton *>(d->_widget)->mapFromGlobal(QCursor::pos()),
+                    static_cast<ToolButton *>(d->_widget)->mapFromGlobal(QCursor::pos()),
                     QCursor::pos(),
                     Qt::LeftButton,
                     Qt::LeftButton,
                     Qt::NoModifier
                 );
 
-                QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &pressEvent);
+                QCoreApplication::sendEvent(static_cast<ToolButton *>(d->_widget), &pressEvent);
 
                 *result = NULL;
                 return true;
@@ -201,14 +201,14 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
             if (d->_widget) {
                 QMouseEvent releaseEvent(
                     QEvent::MouseButtonRelease,
-                    static_cast<CukeToolButton *>(d->_widget)->mapFromGlobal(QCursor::pos()),
+                    static_cast<ToolButton *>(d->_widget)->mapFromGlobal(QCursor::pos()),
                     QCursor::pos(),
                     Qt::LeftButton,
                     Qt::NoButton,
                     Qt::NoModifier
                 );
 
-                QCoreApplication::sendEvent(static_cast<CukeToolButton *>(d->_widget), &releaseEvent);
+                QCoreApplication::sendEvent(static_cast<ToolButton *>(d->_widget), &releaseEvent);
 
                 *result = NULL;
                 return true;
@@ -233,26 +233,26 @@ bool CukeWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr
     return QMainWindow::nativeEvent(eventType, message, result);
 }
 
-void CukeWindow::resizeEvent(QResizeEvent *event) {
+void Window::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
 }
 
 
-void CukeWindow::paintEvent(QPaintEvent *event) {
-    Q_D(CukeWindow);
+void Window::paintEvent(QPaintEvent *event) {
+    Q_D(Window);
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     QPainterPath path;
     path.addRect(rect());
 
-    painter.fillPath(path, CUKE_THEME->getThemeColor(CukeThemeType::Window));
+    painter.fillPath(path, CUKE_THEME->getThemeColor(ThemeType::Window));
 
     QMainWindow::paintEvent(event);
 }
 
-void CukeWindow::onThemeChanged(CukeThemeType::ThemeMode mode) {
-    Q_D(CukeWindow);
+void Window::onThemeChanged(ThemeType::ThemeMode mode) {
+    Q_D(Window);
     setThemeMode(mode);
     update();
 }

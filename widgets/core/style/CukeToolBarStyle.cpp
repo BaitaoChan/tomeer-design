@@ -9,18 +9,18 @@
 #include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeToolBarStyle::CukeToolBarStyle(QStyle *style)
+ToolBarStyle::ToolBarStyle(QStyle *style)
     : QProxyStyle(style) {
 }
 
-CukeToolBarStyle::~CukeToolBarStyle() = default;
+ToolBarStyle::~ToolBarStyle() = default;
 
-void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto toolBar = qobject_cast<const CukeToolBar *>(widget);
+void ToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto toolBar = qobject_cast<const ToolBar *>(widget);
     if (element == PE_IndicatorToolBarHandle) {
         painter->save();
         painter->setPen(Qt::NoPen);
-        painter->setBrush(QBrush(CUKE_THEME->getThemeColor(CukeThemeType::ToolBarHandle)));
+        painter->setBrush(QBrush(CUKE_THEME->getThemeColor(ThemeType::ToolBarHandle)));
 
         int radius, width, height, x, y;
         radius = 1;
@@ -33,7 +33,7 @@ void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
         }
 
         CUKE_PAINTER->drawRoundedRect(QRect(x, y, width, height),
-                                  painter, radius, radius, CukeGeometryType::All);
+                                  painter, radius, radius, GeometryType::All);
         painter->restore();
         return;
     }
@@ -42,8 +42,8 @@ void CukeToolBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOptio
     return QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-void CukeToolBarStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto toolBar = qobject_cast<const CukeToolBar *>(widget);
+void ToolBarStyle::drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    const auto toolBar = qobject_cast<const ToolBar *>(widget);
     if (element == CE_ToolBar) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
@@ -51,7 +51,7 @@ void CukeToolBarStyle::drawControl(ControlElement element, const QStyleOption *o
             // 悬浮
             int radius = 4;
             painter->setPen(Qt::NoPen);
-            painter->setBrush(CUKE_THEME->getThemeColor(toolBar->getThemeMode(), CukeThemeType::ToolBarBg));
+            painter->setBrush(CUKE_THEME->getThemeColor(toolBar->getThemeMode(), ThemeType::ToolBarBg));
             painter->drawRoundedRect(toolBar->rect(), radius, radius);
         } else {
             // 停靠
@@ -62,15 +62,15 @@ void CukeToolBarStyle::drawControl(ControlElement element, const QStyleOption *o
     return QProxyStyle::drawControl(element, option, painter, widget);
 }
 
-void CukeToolBarStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
+void ToolBarStyle::drawComplexControl(ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const {
     return QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 
-int CukeToolBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
+int ToolBarStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
-QSize CukeToolBarStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
+QSize ToolBarStyle::sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const {
     return QProxyStyle::sizeFromContents(type, option, size, widget);
 }
 

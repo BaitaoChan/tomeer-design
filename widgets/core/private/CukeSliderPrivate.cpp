@@ -2,11 +2,11 @@
 #include "CukeSlider.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeSliderPrivate::CukeSliderPrivate(CukeSlider *q)
+SliderPrivate::SliderPrivate(Slider *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeSliderPrivate::~CukeSliderPrivate() = default;
+SliderPrivate::~SliderPrivate() = default;
 
 CUKE_NAMESPACE_END(pub)

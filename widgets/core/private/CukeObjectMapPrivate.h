@@ -6,12 +6,12 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeObjectMap;
-class CukeObjectMapPrivate {
-    CUKE_DECLARE_QPTR(CukeObjectMap)
+class ObjectMap;
+class ObjectMapPrivate {
+    CUKE_DECLARE_QPTR(ObjectMap)
 public:
-    explicit CukeObjectMapPrivate(CukeObjectMap *q);
-    ~CukeObjectMapPrivate();
+    explicit ObjectMapPrivate(ObjectMap *q);
+    ~ObjectMapPrivate();
 
 private:
     QObject *_child = nullptr;

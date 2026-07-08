@@ -6,14 +6,14 @@
 class QPropertyAnimation;
 class QColor;
 CUKE_NAMESPACE_BEGIN(pub)
-class CukeAppBarButton;
-class CukeAppBarButtonStyle;
-class CukeAppBarButtonPrivate : public QObject {
+class AppBarButton;
+class AppBarButtonStyle;
+class AppBarButtonPrivate : public QObject {
     Q_OBJECT
-    CUKE_DECLARE_QPTR(CukeAppBarButton)
+    CUKE_DECLARE_QPTR(AppBarButton)
 public:
-    explicit CukeAppBarButtonPrivate(CukeAppBarButton *q);
-    ~CukeAppBarButtonPrivate() override;
+    explicit AppBarButtonPrivate(AppBarButton *q);
+    ~AppBarButtonPrivate() override;
 
     Q_SLOT void onHoverChanged();
 

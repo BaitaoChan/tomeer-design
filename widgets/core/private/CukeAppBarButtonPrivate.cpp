@@ -4,15 +4,15 @@
 #include "CukeAppBarButton.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-CukeAppBarButtonPrivate::CukeAppBarButtonPrivate(CukeAppBarButton *q)
+AppBarButtonPrivate::AppBarButtonPrivate(AppBarButton *q)
     : QObject(q),
       q_ptr(q) {
 }
 
-CukeAppBarButtonPrivate::~CukeAppBarButtonPrivate() = default;
+AppBarButtonPrivate::~AppBarButtonPrivate() = default;
 
-void CukeAppBarButtonPrivate::onHoverChanged() {
-    Q_Q(CukeAppBarButton);
+void AppBarButtonPrivate::onHoverChanged() {
+    Q_Q(AppBarButton);
     if (q->_pHover) {
         _bgAnim->stop();
         _bgAnim->setStartValue(*_bgColorFrom);
