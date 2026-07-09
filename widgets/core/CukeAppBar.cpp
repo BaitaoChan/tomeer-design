@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QEvent>
 #include <QWindow>
+#include <QStyleHints>
 
 #include "CukeAppBar.h"
 #include "CukeAppBarPrivate.h"
@@ -148,10 +149,20 @@ QList<void *> AppBar::objects() {
     return d->_objectMap->objects();
 }
 
-void AppBar::onThemeChanged(const ThemeType::ThemeMode mode) {
+void AppBar::onThemeChanged(ThemeType::ThemeMode mode) {
     Q_D(AppBar);
     setThemeMode(mode);
-    d->_themeButton->setIconType(getThemeMode() ? IconType::WeatherSunny : IconType::WeatherMoon);
+    if (mode == ThemeType::System) {
+        if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
+            mode = ThemeType::Dark;
+        else
+            mode = ThemeType::Light;
+    }
+
+    if (mode == ThemeType::Light)
+        d->_themeButton->setIconType(IconType::WeatherMoon);
+    else if (mode == ThemeType::Dark)
+        d->_themeButton->setIconType(IconType::WeatherSunny);
     update();
 }
 

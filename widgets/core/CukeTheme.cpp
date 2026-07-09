@@ -1,6 +1,9 @@
+#include <QPropertyAnimation>
+#include <QGuiApplication>
+#include <QStyleHints>
+
 #include "CukeTheme.h"
 #include "CukeThemePrivate.h"
-#include <QPropertyAnimation>
 
 CUKE_NAMESPACE_BEGIN(pub)
 namespace {
@@ -112,6 +115,7 @@ Theme::Theme(QObject *parent)
 
     initThemeColor();
     connect(d, &ThemePrivate::pColorFactorChanged, this, &Theme::themeColorChanged);
+    connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged, this, &Theme::onColorSchemeChanged);
 }
 
 Theme::~Theme() = default;
@@ -119,6 +123,13 @@ Theme::~Theme() = default;
 void Theme::setThemeMode(ThemeType::ThemeMode mode) {
     Q_D(Theme);
     d->_themeMode = mode;
+
+    if (mode == ThemeType::System) {
+        if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
+            mode = ThemeType::Dark;
+        else
+            mode = ThemeType::Light;
+    }
 
     const qreal tFactor = mode == ThemeType::Light ? 1.0 : 0.0;
 
@@ -156,12 +167,18 @@ QColor Theme::getThemeColor(ThemeType::ThemeColor color) {
 
 QColor Theme::getThemeColor(ThemeType::ThemeMode mode, ThemeType::ThemeColor color) {
     Q_D(Theme);
-    if (mode == ThemeType::Light) {
+
+    if (mode == ThemeType::System) {
+        if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
+            mode = ThemeType::Dark;
+        else
+            mode = ThemeType::Light;
+    }
+
+    if (mode == ThemeType::Light)
         return d->_lightThemeColorList[color];
-    }
-    if (mode == ThemeType::Dark) {
+    if (mode == ThemeType::Dark)
         return d->_darkThemeColorList[color];
-    }
     return {};
 }
 
@@ -175,6 +192,22 @@ void Theme::initThemeColor() {
         d->_lightThemeColorList.insert(color.role, color.light);
         d->_darkThemeColorList.insert(color.role, color.dark);
     }
+}
+
+void Theme::onColorSchemeChanged(Qt::ColorScheme colorScheme) {
+    Q_D(Theme);
+
+    if (d->_themeMode != ThemeType::System)
+        return;
+
+    const qreal tFactor = colorScheme == Qt::ColorScheme::Dark ? 0.0 : 1.0;
+
+    emit themeModeChanged(d->_themeMode);
+
+    d->_colorAnimation->stop();
+    d->_colorAnimation->setStartValue(d->getColorFactor());
+    d->_colorAnimation->setEndValue(tFactor);
+    d->_colorAnimation->start();
 }
 
 CUKE_NAMESPACE_END(pub)

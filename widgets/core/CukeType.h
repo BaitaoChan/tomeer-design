@@ -56,8 +56,9 @@ CUKE_TYPE_END(GeometryType)
 
 CUKE_TYPE_BEGIN(ThemeType)
 enum ThemeMode {
-    Light = 0x0000,
-    Dark = 0x0001,
+    Light = 0x00,
+    Dark = 0x01,
+    System = 0x02,
 };
 Q_ENUM(ThemeMode)
 

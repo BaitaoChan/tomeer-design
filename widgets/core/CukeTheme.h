@@ -27,6 +27,8 @@ public:
 signals:
     void themeModeChanged(ThemeType::ThemeMode mode);
     void themeColorChanged();
+private slots:
+    void onColorSchemeChanged(Qt::ColorScheme colorScheme);
 private:
     void initThemeColor();
 };
