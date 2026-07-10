@@ -48,8 +48,12 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
     d->setIsDrag(false);
 #ifdef Q_OS_WIN
     const auto pMsg = static_cast<MSG *>(message);
-    // 获取当前窗口的 DPI 缩放倍率
+    // 获取当前窗口所在显示器对应的 DPI
+    const UINT dpi = GetDpiForWindow(pMsg->hwnd);
+    // 获取逻辑像素到物理像素的缩放倍率
     const qreal hDpr = windowHandle() ? windowHandle()->devicePixelRatio() : 1.0;
+    // 获取标准可缩放窗口顶部或底部的完整框架厚度
+    const int frameY = GetSystemMetricsForDpi(SM_CYSIZEFRAME, dpi) + GetSystemMetricsForDpi(SM_CXPADDEDBORDER, dpi);
     // 隐藏非客户区
     if (pMsg->message == WM_NCCALCSIZE) {
         if (pMsg->wParam == TRUE) {
@@ -63,7 +67,6 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
             qRect.top = pRect.top;
             // 恢复最大化的顶部安全边界
             if (IsZoomed(pMsg->hwnd)) {
-                const int frameY = GetSystemMetrics(SM_CYSIZEFRAME) + GetSystemMetrics(SM_CXPADDEDBORDER);
                 qRect.top += frameY;
             }
             return true;
@@ -77,29 +80,32 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
 
         RECT hMargin = {0, 0, 0, 0};
         // 查询系统建议的窗口边框
-        AdjustWindowRectEx(&hMargin, WS_OVERLAPPEDWINDOW & ~WS_CAPTION, FALSE, NULL);
+        AdjustWindowRectExForDpi(&hMargin, WS_OVERLAPPEDWINDOW & ~WS_CAPTION, FALSE, 0, dpi);
 
         uchar hRow = 1, hCol = 1;
 
-        // left 区域
-        if (hCursor.x >= hRect.left && hCursor.x <= hRect.left - hMargin.left) {
-            d->setIsResize(true);
-            hCol = 0;
-        }
-        // top 区域
-        if (hCursor.y > hRect.top && hCursor.y <= hRect.top - hMargin.top) {
-            d->setIsResize(true);
-            hRow = 0;
-        }
-        // right 区域
-        if (hCursor.x > hRect.right - hMargin.right && hCursor.x <= hRect.right) {
-            d->setIsResize(true);
-            hCol = 2;
-        }
-        // bottom 区域
-        if (hCursor.y > hRect.bottom - hMargin.bottom && hCursor.y <= hRect.bottom) {
-            d->setIsResize(true);
-            hRow = 2;
+        // 最大化取消窗口边缘缩放
+        if (!IsZoomed(pMsg->hwnd)) {
+            // left 区域
+            if (hCursor.x >= hRect.left && hCursor.x <= hRect.left - hMargin.left) {
+                d->setIsResize(true);
+                hCol = 0;
+            }
+            // top 区域
+            if (hCursor.y > hRect.top && hCursor.y <= hRect.top - hMargin.top) {
+                d->setIsResize(true);
+                hRow = 0;
+            }
+            // right 区域
+            if (hCursor.x > hRect.right - hMargin.right && hCursor.x <= hRect.right) {
+                d->setIsResize(true);
+                hCol = 2;
+            }
+            // bottom 区域
+            if (hCursor.y > hRect.bottom - hMargin.bottom && hCursor.y <= hRect.bottom) {
+                d->setIsResize(true);
+                hRow = 2;
+            }
         }
 
         // 返回 resize 命中
@@ -115,7 +121,7 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
         }
 
         // appBar 区域
-        if (hCursor.y > hRect.top - hMargin.top && hCursor.y <= hRect.top - hMargin.top + d->_appBar->getAppBarHeight() * hDpr) {
+        if (hCursor.y >= hRect.top - hMargin.top && hCursor.y <= hRect.top - hMargin.top + d->_appBar->getAppBarHeight() * hDpr) {
             for (const auto &child : d->_appBar->objects()) {
                 const auto widget = static_cast<QWidget *>(child);
                 if (!widget || !widget->isVisible()) {
@@ -124,10 +130,15 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
                 // 坐标映射
                 // 获取 widget 左上角在 window 内的位置
                 const QPoint qCursor = widget->mapTo(window(), QPoint(0, 0));
+
+                int cTop = hRect.top;
+                if (IsZoomed(pMsg->hwnd)) {
+                    cTop += frameY;
+                }
                 const auto qRect = QRect(
                     QPoint(
                         hRect.left - hMargin.left + qRound(qCursor.x() * hDpr),
-                        hRect.top + qRound(qCursor.y() * hDpr)
+                        cTop + qRound(qCursor.y() * hDpr)
                     ),
                     QSize(
                         qRound(widget->width() * hDpr),
