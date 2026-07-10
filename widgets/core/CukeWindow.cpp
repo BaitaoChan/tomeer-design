@@ -78,6 +78,10 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
         RECT hRect;
         GetWindowRect(pMsg->hwnd, &hRect);
 
+        // 获取客户区左上角对应的屏幕坐标
+        POINT cTopLeft{0, 0};
+        ClientToScreen(pMsg->hwnd, &cTopLeft);
+
         RECT hMargin = {0, 0, 0, 0};
         // 查询系统建议的窗口边框
         AdjustWindowRectExForDpi(&hMargin, WS_OVERLAPPEDWINDOW & ~WS_CAPTION, FALSE, 0, dpi);
@@ -121,7 +125,8 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
         }
 
         // appBar 区域
-        if (hCursor.y >= hRect.top - hMargin.top && hCursor.y <= hRect.top - hMargin.top + d->_appBar->getAppBarHeight() * hDpr) {
+        const int appBarHeight = qRound(d->_appBar->getAppBarHeight() * hDpr);
+        if (hCursor.y >= cTopLeft.y && hCursor.y <= cTopLeft.y + appBarHeight) {
             for (const auto &child : d->_appBar->objects()) {
                 const auto widget = static_cast<QWidget *>(child);
                 if (!widget || !widget->isVisible()) {
@@ -137,8 +142,8 @@ bool Window::nativeEvent(const QByteArray &eventType, void *message, qintptr *re
                 }
                 const auto qRect = QRect(
                     QPoint(
-                        hRect.left - hMargin.left + qRound(qCursor.x() * hDpr),
-                        cTop + qRound(qCursor.y() * hDpr)
+                        cTopLeft.x + qRound(qCursor.x() * hDpr),
+                        cTopLeft.y + qRound(qCursor.y() * hDpr)
                     ),
                     QSize(
                         qRound(widget->width() * hDpr),
