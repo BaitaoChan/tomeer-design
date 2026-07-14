@@ -17,6 +17,18 @@ public:
 #define CUKE_TYPE_END(CLASS)                                \
 };
 
+CUKE_TYPE_BEGIN(WindowType)
+enum DisplayMode {
+    Normal,
+#if defined(Q_OS_WIN)
+    Mica,
+    MicaAlt,
+    Acrylic,
+#endif
+};
+Q_ENUM(DisplayMode)
+CUKE_TYPE_END(WindowType)
+
 CUKE_TYPE_BEGIN(AppBarType)
 enum Object {
     InvalidObject = -1,
@@ -83,6 +95,11 @@ enum ThemeColor {
     BorderAlpha,
 
     WindowAlpha,
+
+    Mica,
+    MicaAlt,
+    Acrylic,
+
     PanelAlpha,
 
     Disable,

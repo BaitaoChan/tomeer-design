@@ -13,6 +13,7 @@ class WindowPrivate : public QObject {
     CUKE_DECLARE_QPTR(Window)
     CUKE_Q_PROPERTY_DECL(bool, IsResize)
     CUKE_Q_PROPERTY_DECL(bool, IsDrag)
+    CUKE_Q_PROPERTY_DECL(bool, IsApplied)
 public:
     explicit WindowPrivate(Window *q = nullptr);
     ~WindowPrivate() override;

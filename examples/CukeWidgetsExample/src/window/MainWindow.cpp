@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar->addAction(new QAction("调试"));
     menuBar->addAction(new QAction("拓展"));
     appBar()->addCustomWidget(menuBar, AppBarType::LeftArea);
+    setDisplayMode(WindowType::MicaAlt);
 
     auto toolBar = new ToolBar(this);
     auto *toolButton1 = new ToolButton(this);

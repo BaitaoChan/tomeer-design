@@ -1,8 +1,9 @@
 #include <QPainter>
-#include <QPainterPath>
 #include <QVBoxLayout>
 #include <QWindow>
 #include <QMouseEvent>
+#include <QGuiApplication>
+#include <QStyleHints>
 
 #include "CukeWindow.h"
 #include "CukeToolButton.h"
@@ -24,6 +25,7 @@ Window::Window(QWidget *parent)
     : QMainWindow(parent),
       d_ptr(new WindowPrivate(this)) {
     Q_D(Window);
+    setDisplayMode(WindowType::Normal);
     d->_appBar = new AppBar(this);
     setAttribute(Qt::WA_TranslucentBackground);
     // 保留窗口系统功能
@@ -36,6 +38,57 @@ Window::Window(QWidget *parent)
 }
 
 Window::~Window() = default;
+
+void Window::setDisplayMode(WindowType::DisplayMode pDisplayMode) {
+    Q_D(Window);
+    if (_pDisplayMode != pDisplayMode) {
+        _pDisplayMode = pDisplayMode;
+        Q_EMIT pDisplayModeChanged();
+    }
+
+    bool isApplied = false;
+#ifdef Q_OS_WIN
+    if (windowHandle()) {
+        DWM_SYSTEMBACKDROP_TYPE backdropType = DWMSBT_NONE;
+        if (pDisplayMode == WindowType::Mica)
+            backdropType = DWMSBT_MAINWINDOW;
+        else if (pDisplayMode == WindowType::MicaAlt)
+            backdropType = DWMSBT_TABBEDWINDOW;
+        else if (pDisplayMode == WindowType::Acrylic)
+            backdropType = DWMSBT_TRANSIENTWINDOW;
+
+        auto themeMode = CUKE_THEME->getThemeMode();
+        if (themeMode == ThemeType::System) {
+            if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
+                themeMode = ThemeType::Dark;
+            else
+                themeMode = ThemeType::Light;
+        }
+
+        const auto hwnd = reinterpret_cast<HWND>(winId());
+        BOOL mode = FALSE;
+        if (themeMode == ThemeType::Dark)
+            mode = TRUE;
+        DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &mode, sizeof(mode));
+
+        const HRESULT result = DwmSetWindowAttribute(hwnd, DWMWA_SYSTEMBACKDROP_TYPE, &backdropType, sizeof(backdropType));
+        isApplied = SUCCEEDED(result) && backdropType != DWMSBT_NONE;
+
+        const MARGINS margins = isApplied
+                                    ? MARGINS{-1, -1, -1, -1}
+                                    : MARGINS{0, 0, 0, 0};
+        DwmExtendFrameIntoClientArea(hwnd, &margins);
+    }
+#endif
+
+    d->setIsApplied(isApplied);
+    update();
+}
+
+WindowType::DisplayMode Window::getDisplayMode() const {
+    return _pDisplayMode;
+}
+
 
 AppBar *Window::appBar() {
     Q_D(Window);
@@ -259,18 +312,36 @@ void Window::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
-    QPainterPath path;
-    path.addRect(rect());
-
-    painter.fillPath(path, CUKE_THEME->getThemeColor(ThemeType::Window));
+    if (d->getIsApplied() && getDisplayMode() != WindowType::Normal) {
+        switch (getDisplayMode()) {
+            case WindowType::Mica:
+                painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::Mica));
+                break;
+            case WindowType::MicaAlt:
+                painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::MicaAlt));
+                break;
+            case WindowType::Acrylic:
+                painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::Acrylic));
+                break;
+            default:
+                break;
+        }
+    } else
+        painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::Window));
 
     QMainWindow::paintEvent(event);
+}
+
+void Window::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
+    setDisplayMode(getDisplayMode());
+    update();
 }
 
 void Window::onThemeChanged(ThemeType::ThemeMode mode) {
     Q_D(Window);
     setThemeMode(mode);
-    update();
+    setDisplayMode(getDisplayMode());
 }
 
 CUKE_NAMESPACE_END(pub)

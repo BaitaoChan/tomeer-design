@@ -54,7 +54,16 @@ namespace {
         {ThemeType::BorderAlpha, QColor(128, 128, 128, 120), QColor(53, 53, 53, 120)},
 
         // Window Alpha
-        {ThemeType::WindowAlpha, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
+        {ThemeType::WindowAlpha, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
+
+        // Mica
+        {ThemeType::Mica, QColor(0, 103, 192, 10), QColor(0, 103, 192, 10)},
+
+        // MicaAlt
+        {ThemeType::MicaAlt, QColor(0, 103, 192, 10), QColor(0, 103, 192, 10)},
+
+        // Acrylic
+        {ThemeType::Acrylic, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
 
         // Panel Alpha
         {ThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
