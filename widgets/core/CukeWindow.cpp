@@ -50,12 +50,19 @@ void Window::setDisplayMode(WindowType::DisplayMode pDisplayMode) {
 #ifdef Q_OS_WIN
     if (windowHandle()) {
         DWM_SYSTEMBACKDROP_TYPE backdropType = DWMSBT_NONE;
-        if (pDisplayMode == WindowType::Mica)
-            backdropType = DWMSBT_MAINWINDOW;
-        else if (pDisplayMode == WindowType::MicaAlt)
-            backdropType = DWMSBT_TABBEDWINDOW;
-        else if (pDisplayMode == WindowType::Acrylic)
-            backdropType = DWMSBT_TRANSIENTWINDOW;
+        switch (pDisplayMode) {
+            case WindowType::Mica:
+                backdropType = DWMSBT_MAINWINDOW;
+                break;
+            case WindowType::MicaAlt:
+                backdropType = DWMSBT_TABBEDWINDOW;
+                break;
+            case WindowType::Acrylic:
+                backdropType = DWMSBT_TRANSIENTWINDOW;
+                break;
+            default:
+                break;
+        }
 
         auto themeMode = CUKE_THEME->getThemeMode();
         if (themeMode == ThemeType::System) {
@@ -313,19 +320,6 @@ void Window::paintEvent(QPaintEvent *event) {
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     if (d->getIsApplied() && getDisplayMode() != WindowType::Normal) {
-        switch (getDisplayMode()) {
-            case WindowType::Mica:
-                painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::Mica));
-                break;
-            case WindowType::MicaAlt:
-                painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::MicaAlt));
-                break;
-            case WindowType::Acrylic:
-                painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::Acrylic));
-                break;
-            default:
-                break;
-        }
     } else
         painter.fillRect(rect(), CUKE_THEME->getThemeColor(ThemeType::Window));
 
