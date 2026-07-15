@@ -29,7 +29,7 @@ Window::Window(QWidget *parent)
     d->_appBar = new AppBar(this);
     setAttribute(Qt::WA_TranslucentBackground);
     // 保留窗口系统功能
-    setWindowFlags(Qt::Window | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::WindowSystemMenuHint);
+    setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint);
     resize(1280, 720);
     setStyle(new WindowStyle(style()));
     setStyleSheet("QMainWindow { background: transparent; }");
