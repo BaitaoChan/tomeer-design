@@ -71,6 +71,9 @@ namespace {
         // Pattern
         {ThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
 
+        // Separator
+        {ThemeType::Separator, QColor(128, 128, 128), QColor(53, 53, 53)},
+
         // Focus
         {ThemeType::FocusBorder, QColor(0, 120, 215), QColor(0, 120, 215)},
 

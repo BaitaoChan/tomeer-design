@@ -107,6 +107,7 @@ enum ThemeColor {
 
     Text,
     Pattern,
+    Separator,
 
     FocusBorder,
     FocusPattern,

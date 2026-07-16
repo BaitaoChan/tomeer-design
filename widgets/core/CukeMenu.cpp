@@ -1,6 +1,9 @@
+#include "CukeAction.h"
 #include "CukeMenu.h"
 #include "CukeMenuStyle.h"
 #include "CukeMenuPrivate.h"
+
+#include "CukeIcon.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(Menu, ThemeType::ThemeMode, ThemeMode)
@@ -18,6 +21,30 @@ Menu::Menu(QWidget *parent)
 Menu::Menu(const QString &title, QWidget *parent)
     : Menu(parent) {
     setTitle(title);
+}
+
+void Menu::setIconType(IconType::Icon pIconType) {
+    if (_pIconType != pIconType) {
+        _pIconType = pIconType;
+        pIconTypeChanged();
+        setIcon(CUKE_ICON->getCukeIcon(_pIconType));
+    }
+}
+
+IconType::Icon Menu::getIconType() const {
+    return _pIconType;
+}
+
+Action *Menu::addCukeMenu(Menu *menu) {
+    if (!menu)
+        return nullptr;
+    if (!menu->parent())
+        menu->setParent(this);
+    const auto action = new Action(menu->icon(), menu->title(), this);
+    action->setMenu(menu);
+    addAction(action);
+
+    return action;
 }
 
 void Menu::showEvent(QShowEvent *event) {

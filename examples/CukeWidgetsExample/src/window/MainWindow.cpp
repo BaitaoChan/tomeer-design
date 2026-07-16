@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     toolButton3->setText("统计");
     // toolButton3->setIcon(CUKE_ICON->getCukeIcon(IconType::Dismiss, CUKE_THEME->getThemeColor(ThemeType::Text), 64));
     toolButton3->setIconType(IconType::AppGeneric);
-    auto *menu3 = new Menu(this);
+    auto menu3 = new Menu(this);
     menu3->addAction(new QAction("样例1"));
     menu3->addAction(new QAction("样例2"));
     menu3->addAction(new QAction("样例3"));
@@ -62,6 +62,13 @@ MainWindow::MainWindow(QWidget *parent)
     sample4Action->setToolTip("这是样例4，用于测试 Action");
     sample4Action->setStatusTip("触发样例4 Action");
     menu3->addAction(sample4Action);
+
+    auto subMenu = new Menu("更多", menu3);
+    subMenu->setIconType(IconType::Desktop);
+    subMenu->addAction(new Action("子项1", subMenu));
+    subMenu->addAction(new Action(IconType::BookCoins, "子项2", subMenu));
+    auto *subAction = menu3->addCukeMenu(subMenu);
+    subAction->setShortcut(QKeySequence("Ctrl+M"));
 
     toolButton3->setMenu(menu3);
     auto *toolButton4 = new ToolButton(this);

@@ -1,5 +1,5 @@
+#include "CukeIcon.h"
 #include "CukeActionPrivate.h"
-
 #include "CukeAction.h"
 
 CUKE_NAMESPACE_BEGIN(pub)

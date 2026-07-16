@@ -3,6 +3,7 @@
 
 #include "CukeMenuStyle.h"
 #include "CukeMenu.h"
+#include "CukeAction.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 MenuStyle::MenuStyle(QStyle *style)
@@ -39,31 +40,109 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
 
     if (element == CE_MenuItem) {
         const auto opt = qstyleoption_cast<const QStyleOptionMenuItem *>(option);
+        const auto qAction = menu->actionAt(opt->rect.center());
+        const auto action = qobject_cast<const Action *>(qAction);
+        const auto childMenu = qobject_cast<const Menu *>(qAction->menu());
 
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
-        const QRect rect = opt->rect;
+        QRect rect = opt->rect;
+
+        // 分隔线
+        if (opt->menuItemType == QStyleOptionMenuItem::Separator) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Separator));
+            painter->drawLine(rect.left() + 12, rect.center().y(), rect.right() - 8, rect.center().y());
+            painter->restore();
+            return;
+        }
 
         // 选中背景
         if (opt->state & State_Selected) {
+            painter->save();
             painter->setPen(Qt::NoPen);
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::ComboBoxItem));
             painter->drawRoundedRect(rect.adjusted(6, 1, -2, -1), 4, 4);
+            painter->restore();
         }
 
         // 左侧激光指示
         if (opt->state & State_Selected) {
             const QRect lRect(rect.left() + 8, rect.top() + 4, 3, rect.height() - 8);
-
+            painter->save();
             painter->setPen(Qt::NoPen);
             painter->setBrush(CUKE_THEME->getThemeColor(menu->getThemeMode(), ThemeType::Check));
             painter->drawRoundedRect(lRect, 2, 2);
+            painter->restore();
         }
 
+        // 文字图标绘制
+        painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+
+        constexpr int spacing = 4;
+        constexpr int left = 12 + spacing;
+        constexpr int right = 2 + spacing;
+        constexpr qreal scale = 1.0;
+        const int iWidth = QFontMetrics(opt->font).height();
+        const int tWidth = QFontMetrics(opt->font).horizontalAdvance(opt->text.split(QLatin1Char('\t')).value(0));
+        const int sWidth = QFontMetrics(opt->font).horizontalAdvance(opt->text.split(QLatin1Char('\t')).value(1));
+
+
+        // 内容
+        QRect lRect = rect.adjusted(left, 0, -right, 0);
+        lRect.setHeight(iWidth);
+        lRect.moveCenter({lRect.center().x(), rect.center().y()});
+
+        int _lLength = 0;
+        int _rLength = 0;
+
+        // 图标
+        if (!opt->icon.isNull() || opt->menuHasCheckableItems) {
+            const QRect iRect = QRect(lRect.topLeft(), QSize(iWidth, iWidth));
+
+            painter->save();
+            QFont font("Cuke");
+            font.setPixelSize(qRound(iWidth * scale));
+            painter->setFont(font);
+            if (action && action->getIconType() != IconType::None)
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+            else if (childMenu && childMenu->getIconType() != IconType::None)
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(childMenu->getIconType())));
+            else
+                opt->icon.paint(painter, iRect, Qt::AlignCenter);
+            painter->restore();
+
+            _lLength += iWidth;
+            _lLength += spacing;
+        }
         // 文本
-        painter->setPen(CUKE_THEME->getThemeColor(menu->getThemeMode(), ThemeType::Text));
-        painter->drawText(rect.adjusted(16, 0, -2, 0), Qt::AlignVCenter | Qt::AlignLeft, opt->text);
+        if (!opt->text.split(QLatin1Char('\t')).value(0).isEmpty()) {
+            const QRect tRect = QRect(QPoint(lRect.topLeft().x() + _lLength, lRect.topLeft().y()), QSize(tWidth, iWidth));
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->drawText(tRect, Qt::AlignVCenter | Qt::AlignLeft, opt->text.split(QLatin1Char('\t')).value(0));
+        }
+        // 拓展菜单
+        if (opt->menuItemType == QStyleOptionMenuItem::SubMenu) {
+            _rLength += iWidth;
+            QRect aRect = QRect(QPoint(lRect.topRight().x() - _rLength, lRect.topRight().y()), QSize(iWidth, iWidth));
+            _rLength += spacing;
+            painter->save();
+            QFont font("Cuke");
+            font.setPixelSize(qRound(iWidth * scale));
+            painter->setFont(font);
+            painter->drawText(aRect, Qt::AlignCenter, QString(QChar(IconType::ChevronRight)));
+            painter->restore();
+        }
+        // 快捷键
+        if (!opt->text.split(QLatin1Char('\t')).value(1).isEmpty()) {
+            _rLength += sWidth;
+            const QRect sRect = QRect(QPoint(lRect.topRight().x() - _rLength, lRect.topRight().y()), QSize(sWidth, iWidth));
+            painter->save();
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->drawText(sRect, Qt::AlignVCenter | Qt::AlignRight, opt->text.split(QLatin1Char('\t')).value(1));
+            painter->restore();
+        }
 
         painter->restore();
         return;
@@ -74,8 +153,9 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
 }
 
 int MenuStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
-    if (metric == PM_MenuPanelWidth)
-        ;
+    if (metric == PM_SmallIconSize)
+        if (const auto *menu = qobject_cast<const Menu *>(widget))
+            return menu->fontMetrics().height();
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
@@ -84,8 +164,13 @@ QSize MenuStyle::sizeFromContents(ContentsType type, const QStyleOption *option,
     if (type == CT_Menu) {
         s.rheight() += 6;
     }
-    if (type == CT_MenuItem)
+    // Menu 和 SubMenu 的 Item 保持高度一致
+    if (type == CT_MenuItem) {
         s.rheight() += 6;
+        const auto opt = qstyleoption_cast<const QStyleOptionMenuItem *>(option);
+        if (opt->menuItemType != QStyleOptionMenuItem::Separator)
+            s.setHeight(opt->fontMetrics.height() + 12);
+    }
     return s;
 }
 

@@ -15,6 +15,7 @@ class CUKE_EXPORT Action : public QAction {
 public:
     explicit Action(QObject *parent = nullptr);
     explicit Action(const QString &text, QObject *parent = nullptr);
+    explicit Action(const QIcon &icon, const QString &text, QObject *parent = nullptr);
     explicit Action(const IconType::Icon &icon, const QString &text, QObject *parent = nullptr);
     ~Action() override;
 };

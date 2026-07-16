@@ -6,15 +6,19 @@
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
+class Action;
 class MenuPrivate;
 class CUKE_EXPORT Menu : public QMenu {
     Q_OBJECT
     CUKE_DECLARE_DPTR(Menu)
+    CUKE_Q_PROPERTY_DECL(IconType::Icon, IconType)
     CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
     explicit Menu(QWidget* parent = nullptr);
     explicit Menu(const QString &title, QWidget *parent = nullptr);
     ~Menu() override;
+
+    Action *addCukeMenu(Menu *menu);
 
 protected:
     void showEvent(QShowEvent *event) override;
