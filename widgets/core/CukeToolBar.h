@@ -6,6 +6,7 @@
 #include "CukeType.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
+class Action;
 class ToolBarPrivate;
 class CUKE_EXPORT ToolBar : public QToolBar {
     Q_OBJECT
@@ -14,6 +15,8 @@ class CUKE_EXPORT ToolBar : public QToolBar {
 public:
     explicit ToolBar(QWidget *parent = nullptr);
     ~ToolBar() override;
+
+    Action *addCukeAction(Action *action);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

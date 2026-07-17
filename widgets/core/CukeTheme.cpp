@@ -43,7 +43,7 @@ namespace {
 
         // Disabled
         {ThemeType::Disable, QColor(245, 245, 245, 60), QColor(0, 0, 0, 60)},
-        {ThemeType::TextDisable, QColor(182, 182, 182), QColor(167, 167, 167)},
+        {ThemeType::TextDisable, QColor(80, 80, 80), QColor(167, 167, 167)},
 
         // Alpha
         {ThemeType::DefaultAlpha, QColor(160, 160, 160, 64), QColor(52, 52, 52, 32)},

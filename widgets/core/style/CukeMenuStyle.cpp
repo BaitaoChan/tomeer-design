@@ -13,7 +13,6 @@ MenuStyle::MenuStyle(QStyle *style)
 MenuStyle::~MenuStyle() = default;
 
 void MenuStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
-    const auto menu = qobject_cast<const Menu *>(widget);
     if (element == PE_PanelMenu) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing);
@@ -58,7 +57,7 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
         }
 
         // 选中背景
-        if (opt->state & State_Selected) {
+        if (opt->state & State_Enabled && opt->state & State_Selected) {
             painter->save();
             painter->setPen(Qt::NoPen);
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::ComboBoxItem));
@@ -67,7 +66,7 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
         }
 
         // 左侧激光指示
-        if (opt->state & State_Selected) {
+        if (opt->state & State_Enabled && opt->state & State_Selected) {
             const QRect lRect(rect.left() + 8, rect.top() + 4, 3, rect.height() - 8);
             painter->save();
             painter->setPen(Qt::NoPen);
@@ -77,8 +76,8 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
         }
 
         // 文字图标绘制
-        painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
-        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        painter->setPen(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+        painter->setBrush(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
 
         constexpr int spacing = 4;
         constexpr int left = 12 + spacing;
@@ -101,7 +100,20 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
         if (!opt->icon.isNull() || opt->menuHasCheckableItems) {
             const QRect iRect = QRect(lRect.topLeft(), QSize(iWidth, iWidth));
 
+            if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked) {
+                painter->save();
+                painter->setPen(Qt::NoPen);
+                if (opt->state & State_Enabled)
+                    painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::CheckAlpha));
+                else
+                    painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Disable));
+                painter->drawRoundedRect(iRect.adjusted(1, 1, -1, -1), 3, 3);
+                painter->restore();
+            }
+
             painter->save();
+            painter->setPen(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+            painter->setBrush(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
             QFont font("Cuke");
             font.setPixelSize(qRound(iWidth * scale));
             painter->setFont(font);
@@ -109,8 +121,10 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
                 painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
             else if (childMenu && childMenu->getIconType() != IconType::None)
                 painter->drawText(iRect, Qt::AlignCenter, QString(QChar(childMenu->getIconType())));
-            else
+            else if (!opt->icon.isNull())
                 opt->icon.paint(painter, iRect, Qt::AlignCenter);
+            else if (opt->checked)
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(IconType::Checkmark)));
             painter->restore();
 
             _lLength += iWidth;
@@ -119,7 +133,7 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
         // 文本
         if (!opt->text.split(QLatin1Char('\t')).value(0).isEmpty()) {
             const QRect tRect = QRect(QPoint(lRect.topLeft().x() + _lLength, lRect.topLeft().y()), QSize(tWidth, iWidth));
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->setPen(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
             painter->drawText(tRect, Qt::AlignVCenter | Qt::AlignLeft, opt->text.split(QLatin1Char('\t')).value(0));
         }
         // 拓展菜单
@@ -128,6 +142,7 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
             QRect aRect = QRect(QPoint(lRect.topRight().x() - _rLength, lRect.topRight().y()), QSize(iWidth, iWidth));
             _rLength += spacing;
             painter->save();
+            painter->setPen(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
             QFont font("Cuke");
             font.setPixelSize(qRound(iWidth * scale));
             painter->setFont(font);
@@ -139,7 +154,7 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
             _rLength += sWidth;
             const QRect sRect = QRect(QPoint(lRect.topRight().x() - _rLength, lRect.topRight().y()), QSize(sWidth, iWidth));
             painter->save();
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->setPen(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
             painter->drawText(sRect, Qt::AlignVCenter | Qt::AlignRight, opt->text.split(QLatin1Char('\t')).value(1));
             painter->restore();
         }

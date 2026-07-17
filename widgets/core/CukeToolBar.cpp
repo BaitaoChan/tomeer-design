@@ -1,8 +1,10 @@
 #include <QStyleOption>
 #include <QPainter>
 
+#include "CukeAction.h"
 #include "CukeToolBar.h"
 #include "CukeToolBarStyle.h"
+#include "CukeToolButton.h"
 #include "CukeToolBarPrivate.h"
 #include "CukeTheme.h"
 
@@ -23,6 +25,17 @@ ToolBar::ToolBar(QWidget *parent)
 }
 
 ToolBar::~ToolBar() = default;
+
+Action *ToolBar::addCukeAction(Action *action) {
+    if (!action)
+        return nullptr;
+
+    const auto toolButton = new ToolButton(this);
+    toolButton->setDefaultAction(action);
+    addWidget(toolButton);
+
+    return action;
+}
 
 void ToolBar::paintEvent(QPaintEvent *event) {
     if (isFloating()) {

@@ -7,6 +7,7 @@
 #include "CukeToolBar.h"
 #include "CukePainter.h"
 #include "CukeIcon.h"
+#include "CukeAction.h"
 
 #define CUKE_ARROW_DRAW_MODE 1
 CUKE_NAMESPACE_BEGIN(pub)
@@ -24,9 +25,13 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         painter->setPen(Qt::NoPen);
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         // 背景
-        if (option->state & State_Sunken)
+        if (!(option->state & State_Enabled) && option->state & State_On)
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Disable));
+        else if (option->state & State_Enabled && option->state & State_Sunken)
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::PressAlpha));
-        else if (option->state & State_MouseOver)
+        else if (option->state & State_Enabled && option->state & State_On)
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::CheckAlpha));
+        else if (option->state & State_Enabled && option->state & State_MouseOver)
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::HoverAlpha));
         CUKE_PAINTER->drawRoundedRect(widget->rect(), painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), GeometryType::All);
         painter->restore();
@@ -35,8 +40,8 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
     if (element == PE_IndicatorArrowDown) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
-        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
+        painter->setBrush(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
         constexpr int spacing = 4;
         QFont font("Cuke");
         font.setPixelSize(opt->iconSize.height());
@@ -67,7 +72,7 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         transform.rotate(toolButton->getRotateAngle());
         transform.translate(-path.boundingRect().center().x(), -path.boundingRect().center().y());
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        painter->setBrush(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
         painter->setTransform(transform, true);
         painter->drawPath(path);
 
@@ -77,7 +82,7 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         painter->translate(-center);
         CUKE_PAINTER->drawIcon(center, painter,
                                QIcon(CUKE_ICON->getCukeIcon(IconType::ChevronDown,
-                                                            CUKE_THEME->getThemeColor(ThemeType::Text), 64)),
+                                                            CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable), 64)),
                                QSize(QFontMetrics(opt->font).height(), QFontMetrics(opt->font).height()));
 #endif
         painter->restore();
@@ -91,10 +96,12 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
 
     if (element == CE_ToolButtonLabel) {
         const auto opt = qstyleoption_cast<const QStyleOptionToolButton *>(option);
+        const auto action = qobject_cast<const Action *>(toolButton->defaultAction());
+
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
-        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        painter->setPen(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
+        painter->setBrush(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
         // 文字图标绘制
         constexpr int spacing = 4;
         constexpr qreal scale = 1.0;
@@ -111,7 +118,14 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
             QPoint center = rect.center() - QPoint(opt->iconSize.width() / 2, opt->iconSize.height() / 2);
             QRect iRect(center, opt->iconSize);
 
-            if (toolButton->getIconType() != IconType::None) {
+            if (action && action->getIconType() != IconType::None) {
+                painter->save();
+                QFont font("Cuke");
+                font.setPixelSize(qRound(opt->iconSize.height() * scale));
+                painter->setFont(font);
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+                painter->restore();
+            } else if (toolButton->getIconType() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
@@ -133,7 +147,15 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
                          iSize.height());
             QRect tRect(iRect.right() + spacing, lRect.top(), tSize.width(), lRect.height());
 
-            if (toolButton->getIconType() != IconType::None) {
+
+            if (action && action->getIconType() != IconType::None) {
+                painter->save();
+                QFont font("Cuke");
+                font.setPixelSize(qRound(opt->iconSize.height() * scale));
+                painter->setFont(font);
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+                painter->restore();
+            } else if (toolButton->getIconType() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
@@ -156,7 +178,14 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
                          iSize.height());
             QRect tRect(lRect.left(), iRect.bottom() + spacing, _width, tSize.height());
 
-            if (toolButton->getIconType() != IconType::None) {
+            if (action && action->getIconType() != IconType::None) {
+                painter->save();
+                QFont font("Cuke");
+                font.setPixelSize(qRound(opt->iconSize.height() * scale));
+                painter->setFont(font);
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+                painter->restore();
+            } else if (toolButton->getIconType() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
