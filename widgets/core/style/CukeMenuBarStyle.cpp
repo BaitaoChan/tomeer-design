@@ -23,22 +23,32 @@ void MenuBarStyle::drawControl(ControlElement element, const QStyleOption *optio
     if (element == CE_MenuBarItem && menuBar) {
         int radius = 4;
         const auto opt = qstyleoption_cast<const QStyleOptionMenuItem *>(option);
+        const auto action = qobject_cast<const Action *>(menuBar->actionAt(opt->rect.center()));
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
         painter->setPen(Qt::NoPen);
         if (opt->state & State_Enabled) {
-            if (opt->state & State_Sunken)
+            if (action && action->isCheckable() && action->isChecked())
+                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::CheckAlpha));
+            else if (opt->state & State_Sunken)
                 painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::PressAlpha));
             else if (opt->state & State_Selected)
                 painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::HoverAlpha));
         }
         painter->drawRoundedRect(opt->rect.adjusted(1, 1, -1, -1), radius, radius);
 
-        painter->setPen(CUKE_THEME->getThemeColor(opt->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
-        painter->setBrush(CUKE_THEME->getThemeColor(opt->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
-        if (const auto action = qobject_cast<const Action *>(menuBar->actionAt(opt->rect.center()));
-            action && action->getIconType() != IconType::None && !opt->icon.isNull()) {
+        if (!(opt->state & State_Enabled)) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+        } else if (action && action->isCheckable() && action->isChecked()) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Window));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
+        } else {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        }
+        if (action && action->getIconType() != IconType::None && !opt->icon.isNull()) {
             QFont font("Cuke");
             font.setPixelSize(pixelMetric(PM_SmallIconSize, opt, widget));
             painter->setFont(font);

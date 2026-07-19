@@ -100,7 +100,7 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
         if (!opt->icon.isNull() || opt->menuHasCheckableItems) {
             const QRect iRect = QRect(lRect.topLeft(), QSize(iWidth, iWidth));
 
-            if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked) {
+            if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked && opt->icon.isNull()) {
                 painter->save();
                 painter->setPen(Qt::NoPen);
                 if (opt->state & State_Enabled)
@@ -112,8 +112,19 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
             }
 
             painter->save();
-            painter->setPen(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
-            painter->setBrush(opt->state & State_Enabled ? CUKE_THEME->getThemeColor(ThemeType::Text) : CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+            if (!(opt->state & State_Enabled)) {
+                painter->setPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+            } else if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked && !opt->icon.isNull()) {
+                painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Check));
+                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Check));
+            } else if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked) {
+                painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Window));
+                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
+            } else {
+                painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+            }
             QFont font("Cuke");
             font.setPixelSize(qRound(iWidth * scale));
             painter->setFont(font);

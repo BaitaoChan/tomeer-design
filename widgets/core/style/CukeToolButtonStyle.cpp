@@ -27,7 +27,7 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         // 背景
         if (!(option->state & State_Enabled) && option->state & State_On)
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Disable));
-        else if (option->state & State_Enabled && option->state & State_Sunken)
+        else if (option->state & State_Enabled && option->state & State_Sunken && !(option->state & State_On))
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::PressAlpha));
         else if (option->state & State_Enabled && option->state & State_On)
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::CheckAlpha));
@@ -40,8 +40,16 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
     if (element == PE_IndicatorArrowDown) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
-        painter->setBrush(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
+        if (!(option->state & State_Enabled)) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+        } else if (option->state & State_On) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Window));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
+        } else {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        }
         constexpr int spacing = 4;
         QFont font("Cuke");
         font.setPixelSize(opt->iconSize.height());
@@ -72,7 +80,6 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         transform.rotate(toolButton->getRotateAngle());
         transform.translate(-path.boundingRect().center().x(), -path.boundingRect().center().y());
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
         painter->setTransform(transform, true);
         painter->drawPath(path);
 
@@ -100,8 +107,16 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
 
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        painter->setPen(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
-        painter->setBrush(CUKE_THEME->getThemeColor(option->state & State_Enabled ? ThemeType::Text : ThemeType::TextDisable));
+        if (!(option->state & State_Enabled)) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+        } else if (option->state & State_On) {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Window));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
+        } else {
+            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
+            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        }
         // 文字图标绘制
         constexpr int spacing = 4;
         constexpr qreal scale = 1.0;
