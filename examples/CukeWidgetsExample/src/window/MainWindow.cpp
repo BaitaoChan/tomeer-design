@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 
 #include <QLayout>
+#include <QGridLayout>
 #include <QToolBar>
 #include <QStatusBar>
 #include <QTextEdit>
@@ -22,7 +23,14 @@
 #include "CukeMenuBar.h"
 #include "CukeToolBar.h"
 #include "CukeToolButton.h"
+#include "CukeScrollArea.h"
+#include "CukeLabel.h"
+#include "CukeLineEdit.h"
 #include "CukeComboBox.h"
+#include "CukePushButton.h"
+#include "CukeSlider.h"
+#include "CukeToggleButton.h"
+#include "CukeToggleSwitch.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : Window(parent) {
@@ -126,10 +134,69 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(center);
 
     auto layout = new QHBoxLayout(center);
-    auto combo = new ComboBox(this);
-    combo->setFixedSize(60, 30);
-    combo->addItems({"一号", "二号", "三号"});
-    layout->addWidget(combo);
+    auto scrollArea = new ScrollArea(center);
+    scrollArea->setWidgetResizable(true);
+    layout->addWidget(scrollArea);
+
+    auto scrollWidget = new QWidget(scrollArea);
+    auto gridLayout = new QGridLayout(scrollWidget);
+    gridLayout->setColumnStretch(0, 1);
+    gridLayout->setColumnStretch(1, 1);
+    constexpr int controlHeight = 32;
+    constexpr int borderRadius = 6;
+
+    auto lineEditLabel = new Label("LineEdit", scrollWidget);
+    auto lineEdit = new LineEdit(scrollWidget);
+    lineEdit->setPlaceholderText("Enter text");
+    lineEdit->setFixedSize(160, controlHeight);
+    lineEdit->setBorderRadius(borderRadius);
+    gridLayout->addWidget(lineEditLabel, 0, 0);
+    gridLayout->addWidget(lineEdit, 0, 1);
+
+    auto comboBoxLabel = new Label("ComboBox", scrollWidget);
+    auto comboBox = new ComboBox(scrollWidget);
+    comboBox->addItems({"One", "Two", "Three"});
+    comboBox->setFixedSize(120, controlHeight);
+    comboBox->setBorderRadius(borderRadius);
+    gridLayout->addWidget(comboBoxLabel, 1, 0);
+    gridLayout->addWidget(comboBox, 1, 1);
+
+    auto pushButtonLabel = new Label("PushButton", scrollWidget);
+    auto pushButton = new PushButton("Button", scrollWidget);
+    pushButton->setFixedSize(100, controlHeight);
+    pushButton->setBorderRadius(borderRadius);
+    gridLayout->addWidget(pushButtonLabel, 2, 0);
+    gridLayout->addWidget(pushButton, 2, 1);
+
+    auto sliderLabel = new Label("Slider", scrollWidget);
+    auto slider = new Slider(Qt::Horizontal, scrollWidget);
+    slider->setRange(0, 100);
+    slider->setValue(50);
+    slider->setFixedSize(200, controlHeight);
+    gridLayout->addWidget(sliderLabel, 3, 0);
+    gridLayout->addWidget(slider, 3, 1);
+
+    auto toggleButtonLabel = new Label("ToggleButton", scrollWidget);
+    auto toggleButton = new ToggleButton("Toggle", scrollWidget);
+    toggleButton->setIsToggled(true);
+    toggleButton->setFixedSize(100, controlHeight);
+    toggleButton->setBorderRadius(borderRadius);
+    gridLayout->addWidget(toggleButtonLabel, 4, 0);
+    gridLayout->addWidget(toggleButton, 4, 1);
+
+    auto toggleSwitchLabel = new Label("ToggleSwitch", scrollWidget);
+    auto toggleSwitch = new ToggleSwitch(scrollWidget);
+    toggleSwitch->setIsToggled(true);
+    gridLayout->addWidget(toggleSwitchLabel, 5, 0);
+    gridLayout->addWidget(toggleSwitch, 5, 1);
+
+    for (int row = 0; row < gridLayout->rowCount(); ++row) {
+        gridLayout->setRowMinimumHeight(row, 40);
+        gridLayout->itemAtPosition(row, 0)->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        gridLayout->itemAtPosition(row, 1)->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    }
+    gridLayout->setRowStretch(gridLayout->rowCount(), 1);
+    scrollArea->setWidget(scrollWidget);
 }
 
 MainWindow::~MainWindow() = default;

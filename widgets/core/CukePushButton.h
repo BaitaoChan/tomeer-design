@@ -19,7 +19,7 @@ class CUKE_EXPORT PushButton : public QPushButton {
     CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
     explicit PushButton(QWidget* parent = nullptr);
-    explicit PushButton(QString text, QWidget* parent = nullptr);
+    explicit PushButton(const QString& text, QWidget* parent = nullptr);
     ~PushButton() override;
 
 protected:

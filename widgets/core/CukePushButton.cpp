@@ -16,7 +16,7 @@ PushButton::PushButton(QWidget *parent)
     connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
 }
 
-PushButton::PushButton(QString text, QWidget* parent)
+PushButton::PushButton(const QString& text, QWidget* parent)
     : PushButton(parent) { // 复用上面的构造函数
     setText(text);
 }
