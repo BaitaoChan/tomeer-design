@@ -18,7 +18,7 @@ void ComboBoxItemDelegate::paint(QPainter *painter,
     // 背景
     if (option.state & QStyle::State_Selected) {
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), ThemeType::ComboBoxItem));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::ComboBoxItem));
         painter->drawRoundedRect(r.adjusted(8, 2, -2, -2), 4, 4);
     }
 
@@ -26,12 +26,12 @@ void ComboBoxItemDelegate::paint(QPainter *painter,
     if (option.state & QStyle::State_Selected) {
         const QRect lr(r.left() + 10, r.top() + 4, 3, r.height() - 8);
         painter->setPen(Qt::NoPen);
-        painter->setBrush(CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), ThemeType::Check));
+        painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Check));
         painter->drawRoundedRect(lr, 2, 2);
     }
 
     // 文本
-    painter->setPen(CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), ThemeType::Text));
+    painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
     painter->drawText(r.adjusted(16, 0, -2, 0), Qt::AlignVCenter | Qt::AlignLeft,
                       index.data(Qt::DisplayRole).toString());
 

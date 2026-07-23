@@ -134,6 +134,11 @@ Theme::~Theme() = default;
 
 void Theme::setThemeMode(ThemeType::ThemeMode mode) {
     Q_D(Theme);
+    // 将模式标记回 System
+    if (mode == ThemeType::System && d->_colorAnimation->state() == QAbstractAnimation::Running) {
+        d->_themeMode = mode;
+        return;
+    }
     d->_themeMode = mode;
 
     if (mode == ThemeType::System) {

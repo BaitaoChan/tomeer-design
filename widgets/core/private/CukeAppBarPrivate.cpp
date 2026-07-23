@@ -1,6 +1,3 @@
-#include <QGuiApplication>
-#include <QStyleHints>
-
 #include "CukeAppBarPrivate.h"
 #include "CukeAppBar.h"
 #include "CukeLabel.h"
@@ -33,11 +30,11 @@ void AppBarPrivate::onWindowTitleChanged(const QString& title) const {
 }
 
 void AppBarPrivate::onThemeButtonClicked() {
-    auto mode = CUKE_THEME->getThemeMode();
-
-    if (mode == ThemeType::System)
-        mode = QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark ? ThemeType::Dark : ThemeType::Light;
-    CUKE_THEME->setThemeMode(mode == ThemeType::Dark ? ThemeType::Light : ThemeType::Dark);
+    if (_themeButton->getIconType() == IconType::WeatherMoon)
+        CUKE_THEME->setThemeMode(ThemeType::Dark);
+    else
+        CUKE_THEME->setThemeMode(ThemeType::Light);
+    CUKE_THEME->setThemeMode(ThemeType::System);
 }
 
 void AppBarPrivate::onMinimizeButtonClicked() {

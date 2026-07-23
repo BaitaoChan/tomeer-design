@@ -24,7 +24,7 @@ void TableItemDelegate::paint(QPainter *p,
     QRect r = opt.rect;
 
     // 文本
-    p->setPen(CUKE_THEME->getThemeColor(CUKE_THEME->getThemeMode(), ThemeType::Text));
+    p->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
     p->setFont(index.data(Qt::FontRole).value<QFont>());
 
     r.adjust(8, 0, -8, 0);

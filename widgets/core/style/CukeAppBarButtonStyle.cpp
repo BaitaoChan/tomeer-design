@@ -45,7 +45,7 @@ void AppBarButtonStyle::drawControl(ControlElement element, const QStyleOption *
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 
         // 关闭图标特殊处理
-        if (appBarButton->getIconType() == IconType::Dismiss && CUKE_THEME->getThemeMode() == ThemeType::Light && appBarButton->getHover()) {
+        if (appBarButton->getIconType() == IconType::Dismiss && appBarButton->getHover()) {
             painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
         } else {
