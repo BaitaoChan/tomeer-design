@@ -9,7 +9,7 @@
 #include "CukeAppBarPrivate.h"
 #include "CukeIcon.h"
 #include "CukeLabel.h"
-#include "CukeObjectMap.h"
+#include "CukeWidgetRegister.h"
 #include "CukeAppBarButton.h"
 #include "CukeToggleSwitch.h"
 #include "CukeWindow.h"
@@ -23,7 +23,7 @@ AppBar::AppBar(QWidget *parent)
     Q_D(AppBar);
     _pAppBarHeight = 32;
     setFixedHeight(_pAppBarHeight);
-    d->_objectMap = new ObjectMap(this);
+    d->_widgetRegister = new WidgetRegister(this);
     window()->setContentsMargins(0, height(), 0, 0);
     setGeometry(0, 0, window()->width(), height());
     window()->installEventFilter(this);
@@ -41,7 +41,7 @@ AppBar::AppBar(QWidget *parent)
     else
         d->_windowIcon->setVisible(false);
     d->_mainLayout->addWidget(d->_windowIcon);
-    d->_objectMap->add(AppBarType::WindowIcon, d->_windowIcon);
+    d->_widgetRegister->add(AppBarType::WindowIcon, d->_windowIcon);
     connect(parent, &QMainWindow::windowIconChanged, d, &AppBarPrivate::onWindowIconChanged);
 
     // 标题
@@ -51,7 +51,7 @@ AppBar::AppBar(QWidget *parent)
     else
         d->_windowTitle->setVisible(false);
     d->_mainLayout->addWidget(d->_windowTitle);
-    d->_objectMap->add(AppBarType::WindowTitle, d->_windowTitle);
+    d->_widgetRegister->add(AppBarType::WindowTitle, d->_windowTitle);
     connect(parent, &QMainWindow::windowTitleChanged, d, &AppBarPrivate::onWindowTitleChanged);
 
     // 自定义区域
@@ -84,7 +84,7 @@ AppBar::AppBar(QWidget *parent)
     d->_themeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_themeButton->setIconType(getThemeMode() ? IconType::WeatherSunny : IconType::WeatherMoon);
     d->_containerLayout->addWidget(d->_themeButton);
-    d->_objectMap->add(AppBarType::ThemeButton, d->_themeButton);
+    d->_widgetRegister->add(AppBarType::ThemeButton, d->_themeButton);
     connect(d->_themeButton, &AppBarButton::clicked, d, &AppBarPrivate::onThemeButtonClicked);
 
     // 最小化
@@ -92,7 +92,7 @@ AppBar::AppBar(QWidget *parent)
     d->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_minimizeButton->setIconType(IconType::Subtract);
     d->_containerLayout->addWidget(d->_minimizeButton);
-    d->_objectMap->add(AppBarType::MinimizeButton, d->_minimizeButton);
+    d->_widgetRegister->add(AppBarType::MinimizeButton, d->_minimizeButton);
     connect(d->_minimizeButton, &AppBarButton::clicked, d, &AppBarPrivate::onMinimizeButtonClicked);
 
     // 最大化
@@ -100,7 +100,7 @@ AppBar::AppBar(QWidget *parent)
     d->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_maximizeButton->setIconType(IconType::Maximize);
     d->_containerLayout->addWidget(d->_maximizeButton);
-    d->_objectMap->add(AppBarType::MaximizeButton, d->_maximizeButton);
+    d->_widgetRegister->add(AppBarType::MaximizeButton, d->_maximizeButton);
     connect(d->_maximizeButton, &AppBarButton::clicked, d, &AppBarPrivate::onMaximizeButtonClicked);
 
     // 关闭
@@ -115,7 +115,7 @@ AppBar::AppBar(QWidget *parent)
     d->_closeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
     d->_closeButton->setIconType(IconType::Dismiss);
     d->_containerLayout->addWidget(d->_closeButton);
-    d->_objectMap->add(AppBarType::CloseButton, d->_closeButton);
+    d->_widgetRegister->add(AppBarType::CloseButton, d->_closeButton);
     connect(d->_closeButton, &AppBarButton::pHoverChanged, d, &AppBarPrivate::onHoverChanged);
     connect(d->_closeButton, &AppBarButton::clicked, d, &AppBarPrivate::onCloseButtonClicked);
     connect(CUKE_THEME, &Theme::themeModeChanged, this, &AppBar::onThemeChanged);
@@ -129,24 +129,24 @@ void AppBar::addCustomWidget(QWidget *widget, AppBarType::CustomArea customArea)
     Q_D(AppBar);
     if (customArea == AppBarType::LeftArea) {
         d->_leftLayout->addWidget(widget);
-        d->_objectMap->add(AppBarType::LeftWidget, widget);
+        d->_widgetRegister->add(AppBarType::LeftWidget, widget);
     } else if (customArea == AppBarType::MiddleArea) {
         d->_middleLayout->addWidget(widget);
-        d->_objectMap->add(AppBarType::MiddleWidget, widget);
+        d->_widgetRegister->add(AppBarType::MiddleWidget, widget);
     } else if (customArea == AppBarType::RightArea) {
         d->_rightLayout->addWidget(widget);
-        d->_objectMap->add(AppBarType::RightWidget, widget);
+        d->_widgetRegister->add(AppBarType::RightWidget, widget);
     }
 }
 
 void *AppBar::object(int key) {
     Q_D(AppBar);
-    return d->_objectMap->object(key);
+    return d->_widgetRegister->object(key);
 }
 
 QList<void *> AppBar::objects() {
     Q_D(AppBar);
-    return d->_objectMap->objects();
+    return d->_widgetRegister->objects();
 }
 
 void AppBar::onThemeChanged(ThemeType::ThemeMode mode) {

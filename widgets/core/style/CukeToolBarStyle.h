@@ -2,7 +2,6 @@
 #define CUKETOOLBARSTYLE_H
 #include <QProxyStyle>
 
-#include "../dev/CukeObjectMap.h"
 #include "CukeProperty.h"
 
 CUKE_NAMESPACE_BEGIN(pub)

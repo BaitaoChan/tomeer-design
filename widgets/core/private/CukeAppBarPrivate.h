@@ -11,7 +11,7 @@ class QLabel;
 CUKE_NAMESPACE_BEGIN(pub)
 class AppBar;
 class Label;
-class ObjectMap;
+class WidgetRegister;
 class AppBarButton;
 class ToggleSwitch;
 class AppBarPrivate : public QObject {
@@ -50,7 +50,7 @@ private:
     AppBarButton *_maximizeButton = nullptr;
     AppBarButton *_closeButton = nullptr;
 
-    ObjectMap *_objectMap = nullptr;
+    WidgetRegister *_widgetRegister = nullptr;
 };
 CUKE_NAMESPACE_END(pub)
 

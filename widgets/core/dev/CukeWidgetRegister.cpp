@@ -1,17 +1,17 @@
 #include <QWidget>
 
-#include "CukeObjectMap.h"
-#include "CukeObjectMapPrivate.h"
+#include "CukeWidgetRegister.h"
+#include "CukeWidgetRegisterPrivate.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
-ObjectMap::ObjectMap(QObject *child)
-    : d_ptr(new ObjectMapPrivate(this)) {
+WidgetRegister::WidgetRegister(QObject *child)
+    : d_ptr(new WidgetRegisterPrivate(this)) {
     d_ptr->_child = child;
 }
 
-ObjectMap::~ObjectMap() = default;
+WidgetRegister::~WidgetRegister() = default;
 
-void ObjectMap::add(const int key, void *child) const {
+void WidgetRegister::add(const int key, void *child) const {
     if (!child) {
         return;
     }
@@ -20,20 +20,20 @@ void ObjectMap::add(const int key, void *child) const {
     d_ptr->_children.insert(key, child);
 }
 
-void *ObjectMap::object(const int key) const {
+void *WidgetRegister::object(const int key) const {
     if (!d_ptr->_children.contains(key)) {
         return nullptr;
     }
     return d_ptr->_children.value(key);
 }
 
-QList<void *> ObjectMap::objects() const {
+QList<void *> WidgetRegister::objects() const {
     if (d_ptr->_children.isEmpty()) {
     }
     return d_ptr->_children.values();
 }
 
-bool ObjectMap::contains(const int key) const {
+bool WidgetRegister::contains(const int key) const {
     return d_ptr->_children.contains(key);
 }
 

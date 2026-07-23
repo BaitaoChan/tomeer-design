@@ -2,7 +2,6 @@
 #define CUKETOOLBUTTONSTYLE_H
 #include <QProxyStyle>
 
-#include "../dev/CukeObjectMap.h"
 #include "CukeProperty.h"
 #include "CukeToolButton.h"
 
