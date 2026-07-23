@@ -1,5 +1,5 @@
 #include "CukeThemePrivate.h"
-#include "CukeCheckBox.h"
+#include "CukeTheme.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(ThemePrivate, qreal, ColorFactor)

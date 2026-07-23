@@ -40,7 +40,7 @@ void AppBarButtonStyle::drawControl(ControlElement element, const QStyleOption *
     const auto appBarButton = qobject_cast<const AppBarButton *>(widget);
     const auto opt = qstyleoption_cast<const QStyleOptionToolButton *>(option);
 
-    if (element == CE_ToolButtonLabel && appBarButton && opt) {
+    if (element == CE_ToolButtonLabel) {
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 

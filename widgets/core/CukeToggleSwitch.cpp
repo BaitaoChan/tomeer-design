@@ -252,9 +252,7 @@ void ToggleSwitch::resizeEvent(QResizeEvent *event) {
 
     d->_pKnobDiameter = d->knobDiameter;
 
-    if (d->_pKnobCenterX < 0.0) {
-        d->_pKnobCenterX = d->_isToggled ? d->knobCenterXR : d->knobCenterXL;
-    }
+    d->_pKnobCenterX = d->_isToggled ? d->knobCenterXR : d->knobCenterXL;
 }
 
 
