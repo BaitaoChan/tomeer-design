@@ -134,7 +134,8 @@ void Slider::paintEvent(QPaintEvent *event) {
 
     // 滑轨
     int grooveHeight = 5; // 滑轨厚度
-    QRectF grooveRect(10, d->_handleCenter.y() - grooveHeight / 2.0, width() - 20, grooveHeight);
+    const qreal margin = (d->_handleRect.width() - 1) / 2.0;
+    QRectF grooveRect(margin, d->_handleCenter.y() - grooveHeight / 2.0, width() - 1 - margin * 2, grooveHeight);
     p.setPen(Qt::NoPen);
     p.setBrush(CUKE_THEME->getThemeColor(ThemeType::DefaultAlpha));
     p.drawRoundedRect(grooveRect, 3, 3);
@@ -146,12 +147,10 @@ void Slider::paintEvent(QPaintEvent *event) {
     p.drawRoundedRect(subRect, 3, 3);
 
     // 滑块外圆
-    p.setPen(Qt::NoPen);
     p.setBrush(CUKE_THEME->getThemeColor(ThemeType::SliderHandleBorder));
     p.drawEllipse(d->_handleCenter, d->_handleRect.width() / 2.5, d->_handleRect.width() / 2.5);
 
     // 滑块内圆
-    p.setPen(Qt::NoPen);
     p.setBrush(CUKE_THEME->getThemeColor(ThemeType::Check));
     p.drawEllipse(d->_handleCenter, _pHandleDiameter, _pHandleDiameter);
 }

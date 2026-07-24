@@ -54,13 +54,10 @@ QWidget *SettingsCard::getContent() const {
 
 void SettingsCard::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event)
-    QColor borderColor = CUKE_THEME->getThemeColor(ThemeType::Text);
-    borderColor.setAlpha(20);
-
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(borderColor);
+    painter.setPen(CUKE_THEME->getThemeColor(ThemeType::BorderAlpha));
     painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::PanelAlpha));
-    painter.drawRoundedRect(QRectF(rect()).adjusted(0.5, 0.5, -0.5, -0.5), 6, 6);
+    painter.drawRoundedRect(QRectF(rect()).adjusted(1, 1, -1, -1), 6, 6);
 }
 CUKE_NAMESPACE_END(pub)

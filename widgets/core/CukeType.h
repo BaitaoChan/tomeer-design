@@ -133,6 +133,8 @@ enum ThemeColor {
     Warning,
     Error,
 
+    LineEdit,
+
     ComboBox,
     ComboBoxHover,
     ComboBoxView,

@@ -10,6 +10,9 @@ class LineEditStyle : public QProxyStyle {
 public:
     explicit LineEditStyle(QStyle *style = nullptr);
     ~LineEditStyle() override;
+
+    void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+    void polish(QWidget *widget) override;
 };
 CUKE_NAMESPACE_END(pub)
 

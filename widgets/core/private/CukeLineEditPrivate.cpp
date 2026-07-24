@@ -9,12 +9,4 @@ LineEditPrivate::LineEditPrivate(LineEdit *q)
 
 LineEditPrivate::~LineEditPrivate() = default;
 
-void LineEditPrivate::onLineAnimFinished() {
-    Q_Q(LineEdit);
-    if (!_isFocused) {
-        _hasFocusVisible = false;
-        q->update();
-    }
-}
-
 CUKE_NAMESPACE_END(pub)

@@ -10,7 +10,6 @@ class LineEditPrivate;
 class CUKE_EXPORT LineEdit : public QLineEdit {
     Q_OBJECT
     CUKE_DECLARE_DPTR(LineEdit)
-    CUKE_Q_PROPERTY_DECL(QColor, BorderColor)
     CUKE_Q_PROPERTY_DECL(int, LineHalfWidth)
     CUKE_Q_PROPERTY_DECL(int, BorderRadius)
     CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)

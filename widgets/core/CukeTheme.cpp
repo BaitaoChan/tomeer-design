@@ -34,7 +34,7 @@ namespace {
         {ThemeType::Press, QColor(230, 230, 230), QColor(32, 32, 32)},
         {ThemeType::Check, QColor(0, 95, 184), QColor(0, 103, 192)},
         {ThemeType::Text, QColor(0, 0, 0), QColor(255, 255, 255)},
-        {ThemeType::Border, QColor(128, 128, 128), QColor(53, 53, 53)},
+        {ThemeType::Border, QColor(200, 200, 200), QColor(10, 10, 10)},
         {ThemeType::Error, QColor(220, 53, 69), QColor(220, 53, 69)},
 
         // Window
@@ -51,7 +51,7 @@ namespace {
         {ThemeType::PressAlpha, QColor(232, 232, 232, 200), QColor(52, 52, 52, 200)},
         {ThemeType::CheckAlpha, QColor(0, 95, 184, 230), QColor(0, 103, 192, 230)},
         {ThemeType::TextAlpha, QColor(0, 0, 0, 200), QColor(255, 255, 255, 200)},
-        {ThemeType::BorderAlpha, QColor(128, 128, 128, 120), QColor(53, 53, 53, 120)},
+        {ThemeType::BorderAlpha, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
 
         // Window Alpha
         {ThemeType::WindowAlpha, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
@@ -66,7 +66,7 @@ namespace {
         {ThemeType::Acrylic, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
 
         // Panel Alpha
-        {ThemeType::PanelAlpha, QColor(255, 255, 255, 220), QColor(45, 45, 45, 230)},
+        {ThemeType::PanelAlpha, QColor(255, 255, 255, 20), QColor(255, 255, 255, 20)},
 
         // Pattern
         {ThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
@@ -98,6 +98,9 @@ namespace {
         {ThemeType::HeaderBg, QColor(0, 0, 0, 40), QColor(0, 0, 0, 40)},
         {ThemeType::TableBg, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
         {ThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
+
+        // LineEdit
+        {ThemeType::LineEdit, QColor(252, 252, 252), QColor(42, 42, 42)},
 
         // ComboBox
         {ThemeType::ComboBox, QColor(252, 252, 252), QColor(42, 42, 42)},

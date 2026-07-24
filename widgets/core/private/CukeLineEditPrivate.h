@@ -13,13 +13,9 @@ public:
     explicit LineEditPrivate(LineEdit *q);
     ~LineEditPrivate() override;
 
-    Q_SLOT void onLineAnimFinished();
-
 private:
     bool _isFocused = false;
-    bool _hasFocusVisible = false;
 
-    QPropertyAnimation *_borderAnim = nullptr;
     QPropertyAnimation *_lineAnim = nullptr;
 };
 CUKE_NAMESPACE_END(pub)
