@@ -117,6 +117,9 @@ enum ThemeColor {
 
     SliderHandleBorder,
 
+    ScrollBarHandle,
+    ScrollBarHandleHover,
+
     ShinyText,
     Shiny,
 

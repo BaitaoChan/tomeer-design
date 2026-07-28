@@ -128,10 +128,10 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
             QFont font("Cuke");
             font.setPixelSize(qRound(iWidth * scale));
             painter->setFont(font);
-            if (action && action->getIconType() != IconType::None)
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
-            else if (childMenu && childMenu->getIconType() != IconType::None)
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(childMenu->getIconType())));
+            if (action && action->getCukeIcon() != IconType::None)
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getCukeIcon())));
+            else if (childMenu && childMenu->getCukeIcon() != IconType::None)
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(childMenu->getCukeIcon())));
             else if (!opt->icon.isNull())
                 opt->icon.paint(painter, iRect, Qt::AlignCenter);
             else if (opt->checked)

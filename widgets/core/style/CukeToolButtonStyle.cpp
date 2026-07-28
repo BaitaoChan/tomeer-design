@@ -133,19 +133,19 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
             QPoint center = rect.center() - QPoint(opt->iconSize.width() / 2, opt->iconSize.height() / 2);
             QRect iRect(center, opt->iconSize);
 
-            if (action && action->getIconType() != IconType::None) {
+            if (action && action->getCukeIcon() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
                 painter->setFont(font);
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getCukeIcon())));
                 painter->restore();
-            } else if (toolButton->getIconType() != IconType::None) {
+            } else if (toolButton->getCukeIcon() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
                 painter->setFont(font);
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(toolButton->getIconType())));
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(toolButton->getCukeIcon())));
                 painter->restore();
             } else
                 opt->icon.paint(painter, iRect, Qt::AlignCenter);
@@ -163,19 +163,19 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
             QRect tRect(iRect.right() + spacing, lRect.top(), tSize.width(), lRect.height());
 
 
-            if (action && action->getIconType() != IconType::None) {
+            if (action && action->getCukeIcon() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
                 painter->setFont(font);
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getCukeIcon())));
                 painter->restore();
-            } else if (toolButton->getIconType() != IconType::None) {
+            } else if (toolButton->getCukeIcon() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
                 painter->setFont(font);
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(toolButton->getIconType())));
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(toolButton->getCukeIcon())));
                 painter->restore();
             } else
                 opt->icon.paint(painter, iRect, Qt::AlignCenter);
@@ -193,19 +193,19 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
                          iSize.height());
             QRect tRect(lRect.left(), iRect.bottom() + spacing, _width, tSize.height());
 
-            if (action && action->getIconType() != IconType::None) {
+            if (action && action->getCukeIcon() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
                 painter->setFont(font);
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(action->getCukeIcon())));
                 painter->restore();
-            } else if (toolButton->getIconType() != IconType::None) {
+            } else if (toolButton->getCukeIcon() != IconType::None) {
                 painter->save();
                 QFont font("Cuke");
                 font.setPixelSize(qRound(opt->iconSize.height() * scale));
                 painter->setFont(font);
-                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(toolButton->getIconType())));
+                painter->drawText(iRect, Qt::AlignCenter, QString(QChar(toolButton->getCukeIcon())));
                 painter->restore();
             } else
                 opt->icon.paint(painter, iRect, Qt::AlignCenter);

@@ -23,16 +23,16 @@ Menu::Menu(const QString &title, QWidget *parent)
     setTitle(title);
 }
 
-void Menu::setIconType(IconType::Icon pIconType) {
-    if (_pIconType != pIconType) {
-        _pIconType = pIconType;
-        pIconTypeChanged();
-        setIcon(CUKE_ICON->getCukeIcon(_pIconType));
+void Menu::setCukeIcon(IconType::Icon pCukeIcon) {
+    if (_pCukeIcon != pCukeIcon) {
+        _pCukeIcon = pCukeIcon;
+        pCukeIconChanged();
+        setIcon(CUKE_ICON->getCukeIcon(_pCukeIcon));
     }
 }
 
-IconType::Icon Menu::getIconType() const {
-    return _pIconType;
+IconType::Icon Menu::getCukeIcon() const {
+    return _pCukeIcon;
 }
 
 Action *Menu::addCukeMenu(Menu *menu) {

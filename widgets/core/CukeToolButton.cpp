@@ -32,16 +32,16 @@ ToolButton::ToolButton(QWidget *parent)
 
 ToolButton::~ToolButton() = default;
 
-void ToolButton::setIconType(IconType::Icon pIconType) {
-    if (_pIconType != pIconType) {
-        _pIconType = pIconType;
-        pIconTypeChanged();
-        setIcon(CUKE_ICON->getCukeIcon(_pIconType));
+void ToolButton::setCukeIcon(IconType::Icon pCukeIcon) {
+    if (_pCukeIcon != pCukeIcon) {
+        _pCukeIcon = pCukeIcon;
+        pCukeIconChanged();
+        setIcon(CUKE_ICON->getCukeIcon(_pCukeIcon));
     }
 }
 
-IconType::Icon ToolButton::getIconType() const {
-    return _pIconType;
+IconType::Icon ToolButton::getCukeIcon() const {
+    return _pCukeIcon;
 }
 
 void ToolButton::setMenu(QMenu *menu) {

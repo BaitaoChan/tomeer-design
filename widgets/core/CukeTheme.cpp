@@ -84,6 +84,10 @@ namespace {
         // Slider
         {ThemeType::SliderHandleBorder, QColor(200, 200, 200), QColor(60, 60, 60)},
 
+        // ScrollBar
+        {ThemeType::ScrollBarHandle, QColor(0, 0, 0, 80), QColor(255, 255, 255, 72)},
+        {ThemeType::ScrollBarHandleHover, QColor(0, 0, 0, 120), QColor(255, 255, 255, 112)},
+
         // Waveform
         {ThemeType::WaveformLegendText, QColor(0, 0, 0), QColor(255, 255, 255)},
         {ThemeType::WaveformLegendBorder, QColor(0, 0, 0, 255), QColor(255, 255, 255, 255)},

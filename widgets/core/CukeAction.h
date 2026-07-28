@@ -11,7 +11,7 @@ class ActionPrivate;
 class CUKE_EXPORT Action : public QAction {
     Q_OBJECT
     CUKE_DECLARE_DPTR(Action)
-    CUKE_Q_PROPERTY_DECL(IconType::Icon, IconType)
+    CUKE_Q_PROPERTY_DECL(IconType::Icon, CukeIcon)
 public:
     explicit Action(QObject *parent = nullptr);
     explicit Action(const QString &text, QObject *parent = nullptr);

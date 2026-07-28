@@ -82,7 +82,7 @@ AppBar::AppBar(QWidget *parent)
     // 主题切换
     d->_themeButton = new AppBarButton(this);
     d->_themeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
-    d->_themeButton->setIconType(getThemeMode() ? IconType::WeatherSunny : IconType::WeatherMoon);
+    d->_themeButton->setCukeIcon(getThemeMode() ? IconType::WeatherSunny : IconType::WeatherMoon);
     d->_containerLayout->addWidget(d->_themeButton);
     d->_widgetRegister->add(AppBarType::ThemeButton, d->_themeButton);
     connect(d->_themeButton, &AppBarButton::clicked, d, &AppBarPrivate::onThemeButtonClicked);
@@ -90,7 +90,7 @@ AppBar::AppBar(QWidget *parent)
     // 最小化
     d->_minimizeButton = new AppBarButton(this);
     d->_minimizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
-    d->_minimizeButton->setIconType(IconType::Subtract);
+    d->_minimizeButton->setCukeIcon(IconType::Subtract);
     d->_containerLayout->addWidget(d->_minimizeButton);
     d->_widgetRegister->add(AppBarType::MinimizeButton, d->_minimizeButton);
     connect(d->_minimizeButton, &AppBarButton::clicked, d, &AppBarPrivate::onMinimizeButtonClicked);
@@ -98,7 +98,7 @@ AppBar::AppBar(QWidget *parent)
     // 最大化
     d->_maximizeButton = new AppBarButton(this);
     d->_maximizeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
-    d->_maximizeButton->setIconType(IconType::Maximize);
+    d->_maximizeButton->setCukeIcon(IconType::Maximize);
     d->_containerLayout->addWidget(d->_maximizeButton);
     d->_widgetRegister->add(AppBarType::MaximizeButton, d->_maximizeButton);
     connect(d->_maximizeButton, &AppBarButton::clicked, d, &AppBarPrivate::onMaximizeButtonClicked);
@@ -113,7 +113,7 @@ AppBar::AppBar(QWidget *parent)
     d->_closeButton->bgColorTo(CUKE_THEME->getThemeColor(ThemeType::Dismiss));
     d->_closeButton->setBgColorUsedFlag(true);
     d->_closeButton->setFixedSize(_pAppBarHeight, _pAppBarHeight);
-    d->_closeButton->setIconType(IconType::Dismiss);
+    d->_closeButton->setCukeIcon(IconType::Dismiss);
     d->_containerLayout->addWidget(d->_closeButton);
     d->_widgetRegister->add(AppBarType::CloseButton, d->_closeButton);
     connect(d->_closeButton, &AppBarButton::pHoverChanged, d, &AppBarPrivate::onHoverChanged);
@@ -160,9 +160,9 @@ void AppBar::onThemeChanged(ThemeType::ThemeMode mode) {
     }
 
     if (mode == ThemeType::Light)
-        d->_themeButton->setIconType(IconType::WeatherMoon);
+        d->_themeButton->setCukeIcon(IconType::WeatherMoon);
     else if (mode == ThemeType::Dark)
-        d->_themeButton->setIconType(IconType::WeatherSunny);
+        d->_themeButton->setCukeIcon(IconType::WeatherSunny);
     update();
 }
 

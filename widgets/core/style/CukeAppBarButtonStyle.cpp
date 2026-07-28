@@ -45,7 +45,7 @@ void AppBarButtonStyle::drawControl(ControlElement element, const QStyleOption *
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 
         // 关闭图标特殊处理
-        if (appBarButton->getIconType() == IconType::Dismiss && appBarButton->getHover()) {
+        if (appBarButton->getCukeIcon() == IconType::Dismiss && appBarButton->getHover()) {
             painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
         } else {
@@ -59,11 +59,11 @@ void AppBarButtonStyle::drawControl(ControlElement element, const QStyleOption *
         QPoint center = rect.center() - QPoint(iSize.width() / 2, iSize.height() / 2);
         QRect iRect(center, iSize);
 
-        if (appBarButton->getIconType() != IconType::None) {
+        if (appBarButton->getCukeIcon() != IconType::None) {
             QFont font("Cuke");
             font.setPixelSize(iSize.height());
             painter->setFont(font);
-            painter->drawText(iRect, Qt::AlignCenter, QString(QChar(appBarButton->getIconType())));
+            painter->drawText(iRect, Qt::AlignCenter, QString(QChar(appBarButton->getCukeIcon())));
         } else {
             opt->icon.paint(painter, iRect, Qt::AlignCenter);
         }

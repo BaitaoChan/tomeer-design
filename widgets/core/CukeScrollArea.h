@@ -5,6 +5,7 @@
 #include "CukeTheme.h"
 #include "CukeProperty.h"
 
+class QWheelEvent;
 CUKE_NAMESPACE_BEGIN(pub)
 class ScrollAreaPrivate;
 class CUKE_EXPORT ScrollArea : public QScrollArea {
@@ -17,6 +18,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
     virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)

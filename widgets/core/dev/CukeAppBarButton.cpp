@@ -13,7 +13,7 @@ CUKE_Q_PROPERTY_IMPL(AppBarButton, bool, Pressed)
 CUKE_Q_PROPERTY_IMPL(AppBarButton, QColor, BgColor)
 CUKE_Q_PROPERTY_IMPL(AppBarButton, int, BorderRadius)
 CUKE_Q_PROPERTY_IMPL(AppBarButton, bool, BgColorUsedFlag)
-CUKE_Q_PROPERTY_IMPL(AppBarButton, IconType::Icon, IconType)
+CUKE_Q_PROPERTY_IMPL(AppBarButton, IconType::Icon, CukeIcon)
 CUKE_Q_PROPERTY_IMPL(AppBarButton, ThemeType::ThemeMode, ThemeMode)
 CUKE_Q_PROPERTY_IMPL(AppBarButton, GeometryType::SideFlag, SideFlag)
 AppBarButton::AppBarButton(QWidget *parent)
@@ -30,7 +30,7 @@ AppBarButton::AppBarButton(QWidget *parent)
     connect(this, &AppBarButton::pBgColorUsedFlagChanged, this, QOverload<>::of(&AppBarButton::update));
     connect(this, &AppBarButton::pSideFlagChanged, this, QOverload<>::of(&AppBarButton::update));
     connect(this, &AppBarButton::pHoverChanged, d, &AppBarButtonPrivate::onHoverChanged);
-    connect(this, &AppBarButton::pIconTypeChanged, this, QOverload<>::of(&AppBarButton::update));
+    connect(this, &AppBarButton::pCukeIconChanged, this, QOverload<>::of(&AppBarButton::update));
     connect(this, &AppBarButton::pHoverChanged, this, QOverload<>::of(&AppBarButton::update));
     connect(this, &AppBarButton::pPressedChanged, this, QOverload<>::of(&AppBarButton::update));
     connect(CUKE_THEME, &Theme::themeModeChanged, this, &AppBarButton::onThemeChanged);

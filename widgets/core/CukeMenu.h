@@ -11,7 +11,7 @@ class MenuPrivate;
 class CUKE_EXPORT Menu : public QMenu {
     Q_OBJECT
     CUKE_DECLARE_DPTR(Menu)
-    CUKE_Q_PROPERTY_DECL(IconType::Icon, IconType)
+    CUKE_Q_PROPERTY_DECL(IconType::Icon, CukeIcon)
     CUKE_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
     explicit Menu(QWidget* parent = nullptr);

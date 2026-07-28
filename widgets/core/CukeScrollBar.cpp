@@ -8,6 +8,7 @@ ScrollBar::ScrollBar(QWidget *parent)
     : QScrollBar(parent),
       d_ptr(new ScrollBarPrivate(this)) {
     setStyle(new ScrollBarStyle(style()));
+    setAttribute(Qt::WA_Hover);
 
     connect(CUKE_THEME, &Theme::themeModeChanged, this, &ScrollBar::onThemeChanged);
     connect(CUKE_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));

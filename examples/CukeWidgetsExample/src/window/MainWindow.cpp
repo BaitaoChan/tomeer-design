@@ -47,19 +47,19 @@ MainWindow::MainWindow(QWidget *parent)
     disabledMenuBarAction->setEnabled(false);
     menuBar->addAction(disabledMenuBarAction);
     appBar()->addCustomWidget(menuBar, AppBarType::LeftArea);
-    setDisplayMode(WindowType::Mica);
+    setDisplayMode(WindowType::Normal);
 
     auto toolBar = new ToolBar(this);
     auto toolButton1 = new ToolButton(this);
     toolButton1->setText("开始");
     auto toolButton2 = new ToolButton(this);
     // toolButton2->setIcon(CUKE_ICON->getCukeIcon(IconType::CommentAdd, CUKE_THEME->getThemeColor(ThemeType::Text), 64));
-    toolButton2->setIconType(IconType::BookCoins);
+    toolButton2->setCukeIcon(IconType::BookCoins);
     auto toolButton3 = new ToolButton(this);
     toolButton3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolButton3->setText("统计");
     // toolButton3->setIcon(CUKE_ICON->getCukeIcon(IconType::Dismiss, CUKE_THEME->getThemeColor(ThemeType::Text), 64));
-    toolButton3->setIconType(IconType::AppGeneric);
+    toolButton3->setCukeIcon(IconType::AppGeneric);
     auto menu3 = new Menu(this);
     menu3->addAction(new QAction("样例1"));
     auto disabledMenuAction = new QAction("样例2", menu3);
@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent)
     menu3->addAction(exclusiveAction2);
 
     auto subMenu = new Menu("更多", menu3);
-    subMenu->setIconType(IconType::Desktop);
+    subMenu->setCukeIcon(IconType::Desktop);
     subMenu->addAction(new Action("子项1", subMenu));
     subMenu->addAction(new Action(IconType::BookCoins, "子项2", subMenu));
     subMenu->addSeparator();
@@ -175,4 +175,3 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() = default;
-

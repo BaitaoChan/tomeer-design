@@ -30,7 +30,7 @@ void AppBarPrivate::onWindowTitleChanged(const QString& title) const {
 }
 
 void AppBarPrivate::onThemeButtonClicked() {
-    if (_themeButton->getIconType() == IconType::WeatherMoon)
+    if (_themeButton->getCukeIcon() == IconType::WeatherMoon)
         CUKE_THEME->setThemeMode(ThemeType::Dark);
     else
         CUKE_THEME->setThemeMode(ThemeType::Light);
@@ -53,9 +53,9 @@ void AppBarPrivate::onMaximizeButtonClicked() {
         q->window()->showMaximized();
 
     if (q->window()->windowState() & Qt::WindowMaximized)
-        _maximizeButton->setIconType(IconType::SquareMultiple);
+        _maximizeButton->setCukeIcon(IconType::SquareMultiple);
     else
-        _maximizeButton->setIconType(IconType::Maximize);
+        _maximizeButton->setCukeIcon(IconType::Maximize);
 }
 
 void AppBarPrivate::onCloseButtonClicked() {
@@ -71,9 +71,9 @@ void AppBarPrivate::onHoverChanged() {
 void AppBarPrivate::onWindowStateChanged() {
     Q_Q(AppBar);
     if (q->window()->windowState() & Qt::WindowMaximized)
-        _maximizeButton->setIconType(IconType::SquareMultiple);
+        _maximizeButton->setCukeIcon(IconType::SquareMultiple);
     else
-        _maximizeButton->setIconType(IconType::Maximize);
+        _maximizeButton->setCukeIcon(IconType::Maximize);
 }
 
 CUKE_NAMESPACE_END(pub)

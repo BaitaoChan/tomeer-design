@@ -48,11 +48,11 @@ void MenuBarStyle::drawControl(ControlElement element, const QStyleOption *optio
             painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
         }
-        if (action && action->getIconType() != IconType::None && !opt->icon.isNull()) {
+        if (action && action->getCukeIcon() != IconType::None && !opt->icon.isNull()) {
             QFont font("Cuke");
             font.setPixelSize(pixelMetric(PM_SmallIconSize, opt, widget));
             painter->setFont(font);
-            painter->drawText(opt->rect, Qt::AlignCenter, QString(QChar(action->getIconType())));
+            painter->drawText(opt->rect, Qt::AlignCenter, QString(QChar(action->getCukeIcon())));
         } else if (!opt->icon.isNull())
             opt->icon.paint(painter, opt->rect, Qt::AlignCenter);
         else

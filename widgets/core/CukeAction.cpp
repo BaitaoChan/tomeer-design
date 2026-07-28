@@ -21,21 +21,21 @@ Action::Action(const QIcon &icon, const QString &text, QObject *parent)
 Action::Action(const IconType::Icon &icon, const QString &text, QObject *parent)
     : Action(text, parent) {
     Q_D(Action);
-    setIconType(icon);
+    setCukeIcon(icon);
 }
 
 Action::~Action() = default;
 
-void Action::setIconType(IconType::Icon pIconType) {
-    if (_pIconType != pIconType) {
-        _pIconType = pIconType;
-        pIconTypeChanged();
-        setIcon(CUKE_ICON->getCukeIcon(_pIconType));
+void Action::setCukeIcon(IconType::Icon pCukeIcon) {
+    if (_pCukeIcon != pCukeIcon) {
+        _pCukeIcon = pCukeIcon;
+        pCukeIconChanged();
+        setIcon(CUKE_ICON->getCukeIcon(_pCukeIcon));
     }
 }
 
-IconType::Icon Action::getIconType() const {
-    return _pIconType;
+IconType::Icon Action::getCukeIcon() const {
+    return _pCukeIcon;
 }
 
 CUKE_NAMESPACE_END(pub)
