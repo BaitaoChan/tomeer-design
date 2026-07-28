@@ -24,6 +24,7 @@ enum DisplayMode {
     Mica,
     MicaAlt,
     Acrylic,
+    DwmBlur,
 #endif
 };
 Q_ENUM(DisplayMode)
@@ -99,6 +100,7 @@ enum ThemeColor {
     Mica,
     MicaAlt,
     Acrylic,
+    DwmBlur,
 
     PanelAlpha,
 

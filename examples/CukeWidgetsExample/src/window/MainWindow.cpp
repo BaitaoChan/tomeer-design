@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     disabledMenuBarAction->setEnabled(false);
     menuBar->addAction(disabledMenuBarAction);
     appBar()->addCustomWidget(menuBar, AppBarType::LeftArea);
-    setDisplayMode(WindowType::Normal);
+    setDisplayMode(WindowType::DwmBlur);
 
     auto toolBar = new ToolBar(this);
     auto toolButton1 = new ToolButton(this);

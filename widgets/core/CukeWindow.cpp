@@ -73,18 +73,45 @@ void Window::setDisplayMode(WindowType::DisplayMode pDisplayMode) {
         }
 
         const auto hwnd = reinterpret_cast<HWND>(winId());
-        BOOL mode = FALSE;
-        if (themeMode == ThemeType::Dark)
-            mode = TRUE;
+        const BOOL mode = themeMode == ThemeType::Dark;
         DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &mode, sizeof(mode));
 
         const HRESULT result = DwmSetWindowAttribute(hwnd, DWMWA_SYSTEMBACKDROP_TYPE, &backdropType, sizeof(backdropType));
         isApplied = SUCCEEDED(result) && backdropType != DWMSBT_NONE;
 
-        const MARGINS margins = isApplied
+        const MARGINS margins = backdropType != DWMSBT_NONE
                                     ? MARGINS{-1, -1, -1, -1}
                                     : MARGINS{0, 0, 0, 0};
         DwmExtendFrameIntoClientArea(hwnd, &margins);
+
+        struct AccentPolicy {
+            int state;
+            int flags;
+            DWORD color;
+            int animationId;
+        };
+        struct WindowCompositionAttributeData {
+            int attribute;
+            PVOID data;
+            SIZE_T size;
+        };
+        using SetWindowCompositionAttribute = BOOL(WINAPI *)(HWND, WindowCompositionAttributeData *);
+
+        const auto user32 = GetModuleHandleW(L"user32.dll");
+        if (const auto setWindowCompositionAttribute = reinterpret_cast<SetWindowCompositionAttribute>(GetProcAddress(user32, "SetWindowCompositionAttribute"))) {
+            const QColor color = CUKE_THEME->getThemeColor(themeMode, ThemeType::DwmBlur);
+            AccentPolicy accent = {
+                pDisplayMode == WindowType::DwmBlur ? 4 : 0,
+                0,
+                (static_cast<DWORD>(color.alpha()) << 24) | (static_cast<DWORD>(color.blue()) << 16) |
+                (static_cast<DWORD>(color.green()) << 8) | static_cast<DWORD>(color.red()),
+                0
+            };
+            WindowCompositionAttributeData data = {19, &accent, sizeof(accent)};
+            const BOOL result = setWindowCompositionAttribute(hwnd, &data);
+            if (pDisplayMode == WindowType::DwmBlur)
+                isApplied = result;
+        }
     }
 #endif
 

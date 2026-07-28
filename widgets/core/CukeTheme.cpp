@@ -65,6 +65,9 @@ namespace {
         // Acrylic
         {ThemeType::Acrylic, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
 
+        // DwmBlur
+        {ThemeType::DwmBlur, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
+
         // Panel Alpha
         {ThemeType::PanelAlpha, QColor(255, 255, 255, 20), QColor(255, 255, 255, 20)},
 
