@@ -23,6 +23,8 @@ public:
     QMenu *menu() const;
 
 protected:
+    bool event(QEvent *event) override;
+
     virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 CUKE_NAMESPACE_END(pub)

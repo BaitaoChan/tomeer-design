@@ -1,10 +1,12 @@
 #include <QPropertyAnimation>
+#include <QHelpEvent>
 #include <QMenu>
 
 #include "CukeIcon.h"
 #include "CukeToolButton.h"
 #include "CukeToolButtonPrivate.h"
 #include "CukeToolButtonStyle.h"
+#include "CukeToolTip.h"
 
 CUKE_NAMESPACE_BEGIN(pub)
 CUKE_Q_PROPERTY_IMPL(ToolButton, int, BorderRadius)
@@ -57,6 +59,22 @@ void ToolButton::setMenu(QMenu *menu) {
 
 QMenu *ToolButton::menu() const {
     return QToolButton::menu();
+}
+
+bool ToolButton::event(QEvent *event) {
+    if (event->type() == QEvent::ToolTip) {
+        const auto helpEvent = dynamic_cast<QHelpEvent *>(event);
+        if (!toolTip().isEmpty())
+            ToolTip::showText(helpEvent->globalPos(), toolTip(), this);
+        else {
+            ToolTip::hideText();
+            event->ignore();
+        }
+        return true;
+    }
+    if (event->type() == QEvent::Leave || event->type() == QEvent::Hide)
+        ToolTip::hideText();
+    return QToolButton::event(event);
 }
 
 void ToolButton::onThemeChanged(ThemeType::ThemeMode mode) {
