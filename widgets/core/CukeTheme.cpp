@@ -115,6 +115,10 @@ namespace {
         {ThemeType::ComboBoxView, QColor(242, 242, 242), QColor(42, 42, 42)},
         {ThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
 
+        // PushButton
+        {ThemeType::PushButton, QColor(252, 252, 252), QColor(42, 42, 42)},
+        {ThemeType::PushButtonHover, QColor(248, 248, 248), QColor(48, 48, 48)},
+
         // AppBarButton
         {ThemeType::Dismiss, QColor(232, 17, 35), QColor(232, 17, 35)},
 

@@ -28,6 +28,7 @@
 #include "CukeLabel.h"
 #include "CukeLineEdit.h"
 #include "CukeComboBox.h"
+#include "CukePushButton.h"
 #include "CukeSlider.h"
 #include "CukeToggleSwitch.h"
 
@@ -47,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     disabledMenuBarAction->setEnabled(false);
     menuBar->addAction(disabledMenuBarAction);
     appBar()->addCustomWidget(menuBar, AppBarType::LeftArea);
-    setDisplayMode(WindowType::DwmBlur);
+    setDisplayMode(WindowType::Mica);
 
     auto toolBar = new ToolBar(this);
     auto toolButton1 = new ToolButton(this);
@@ -146,17 +147,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     auto lineEdit = new LineEdit();
     lineEdit->setPlaceholderText("Enter text");
-    lineEdit->setFixedSize(160, controlHeight);
+    lineEdit->setFixedSize(100, controlHeight);
     lineEdit->setBorderRadius(borderRadius);
     auto lineEditCard = new SettingsCard("LineEdit", lineEdit, scrollWidget);
     columnLayout->addWidget(lineEditCard);
 
     auto comboBox = new ComboBox();
     comboBox->addItems({"One", "Two", "Three"});
-    comboBox->setFixedSize(120, controlHeight);
+    comboBox->setFixedSize(100, controlHeight);
     comboBox->setBorderRadius(borderRadius);
     auto comboBoxCard = new SettingsCard("ComboBox", comboBox, scrollWidget);
     columnLayout->addWidget(comboBoxCard);
+
+    auto pushButton = new PushButton(IconType::CommentAdd, "Button");
+    pushButton->setFixedSize(100, controlHeight);
+    pushButton->setBorderRadius(borderRadius);
+    auto pushButtonCard = new SettingsCard("PushButton", pushButton, scrollWidget);
+    columnLayout->addWidget(pushButtonCard);
 
     auto slider = new Slider(Qt::Horizontal);
     slider->setRange(0, 100);

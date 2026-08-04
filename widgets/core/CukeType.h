@@ -145,6 +145,9 @@ enum ThemeColor {
     ComboBoxView,
     ComboBoxItem,
 
+    PushButton,
+    PushButtonHover,
+
     Dismiss,
 
     ThemeSwitchKnobL,
