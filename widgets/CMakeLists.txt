@@ -9,20 +9,18 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-file(GLOB ORIGIN CONFIGURE_DEPENDS core/*.h core/*.cpp)
-file(GLOB DEV CONFIGURE_DEPENDS core/dev/*.h core/dev/*.cpp)
-file(GLOB LAB CONFIGURE_DEPENDS lab/*.h lab/*.cpp)
-file(GLOB PRIVATE CONFIGURE_DEPENDS core/private/*.h core/private/*.cpp lab/private/*.h lab/private/*.cpp)
-file(GLOB STYLE CONFIGURE_DEPENDS core/style/*.h core/style/*.cpp lab/style/*.h lab/style/*.cpp)
+file(GLOB ORIGIN CONFIGURE_DEPENDS *.h *.cpp)
+file(GLOB DEV CONFIGURE_DEPENDS dev/*.h dev/*.cpp)
+file(GLOB PRIVATE CONFIGURE_DEPENDS private/*.h private/*.cpp)
+file(GLOB STYLE CONFIGURE_DEPENDS style/*.h style/*.cpp)
 
 # 可执行文件
 add_library(${PROJECT_NAME} SHARED
         ${ORIGIN}
         ${DEV}
-        ${LAB}
         ${PRIVATE}
         ${STYLE}
-        ${CMAKE_CURRENT_SOURCE_DIR}/core/res/res.qrc
+        ${CMAKE_CURRENT_SOURCE_DIR}/res/res.qrc
 )
 
 # 查找 Qt 包
@@ -32,16 +30,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 # 包含目录
 target_include_directories(${PROJECT_NAME}
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lab>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
         PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/dev>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/private>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/style>
-
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lab/private>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lab/style>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dev>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/style>
 )
 
 # 链接库
@@ -67,8 +61,6 @@ install(TARGETS ${PROJECT_NAME}
 )
 
 # 导出公共头文件和库文件
-file(GLOB PUBLIC_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/core/*.h")
-file(GLOB LAB_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/lab/*.h")
+file(GLOB PUBLIC_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 
 install(FILES ${PUBLIC_HEADERS} DESTINATION ${PROJECT_NAME}/${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${LAB_HEADERS} DESTINATION ${PROJECT_NAME}/${CMAKE_INSTALL_INCLUDEDIR}/lab)
