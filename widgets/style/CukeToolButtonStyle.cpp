@@ -41,14 +41,17 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         if (!(option->state & State_Enabled)) {
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
+            painter->setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable), 1));
             painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
-        } else if (option->state & State_On) {
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Window));
-            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
-        } else {
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
-            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        }
+        else {
+            if (option->state & State_On) {
+                painter->setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text), 1));
+                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
+            } else {
+                painter->setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::Text), 1));
+                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+            }
         }
         constexpr int spacing = 4;
         QFont font("Cuke");
@@ -107,15 +110,13 @@ void ToolButtonStyle::drawControl(ControlElement element, const QStyleOption *op
 
         painter->save();
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-        if (!(option->state & State_Enabled)) {
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
-            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
-        } else if (option->state & State_On) {
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Window));
-            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
-        } else {
-            painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
-            painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
+        if (!(option->state & State_Enabled))
+            painter->setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable), 1));
+        else {
+            if (option->state & State_On)
+                painter->setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text), 1));
+            else
+                painter->setPen(QPen(CUKE_THEME->getThemeColor(ThemeType::Text), 1));
         }
         // 文字图标绘制
         constexpr int spacing = 4;

@@ -29,6 +29,7 @@
 #include "CukeLineEdit.h"
 #include "CukeComboBox.h"
 #include "CukePushButton.h"
+#include "CukeToggleButton.h"
 #include "CukeSlider.h"
 #include "CukeToggleSwitch.h"
 
@@ -159,11 +160,17 @@ MainWindow::MainWindow(QWidget *parent)
     auto comboBoxCard = new SettingsCard("ComboBox", comboBox, scrollWidget);
     columnLayout->addWidget(comboBoxCard);
 
-    auto pushButton = new PushButton(IconType::CommentAdd, "Button");
+    auto pushButton = new PushButton(IconType::Calendar3Day, "Button");
     pushButton->setFixedSize(100, controlHeight);
     pushButton->setBorderRadius(borderRadius);
     auto pushButtonCard = new SettingsCard("PushButton", pushButton, scrollWidget);
     columnLayout->addWidget(pushButtonCard);
+
+    auto toggleButton = new ToggleButton(IconType::CalendarLtr, "Button");
+    toggleButton->setFixedSize(100, controlHeight);
+    toggleButton->setBorderRadius(borderRadius);
+    auto toggleButtonCard = new SettingsCard("ToggleButton", toggleButton, scrollWidget);
+    columnLayout->addWidget(toggleButtonCard);
 
     auto slider = new Slider(Qt::Horizontal);
     slider->setRange(0, 100);

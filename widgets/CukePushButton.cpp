@@ -63,9 +63,9 @@ void PushButton::paintEvent(QPaintEvent *event) {
     else if (isChecked())
         painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::Check));
     else if (underMouse())
-        painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::PushButtonHover));
+        painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::ButtonHover));
     else
-        painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::PushButton));
+        painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::Button));
     CUKE_PAINTER->drawRoundedRect(rect().adjusted(1, 1, -1, -1), &painter, getBorderRadius(), getBorderRadius(), getSideFlag());
 
     if (!isEnabled())

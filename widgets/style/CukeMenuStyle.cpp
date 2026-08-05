@@ -112,19 +112,14 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
             }
 
             painter->save();
-            if (!(opt->state & State_Enabled)) {
+            if (!(opt->state & State_Enabled))
                 painter->setPen(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
-                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::TextDisable));
-            } else if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked && !opt->icon.isNull()) {
+            else if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked && !opt->icon.isNull())
                 painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Check));
-                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Check));
-            } else if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked) {
-                painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Window));
-                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
-            } else {
+            else if (opt->checkType != QStyleOptionMenuItem::NotCheckable && opt->checked)
+                painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
+            else
                 painter->setPen(CUKE_THEME->getThemeColor(ThemeType::Text));
-                painter->setBrush(CUKE_THEME->getThemeColor(ThemeType::Text));
-            }
             QFont font("Cuke");
             font.setPixelSize(qRound(iWidth * scale));
             painter->setFont(font);
