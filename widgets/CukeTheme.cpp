@@ -140,6 +140,10 @@ Theme::Theme(QObject *parent)
     d->_colorAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
     initThemeColor();
+    if (getThemeMode() == ThemeType::System)
+        d->setColorFactor(QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark ? 0.0 : 1.0);
+    else
+        d->setColorFactor(getThemeMode() == ThemeType::Dark ? 0.0 : 1.0);
     connect(d, &ThemePrivate::pColorFactorChanged, this, &Theme::themeColorChanged);
     connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged, this, &Theme::onColorSchemeChanged);
 }

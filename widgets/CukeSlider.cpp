@@ -1,5 +1,8 @@
+#include <QHelpEvent>
+
 #include "CukeSlider.h"
 #include "CukeSliderPrivate.h"
+#include "CukeToolTip.h"
 
 CUKE_NAMESPACE_BEGIN()
 CUKE_Q_PROPERTY_IMPL(Slider, qreal, HandleDiameter)
@@ -27,6 +30,22 @@ Slider::Slider(Qt::Orientation orientation, QWidget *parent)
 }
 
 Slider::~Slider() = default;
+
+bool Slider::event(QEvent *event) {
+    if (event->type() == QEvent::ToolTip) {
+        const auto helpEvent = dynamic_cast<QHelpEvent *>(event);
+        if (!toolTip().isEmpty())
+            ToolTip::showText(helpEvent->globalPos(), toolTip(), this);
+        else {
+            ToolTip::hideText();
+            event->ignore();
+        }
+        return true;
+    }
+    if (event->type() == QEvent::Leave || event->type() == QEvent::Hide)
+        ToolTip::hideText();
+    return QSlider::event(event);
+}
 
 void Slider::enterEvent(QEnterEvent *event) {
     setMouseTracking(true);
@@ -68,6 +87,10 @@ void Slider::mouseMoveEvent(QMouseEvent *event) {
         }
     }
     QSlider::mouseMoveEvent(event);
+
+    // 鼠标移动更新 ToolTip 的位置
+    if (d->_isPressed)
+        ToolTip::showText(event->globalPosition().toPoint(), QString::number(sliderPosition()), this);
 }
 
 void Slider::mousePressEvent(QMouseEvent *event) {
@@ -80,12 +103,16 @@ void Slider::mousePressEvent(QMouseEvent *event) {
         d->_handleDiameterAnimation->start();
     }
     QSlider::mousePressEvent(event);
+
+    if (d->_isPressed)
+        ToolTip::showText(event->globalPosition().toPoint(), QString::number(sliderPosition()), this);
 }
 
 void Slider::mouseReleaseEvent(QMouseEvent *event) {
     Q_D(Slider);
     if (event->button() == Qt::LeftButton) {
         d->_isPressed = false;
+        ToolTip::hideText();
         // 松开后，如果还在 handle 上，回到 hover，否则回到默认
         if (d->_handleRect.contains(event->pos())) {
             d->_handleDiameterAnimation->stop();
@@ -108,8 +135,7 @@ void Slider::resizeEvent(QResizeEvent *event) {
 
     QStyleOptionSlider opt;
     initStyleOption(&opt);
-    QRect handleRect = style()->subControlRect(QStyle::CC_Slider, &opt,
-                                               QStyle::SC_SliderHandle, this);
+    QRect handleRect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
 
     if (d->handleDiameter == 0) {
         d->handleDiameter = handleRect.width() / 4;
@@ -128,8 +154,7 @@ void Slider::paintEvent(QPaintEvent *event) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
 
-    d->_handleRect = style()->subControlRect(QStyle::CC_Slider, &opt,
-                                                 QStyle::SC_SliderHandle, this);
+    d->_handleRect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
     d->_handleCenter = d->_handleRect.center();
 
     // 滑轨

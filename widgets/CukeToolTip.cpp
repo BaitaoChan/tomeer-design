@@ -13,6 +13,8 @@ ToolTip::ToolTip(QWidget *parent)
       d_ptr(new ToolTipPrivate(this)) {
     Q_D(ToolTip);
     setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_ShowWithoutActivating);
+    setAttribute(Qt::WA_TransparentForMouseEvents);
 
     d->_layout = new QHBoxLayout(this);
     d->_label = new Label(this);
@@ -40,12 +42,18 @@ void ToolTip::showText(const QPoint &pos, const QString &text, QWidget *widget) 
     }
     if (!ToolTipPrivate::_toolTip)
         ToolTipPrivate::_toolTip = new ToolTip();
-    if (ToolTipPrivate::_toolTip->isVisible() && ToolTipPrivate::_toolTip->getToolTip() == text)
-        return;
-    ToolTipPrivate::_toolTip->setToolTip(text);
-    ToolTipPrivate::_toolTip->adjustSize();
-    ToolTipPrivate::_toolTip->move(pos + QPoint(4, 16));
-    ToolTipPrivate::_toolTip->showNormal();
+    ToolTip *toolTip = ToolTipPrivate::_toolTip;
+
+    if (toolTip->getToolTip() != text)
+        toolTip->setToolTip(text);
+
+    const QPoint tPos = pos + QPoint(4, 16);
+
+    if (toolTip->pos() != tPos)
+        toolTip->move(tPos);
+
+    if (!toolTip->isVisible())
+        toolTip->show();
 }
 
 void ToolTip::hideText() {
@@ -58,7 +66,7 @@ void ToolTip::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(CUKE_THEME->getThemeColor(ThemeType::BorderAlpha));
-    painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::WindowAlpha));
+    painter.setBrush(CUKE_THEME->getThemeColor(ThemeType::Window));
     painter.drawRoundedRect(QRectF(rect()).adjusted(1, 1, -1, -1), 4, 4);
 }
 
