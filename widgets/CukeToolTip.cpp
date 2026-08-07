@@ -44,12 +44,13 @@ void ToolTip::showText(const QPoint &pos, const QString &text, QWidget *widget) 
         ToolTipPrivate::_toolTip = new ToolTip();
     ToolTip *toolTip = ToolTipPrivate::_toolTip;
 
-    if (toolTip->getToolTip() != text)
+    const bool textChanged = toolTip->getToolTip() != text;
+    if (textChanged)
         toolTip->setToolTip(text);
 
     const QPoint tPos = pos + QPoint(4, 16);
 
-    if (toolTip->pos() != tPos)
+    if (textChanged || !toolTip->isVisible())
         toolTip->move(tPos);
 
     if (!toolTip->isVisible())

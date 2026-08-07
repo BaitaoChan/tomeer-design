@@ -32,7 +32,7 @@ namespace {
         {ThemeType::Default, QColor(160, 160, 160), QColor(82, 82, 82)},
         {ThemeType::Hover, QColor(240, 240, 240), QColor(52, 52, 52)},
         {ThemeType::Press, QColor(230, 230, 230), QColor(32, 32, 32)},
-        {ThemeType::Check, QColor(0, 95, 184), QColor(0, 103, 192)},
+        {ThemeType::Check, QColor(0, 95, 184), QColor(0, 120, 212)},
         {ThemeType::Text, QColor(0, 0, 0), QColor(255, 255, 255)},
         {ThemeType::Border, QColor(200, 200, 200), QColor(10, 10, 10)},
         {ThemeType::Error, QColor(220, 53, 69), QColor(220, 53, 69)},
@@ -49,7 +49,7 @@ namespace {
         {ThemeType::DefaultAlpha, QColor(160, 160, 160, 64), QColor(52, 52, 52, 32)},
         {ThemeType::HoverAlpha, QColor(232, 232, 232, 128), QColor(52, 52, 52, 128)},
         {ThemeType::PressAlpha, QColor(232, 232, 232, 200), QColor(52, 52, 52, 200)},
-        {ThemeType::CheckAlpha, QColor(0, 95, 184, 230), QColor(0, 103, 192, 230)},
+        {ThemeType::CheckAlpha, QColor(0, 95, 184, 230), QColor(0, 120, 212, 230)},
         {ThemeType::TextAlpha, QColor(0, 0, 0, 200), QColor(255, 255, 255, 200)},
         {ThemeType::BorderAlpha, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
 
