@@ -69,7 +69,7 @@ namespace {
         {ThemeType::DwmBlur, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
 
         // Panel Alpha
-        {ThemeType::PanelAlpha, QColor(255, 255, 255, 20), QColor(255, 255, 255, 20)},
+        {ThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(52, 52, 52, 60)},
 
         // Pattern
         {ThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
