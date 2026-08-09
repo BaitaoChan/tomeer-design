@@ -12,6 +12,7 @@ class CUKE_EXPORT Theme : public QObject {
     Q_OBJECT
     CUKE_DECLARE_DPTR(Theme)
     CUKE_Q_SINGLETON_DECL(Theme)
+    CUKE_Q_PROPERTY_DECL(bool, FollowSystem)
 private:
     explicit Theme(QObject *parent = nullptr);
     ~Theme() override;

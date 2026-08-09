@@ -34,7 +34,6 @@ void AppBarPrivate::onThemeButtonClicked() {
         CUKE_THEME->setThemeMode(ThemeType::Dark);
     else
         CUKE_THEME->setThemeMode(ThemeType::Light);
-    CUKE_THEME->setThemeMode(ThemeType::System);
 }
 
 void AppBarPrivate::onMinimizeButtonClicked() {

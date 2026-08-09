@@ -130,6 +130,7 @@ namespace {
 }
 
 CUKE_Q_SINGLETON_IMPL(Theme)
+CUKE_Q_PROPERTY_IMPL(Theme, bool, FollowSystem)
 Theme::Theme(QObject *parent)
     : QObject(parent),
       d_ptr(new ThemePrivate(this)) {
@@ -140,31 +141,33 @@ Theme::Theme(QObject *parent)
     d->_colorAnimation->setEasingCurve(QEasingCurve::InOutSine);
 
     initThemeColor();
-    if (getThemeMode() == ThemeType::System)
-        d->setColorFactor(QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark ? 0.0 : 1.0);
-    else
-        d->setColorFactor(getThemeMode() == ThemeType::Dark ? 0.0 : 1.0);
+    d->_themeMode = QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark ? ThemeType::Dark : ThemeType::Light;
+    d->setColorFactor(d->_themeMode == ThemeType::Dark ? 0.0 : 1.0);
     connect(d, &ThemePrivate::pColorFactorChanged, this, &Theme::themeColorChanged);
     connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged, this, &Theme::onColorSchemeChanged);
+    connect(this, &Theme::pFollowSystemChanged, this, [this] {
+        if (getFollowSystem())
+            setThemeMode(ThemeType::System);
+    });
+    setFollowSystem(true);
 }
 
 Theme::~Theme() = default;
 
 void Theme::setThemeMode(ThemeType::ThemeMode mode) {
     Q_D(Theme);
-    // 将模式标记回 System
-    if (mode == ThemeType::System && d->_colorAnimation->state() == QAbstractAnimation::Running) {
-        d->_themeMode = mode;
-        return;
-    }
-    d->_themeMode = mode;
-
     if (mode == ThemeType::System) {
-        if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
-            mode = ThemeType::Dark;
-        else
-            mode = ThemeType::Light;
+        if (!getFollowSystem()) {
+            setFollowSystem(true);
+            return;
+        }
+        mode = QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark ? ThemeType::Dark : ThemeType::Light;
+    } else {
+        // 手动指定主题后不再跟随系统变化
+        setFollowSystem(false);
     }
+
+    d->_themeMode = mode;
 
     const qreal tFactor = mode == ThemeType::Light ? 1.0 : 0.0;
 
@@ -230,19 +233,11 @@ void Theme::initThemeColor() {
 }
 
 void Theme::onColorSchemeChanged(Qt::ColorScheme colorScheme) {
-    Q_D(Theme);
-
-    if (d->_themeMode != ThemeType::System)
+    if (!getFollowSystem())
         return;
 
-    const qreal tFactor = colorScheme == Qt::ColorScheme::Dark ? 0.0 : 1.0;
-
-    emit themeModeChanged(d->_themeMode);
-
-    d->_colorAnimation->stop();
-    d->_colorAnimation->setStartValue(d->getColorFactor());
-    d->_colorAnimation->setEndValue(tFactor);
-    d->_colorAnimation->start();
+    Q_UNUSED(colorScheme)
+    setThemeMode(ThemeType::System);
 }
 
 CUKE_NAMESPACE_END

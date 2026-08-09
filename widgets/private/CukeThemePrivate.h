@@ -18,7 +18,7 @@ public:
     ~ThemePrivate() override;
 
 private:
-    ThemeType::ThemeMode _themeMode = ThemeType::System;
+    ThemeType::ThemeMode _themeMode = ThemeType::Light;
     QMap<ThemeType::ThemeColor, QColor> _lightThemeColorList;
     QMap<ThemeType::ThemeColor, QColor> _darkThemeColorList;
 
