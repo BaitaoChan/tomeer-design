@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(CukeWidgets LANGUAGES CXX)
+project(tomeer-widgets LANGUAGES CXX)
 
 # 基础配置
 set(CMAKE_CXX_STANDARD 20)
@@ -43,7 +43,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
 )
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE CUKEWIDGETS_LIBRARY)
+target_compile_definitions(${PROJECT_NAME} PRIVATE WIDGETS_LIBRARY)
 
 # install 库文件 dll/lib
 install(TARGETS ${PROJECT_NAME}
@@ -54,10 +54,10 @@ install(TARGETS ${PROJECT_NAME}
         INCLUDES DESTINATION ${PROJECT_NAME}/${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-# 将 dll 安装到 CukeWidgetsExample 运行目录下
+# 将 dll 安装到 tomeer-widgets-example 运行目录下
 install(TARGETS ${PROJECT_NAME}
-        RUNTIME DESTINATION CukeWidgetsExample
-        LIBRARY DESTINATION CukeWidgetsExample
+        RUNTIME DESTINATION tomeer-widgets-example
+        LIBRARY DESTINATION tomeer-widgets-example
 )
 
 # 导出公共头文件和库文件
