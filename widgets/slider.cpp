@@ -89,8 +89,12 @@ void Slider::mouseMoveEvent(QMouseEvent *event) {
     QSlider::mouseMoveEvent(event);
 
     // 鼠标移动更新 ToolTip 的位置
-    if (d->_isPressed)
-        ToolTip::showText(event->globalPosition().toPoint(), QString::number(sliderPosition()), this);
+    if (d->_isPressed) {
+        QStyleOptionSlider opt;
+        initStyleOption(&opt);
+        const QRect handleRect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
+        ToolTip::showText(mapToGlobal(handleRect.center()), QString::number(sliderPosition()), this);
+    }
 }
 
 void Slider::mousePressEvent(QMouseEvent *event) {
@@ -104,8 +108,12 @@ void Slider::mousePressEvent(QMouseEvent *event) {
     }
     QSlider::mousePressEvent(event);
 
-    if (d->_isPressed)
-        ToolTip::showText(event->globalPosition().toPoint(), QString::number(sliderPosition()), this);
+    if (d->_isPressed) {
+        QStyleOptionSlider opt;
+        initStyleOption(&opt);
+        const QRect handleRect = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
+        ToolTip::showText(mapToGlobal(handleRect.center()), QString::number(sliderPosition()), this);
+    }
 }
 
 void Slider::mouseReleaseEvent(QMouseEvent *event) {
