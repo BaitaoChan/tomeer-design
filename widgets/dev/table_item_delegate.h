@@ -14,16 +14,11 @@ public:
     ~TableItemDelegate() override;
 
 protected:
-    QWidget *createEditor(QWidget *parent,
-                          const QStyleOptionViewItem &option,
-                          const QModelIndex &index) const override;
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
-    void paint(QPainter *p,
-               const QStyleOptionViewItem &opt,
-               const QModelIndex &index) const override;
+    void paint(QPainter *p, const QStyleOptionViewItem &opt, const QModelIndex &index) const override;
 
-    QSize sizeHint(const QStyleOptionViewItem &opt,
-                   const QModelIndex &index) const override;
+    QSize sizeHint(const QStyleOptionViewItem &opt, const QModelIndex &index) const override;
 
 };
 TOMEER_NAMESPACE_END

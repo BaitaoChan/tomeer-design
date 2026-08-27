@@ -14,8 +14,8 @@ class AppBarButton : public QToolButton {
     TOMEER_Q_PROPERTY_DECL(bool, Pressed)
     TOMEER_Q_PROPERTY_DECL(QColor, BgColor)
     TOMEER_Q_PROPERTY_DECL(int, BorderRadius)
-    TOMEER_Q_PROPERTY_DECL(bool, BgColorUsedFlag)
     TOMEER_Q_PROPERTY_DECL(IconType::Icon, Icon)
+    TOMEER_Q_PROPERTY_DECL(bool, BgColorUsedFlag)
     TOMEER_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
     TOMEER_Q_PROPERTY_DECL(GeometryType::SideFlag, SideFlag)
 public:

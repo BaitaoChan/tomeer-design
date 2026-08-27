@@ -8,8 +8,7 @@ ComboBoxItemDelegate::ComboBoxItemDelegate(QObject *parent)
 
 ComboBoxItemDelegate::~ComboBoxItemDelegate() = default;
 
-void ComboBoxItemDelegate::paint(QPainter *painter,
-                                   const QStyleOptionViewItem &option, const QModelIndex &index) const {
+void ComboBoxItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
@@ -38,8 +37,7 @@ void ComboBoxItemDelegate::paint(QPainter *painter,
     painter->restore();
 }
 
-QSize ComboBoxItemDelegate::sizeHint(const QStyleOptionViewItem &option,
-                                       const QModelIndex &index) const {
+QSize ComboBoxItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
     return QSize(0, 30);
 }
 

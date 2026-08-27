@@ -15,8 +15,6 @@ void WidgetRegister::add(const int key, void *child) const {
     if (!child) {
         return;
     }
-    if (d_ptr->_children.contains(key)) {
-    }
     d_ptr->_children.insert(key, child);
 }
 
@@ -28,8 +26,6 @@ void *WidgetRegister::object(const int key) const {
 }
 
 QList<void *> WidgetRegister::objects() const {
-    if (d_ptr->_children.isEmpty()) {
-    }
     return d_ptr->_children.values();
 }
 

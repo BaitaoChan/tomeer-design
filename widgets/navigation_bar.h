@@ -14,6 +14,7 @@ public:
     explicit NavigationBar(QWidget *parent = nullptr);
     ~NavigationBar() override;
 protected:
+    void paintEvent(QPaintEvent *event) override;
     virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 TOMEER_NAMESPACE_END

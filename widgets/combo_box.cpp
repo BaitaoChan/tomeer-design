@@ -22,13 +22,13 @@ ComboBox::ComboBox(QWidget *parent)
         QComboBox::drop-down { border: none; background: transparent; }
         QComboBox QAbstractItemView { background: transparent; border: none; }
     )");
-    const auto view = new ComboBoxView(this);
-    view->setItemDelegate(new ComboBoxItemDelegate(view));
-    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setView(view);
+    d->_view = new ComboBoxView(this);
+    d->_view->setItemDelegate(new ComboBoxItemDelegate(d->_view));
+    d->_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    d->_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setView(d->_view);
     setStyle(new ComboBoxStyle(style()));
-    view->setSelectionMode(QAbstractItemView::SingleSelection);
+    d->_view->setSelectionMode(QAbstractItemView::SingleSelection);
     d->_rotateAnim = new QPropertyAnimation(this, "_pRotateAngle", this);
     d->_rotateAnim->setDuration(300);
     d->_rotateAnim->setEasingCurve(QEasingCurve::InOutSine);

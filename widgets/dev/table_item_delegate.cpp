@@ -7,18 +7,14 @@ TableItemDelegate::TableItemDelegate(QObject *parent)
 
 TableItemDelegate::~TableItemDelegate() = default;
 
-QWidget *TableItemDelegate::createEditor(QWidget *parent,
-                                      const QStyleOptionViewItem &option,
-                                      const QModelIndex &index) const {
+QWidget *TableItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const {
     auto *editor = new LineEdit(parent);
     editor->setBorderRadius(0);
     editor->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     return editor;
 }
 
-void TableItemDelegate::paint(QPainter *p,
-                           const QStyleOptionViewItem &opt,
-                           const QModelIndex &index) const {
+void TableItemDelegate::paint(QPainter *p, const QStyleOptionViewItem &opt, const QModelIndex &index) const {
     p->save();
     p->setRenderHint(QPainter::Antialiasing);
     QRect r = opt.rect;
@@ -35,8 +31,7 @@ void TableItemDelegate::paint(QPainter *p,
     p->restore();
 }
 
-QSize TableItemDelegate::sizeHint(const QStyleOptionViewItem &opt,
-                               const QModelIndex &index) const {
+QSize TableItemDelegate::sizeHint(const QStyleOptionViewItem &opt, const QModelIndex &index) const {
     return QStyledItemDelegate::sizeHint(opt, index);
 }
 
