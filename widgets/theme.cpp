@@ -122,6 +122,9 @@ namespace {
         // AppBarButton
         {ThemeType::Dismiss, QColor(232, 17, 35), QColor(232, 17, 35)},
 
+        // NavigationBar
+        {ThemeType::NavigationNodeSelected, QColor(0, 0, 0, 10), QColor(255, 255, 255, 12)},
+
         // ToolBar
         {ThemeType::ToolBarHandle, QColor(0, 95, 184), QColor(0, 103, 192)},
         {ThemeType::ToolBarBorder, QColor(98, 238, 147), QColor(98, 238, 147)},

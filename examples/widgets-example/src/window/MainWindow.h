@@ -1,10 +1,7 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include "menu_bar.h"
-#include "window.h"
-
-using namespace tomeer;
+#include "main.h"
 
 class MainWindow : public Window {
     Q_OBJECT

@@ -1,9 +1,7 @@
 #include <QApplication>
 
-#include "application.h"
+#include "main.h"
 #include "MainWindow.h"
-
-using namespace tomeer;
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);

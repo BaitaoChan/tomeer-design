@@ -1,6 +1,8 @@
 #ifndef NAVIGATION_BAR_H
 #define NAVIGATION_BAR_H
+#include <QString>
 #include <QWidget>
+
 #include "property.h"
 #include "type.h"
 
@@ -13,6 +15,17 @@ class WIDGETS_EXPORT NavigationBar : public QWidget {
 public:
     explicit NavigationBar(QWidget *parent = nullptr);
     ~NavigationBar() override;
+
+    bool addPageNode(QWidget *page, const QString &key, const QString &title, IconType::Icon icon = IconType::None, const QString &parentKey = {});
+    bool addExpanderNode(const QString &key, const QString &title, IconType::Icon icon = IconType::None, const QString &parentKey = {});
+    bool removeNode(const QString &key);
+
+    bool setCurrentKey(const QString &key);
+    QString currentKey() const;
+
+signals:
+    void currentKeyChanged(const QString &key);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     virtual void onThemeChanged(ThemeType::ThemeMode mode);

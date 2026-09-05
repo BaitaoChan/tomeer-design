@@ -11,11 +11,13 @@ set(CMAKE_AUTOUIC ON)
 
 file(GLOB ORIGIN CONFIGURE_DEPENDS src/*.h src/*.cpp)
 file(GLOB WINDOW CONFIGURE_DEPENDS src/window/*.h src/window/*.cpp)
+file(GLOB PAGE CONFIGURE_DEPENDS src/page/*.h src/page/*.cpp)
 
 add_executable(
         ${PROJECT_NAME}
         ${ORIGIN}
         ${WINDOW}
+        ${PAGE}
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/widgets-example.qrc
 )
 
@@ -23,6 +25,7 @@ target_include_directories(${PROJECT_NAME}
         PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/window>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/page>
 )
 
 # 查找 Qt 包

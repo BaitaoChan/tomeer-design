@@ -1,37 +1,19 @@
 #include "MainWindow.h"
 
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QToolBar>
-#include <QStatusBar>
-#include <QTextEdit>
-
-#include <QDockWidget>
-#include <QTreeWidget>
-#include <QListWidget>
-
-#include <QMenu>
 #include <QAction>
 #include <QActionGroup>
+#include <QWidget>
 
-#include <QFile>
-
-#include "icon.h"
 #include "action.h"
-#include "menu.h"
 #include "app_bar.h"
+#include "icon.h"
+#include "menu.h"
 #include "menu_bar.h"
+#include "navigation_bar.h"
 #include "tool_bar.h"
 #include "tool_button.h"
-#include "scroll_area.h"
-#include "settings_card.h"
-#include "label.h"
-#include "line_edit.h"
-#include "combo_box.h"
-#include "push_button.h"
-#include "toggle_button.h"
-#include "slider.h"
-#include "toggle_switch.h"
+
+#include "ControlsPage.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : Window(parent) {
@@ -107,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
     checkedSubMenuAction->setChecked(true);
     subMenu->addAction(checkedSubMenuAction);
     subMenu->addAction(new Action(IconType::Cloud, "图标子项", subMenu));
-    auto *subAction = menu3->addMenu(subMenu);
+    auto subAction = menu3->addMenu(subMenu);
     subAction->setShortcut(QKeySequence("Ctrl+M"));
 
     toolButton3->setMenu(menu3);
@@ -117,7 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
     toolButtonAction->setCheckable(true);
     toolButtonAction->setChecked(true);
     toolButton4->setDefaultAction(toolButtonAction);
-    auto *menu4 = new Menu(this);
+    auto menu4 = new Menu(this);
     menu4->addAction(new QAction("样例1"));
     toolButton4->setMenu(menu4);
     auto toolBarAction = new Action(IconType::CommentAdd, "Action");
@@ -131,61 +113,25 @@ MainWindow::MainWindow(QWidget *parent)
     toolBar->addWidget(toolButton4);
     this->addToolBar(toolBar);
 
-    auto center = new QWidget();
-    setCentralWidget(center);
+    auto navigationBar = new NavigationBar(this);
+    setCentralWidget(navigationBar);
 
-    auto layout = new QHBoxLayout(center);
-    auto scrollArea = new ScrollArea(center);
-    scrollArea->setWidgetResizable(true);
-    layout->addWidget(scrollArea);
+    navigationBar->addExpanderNode("controls", "控件示例", IconType::Apps);
+    navigationBar->addPageNode(new ControlsPage(navigationBar), "allControls", "全部控件", IconType::ControlButton, "controls");
 
-    auto scrollWidget = new QWidget(scrollArea);
-    auto columnLayout = new QVBoxLayout(scrollWidget);
-    columnLayout->setContentsMargins(0, 0, 0, 0);
-    columnLayout->setSpacing(4);
-    constexpr int controlHeight = 32;
-    constexpr int borderRadius = 6;
+    navigationBar->addExpanderNode("documents", "文档", IconType::Document);
+    navigationBar->addPageNode(new QWidget(navigationBar), "recentDocuments", "最近使用", IconType::DocumentText, "documents");
+    navigationBar->addPageNode(new QWidget(navigationBar), "favoriteDocuments", "收藏", IconType::Bookmark, "documents");
 
-    auto lineEdit = new LineEdit();
-    lineEdit->setPlaceholderText("Enter text");
-    lineEdit->setFixedSize(100, controlHeight);
-    lineEdit->setBorderRadius(borderRadius);
-    auto lineEditCard = new SettingsCard("LineEdit", lineEdit, scrollWidget);
-    columnLayout->addWidget(lineEditCard);
+    navigationBar->addExpanderNode("workspace", "工作区", IconType::Folder);
+    navigationBar->addPageNode(new QWidget(navigationBar), "projects", "项目", IconType::AppFolder, "workspace");
+    navigationBar->addPageNode(new QWidget(navigationBar), "resources", "资源", IconType::Database, "workspace");
 
-    auto comboBox = new ComboBox();
-    comboBox->addItems({"One", "Two", "Three"});
-    comboBox->setFixedSize(100, controlHeight);
-    comboBox->setBorderRadius(borderRadius);
-    auto comboBoxCard = new SettingsCard("ComboBox", comboBox, scrollWidget);
-    columnLayout->addWidget(comboBoxCard);
+    navigationBar->addExpanderNode("system", "系统", IconType::Desktop);
+    navigationBar->addPageNode(new QWidget(navigationBar), "settings", "设置", IconType::Settings, "system");
+    navigationBar->addPageNode(new QWidget(navigationBar), "about", "关于", IconType::Info, "system");
 
-    auto pushButton = new PushButton(IconType::Calendar3Day, "Button");
-    pushButton->setFixedSize(100, controlHeight);
-    pushButton->setBorderRadius(borderRadius);
-    auto pushButtonCard = new SettingsCard("PushButton", pushButton, scrollWidget);
-    columnLayout->addWidget(pushButtonCard);
-
-    auto toggleButton = new ToggleButton(IconType::CalendarLtr, "Button");
-    toggleButton->setFixedSize(100, controlHeight);
-    toggleButton->setBorderRadius(borderRadius);
-    auto toggleButtonCard = new SettingsCard("ToggleButton", toggleButton, scrollWidget);
-    columnLayout->addWidget(toggleButtonCard);
-
-    auto slider = new Slider(Qt::Horizontal);
-    slider->setRange(0, 100);
-    slider->setValue(50);
-    slider->setFixedSize(200, controlHeight);
-    auto sliderCard = new SettingsCard("Slider", slider, scrollWidget);
-    columnLayout->addWidget(sliderCard);
-
-    auto toggleSwitch = new ToggleSwitch();
-    toggleSwitch->setIsToggled(true);
-    auto toggleSwitchCard = new SettingsCard("ToggleSwitch", toggleSwitch, scrollWidget);
-    columnLayout->addWidget(toggleSwitchCard);
-    columnLayout->addStretch();
-
-    scrollArea->setWidget(scrollWidget);
+    navigationBar->setCurrentKey("allControls");
 }
 
 MainWindow::~MainWindow() = default;

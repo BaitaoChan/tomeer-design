@@ -9,6 +9,15 @@ NavigationBarViewStyle::NavigationBarViewStyle(QStyle *style)
 NavigationBarViewStyle::~NavigationBarViewStyle() = default;
 
 void NavigationBarViewStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    if (element == PE_IndicatorBranch)
+        return;
+    if (element == PE_FrameFocusRect)
+        return;
+    if (element == PE_PanelItemViewItem)
+        return;
+    if (element == PE_PanelItemViewRow)
+        return;
+
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
@@ -17,6 +26,8 @@ void NavigationBarViewStyle::drawControl(ControlElement element, const QStyleOpt
 }
 
 int NavigationBarViewStyle::pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const {
+    if (metric == PM_TreeViewIndentation)
+        return 28;
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
 

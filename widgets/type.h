@@ -8,13 +8,13 @@
 TOMEER_NAMESPACE_BEGIN()
 
 // 宏开始：声明一个带 Q_GADGET 的类
-#define TOMEER_TYPE_BEGIN(CLASS)                              \
+#define TOMEER_TYPE_BEGIN(CLASS)                            \
 class WIDGETS_EXPORT CLASS : public QObject {               \
 Q_GADGET                                                    \
 public:
 
 // 宏结束：关闭类定义
-#define TOMEER_TYPE_END(CLASS)                                \
+#define TOMEER_TYPE_END(CLASS)                              \
 };
 
 TOMEER_TYPE_BEGIN(WindowType)
@@ -53,6 +53,21 @@ enum CustomArea {
 Q_ENUM(CustomArea)
 
 TOMEER_TYPE_END(AppBarType)
+
+TOMEER_TYPE_BEGIN(NavigationBarType)
+enum NodeType {
+    Page,
+    Expander
+};
+Q_ENUM(NodeType)
+
+enum DataRole {
+    KeyRole = Qt::UserRole + 1,
+    IconRole,
+    NodeTypeRole
+};
+Q_ENUM(DataRole)
+TOMEER_TYPE_END(NavigationBarType)
 
 TOMEER_TYPE_BEGIN(GeometryType)
 enum SideFlag {
@@ -153,6 +168,8 @@ enum ThemeColor {
     ThemeSwitchKnobL,
     ThemeSwitchKnobR,
     ThemeSwitchBorder,
+
+    NavigationNodeSelected,
 
     ToolBarHandle,
     ToolBarBorder,

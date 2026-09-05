@@ -9,6 +9,8 @@ NavigationBarStyle::NavigationBarStyle(QStyle *style)
 NavigationBarStyle::~NavigationBarStyle() = default;
 
 void NavigationBarStyle::drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+    if (element == PE_Widget)
+        return;
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
