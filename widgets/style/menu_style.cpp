@@ -66,14 +66,14 @@ void MenuStyle::drawControl(ControlElement element, const QStyleOption *option, 
         }
 
         // 左侧激光指示
-        if (opt->state & State_Enabled && opt->state & State_Selected) {
-            const QRect lRect(rect.left() + 8, rect.top() + 4, 3, rect.height() - 8);
-            painter->save();
-            painter->setPen(Qt::NoPen);
-            painter->setBrush(TOMEER_THEME->getThemeColor(menu->getThemeMode(), ThemeType::Check));
-            painter->drawRoundedRect(lRect, 2, 2);
-            painter->restore();
-        }
+        // if (opt->state & State_Enabled && opt->state & State_Selected) {
+        //     const QRect lRect(rect.left() + 8, rect.top() + 4, 3, rect.height() - 8);
+        //     painter->save();
+        //     painter->setPen(Qt::NoPen);
+        //     painter->setBrush(TOMEER_THEME->getThemeColor(menu->getThemeMode(), ThemeType::Check));
+        //     painter->drawRoundedRect(lRect, 2, 2);
+        //     painter->restore();
+        // }
 
         // 文字图标绘制
         painter->setPen(opt->state & State_Enabled ? TOMEER_THEME->getThemeColor(ThemeType::Text) : TOMEER_THEME->getThemeColor(ThemeType::TextDisable));

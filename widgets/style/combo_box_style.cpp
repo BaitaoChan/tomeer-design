@@ -26,7 +26,7 @@ void ComboBoxStyle::drawControl(ControlElement element, const QStyleOption *opti
     // QFrame
     if (element == CE_ShapedFrame) {
         if (widget && qobject_cast<const QFrame *>(widget)) {
-            int radius = 6;
+            const int radius = combo->getBorderRadius();
             painter->save();
             painter->setRenderHints(QPainter::Antialiasing);
 
@@ -62,7 +62,7 @@ void ComboBoxStyle::drawComplexControl(ComplexControl control, const QStyleOptio
         const auto combo = qobject_cast<const ComboBox *>(widget);
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
-        int radius = 4;
+        const int radius = combo->getBorderRadius();
         const QRect fr = subControlRect(CC_ComboBox, opt, SC_ComboBoxFrame, widget);
 
         // 背景
