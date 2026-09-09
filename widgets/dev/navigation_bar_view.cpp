@@ -7,6 +7,7 @@
 #include <QPalette>
 #include <QPropertyAnimation>
 
+#include "scroll_bar.h"
 #include "tool_tip.h"
 #include "type.h"
 
@@ -15,6 +16,8 @@ TOMEER_Q_PROPERTY_IMPL(NavigationBarView, qreal, RotateAngle)
 
 NavigationBarView::NavigationBarView(QWidget *parent)
     : QTreeWidget(parent) {
+    setHorizontalScrollBar(new ScrollBar(this));
+    setVerticalScrollBar(new ScrollBar(this));
     setHeaderHidden(true);
     setColumnCount(1);
     setIconSize(QSize(QFontMetrics(font()).height(), QFontMetrics(font()).height()));
