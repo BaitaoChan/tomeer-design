@@ -1,6 +1,5 @@
 #ifndef NAVIGATION_BAR_NODE_DELEGATE_H
 #define NAVIGATION_BAR_NODE_DELEGATE_H
-
 #include <QStyledItemDelegate>
 
 #include "property.h"

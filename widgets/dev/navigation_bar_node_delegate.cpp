@@ -1,6 +1,3 @@
-#include <QPainter>
-#include <QPainterPath>
-
 #include "navigation_bar_node_delegate.h"
 #include "navigation_bar_view.h"
 #include "painter.h"
@@ -37,18 +34,18 @@ void NavigationBarNodeDelegate::paint(QPainter *painter, const QStyleOptionViewI
     const auto nodeType = static_cast<NavigationBarType::NodeType>(index.data(NavigationBarType::NodeTypeRole).toInt());
 
     // 选中指示
-    if (option.state & QStyle::State_Enabled) {
-        if (option.state & QStyle::State_Selected) {
-            if (nodeType == NavigationBarType::Page) {
-                painter->setPen(Qt::NoPen);
-                painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::CheckAlpha));
-                QRect iRect(0, 0, 3, 16);
-                iRect.moveCenter(r.center());
-                iRect.moveLeft(r.left());
-                TOMEER_PAINTER->drawRoundedRect(iRect, painter, 1.5, 1.5);
-            }
-        }
-    }
+    // if (option.state & QStyle::State_Enabled) {
+    //     if (option.state & QStyle::State_Selected) {
+    //         if (nodeType == NavigationBarType::Page) {
+    //             painter->setPen(Qt::NoPen);
+    //             painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::CheckAlpha));
+    //             QRect iRect(0, 0, 3, 16);
+    //             iRect.moveCenter(r.center());
+    //             iRect.moveLeft(r.left());
+    //             TOMEER_PAINTER->drawRoundedRect(iRect, painter, 1.5, 1.5);
+    //         }
+    //     }
+    // }
 
     if (option.state & QStyle::State_Enabled) {
         painter->setPen(TOMEER_THEME->getThemeColor(ThemeType::Text));

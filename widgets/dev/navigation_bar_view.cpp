@@ -1,13 +1,10 @@
-#include "navigation_bar_view.h"
-
 #include <QBrush>
-#include <QFontMetrics>
-#include <QHelpEvent>
+#include <QPainter>
 #include <QMouseEvent>
-#include <QPalette>
 #include <QPropertyAnimation>
 
 #include "navigation_bar_view_private.h"
+#include "navigation_bar_view.h"
 #include "scroll_bar.h"
 #include "tool_tip.h"
 #include "type.h"
@@ -44,13 +41,24 @@ NavigationBarView::NavigationBarView(QWidget *parent)
     d->_rotateAnim->setDuration(300);
     d->_rotateAnim->setEasingCurve(QEasingCurve::InOutSine);
 
+    d->_indicatorAnim = new QVariantAnimation(this);
+    d->_indicatorAnim->setStartValue(0.0);
+    d->_indicatorAnim->setEndValue(1.0);
+    d->_indicatorAnim->setDuration(340);
+
     connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, viewport(), QOverload<>::of(&QWidget::update));
     connect(d->_rotateAnim, &QPropertyAnimation::finished, this, [this, d] {
         d->_togglingIndex = QModelIndex();
         viewport()->update();
     });
-    connect(this, &QTreeWidget::expanded, this, &NavigationBarView::onExpanded);
-    connect(this, &QTreeWidget::collapsed, this, &NavigationBarView::onCollapsed);
+    connect(d->_indicatorAnim, &QVariantAnimation::valueChanged,viewport(), QOverload<>::of(&QWidget::update));
+    connect(d->_indicatorAnim, &QVariantAnimation::finished, this, [this, d] {
+        d->_previousIndex = QModelIndex();
+        d->_currentIndex = QModelIndex();
+        viewport()->update();
+    });
+    connect(this, &QTreeWidget::expanded, d, &NavigationBarViewPrivate::onExpanded);
+    connect(this, &QTreeWidget::collapsed, d, &NavigationBarViewPrivate::onCollapsed);
 }
 
 NavigationBarView::~NavigationBarView() = default;
@@ -127,36 +135,62 @@ void NavigationBarView::mouseReleaseEvent(QMouseEvent *event) {
     viewport()->update();
 }
 
-void NavigationBarView::onExpanded(const QModelIndex &index) {
+void NavigationBarView::currentChanged(const QModelIndex &current, const QModelIndex &previous) {
     Q_D(NavigationBarView);
-    qreal startAngle = 0.0;
-    if (d->_togglingIndex == index) {
-        if (d->_rotateAnim->state() == QAbstractAnimation::Running)
-            startAngle = getRotateAngle();
-    }
+    QTreeWidget::currentChanged(current, previous);
 
-    d->_rotateAnim->stop();
-    d->_togglingIndex = index;
-    setRotateAngle(startAngle);
-    d->_rotateAnim->setStartValue(startAngle);
-    d->_rotateAnim->setEndValue(180.0);
-    d->_rotateAnim->start();
+    d->_indicatorAnim->stop();
+    d->_previousIndex = previous;
+    d->_currentIndex = current;
+    d->setDownward(visualRect(current).center().y() > visualRect(previous).center().y());
+    d->_indicatorAnim->start();
 }
 
-void NavigationBarView::onCollapsed(const QModelIndex &index) {
+void NavigationBarView::paintEvent(QPaintEvent *event) {
     Q_D(NavigationBarView);
-    qreal startAngle = 180.0;
-    if (d->_togglingIndex == index) {
-        if (d->_rotateAnim->state() == QAbstractAnimation::Running)
-            startAngle = getRotateAngle();
+    QTreeWidget::paintEvent(event);
+
+    qreal _radius = 1.5;
+    
+    QPainter painter(viewport());
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(TOMEER_THEME->getThemeColor(ThemeType::CheckAlpha));
+
+    // 正常绘制
+    if (d->_indicatorAnim->state() != QAbstractAnimation::Running) {
+        painter.drawRoundedRect(d->_indicatorRect(currentIndex()), _radius, _radius);
+        return;
     }
 
-    d->_rotateAnim->stop();
-    d->_togglingIndex = index;
-    setRotateAngle(startAngle);
-    d->_rotateAnim->setStartValue(startAngle);
-    d->_rotateAnim->setEndValue(0.0);
-    d->_rotateAnim->start();
+    const int _time = d->_indicatorAnim->currentTime();
+    qreal progress = 1.0;
+    // 动画绘制
+    if (_time < 220) {
+        if (_time < 120)
+            progress = QEasingCurve(QEasingCurve::InCurve).valueForProgress(_time / 120.0);
+        const QRectF indicatorRect = d->_indicatorRect(d->_previousIndex);
+        const QRectF borderRect = visualRect(d->_previousIndex);
+        QRectF _pRect = d->_indicatorRect(d->_previousIndex);
+        // 拉伸方向
+        if (d->getDownward())
+            _pRect.setBottom(indicatorRect.bottom() + (borderRect.bottom() - indicatorRect.bottom()) * progress);
+        else
+            _pRect.setTop(indicatorRect.top() + (borderRect.top() - indicatorRect.top()) * progress);
+        painter.drawRoundedRect(_pRect, _radius, _radius);
+        return;
+    }
+    progress = QEasingCurve(QEasingCurve::InQuart).valueForProgress((_time - 220) / 120.0);
+    const QRectF indicatorRect = d->_indicatorRect(d->_currentIndex);
+    const QRectF borderRect = visualRect(d->_currentIndex);
+
+    QRectF _cRect = d->_indicatorRect(d->_currentIndex);
+
+    if (d->getDownward())
+        _cRect.setTop(borderRect.top() + (indicatorRect.top() - borderRect.top()) * progress);
+    else
+        _cRect.setBottom(borderRect.bottom() + (indicatorRect.bottom() - borderRect.bottom()) * progress);
+    painter.drawRoundedRect(_cRect, _radius, _radius);
 }
 
 TOMEER_NAMESPACE_END

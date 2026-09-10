@@ -21,10 +21,8 @@ protected:
     bool viewportEvent(QEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-
-private:
-    Q_SLOT void onExpanded(const QModelIndex &index);
-    Q_SLOT void onCollapsed(const QModelIndex &index);
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
+    void paintEvent(QPaintEvent *event) override;
 };
 
 TOMEER_NAMESPACE_END
