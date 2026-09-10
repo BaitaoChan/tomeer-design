@@ -7,6 +7,7 @@
 #include <QPalette>
 #include <QPropertyAnimation>
 
+#include "navigation_bar_view_private.h"
 #include "scroll_bar.h"
 #include "tool_tip.h"
 #include "type.h"
@@ -15,7 +16,10 @@ TOMEER_NAMESPACE_BEGIN()
 TOMEER_Q_PROPERTY_IMPL(NavigationBarView, qreal, RotateAngle)
 
 NavigationBarView::NavigationBarView(QWidget *parent)
-    : QTreeWidget(parent) {
+    : QTreeWidget(parent),
+      d_ptr(new NavigationBarViewPrivate(this)) {
+    Q_D(NavigationBarView);
+
     setHorizontalScrollBar(new ScrollBar(this));
     setVerticalScrollBar(new ScrollBar(this));
     setHeaderHidden(true);
@@ -36,13 +40,13 @@ NavigationBarView::NavigationBarView(QWidget *parent)
     setPalette(viewPalette);
     viewport()->setPalette(viewPalette);
 
-    _rotateAnim = new QPropertyAnimation(this, "_pRotateAngle", this);
-    _rotateAnim->setDuration(300);
-    _rotateAnim->setEasingCurve(QEasingCurve::InOutSine);
+    d->_rotateAnim = new QPropertyAnimation(this, "_pRotateAngle", this);
+    d->_rotateAnim->setDuration(300);
+    d->_rotateAnim->setEasingCurve(QEasingCurve::InOutSine);
 
-    connect(_rotateAnim, &QPropertyAnimation::valueChanged, viewport(), QOverload<>::of(&QWidget::update));
-    connect(_rotateAnim, &QPropertyAnimation::finished, this, [this] {
-        _animatedIndex = QModelIndex();
+    connect(d->_rotateAnim, &QPropertyAnimation::valueChanged, viewport(), QOverload<>::of(&QWidget::update));
+    connect(d->_rotateAnim, &QPropertyAnimation::finished, this, [this, d] {
+        d->_togglingIndex = QModelIndex();
         viewport()->update();
     });
     connect(this, &QTreeWidget::expanded, this, &NavigationBarView::onExpanded);
@@ -51,12 +55,14 @@ NavigationBarView::NavigationBarView(QWidget *parent)
 
 NavigationBarView::~NavigationBarView() = default;
 
-bool NavigationBarView::isIndexPressed(const QModelIndex &index) const {
-    return _pressedIndex == index;
+bool NavigationBarView::isPressed(const QModelIndex &index) const {
+    Q_D(const NavigationBarView);
+    return d->_pressedIndex == index;
 }
 
-bool NavigationBarView::isIndexAnimated(const QModelIndex &index) const {
-    return _animatedIndex == index;
+bool NavigationBarView::isToggling(const QModelIndex &index) const {
+    Q_D(const NavigationBarView);
+    return d->_togglingIndex == index;
 }
 
 bool NavigationBarView::viewportEvent(QEvent *event) {
@@ -78,12 +84,13 @@ bool NavigationBarView::viewportEvent(QEvent *event) {
 }
 
 void NavigationBarView::mousePressEvent(QMouseEvent *event) {
-    _pressedIndex = indexAt(event->position().toPoint());
+    Q_D(NavigationBarView);
+    d->_pressedIndex = indexAt(event->position().toPoint());
     viewport()->update();
 
     if (event->button() == Qt::LeftButton) {
-        if (_pressedIndex.isValid()) {
-            const auto nodeType = static_cast<NavigationBarType::NodeType>(_pressedIndex.data(NavigationBarType::NodeTypeRole).toInt());
+        if (d->_pressedIndex.isValid()) {
+            const auto nodeType = static_cast<NavigationBarType::NodeType>(d->_pressedIndex.data(NavigationBarType::NodeTypeRole).toInt());
             if (nodeType == NavigationBarType::Expander) {
                 event->accept();
                 return;
@@ -94,10 +101,11 @@ void NavigationBarView::mousePressEvent(QMouseEvent *event) {
 }
 
 void NavigationBarView::mouseReleaseEvent(QMouseEvent *event) {
+    Q_D(NavigationBarView);
     const QModelIndex releasedIndex = indexAt(event->position().toPoint());
     bool isExpander = false;
     if (releasedIndex.isValid()) {
-        if (releasedIndex == _pressedIndex) {
+        if (releasedIndex == d->_pressedIndex) {
             const auto nodeType = static_cast<NavigationBarType::NodeType>(releasedIndex.data(NavigationBarType::NodeTypeRole).toInt());
             if (nodeType == NavigationBarType::Expander)
                 isExpander = true;
@@ -115,38 +123,40 @@ void NavigationBarView::mouseReleaseEvent(QMouseEvent *event) {
         QTreeWidget::mouseReleaseEvent(event);
     }
 
-    _pressedIndex = QModelIndex();
+    d->_pressedIndex = QModelIndex();
     viewport()->update();
 }
 
 void NavigationBarView::onExpanded(const QModelIndex &index) {
+    Q_D(NavigationBarView);
     qreal startAngle = 0.0;
-    if (_animatedIndex == index) {
-        if (_rotateAnim->state() == QAbstractAnimation::Running)
+    if (d->_togglingIndex == index) {
+        if (d->_rotateAnim->state() == QAbstractAnimation::Running)
             startAngle = getRotateAngle();
     }
 
-    _rotateAnim->stop();
-    _animatedIndex = index;
+    d->_rotateAnim->stop();
+    d->_togglingIndex = index;
     setRotateAngle(startAngle);
-    _rotateAnim->setStartValue(startAngle);
-    _rotateAnim->setEndValue(180.0);
-    _rotateAnim->start();
+    d->_rotateAnim->setStartValue(startAngle);
+    d->_rotateAnim->setEndValue(180.0);
+    d->_rotateAnim->start();
 }
 
 void NavigationBarView::onCollapsed(const QModelIndex &index) {
+    Q_D(NavigationBarView);
     qreal startAngle = 180.0;
-    if (_animatedIndex == index) {
-        if (_rotateAnim->state() == QAbstractAnimation::Running)
+    if (d->_togglingIndex == index) {
+        if (d->_rotateAnim->state() == QAbstractAnimation::Running)
             startAngle = getRotateAngle();
     }
 
-    _rotateAnim->stop();
-    _animatedIndex = index;
+    d->_rotateAnim->stop();
+    d->_togglingIndex = index;
     setRotateAngle(startAngle);
-    _rotateAnim->setStartValue(startAngle);
-    _rotateAnim->setEndValue(0.0);
-    _rotateAnim->start();
+    d->_rotateAnim->setStartValue(startAngle);
+    d->_rotateAnim->setEndValue(0.0);
+    d->_rotateAnim->start();
 }
 
 TOMEER_NAMESPACE_END

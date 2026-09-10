@@ -27,7 +27,7 @@ void NavigationBarNodeDelegate::paint(QPainter *painter, const QStyleOptionViewI
         painter->setPen(Qt::NoPen);
         if (option.state & QStyle::State_Selected)
             painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::NavigationNodeSelected));
-        else if (view->isIndexPressed(index))
+        else if (view->isPressed(index))
             painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::PressAlpha));
         else if (option.state & QStyle::State_MouseOver)
             painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::HoverAlpha));
@@ -82,7 +82,7 @@ void NavigationBarNodeDelegate::paint(QPainter *painter, const QStyleOptionViewI
             qreal rotateAngle = 0.0;
             if (view->isExpanded(index))
                 rotateAngle = 180.0;
-            if (view->isIndexAnimated(index))
+            if (view->isToggling(index))
                 rotateAngle = view->getRotateAngle();
 
             const QRect aRect(r.right() - iSize.width() - 12, r.top(), iSize.width() + 12, r.height());
