@@ -19,6 +19,8 @@ public:
     explicit NavigationBarPrivate(NavigationBar *q);
     ~NavigationBarPrivate() override;
 
+    Q_SLOT void onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
 private:
     bool _isExpander(const QTreeWidgetItem *node) const;
     QTreeWidgetItem *_createNode(NavigationBarType::NodeType type, const QString &key, const QString &title, IconType::Icon icon) const;

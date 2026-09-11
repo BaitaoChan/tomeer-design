@@ -37,18 +37,7 @@ NavigationBar::NavigationBar(QWidget *parent)
     layout->addWidget(d->_view);
     layout->addWidget(d->_stackedWidget, 1);
 
-    connect(d->_view, &QTreeWidget::currentItemChanged, this, [this, d](const QTreeWidgetItem *current, QTreeWidgetItem *) {
-        if (!current)
-            return;
-
-        const auto key = current->data(0, NavigationBarType::KeyRole).toString();
-        const auto page = d->_pages.value(key);
-        if (!page)
-            return;
-
-        d->_stackedWidget->setCurrentWidget(page);
-        emit currentKeyChanged(key);
-    });
+    connect(d->_view, &QTreeWidget::currentItemChanged, d, &NavigationBarPrivate::onCurrentItemChanged);
     connect(TOMEER_THEME, &Theme::themeModeChanged, this, &NavigationBar::onThemeChanged);
     connect(TOMEER_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
     connect(TOMEER_THEME, &Theme::themeColorChanged, d->_view->viewport(), QOverload<>::of(&QWidget::update));

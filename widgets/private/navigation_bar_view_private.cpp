@@ -47,9 +47,13 @@ void NavigationBarViewPrivate::onCollapsed(const QModelIndex &index) {
 QRect NavigationBarViewPrivate::_indicatorRect(const QModelIndex &index) {
     Q_Q(NavigationBarView);
 
+    QRect _rect = q->visualRect(index);
+    if (_rect.isEmpty())
+        return {};
+
     QRect rect(0, 0, 3, 16);
-    rect.moveCenter(q->visualRect(index).adjusted(4, 2, -4, -2).center());
-    rect.moveLeft(q->visualRect(index).left() + 4);
+    rect.moveCenter(_rect.adjusted(4, 2, -4, -2).center());
+    rect.moveLeft(_rect.left() + 4);
 
     return rect;
 }

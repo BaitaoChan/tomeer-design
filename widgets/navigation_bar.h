@@ -23,9 +23,6 @@ public:
     bool setCurrentKey(const QString &key);
     QString currentKey() const;
 
-signals:
-    void currentKeyChanged(const QString &key);
-
 protected:
     void paintEvent(QPaintEvent *event) override;
     virtual void onThemeChanged(ThemeType::ThemeMode mode);

@@ -1,7 +1,7 @@
-#include "navigation_bar_private.h"
-
 #include <QTreeWidgetItem>
+#include <QStackedWidget>
 
+#include "navigation_bar_private.h"
 #include "navigation_bar.h"
 
 TOMEER_NAMESPACE_BEGIN()
@@ -13,10 +13,15 @@ NavigationBarPrivate::NavigationBarPrivate(NavigationBar *q)
 
 NavigationBarPrivate::~NavigationBarPrivate() = default;
 
-bool NavigationBarPrivate::_isExpander(const QTreeWidgetItem *node) const {
-    if (!node)
-        return false;
+void NavigationBarPrivate::onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
+    Q_Q(NavigationBar);
+    const auto key = current->data(0, NavigationBarType::KeyRole).toString();
+    const auto page = _pages.value(key);
 
+    _stackedWidget->setCurrentWidget(page);
+}
+
+bool NavigationBarPrivate::_isExpander(const QTreeWidgetItem *node) const {
     const auto nodeType = static_cast<NavigationBarType::NodeType>(node->data(0, NavigationBarType::NodeTypeRole).toInt());
     if (nodeType == NavigationBarType::Expander)
         return true;
