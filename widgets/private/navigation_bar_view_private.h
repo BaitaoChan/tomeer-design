@@ -21,7 +21,7 @@ public:
     Q_SLOT void onCollapsed(const QModelIndex &index);
 
 private:
-    QRect _indicatorRect(const QModelIndex &index);
+    QRect _indicatorRect(const QModelIndex &index) const;
 
     QVariantAnimation *_indicatorAnim = nullptr;
     QPropertyAnimation *_rotateAnim = nullptr;

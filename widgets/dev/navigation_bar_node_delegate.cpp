@@ -110,7 +110,7 @@ void NavigationBarNodeDelegate::paint(QPainter *painter, const QStyleOptionViewI
 }
 
 QSize NavigationBarNodeDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    return QSize(0, 40);
+    return {0, 40};
 }
 
 TOMEER_NAMESPACE_END

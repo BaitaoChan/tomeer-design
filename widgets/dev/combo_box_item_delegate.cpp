@@ -38,7 +38,7 @@ void ComboBoxItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 }
 
 QSize ComboBoxItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    return QSize(0, 30);
+    return {0, 30};
 }
 
 TOMEER_NAMESPACE_END

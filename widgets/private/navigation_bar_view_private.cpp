@@ -44,8 +44,8 @@ void NavigationBarViewPrivate::onCollapsed(const QModelIndex &index) {
     _rotateAnim->start();
 }
 
-QRect NavigationBarViewPrivate::_indicatorRect(const QModelIndex &index) {
-    Q_Q(NavigationBarView);
+QRect NavigationBarViewPrivate::_indicatorRect(const QModelIndex &index) const {
+    Q_Q(const NavigationBarView);
 
     QRect _rect = q->visualRect(index);
     if (_rect.isEmpty())

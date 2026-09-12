@@ -22,6 +22,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
+    void drawRow(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     void paintEvent(QPaintEvent *event) override;
 };
 

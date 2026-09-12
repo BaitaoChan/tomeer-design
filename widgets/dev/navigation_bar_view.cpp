@@ -146,22 +146,37 @@ void NavigationBarView::currentChanged(const QModelIndex &current, const QModelI
     d->_indicatorAnim->start();
 }
 
+void NavigationBarView::drawRow(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    Q_D(const NavigationBarView);
+    QTreeWidget::drawRow(painter, option, index);
+
+    if (index != currentIndex())
+        return;
+
+    // 正常绘制
+    if (d->_indicatorAnim->state() == QAbstractAnimation::Running)
+        return;
+
+    painter->save();
+    painter->setRenderHint(QPainter::Antialiasing);
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::CheckAlpha));
+    painter->drawRoundedRect(d->_indicatorRect(index), 1.5, 1.5);
+    painter->restore();
+}
+
 void NavigationBarView::paintEvent(QPaintEvent *event) {
     Q_D(NavigationBarView);
     QTreeWidget::paintEvent(event);
 
-    qreal _radius = 1.5;
+    // 指示条绘制
+    if (d->_indicatorAnim->state() != QAbstractAnimation::Running)
+        return;
     
     QPainter painter(viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
     painter.setBrush(TOMEER_THEME->getThemeColor(ThemeType::CheckAlpha));
-
-    // 正常绘制
-    if (d->_indicatorAnim->state() != QAbstractAnimation::Running) {
-        painter.drawRoundedRect(d->_indicatorRect(currentIndex()), _radius, _radius);
-        return;
-    }
 
     const int _time = d->_indicatorAnim->currentTime();
     qreal progress = 1.0;
@@ -177,7 +192,7 @@ void NavigationBarView::paintEvent(QPaintEvent *event) {
             _pRect.setBottom(indicatorRect.bottom() + (borderRect.bottom() - indicatorRect.bottom()) * progress);
         else
             _pRect.setTop(indicatorRect.top() + (borderRect.top() - indicatorRect.top()) * progress);
-        painter.drawRoundedRect(_pRect, _radius, _radius);
+        painter.drawRoundedRect(_pRect, 1.5, 1.5);
         return;
     }
     progress = QEasingCurve(QEasingCurve::InQuart).valueForProgress((_time - 220) / 120.0);
@@ -190,7 +205,7 @@ void NavigationBarView::paintEvent(QPaintEvent *event) {
         _cRect.setTop(borderRect.top() + (indicatorRect.top() - borderRect.top()) * progress);
     else
         _cRect.setBottom(borderRect.bottom() + (indicatorRect.bottom() - borderRect.bottom()) * progress);
-    painter.drawRoundedRect(_cRect, _radius, _radius);
+    painter.drawRoundedRect(_cRect, 1.5, 1.5);
 }
 
 TOMEER_NAMESPACE_END
