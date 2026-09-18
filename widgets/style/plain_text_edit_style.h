@@ -10,6 +10,10 @@ class PlainTextEditStyle : public QProxyStyle {
 public:
     explicit PlainTextEditStyle(QStyle *style = nullptr);
     ~PlainTextEditStyle() override;
+
+    void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+    void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+    void polish(QWidget *widget) override;
 };
 TOMEER_NAMESPACE_END
 

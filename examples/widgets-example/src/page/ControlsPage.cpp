@@ -4,6 +4,7 @@
 
 #include "combo_box.h"
 #include "line_edit.h"
+#include "plain_text_edit.h"
 #include "push_button.h"
 #include "settings_card.h"
 #include "slider.h"
@@ -37,6 +38,12 @@ ControlsPage::ControlsPage(QWidget *parent)
     lineEdit->setFixedSize(100, controlHeight);
     lineEdit->setBorderRadius(borderRadius);
     layout->addWidget(new SettingsCard("LineEdit", lineEdit, content));
+
+    auto plainTextEdit = new PlainTextEdit;
+    plainTextEdit->setPlainText(QStringLiteral("但愿现实中的金阁比我想像中的金阁会显出更清晰的美。\n\n——三岛由纪夫《金阁寺》"));
+    plainTextEdit->setFixedSize(360, 100);
+    plainTextEdit->setBorderRadius(borderRadius);
+    layout->addWidget(new SettingsCard("PlainTextEdit", plainTextEdit, content));
 
     auto comboBox = new ComboBox;
     comboBox->addItems({"One", "Two", "Three"});

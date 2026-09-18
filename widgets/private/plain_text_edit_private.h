@@ -3,6 +3,7 @@
 #include "property.h"
 #include "type.h"
 
+class QPropertyAnimation;
 TOMEER_NAMESPACE_BEGIN()
 class PlainTextEdit;
 class PlainTextEditPrivate : public QObject {
@@ -11,6 +12,11 @@ class PlainTextEditPrivate : public QObject {
 public:
     explicit PlainTextEditPrivate(PlainTextEdit *q);
     ~PlainTextEditPrivate() override;
+
+private:
+    bool _isFocused = false;
+
+    QPropertyAnimation *_lineAnim = nullptr;
 };
 TOMEER_NAMESPACE_END
 

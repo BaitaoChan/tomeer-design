@@ -11,7 +11,7 @@ SettingsCard::SettingsCard(QWidget *parent)
     : QWidget(parent) {
     const auto layout = new QHBoxLayout(this);
     const auto label = new Label(this);
-    layout->setContentsMargins(16, 8, 16, 8);
+    layout->setContentsMargins(16, 16, 16, 16);
     layout->setSpacing(12);
     layout->addWidget(label);
     layout->addStretch();
