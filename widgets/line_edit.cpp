@@ -6,8 +6,8 @@
 #include "line_edit_private.h"
 
 TOMEER_NAMESPACE_BEGIN()
-TOMEER_Q_PROPERTY_IMPL(LineEdit, int, LineHalfWidth)
 TOMEER_Q_PROPERTY_IMPL(LineEdit, int, BorderRadius)
+TOMEER_Q_PROPERTY_IMPL(LineEdit, int, LineHalfWidth)
 TOMEER_Q_PROPERTY_IMPL(LineEdit, ThemeType::ThemeMode, ThemeMode)
 LineEdit::LineEdit(QWidget *parent)
     : QLineEdit(parent),

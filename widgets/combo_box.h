@@ -7,7 +7,6 @@
 #include <QPropertyAnimation>
 #include <QApplication>
 #include <QLayout>
-#include <QGraphicseffect>
 
 #include "theme.h"
 #include "property.h"
@@ -18,9 +17,9 @@ class WIDGETS_EXPORT ComboBox : public QComboBox {
     Q_OBJECT
     TOMEER_DECLARE_DPTR(ComboBox)
     TOMEER_Q_PROPERTY_DECL(int, RotateAngle)
-    TOMEER_Q_PROPERTY_DECL(int, LineHalfWidth)
-    TOMEER_Q_PROPERTY_DECL(int, BorderRadius)
     TOMEER_Q_PROPERTY_DECL(int, PopupHeight)
+    TOMEER_Q_PROPERTY_DECL(int, BorderRadius)
+    TOMEER_Q_PROPERTY_DECL(int, LineHalfWidth)
     TOMEER_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
     explicit ComboBox(QWidget *parent = nullptr);

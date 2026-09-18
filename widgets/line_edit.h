@@ -10,8 +10,8 @@ class LineEditPrivate;
 class WIDGETS_EXPORT LineEdit : public QLineEdit {
     Q_OBJECT
     TOMEER_DECLARE_DPTR(LineEdit)
-    TOMEER_Q_PROPERTY_DECL(int, LineHalfWidth)
     TOMEER_Q_PROPERTY_DECL(int, BorderRadius)
+    TOMEER_Q_PROPERTY_DECL(int, LineHalfWidth)
     TOMEER_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
     explicit LineEdit(QWidget *parent = nullptr);

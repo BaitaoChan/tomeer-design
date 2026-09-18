@@ -11,9 +11,9 @@
 #define TOMEER_COMBOBOX_POPUP_ANIM_MODE 3
 TOMEER_NAMESPACE_BEGIN()
 TOMEER_Q_PROPERTY_IMPL(ComboBox, int, RotateAngle)
-TOMEER_Q_PROPERTY_IMPL(ComboBox, int, LineHalfWidth)
-TOMEER_Q_PROPERTY_IMPL(ComboBox, int, BorderRadius)
 TOMEER_Q_PROPERTY_IMPL(ComboBox, int, PopupHeight)
+TOMEER_Q_PROPERTY_IMPL(ComboBox, int, BorderRadius)
+TOMEER_Q_PROPERTY_IMPL(ComboBox, int, LineHalfWidth)
 TOMEER_Q_PROPERTY_IMPL(ComboBox, ThemeType::ThemeMode, ThemeMode)
 ComboBox::ComboBox(QWidget *parent)
     : QComboBox(parent),
@@ -85,13 +85,14 @@ void ComboBox::showPopup() {
     heightAnim->start(QAbstractAnimation::DeleteWhenStopped);
 
 #elif TOMEER_COMBOBOX_POPUP_ANIM_MODE == 2
-
-    auto effect = new QGraphicsOpacityEffect(view());
-    view()->setGraphicsEffect(effect);
-    auto opacityAnim = new QPropertyAnimation(effect, "opacity");
+    container->setWindowOpacity(0);
+    auto opacityAnim = new QPropertyAnimation(container, "windowOpacity", this);
     opacityAnim->setStartValue(0);
     opacityAnim->setEndValue(1);
     opacityAnim->setDuration(350);
+    connect(opacityAnim, &QPropertyAnimation::finished, this, [=]() {
+        d->setIsPopup(false);
+    });
     opacityAnim->start(QAbstractAnimation::DeleteWhenStopped);
 
 #elif TOMEER_COMBOBOX_POPUP_ANIM_MODE == 3
@@ -105,9 +106,7 @@ void ComboBox::showPopup() {
     slideView->show();
     slideView->raise();
 
-    auto effect = new QGraphicsOpacityEffect(view());
-    effect->setOpacity(0);
-    view()->setGraphicsEffect(effect);
+    view()->hide();
 
     container->setFixedHeight(1);
     slideView->move(viewRect.topLeft() - QPoint(0, popupHeight - 1));
@@ -134,7 +133,7 @@ void ComboBox::showPopup() {
         slideView->setMask(QRegion(clipPath.toFillPolygon().toPolygon()));
     });
     connect(heightAnim, &QPropertyAnimation::finished, this, [=]() {
-        view()->setGraphicsEffect(nullptr);
+        view()->show();
         slideView->deleteLater();
         d->setIsPopup(false);
     });
@@ -183,18 +182,14 @@ void ComboBox::hidePopup() {
     heightAnim->start(QAbstractAnimation::DeleteWhenStopped);
 
 #elif TOMEER_COMBOBOX_POPUP_ANIM_MODE == 2
-    auto effect = qobject_cast<QGraphicsOpacityEffect *>(view()->graphicsEffect());
-    if (!effect) {
-        QComboBox::hidePopup();
-        return;
-    }
-    auto opacityAnim = new QPropertyAnimation(effect, "opacity", this);
-    opacityAnim->setStartValue(effect->opacity());
+    auto opacityAnim = new QPropertyAnimation(container, "windowOpacity", this);
+    opacityAnim->setStartValue(container->windowOpacity());
     opacityAnim->setEndValue(0);
     opacityAnim->setDuration(350);
     connect(opacityAnim, &QPropertyAnimation::finished, this, [=]() {
-        effect->deleteLater();
         QComboBox::hidePopup();
+        container->setWindowOpacity(1);
+        d->setIsPopup(false);
     });
     opacityAnim->start(QAbstractAnimation::DeleteWhenStopped);
 
@@ -209,9 +204,7 @@ void ComboBox::hidePopup() {
     slideView->show();
     slideView->raise();
 
-    auto effect = new QGraphicsOpacityEffect(view());
-    effect->setOpacity(0);
-    view()->setGraphicsEffect(effect);
+    view()->hide();
 
     auto heightAnim = new QPropertyAnimation(container, "maximumHeight", this);
     heightAnim->setStartValue(popupHeight);
@@ -235,9 +228,9 @@ void ComboBox::hidePopup() {
         slideView->setMask(QRegion(clipPath.toFillPolygon().toPolygon()));
     });
     connect(heightAnim, &QPropertyAnimation::finished, this, [=]() {
-        view()->setGraphicsEffect(nullptr);
         slideView->deleteLater();
         QComboBox::hidePopup();
+        view()->show();
         container->setMinimumHeight(0);
         container->setMaximumHeight(QWIDGETSIZE_MAX);
         d->setIsPopup(false);
