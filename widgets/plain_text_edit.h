@@ -15,6 +15,7 @@ class WIDGETS_EXPORT PlainTextEdit : public QPlainTextEdit {
     TOMEER_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
 public:
     explicit PlainTextEdit(QWidget *parent = nullptr);
+    explicit PlainTextEdit(const QString &text, QWidget *parent = nullptr);
     ~PlainTextEdit() override;
 
 protected:

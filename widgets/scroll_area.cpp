@@ -14,8 +14,17 @@ ScrollArea::ScrollArea(QWidget *parent)
     Q_D(ScrollArea);
     setHorizontalScrollBar(new ScrollBar(this));
     setVerticalScrollBar(new ScrollBar(this));
-    setStyleSheet("QScrollArea { border: none; background: transparent; }");
-    viewport()->setStyleSheet("background: transparent;");
+
+    // 仅透明化 viewport 样式
+    setStyleSheet(QStringLiteral(R"(
+        QScrollArea {
+            border: none;
+            background: transparent;
+        }
+        QScrollArea .QWidget {
+            background: transparent;
+        }
+    )"));
 
     d->_horScrollAnim = new QPropertyAnimation(horizontalScrollBar(), "value", this);
     d->_horScrollAnim->setDuration(160);

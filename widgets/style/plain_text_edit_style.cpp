@@ -27,7 +27,7 @@ void PlainTextEditStyle::drawControl(ControlElement element, const QStyleOption 
         painter->drawRoundedRect(option->rect.adjusted(1, 1, -1, -1), plainTextEdit->getBorderRadius(), plainTextEdit->getBorderRadius());
 
         const QRectF lineRect(option->rect.left() + 4,
-                              option->rect.bottom() - 4,
+                              option->rect.bottom() - 3,
                               qMax(0, option->rect.width() - 8),
                               2);
         painter->setPen(Qt::NoPen);

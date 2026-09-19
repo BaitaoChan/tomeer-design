@@ -1,6 +1,7 @@
+#include <QPalette>
 #include <QPropertyAnimation>
-#include <QTextDocument>
 
+#include "scroll_bar.h"
 #include "plain_text_edit.h"
 #include "plain_text_edit_style.h"
 #include "plain_text_edit_private.h"
@@ -14,6 +15,8 @@ PlainTextEdit::PlainTextEdit(QWidget *parent)
       _pBorderRadius(6),
       d_ptr(new PlainTextEditPrivate(this)) {
     Q_D(PlainTextEdit);
+    setHorizontalScrollBar(new ScrollBar(this));
+    setVerticalScrollBar(new ScrollBar(this));
     setStyle(new PlainTextEditStyle(style()));
     setAttribute(Qt::WA_TranslucentBackground);
     viewport()->setAutoFillBackground(false);
@@ -29,8 +32,11 @@ PlainTextEdit::PlainTextEdit(QWidget *parent)
     connect(this, &PlainTextEdit::pBorderRadiusChanged, this, QOverload<>::of(&QWidget::update));
     connect(TOMEER_THEME, &Theme::themeModeChanged, this, &PlainTextEdit::onThemeChanged);
     connect(TOMEER_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
+}
 
-    onThemeChanged(TOMEER_THEME->getThemeMode());
+PlainTextEdit::PlainTextEdit(const QString &text, QWidget *parent)
+    : PlainTextEdit(parent) {
+    setPlainText(text);
 }
 
 PlainTextEdit::~PlainTextEdit() = default;
@@ -76,6 +82,10 @@ void PlainTextEdit::resizeEvent(QResizeEvent *event) {
 
 void PlainTextEdit::paintEvent(QPaintEvent *event) {
     QPlainTextEdit::paintEvent(event);
+
+    QPalette pal = palette();
+    pal.setColor(QPalette::Text, TOMEER_THEME->getThemeColor(ThemeType::Text));
+    setPalette(pal);
 }
 
 TOMEER_NAMESPACE_END

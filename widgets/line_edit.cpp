@@ -80,13 +80,17 @@ void LineEdit::resizeEvent(QResizeEvent *event) {
 void LineEdit::paintEvent(QPaintEvent *event) {
     QLineEdit::paintEvent(event);
 
+    QPalette pal = palette();
+    pal.setColor(QPalette::Text, TOMEER_THEME->getThemeColor(ThemeType::Text));
+    setPalette(pal);
+
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
     // 绘制底部横线
     p.setPen(Qt::NoPen);
     p.setBrush(TOMEER_THEME->getThemeColor(ThemeType::Pattern));
     p.drawRoundedRect(QRectF(rect().left() + 4,
-                             rect().bottom() * 0.9,
+                             rect().bottom() - 3,
                              rect().right() - rect().left() - 8,
                              2),
                       2,
@@ -95,7 +99,7 @@ void LineEdit::paintEvent(QPaintEvent *event) {
     // 焦点指示
     p.setBrush(TOMEER_THEME->getThemeColor(ThemeType::Check));
     p.drawRoundedRect(QRectF(rect().left() + 4 + (rect().right() - rect().left() - 8) / 2.0 - _pLineHalfWidth,
-                             rect().bottom() * 0.9,
+                             rect().bottom() - 3,
                              _pLineHalfWidth * 2,
                              3),
                       2,
