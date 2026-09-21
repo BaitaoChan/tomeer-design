@@ -18,7 +18,7 @@ LineEdit::LineEdit(QWidget *parent)
     setFixedHeight(30);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    d->_lineAnim = new QPropertyAnimation(this, QByteArrayLiteral("_pLineHalfWidth"), this);
+    d->_lineAnim = new QPropertyAnimation(this, "_pLineHalfWidth", this);
     d->_lineAnim->setDuration(300);
     d->_lineAnim->setEasingCurve(QEasingCurve::InOutSine);
 

@@ -69,6 +69,30 @@ enum DataRole {
 Q_ENUM(DataRole)
 TOMEER_TYPE_END(NavigationBarType)
 
+TOMEER_TYPE_BEGIN(MessageBarType)
+enum AlignFlag {
+    Default = 0x00,
+    Top = 0x01,
+    Left = 0x02,
+    Bottom = 0x04,
+    Right = 0x08,
+    TopLeft = Top | Left,
+    TopRight = Top | Right,
+    BottomLeft = Bottom | Left,
+    BottomRight = Bottom | Right,
+    Center = Top | Left | Bottom | Right,
+};
+Q_ENUM(AlignFlag)
+
+enum MessageMode {
+    Success = 0x0000,
+    Warning = 0x0001,
+    Information = 0x0002,
+    Error = 0x0003,
+};
+Q_ENUM(MessageMode)
+TOMEER_TYPE_END(MessageBarType)
+
 TOMEER_TYPE_BEGIN(GeometryType)
 enum SideFlag {
     None = 0x00,
