@@ -1,5 +1,6 @@
 #include <QHBoxLayout>
 #include <QPainter>
+#include <QPropertyAnimation>
 
 #include "tool_tip.h"
 #include "label.h"
@@ -21,9 +22,19 @@ ToolTip::ToolTip(QWidget *parent)
     d->_layout->setContentsMargins(8, 4, 8, 4);
     d->_layout->addWidget(d->_label, 0, Qt::AlignVCenter);
 
+    d->_opacityAnimation = new QPropertyAnimation(this, "windowOpacity", this);
+    d->_opacityAnimation->setDuration(100);
+    d->_opacityAnimation->setEasingCurve(QEasingCurve::InOutSine);
+
     connect(this, &ToolTip::pToolTipChanged, this, [this, d] {
         d->_label->setText(getToolTip());
         adjustSize();
+    });
+    connect(d->_opacityAnimation, &QPropertyAnimation::finished, this, [this, d] {
+        if (d->_opacityAnimation->endValue().toReal() == 0.0) {
+            hide();
+            setWindowOpacity(1.0);
+        }
     });
     connect(TOMEER_THEME, &Theme::themeModeChanged, this, QOverload<>::of(&QWidget::update));
     connect(TOMEER_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
@@ -43,6 +54,7 @@ void ToolTip::showText(const QPoint &pos, const QString &text, QWidget *widget) 
     if (!ToolTipPrivate::_toolTip)
         ToolTipPrivate::_toolTip = new ToolTip();
     ToolTip *toolTip = ToolTipPrivate::_toolTip;
+    const auto *const d = toolTip->d_func();
 
     const bool textChanged = toolTip->getToolTip() != text;
     if (textChanged)
@@ -53,13 +65,36 @@ void ToolTip::showText(const QPoint &pos, const QString &text, QWidget *widget) 
     if (textChanged || !toolTip->isVisible())
         toolTip->move(tPos);
 
-    if (!toolTip->isVisible())
+    if (!toolTip->isVisible()) {
+        d->_opacityAnimation->stop();
+        toolTip->setWindowOpacity(0.0);
         toolTip->show();
+        d->_opacityAnimation->setStartValue(0.0);
+        d->_opacityAnimation->setEndValue(1.0);
+        d->_opacityAnimation->start();
+    } else if (d->_opacityAnimation->state() == QAbstractAnimation::Running &&
+               d->_opacityAnimation->endValue().toReal() == 0.0) {
+        d->_opacityAnimation->stop();
+        d->_opacityAnimation->setStartValue(toolTip->windowOpacity());
+        d->_opacityAnimation->setEndValue(1.0);
+        d->_opacityAnimation->start();
+    }
 }
 
 void ToolTip::hideText() {
-    if (ToolTipPrivate::_toolTip)
-        ToolTipPrivate::_toolTip->hide();
+    ToolTip *toolTip = ToolTipPrivate::_toolTip;
+    if (!toolTip || !toolTip->isVisible())
+        return;
+
+    auto *const d = toolTip->d_func();
+    if (d->_opacityAnimation->state() == QAbstractAnimation::Running &&
+        d->_opacityAnimation->endValue().toReal() == 0.0)
+        return;
+
+    d->_opacityAnimation->stop();
+    d->_opacityAnimation->setStartValue(toolTip->windowOpacity());
+    d->_opacityAnimation->setEndValue(0.0);
+    d->_opacityAnimation->start();
 }
 
 void ToolTip::paintEvent(QPaintEvent *event) {
@@ -67,7 +102,7 @@ void ToolTip::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(TOMEER_THEME->getThemeColor(ThemeType::BorderAlpha));
-    painter.setBrush(TOMEER_THEME->getThemeColor(ThemeType::Window));
+    painter.setBrush(TOMEER_THEME->getThemeColor(ThemeType::ToolTip));
     painter.drawRoundedRect(QRectF(rect()).adjusted(1, 1, -1, -1), 4, 4);
 }
 

@@ -197,7 +197,9 @@ enum ThemeColor {
 
     ToolBarHandle,
     ToolBarBorder,
-    ToolBarBg
+    ToolBarBg,
+
+    ToolTip
 
 };
 Q_ENUM(ThemeColor)

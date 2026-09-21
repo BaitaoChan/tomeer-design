@@ -129,6 +129,10 @@ namespace {
         {ThemeType::ToolBarHandle, QColor(0, 95, 184), QColor(0, 103, 192)},
         {ThemeType::ToolBarBorder, QColor(98, 238, 147), QColor(98, 238, 147)},
         {ThemeType::ToolBarBg, QColor(245, 245, 245), QColor(42, 42, 42)},
+
+        // ToolTip
+        {ThemeType::ToolTip, QColor(249, 249, 249), QColor(46, 46, 46)},
+
     };
 }
 

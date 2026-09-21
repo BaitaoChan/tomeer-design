@@ -3,6 +3,7 @@
 #include "property.h"
 
 class QHBoxLayout;
+class QPropertyAnimation;
 TOMEER_NAMESPACE_BEGIN()
 class Label;
 class ToolTip;
@@ -15,6 +16,8 @@ public:
 
 private:
     QHBoxLayout *_layout = nullptr;
+
+    QPropertyAnimation *_opacityAnimation = nullptr;
 
     Label *_label = nullptr;
     static ToolTip *_toolTip;
