@@ -158,6 +158,8 @@ enum ThemeColor {
 
     SliderHandleBorder,
 
+    CheckBoxBorder,
+
     ScrollBarHandle,
     ScrollBarHandleHover,
 

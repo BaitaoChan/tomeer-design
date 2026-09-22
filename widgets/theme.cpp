@@ -87,6 +87,9 @@ namespace {
         // Slider
         {ThemeType::SliderHandleBorder, QColor(200, 200, 200), QColor(60, 60, 60)},
 
+        // CheckBox
+        {ThemeType::CheckBoxBorder, QColor(138, 138, 138), QColor(120, 120, 120)},
+
         // ScrollBar
         {ThemeType::ScrollBarHandle, QColor(0, 0, 0, 80), QColor(255, 255, 255, 72)},
         {ThemeType::ScrollBarHandleHover, QColor(0, 0, 0, 120), QColor(255, 255, 255, 112)},

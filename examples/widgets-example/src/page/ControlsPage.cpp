@@ -2,6 +2,7 @@
 
 #include <QVBoxLayout>
 
+#include "check_box.h"
 #include "combo_box.h"
 #include "line_edit.h"
 #include "plain_text_edit.h"
@@ -32,6 +33,10 @@ ControlsPage::ControlsPage(QWidget *parent)
     toggleButton->setFixedSize(100, controlHeight);
     toggleButton->setBorderRadius(borderRadius);
     layout->addWidget(new SettingsCard("ToggleButton", toggleButton, content));
+
+    auto checkBox = new CheckBox;
+    checkBox->setChecked(true);
+    layout->addWidget(new SettingsCard("CheckBox", checkBox, content));
 
     auto lineEdit = new LineEdit;
     lineEdit->setPlaceholderText("Enter text");
