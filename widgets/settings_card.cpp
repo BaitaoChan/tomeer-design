@@ -44,7 +44,10 @@ void SettingsCard::setContent(QWidget *pContent) {
     if (_pContent) {
         layout()->addWidget(_pContent);
         layout()->setAlignment(_pContent, Qt::AlignRight | Qt::AlignVCenter);
-    }
+        const QMargins margins = layout()->contentsMargins();
+        setMinimumHeight(qMax(68, _pContent->minimumHeight() + margins.top() + margins.bottom()));
+    } else
+        setMinimumHeight(68);
     emit pContentChanged();
 }
 
