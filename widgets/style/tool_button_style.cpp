@@ -25,14 +25,17 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         painter->setPen(Qt::NoPen);
         painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
         // 背景
-        if (!(option->state & State_Enabled) && option->state & State_On)
-            painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::Disable));
-        else if (option->state & State_Enabled && option->state & State_Sunken && !(option->state & State_On))
-            painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::PressAlpha));
-        else if (option->state & State_Enabled && option->state & State_On)
-            painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::CheckAlpha));
-        else if (option->state & State_Enabled && option->state & State_MouseOver)
-            painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::HoverAlpha));
+        if (option->state & State_Enabled) {
+            if (option->state & State_On)
+                painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::CheckAlpha));
+            else if (option->state & State_Sunken)
+                painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::PressAlpha));
+            else if (option->state & State_MouseOver)
+                painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::HoverAlpha));
+        } else {
+            if (option->state & State_On)
+                painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::Disable));
+        }
         TOMEER_PAINTER->drawRoundedRect(widget->rect(), painter, toolButton->getBorderRadius(), toolButton->getBorderRadius(), GeometryType::All);
         painter->restore();
         return;

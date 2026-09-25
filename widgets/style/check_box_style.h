@@ -12,6 +12,8 @@ public:
     ~CheckBoxStyle() override;
 
     void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+    int pixelMetric(PixelMetric metric, const QStyleOption* option, const QWidget* widget) const override;
+
 };
 TOMEER_NAMESPACE_END
 

@@ -136,6 +136,10 @@ namespace {
         // ToolTip
         {ThemeType::ToolTip, QColor(249, 249, 249), QColor(46, 46, 46)},
 
+        // CheckBox
+        {ThemeType::CheckBox, QColor(252, 252, 252), QColor(42, 42, 42)},
+        {ThemeType::CheckBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)}
+
     };
 }
 

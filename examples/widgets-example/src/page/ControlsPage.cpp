@@ -34,8 +34,8 @@ ControlsPage::ControlsPage(QWidget *parent)
     toggleButton->setBorderRadius(borderRadius);
     layout->addWidget(new SettingsCard("ToggleButton", toggleButton, content));
 
-    auto checkBox = new CheckBox;
-    checkBox->setChecked(true);
+    auto checkBox = new CheckBox("CheckBox");
+    checkBox->setIcon(IconType::Calendar3Day);
     layout->addWidget(new SettingsCard("CheckBox", checkBox, content));
 
     auto lineEdit = new LineEdit;
