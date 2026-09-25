@@ -50,12 +50,14 @@ void CheckBoxStyle::drawControl(ControlElement element, const QStyleOption *opti
         if (opt->state & State_On)
             painter->drawText(cRect, Qt::AlignCenter, QChar(IconType::Checkmark));
         else if (opt->state & State_NoChange) {
-            painter->setPen(QPen(TOMEER_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text), 2));
-            painter->drawLine(cRect.left() + 2, cRect.center().y(), cRect.right() - 2, cRect.center().y());
+            painter->setPen(Qt::NoPen);
+            painter->setBrush(TOMEER_THEME->getThemeColor(ThemeType::Dark, ThemeType::Text));
+            QRect _rect(cRect.center().x() - (cRect.width() - 6) / 2, cRect.center().y(), cRect.width() - 6, 1);
+            painter->drawRoundedRect(_rect, 1, 1);
         }
         painter->restore();
 
-        // 图标和文字绘制
+        // 图标绘制
         QRect tRect = opt->rect.adjusted(indicatorSize + pixelMetric(PM_CheckBoxLabelSpacing, opt, widget), 0, 0, 0);
         if (!opt->icon.isNull()) {
             QRect iRect(tRect.x(), tRect.y() + (tRect.height() - opt->iconSize.height()) / 2, opt->iconSize.width(), opt->iconSize.height());
@@ -73,6 +75,7 @@ void CheckBoxStyle::drawControl(ControlElement element, const QStyleOption *opti
                 opt->icon.paint(painter, iRect, Qt::AlignCenter);
             tRect.adjust(opt->iconSize.width() + 4, 0, 0, 0);
         }
+        // 文字绘制
         if (!opt->text.isEmpty()) {
             if (opt->state & State_Enabled)
                 painter->setPen(TOMEER_THEME->getThemeColor(ThemeType::Text));
