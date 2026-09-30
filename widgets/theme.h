@@ -31,6 +31,7 @@ signals:
 private slots:
     void onColorSchemeChanged(Qt::ColorScheme colorScheme);
 private:
+    QColor mixColor(const QColor &dark, const QColor &light) const;
     void initThemeColor();
 };
 TOMEER_NAMESPACE_END

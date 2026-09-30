@@ -6,142 +6,123 @@
 #include "theme_private.h"
 
 TOMEER_NAMESPACE_BEGIN()
-namespace {
-    struct ThemeColor {
-        ThemeType::ThemeColor role;
-        QColor light;
-        QColor dark;
-    };
+const ThemeColor themeColors[] = {
+    // Transparent
+    {ThemeType::Transparent, QColor(255, 255, 255, 0), QColor(0, 0, 0, 0)},
 
-    QColor mixColor(const QColor &dark, const QColor &light, qreal factor) {
-        factor = qBound<qreal>(0.0, factor, 1.0);
+    // Basic
+    {ThemeType::Default, QColor(160, 160, 160), QColor(82, 82, 82)},
+    {ThemeType::Hover, QColor(240, 240, 240), QColor(52, 52, 52)},
+    {ThemeType::Press, QColor(230, 230, 230), QColor(32, 32, 32)},
+    {ThemeType::Check, QColor(0, 95, 184), QColor(0, 120, 212)},
+    {ThemeType::Text, QColor(0, 0, 0), QColor(255, 255, 255)},
+    {ThemeType::Border, QColor(200, 200, 200), QColor(10, 10, 10)},
+    {ThemeType::Error, QColor(220, 53, 69), QColor(220, 53, 69)},
 
-        return {
-            qRound(dark.red() + (light.red() - dark.red()) * factor),
-            qRound(dark.green() + (light.green() - dark.green()) * factor),
-            qRound(dark.blue() + (light.blue() - dark.blue()) * factor),
-            qRound(dark.alpha() + (light.alpha() - dark.alpha()) * factor)
-        };
-    }
+    // Window
+    {ThemeType::Window, QColor(252, 252, 252), QColor(32, 32, 32)},
+    {ThemeType::RubberBand, QColor(238, 238, 238), QColor(42, 42, 42)},
 
-    const ThemeColor themeColors[] = {
-        // Transparent
-        {ThemeType::Transparent, QColor(255, 255, 255, 0), QColor(0, 0, 0, 0)},
+    // Disabled
+    {ThemeType::Disable, QColor(245, 245, 245, 60), QColor(0, 0, 0, 60)},
+    {ThemeType::TextDisable, QColor(80, 80, 80), QColor(167, 167, 167)},
 
-        // Basic
-        {ThemeType::Default, QColor(160, 160, 160), QColor(82, 82, 82)},
-        {ThemeType::Hover, QColor(240, 240, 240), QColor(52, 52, 52)},
-        {ThemeType::Press, QColor(230, 230, 230), QColor(32, 32, 32)},
-        {ThemeType::Check, QColor(0, 95, 184), QColor(0, 120, 212)},
-        {ThemeType::Text, QColor(0, 0, 0), QColor(255, 255, 255)},
-        {ThemeType::Border, QColor(200, 200, 200), QColor(10, 10, 10)},
-        {ThemeType::Error, QColor(220, 53, 69), QColor(220, 53, 69)},
+    // Alpha
+    {ThemeType::DefaultAlpha, QColor(160, 160, 160, 64), QColor(52, 52, 52, 32)},
+    {ThemeType::HoverAlpha, QColor(232, 232, 232, 128), QColor(52, 52, 52, 128)},
+    {ThemeType::PressAlpha, QColor(232, 232, 232, 200), QColor(52, 52, 52, 200)},
+    {ThemeType::CheckAlpha, QColor(0, 95, 184, 230), QColor(0, 120, 212, 230)},
+    {ThemeType::TextAlpha, QColor(0, 0, 0, 200), QColor(255, 255, 255, 200)},
+    {ThemeType::BorderAlpha, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
 
-        // Window
-        {ThemeType::Window, QColor(252, 252, 252), QColor(32, 32, 32)},
-        {ThemeType::RubberBand, QColor(238, 238, 238), QColor(42, 42, 42)},
+    // Window Alpha
+    {ThemeType::WindowAlpha, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
 
-        // Disabled
-        {ThemeType::Disable, QColor(245, 245, 245, 60), QColor(0, 0, 0, 60)},
-        {ThemeType::TextDisable, QColor(80, 80, 80), QColor(167, 167, 167)},
+    // Mica
+    {ThemeType::Mica, QColor(0, 103, 192, 10), QColor(0, 103, 192, 10)},
 
-        // Alpha
-        {ThemeType::DefaultAlpha, QColor(160, 160, 160, 64), QColor(52, 52, 52, 32)},
-        {ThemeType::HoverAlpha, QColor(232, 232, 232, 128), QColor(52, 52, 52, 128)},
-        {ThemeType::PressAlpha, QColor(232, 232, 232, 200), QColor(52, 52, 52, 200)},
-        {ThemeType::CheckAlpha, QColor(0, 95, 184, 230), QColor(0, 120, 212, 230)},
-        {ThemeType::TextAlpha, QColor(0, 0, 0, 200), QColor(255, 255, 255, 200)},
-        {ThemeType::BorderAlpha, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
+    // MicaAlt
+    {ThemeType::MicaAlt, QColor(0, 103, 192, 10), QColor(0, 103, 192, 10)},
 
-        // Window Alpha
-        {ThemeType::WindowAlpha, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
+    // Acrylic
+    {ThemeType::Acrylic, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
 
-        // Mica
-        {ThemeType::Mica, QColor(0, 103, 192, 10), QColor(0, 103, 192, 10)},
+    // DwmBlur
+    {ThemeType::DwmBlur, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
 
-        // MicaAlt
-        {ThemeType::MicaAlt, QColor(0, 103, 192, 10), QColor(0, 103, 192, 10)},
+    // Panel Alpha
+    {ThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(52, 52, 52, 60)},
 
-        // Acrylic
-        {ThemeType::Acrylic, QColor(252, 252, 252, 140), QColor(0, 0, 0, 140)},
+    // Pattern
+    {ThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
 
-        // DwmBlur
-        {ThemeType::DwmBlur, QColor(252, 252, 252, 120), QColor(0, 0, 0, 60)},
+    // Separator
+    {ThemeType::Separator, QColor(128, 128, 128), QColor(53, 53, 53)},
 
-        // Panel Alpha
-        {ThemeType::PanelAlpha, QColor(252, 252, 252, 60), QColor(52, 52, 52, 60)},
+    // Focus
+    {ThemeType::FocusBorder, QColor(0, 120, 215), QColor(0, 120, 215)},
 
-        // Pattern
-        {ThemeType::Pattern, QColor(200, 200, 200, 160), QColor(10, 10, 10, 60)},
+    // ToggleSwitch
+    {ThemeType::ToggleSwitchKnob, QColor(252, 252, 252), QColor(60, 60, 60)},
+    {ThemeType::ToggleSwitchBorder, QColor(220, 220, 220), QColor(60, 60, 60)},
 
-        // Separator
-        {ThemeType::Separator, QColor(128, 128, 128), QColor(53, 53, 53)},
+    // Slider
+    {ThemeType::SliderHandleBorder, QColor(200, 200, 200), QColor(60, 60, 60)},
 
-        // Focus
-        {ThemeType::FocusBorder, QColor(0, 120, 215), QColor(0, 120, 215)},
+    // CheckBox
+    {ThemeType::CheckBoxBorder, QColor(138, 138, 138), QColor(120, 120, 120)},
 
-        // ToggleSwitch
-        {ThemeType::ToggleSwitchKnob, QColor(252, 252, 252), QColor(60, 60, 60)},
-        {ThemeType::ToggleSwitchBorder, QColor(220, 220, 220), QColor(60, 60, 60)},
+    // ScrollBar
+    {ThemeType::ScrollBarHandle, QColor(0, 0, 0, 80), QColor(255, 255, 255, 72)},
+    {ThemeType::ScrollBarHandleHover, QColor(0, 0, 0, 120), QColor(255, 255, 255, 112)},
 
-        // Slider
-        {ThemeType::SliderHandleBorder, QColor(200, 200, 200), QColor(60, 60, 60)},
+    // Waveform
+    {ThemeType::WaveformLegendText, QColor(0, 0, 0), QColor(255, 255, 255)},
+    {ThemeType::WaveformLegendBorder, QColor(0, 0, 0, 255), QColor(255, 255, 255, 255)},
+    {ThemeType::WaveformX, QColor(0, 0, 0), QColor(255, 255, 255)},
+    {ThemeType::WaveformGrid, QColor(100, 100, 100, 100), QColor(140, 140, 140, 100)},
 
-        // CheckBox
-        {ThemeType::CheckBoxBorder, QColor(138, 138, 138), QColor(120, 120, 120)},
+    // Status
+    {ThemeType::Normal, Qt::darkGreen, Qt::darkGreen},
+    {ThemeType::Warning, Qt::darkYellow, Qt::darkYellow},
 
-        // ScrollBar
-        {ThemeType::ScrollBarHandle, QColor(0, 0, 0, 80), QColor(255, 255, 255, 72)},
-        {ThemeType::ScrollBarHandleHover, QColor(0, 0, 0, 120), QColor(255, 255, 255, 112)},
+    // TableView
+    {ThemeType::HeaderBg, QColor(0, 0, 0, 40), QColor(0, 0, 0, 40)},
+    {ThemeType::TableBg, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
+    {ThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
 
-        // Waveform
-        {ThemeType::WaveformLegendText, QColor(0, 0, 0), QColor(255, 255, 255)},
-        {ThemeType::WaveformLegendBorder, QColor(0, 0, 0, 255), QColor(255, 255, 255, 255)},
-        {ThemeType::WaveformX, QColor(0, 0, 0), QColor(255, 255, 255)},
-        {ThemeType::WaveformGrid, QColor(100, 100, 100, 100), QColor(140, 140, 140, 100)},
+    // LineEdit
+    {ThemeType::LineEdit, QColor(252, 252, 252), QColor(42, 42, 42)},
 
-        // Status
-        {ThemeType::Normal, Qt::darkGreen, Qt::darkGreen},
-        {ThemeType::Warning, Qt::darkYellow, Qt::darkYellow},
+    // ComboBox
+    {ThemeType::ComboBox, QColor(252, 252, 252), QColor(42, 42, 42)},
+    {ThemeType::ComboBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)},
+    {ThemeType::ComboBoxView, QColor(242, 242, 242), QColor(42, 42, 42)},
+    {ThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
 
-        // TableView
-        {ThemeType::HeaderBg, QColor(0, 0, 0, 40), QColor(0, 0, 0, 40)},
-        {ThemeType::TableBg, QColor(252, 252, 252, 60), QColor(0, 0, 0, 40)},
-        {ThemeType::SelectedItem, QColor(0, 0, 0, 10), QColor(0, 0, 0, 10)},
+    // Button
+    {ThemeType::Button, QColor(252, 252, 252), QColor(42, 42, 42)},
+    {ThemeType::ButtonHover, QColor(248, 248, 248), QColor(48, 48, 48)},
 
-        // LineEdit
-        {ThemeType::LineEdit, QColor(252, 252, 252), QColor(42, 42, 42)},
+    // AppBarButton
+    {ThemeType::Dismiss, QColor(232, 17, 35), QColor(232, 17, 35)},
 
-        // ComboBox
-        {ThemeType::ComboBox, QColor(252, 252, 252), QColor(42, 42, 42)},
-        {ThemeType::ComboBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)},
-        {ThemeType::ComboBoxView, QColor(242, 242, 242), QColor(42, 42, 42)},
-        {ThemeType::ComboBoxItem, QColor(252, 252, 252), QColor(22, 22, 22)},
+    // NavigationBar
+    {ThemeType::NavigationNodeSelected, QColor(0, 0, 0, 10), QColor(255, 255, 255, 12)},
 
-        // Button
-        {ThemeType::Button, QColor(252, 252, 252), QColor(42, 42, 42)},
-        {ThemeType::ButtonHover, QColor(248, 248, 248), QColor(48, 48, 48)},
+    // ToolBar
+    {ThemeType::ToolBarHandle, QColor(0, 95, 184), QColor(0, 103, 192)},
+    {ThemeType::ToolBarBorder, QColor(98, 238, 147), QColor(98, 238, 147)},
+    {ThemeType::ToolBarBg, QColor(245, 245, 245), QColor(42, 42, 42)},
 
-        // AppBarButton
-        {ThemeType::Dismiss, QColor(232, 17, 35), QColor(232, 17, 35)},
+    // ToolTip
+    {ThemeType::ToolTip, QColor(249, 249, 249), QColor(46, 46, 46)},
 
-        // NavigationBar
-        {ThemeType::NavigationNodeSelected, QColor(0, 0, 0, 10), QColor(255, 255, 255, 12)},
+    // CheckBox
+    {ThemeType::CheckBox, QColor(252, 252, 252), QColor(42, 42, 42)},
+    {ThemeType::CheckBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)}
 
-        // ToolBar
-        {ThemeType::ToolBarHandle, QColor(0, 95, 184), QColor(0, 103, 192)},
-        {ThemeType::ToolBarBorder, QColor(98, 238, 147), QColor(98, 238, 147)},
-        {ThemeType::ToolBarBg, QColor(245, 245, 245), QColor(42, 42, 42)},
-
-        // ToolTip
-        {ThemeType::ToolTip, QColor(249, 249, 249), QColor(46, 46, 46)},
-
-        // CheckBox
-        {ThemeType::CheckBox, QColor(252, 252, 252), QColor(42, 42, 42)},
-        {ThemeType::CheckBoxHover, QColor(248, 248, 248), QColor(48, 48, 48)}
-
-    };
-}
+};
 
 TOMEER_Q_SINGLETON_IMPL(Theme)
 TOMEER_Q_PROPERTY_IMPL(Theme, bool, FollowSystem)
@@ -214,7 +195,7 @@ QColor Theme::getThemeColor(ThemeType::ThemeColor color) {
     const QColor lightColor = d->_lightThemeColorList.value(color);
     const QColor darkColor = d->_darkThemeColorList.value(color);
 
-    return mixColor(darkColor, lightColor, d->getColorFactor());
+    return mixColor(darkColor, lightColor);
 }
 
 QColor Theme::getThemeColor(ThemeType::ThemeMode mode, ThemeType::ThemeColor color) {
@@ -232,6 +213,17 @@ QColor Theme::getThemeColor(ThemeType::ThemeMode mode, ThemeType::ThemeColor col
     if (mode == ThemeType::Dark)
         return d->_darkThemeColorList[color];
     return {};
+}
+
+QColor Theme::mixColor(const QColor &dark, const QColor &light) const {
+    Q_D(const Theme);
+    const qreal factor = qBound<qreal>(0.0, d->getColorFactor(), 1.0);
+
+    return {
+        qRound(dark.red() + (light.red() - dark.red()) * factor),
+        qRound(dark.green() + (light.green() - dark.green()) * factor),
+        qRound(dark.blue() + (light.blue() - dark.blue()) * factor),
+        qRound(dark.alpha() + (light.alpha() - dark.alpha()) * factor)};
 }
 
 void Theme::initThemeColor() {

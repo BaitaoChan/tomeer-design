@@ -8,6 +8,13 @@
 class QPropertyAnimation;
 TOMEER_NAMESPACE_BEGIN()
 class Theme;
+
+struct ThemeColor {
+    ThemeType::ThemeColor role;
+    QColor light;
+    QColor dark;
+};
+
 class ThemePrivate : public QObject {
     Q_OBJECT
     TOMEER_DECLARE_QPTR(Theme)
