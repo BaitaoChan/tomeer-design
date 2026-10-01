@@ -79,8 +79,9 @@ void Window::setDisplayMode(WindowType::DisplayMode pDisplayMode) {
         const HRESULT result = DwmSetWindowAttribute(hwnd, DWMWA_SYSTEMBACKDROP_TYPE, &backdropType, sizeof(backdropType));
         isApplied = SUCCEEDED(result) && backdropType != DWMSBT_NONE;
 
+        // 材质覆盖整个窗口
         const MARGINS margins = backdropType != DWMSBT_NONE
-                                    ? MARGINS{-1, -1, -1, -1}
+                                    ? MARGINS{GetSystemMetrics(SM_CXVIRTUALSCREEN), 0, 0, 0}
                                     : MARGINS{0, 0, 0, 0};
         DwmExtendFrameIntoClientArea(hwnd, &margins);
 
@@ -355,24 +356,6 @@ void Window::paintEvent(QPaintEvent *event) {
 
 void Window::showEvent(QShowEvent *event) {
     QMainWindow::showEvent(event);
-#ifdef Q_OS_WIN
-    const auto hwnd = reinterpret_cast<HWND>(winId());
-    const auto style = GetWindowLongPtrW(hwnd, GWL_STYLE);
-    const auto customStyle = style & ~static_cast<LONG_PTR>(WS_CAPTION);
-    if (customStyle != style) {
-        // 保留 Qt Hint 产生的系统菜单和最小化/最大化语义，仅禁止原生标题栏绘制。
-        SetWindowLongPtrW(hwnd, GWL_STYLE, customStyle);
-        SetWindowPos(
-            hwnd,
-            nullptr,
-            0,
-            0,
-            0,
-            0,
-            SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED
-        );
-    }
-#endif
     setDisplayMode(getDisplayMode());
     update();
 }
