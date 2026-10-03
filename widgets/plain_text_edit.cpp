@@ -1,6 +1,8 @@
-#include <QPalette>
+#include <QKeySequence>
 #include <QPropertyAnimation>
 
+#include "action.h"
+#include "menu.h"
 #include "scroll_bar.h"
 #include "plain_text_edit.h"
 #include "plain_text_edit_style.h"
@@ -40,6 +42,64 @@ PlainTextEdit::PlainTextEdit(const QString &text, QWidget *parent)
 }
 
 PlainTextEdit::~PlainTextEdit() = default;
+
+void PlainTextEdit::contextMenuEvent(QContextMenuEvent *event) {
+    const auto menu = new Menu(this);
+    menu->setAttribute(Qt::WA_DeleteOnClose);
+    Action *action = nullptr;
+
+    if (!isReadOnly()) {
+        action = new Action(IconType::ArrowUndo, tr("Undo"), menu);
+        action->setShortcut(QKeySequence::Undo);
+        action->setEnabled(isUndoRedoEnabled() && document()->isUndoAvailable());
+        connect(action, &QAction::triggered, this, &QPlainTextEdit::undo);
+        menu->addAction(action);
+
+        action = new Action(IconType::ArrowRedo, tr("Redo"), menu);
+        action->setShortcut(QKeySequence::Redo);
+        action->setEnabled(isUndoRedoEnabled() && document()->isRedoAvailable());
+        connect(action, &QAction::triggered, this, &QPlainTextEdit::redo);
+        menu->addAction(action);
+        menu->addSeparator();
+
+        action = new Action(IconType::Cut, tr("Cut"), menu);
+        action->setShortcut(QKeySequence::Cut);
+        action->setEnabled(textCursor().hasSelection());
+        connect(action, &QAction::triggered, this, &QPlainTextEdit::cut);
+        menu->addAction(action);
+    }
+
+    action = new Action(IconType::Copy, tr("Copy"), menu);
+    action->setShortcut(QKeySequence::Copy);
+    action->setEnabled(textCursor().hasSelection());
+    connect(action, &QAction::triggered, this, &QPlainTextEdit::copy);
+    menu->addAction(action);
+
+    if (!isReadOnly()) {
+        action = new Action(IconType::ClipboardPaste, tr("Paste"), menu);
+        action->setShortcut(QKeySequence::Paste);
+        action->setEnabled(canPaste());
+        connect(action, &QAction::triggered, this, &QPlainTextEdit::paste);
+        menu->addAction(action);
+
+        action = new Action(IconType::Delete, tr("Delete"), menu);
+        action->setShortcut(QKeySequence::Delete);
+        action->setEnabled(textCursor().hasSelection());
+        connect(action, &QAction::triggered, this, [this] { textCursor().removeSelectedText(); });
+        menu->addAction(action);
+    }
+
+    menu->addSeparator();
+
+    action = new Action(IconType::SelectAllOn, tr("Select All"), menu);
+    action->setShortcut(QKeySequence::SelectAll);
+    action->setEnabled(!document()->isEmpty());
+    connect(action, &QAction::triggered, this, &QPlainTextEdit::selectAll);
+    menu->addAction(action);
+
+    menu->popup(event->globalPos());
+    setFocus();
+}
 
 void PlainTextEdit::onThemeChanged(ThemeType::ThemeMode mode) {
     setThemeMode(mode);

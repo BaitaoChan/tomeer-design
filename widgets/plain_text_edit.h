@@ -19,6 +19,7 @@ public:
     ~PlainTextEdit() override;
 
 protected:
+    void contextMenuEvent(QContextMenuEvent *event) override;
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
