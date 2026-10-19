@@ -1,14 +1,14 @@
-#include "navigation_bar.h"
-
 #include <QHBoxLayout>
 #include <QList>
+#include <QResizeEvent>
 #include <QStackedWidget>
 #include <QStyleOption>
 #include <QStylePainter>
 #include <QTreeWidgetItem>
 
-#include "navigation_bar_node_delegate.h"
+#include "navigation_bar.h"
 #include "navigation_bar_private.h"
+#include "navigation_bar_node_delegate.h"
 #include "navigation_bar_style.h"
 #include "navigation_bar_view.h"
 #include "navigation_bar_view_style.h"
@@ -17,6 +17,7 @@
 TOMEER_NAMESPACE_BEGIN()
 
 TOMEER_Q_PROPERTY_IMPL(NavigationBar, ThemeType::ThemeMode, ThemeMode)
+TOMEER_Q_PROPERTY_IMPL(NavigationBar, NavigationBarType::DisplayMode, DisplayMode)
 NavigationBar::NavigationBar(QWidget *parent)
     : QWidget(parent),
       d_ptr(new NavigationBarPrivate(this)) {
@@ -27,7 +28,6 @@ NavigationBar::NavigationBar(QWidget *parent)
     d->_view = new NavigationBarView(this);
     d->_view->setStyle(new NavigationBarViewStyle(d->_view->style()));
     d->_view->setItemDelegate(new NavigationBarNodeDelegate(d->_view));
-    d->_view->setFixedWidth(220);
 
     d->_stackedWidget = new QStackedWidget(this);
 
@@ -41,8 +41,10 @@ NavigationBar::NavigationBar(QWidget *parent)
     connect(TOMEER_THEME, &Theme::themeModeChanged, this, &NavigationBar::onThemeChanged);
     connect(TOMEER_THEME, &Theme::themeColorChanged, this, QOverload<>::of(&QWidget::update));
     connect(TOMEER_THEME, &Theme::themeColorChanged, d->_view->viewport(), QOverload<>::of(&QWidget::update));
+    connect(this, &NavigationBar::pDisplayModeChanged, this, [this] { resizeEvent(nullptr); });
 
     setThemeMode(TOMEER_THEME->getThemeMode());
+    resizeEvent(nullptr);
 }
 
 NavigationBar::~NavigationBar() = default;
@@ -145,6 +147,11 @@ QString NavigationBar::currentKey() const {
     return d->_pages.contains(key) ? key : QString();
 }
 
+bool NavigationBar::getIsCompacted() const {
+    Q_D(const NavigationBar);
+    return d->_view->getIsCompacted();
+}
+
 void NavigationBar::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event)
 
@@ -153,6 +160,35 @@ void NavigationBar::paintEvent(QPaintEvent *event) {
 
     QStylePainter painter(this);
     painter.drawPrimitive(QStyle::PE_Widget, option);
+}
+
+void NavigationBar::resizeEvent(QResizeEvent *event) {
+    QWidget::resizeEvent(event);
+    Q_D(NavigationBar);
+
+    NavigationBarType::DisplayMode mode = getDisplayMode();
+    if (mode == NavigationBarType::Auto) {
+        if (width() >= d->_expandedThreshold)
+            mode = NavigationBarType::Expanded;
+        else if (width() >= d->_compactThreshold)
+            mode = NavigationBarType::Compact;
+        else
+            mode = NavigationBarType::Minimal;
+    }
+
+    int target = d->_minimalWidth;
+    if (mode == NavigationBarType::Expanded)
+        target = d->_expandedWidth;
+    else if (mode == NavigationBarType::Compact)
+        target = d->_compactWidth;
+
+    const bool isCollapsed = mode != NavigationBarType::Expanded;
+
+    if (d->_view->minimumWidth() == target && d->_view->getIsCompacted() == isCollapsed)
+        return;
+
+    d->_view->setFixedWidth(target);
+    d->_view->setIsCompacted(isCollapsed);
 }
 
 void NavigationBar::onThemeChanged(ThemeType::ThemeMode mode) {

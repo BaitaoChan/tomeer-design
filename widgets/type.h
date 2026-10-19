@@ -67,6 +67,14 @@ enum DataRole {
     NodeTypeRole
 };
 Q_ENUM(DataRole)
+
+enum DisplayMode {
+    Auto = 0x00,
+    Expanded = 0x01,
+    Compact = 0x02,
+    Minimal = 0x03
+};
+Q_ENUM(DisplayMode)
 TOMEER_TYPE_END(NavigationBarType)
 
 TOMEER_TYPE_BEGIN(MessageBarType)

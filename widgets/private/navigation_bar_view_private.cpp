@@ -1,7 +1,10 @@
 #include <QPropertyAnimation>
+#include <QStyle>
 
 #include "navigation_bar_view_private.h"
 #include "navigation_bar_view.h"
+
+#include "tool_tip.h"
 
 TOMEER_NAMESPACE_BEGIN()
 TOMEER_Q_PROPERTY_IMPL(NavigationBarViewPrivate, bool, Downward)
@@ -42,6 +45,17 @@ void NavigationBarViewPrivate::onCollapsed(const QModelIndex &index) {
     _rotateAnim->setStartValue(startAngle);
     _rotateAnim->setEndValue(0.0);
     _rotateAnim->start();
+}
+
+void NavigationBarViewPrivate::onIsCompactedChanged() {
+    Q_Q(NavigationBarView);
+    const bool compact = q->getIsCompacted();
+    // 展开态跟随样式给出的缩进，收起态归零让各级图标落在同一列
+    q->setIndentation(compact ? 0 : q->style()->pixelMetric(QStyle::PM_TreeViewIndentation, nullptr, q));
+    if (!compact)
+        ToolTip::hideText();
+    // 缩进参与项矩形计算，必须重新布局才会生效
+    q->doItemsLayout();
 }
 
 QRect NavigationBarViewPrivate::_indicatorRect(const QModelIndex &index) const {

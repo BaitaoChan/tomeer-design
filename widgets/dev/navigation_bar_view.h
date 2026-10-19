@@ -9,6 +9,7 @@ class NavigationBarViewPrivate;
 class NavigationBarView : public QTreeWidget {
     Q_OBJECT
     TOMEER_DECLARE_DPTR(NavigationBarView)
+    TOMEER_Q_PROPERTY_DECL(bool, IsCompacted)
     TOMEER_Q_PROPERTY_DECL(qreal, RotateAngle)
 public:
     explicit NavigationBarView(QWidget *parent = nullptr);
@@ -19,6 +20,7 @@ public:
 
 protected:
     bool viewportEvent(QEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;

@@ -132,6 +132,8 @@ MainWindow::MainWindow(QWidget *parent)
     navigationBar->addPageNode(new QWidget(navigationBar), "about", "关于", IconType::Info, "system");
 
     navigationBar->setCurrentKey("allControls");
+
+    navigationBar->setDisplayMode(NavigationBarType::Auto);
 }
 
 MainWindow::~MainWindow() = default;

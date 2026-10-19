@@ -25,6 +25,12 @@ private:
     bool _isExpander(const QTreeWidgetItem *node) const;
     QTreeWidgetItem *_createNode(NavigationBarType::NodeType type, const QString &key, const QString &title, IconType::Icon icon) const;
 
+    int _expandedWidth = 220;
+    int _compactWidth = 42;
+    int _minimalWidth = 0;
+    int _expandedThreshold = 850;
+    int _compactThreshold = 550;
+
     NavigationBarView *_view = nullptr;
     QStackedWidget *_stackedWidget = nullptr;
     QHash<QString, QTreeWidgetItem *> _nodes;

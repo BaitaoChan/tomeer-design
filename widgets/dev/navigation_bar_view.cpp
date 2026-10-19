@@ -1,15 +1,16 @@
 #include <QBrush>
 #include <QPainter>
-#include <QMouseEvent>
 #include <QPropertyAnimation>
+#include <QResizeEvent>
 
-#include "navigation_bar_view_private.h"
 #include "navigation_bar_view.h"
+#include "navigation_bar_view_private.h"
 #include "scroll_bar.h"
 #include "tool_tip.h"
 #include "type.h"
 
 TOMEER_NAMESPACE_BEGIN()
+TOMEER_Q_PROPERTY_IMPL(NavigationBarView, bool, IsCompacted)
 TOMEER_Q_PROPERTY_IMPL(NavigationBarView, qreal, RotateAngle)
 
 NavigationBarView::NavigationBarView(QWidget *parent)
@@ -51,7 +52,7 @@ NavigationBarView::NavigationBarView(QWidget *parent)
         d->_togglingIndex = QModelIndex();
         viewport()->update();
     });
-    connect(d->_indicatorAnim, &QVariantAnimation::valueChanged,viewport(), QOverload<>::of(&QWidget::update));
+    connect(d->_indicatorAnim, &QVariantAnimation::valueChanged, viewport(), QOverload<>::of(&QWidget::update));
     connect(d->_indicatorAnim, &QVariantAnimation::finished, this, [this, d] {
         d->_previousIndex = QModelIndex();
         d->_currentIndex = QModelIndex();
@@ -59,6 +60,7 @@ NavigationBarView::NavigationBarView(QWidget *parent)
     });
     connect(this, &QTreeWidget::expanded, d, &NavigationBarViewPrivate::onExpanded);
     connect(this, &QTreeWidget::collapsed, d, &NavigationBarViewPrivate::onCollapsed);
+    connect(this, &NavigationBarView::pIsCompactedChanged, d, &NavigationBarViewPrivate::onIsCompactedChanged);
 }
 
 NavigationBarView::~NavigationBarView() = default;
@@ -77,7 +79,8 @@ bool NavigationBarView::viewportEvent(QEvent *event) {
     if (event->type() == QEvent::ToolTip) {
         const auto helpEvent = dynamic_cast<QHelpEvent *>(event);
         const auto index = indexAt(helpEvent->pos());
-        const auto text = index.data(Qt::ToolTipRole).toString();
+        // 收起由 ToolTip 显示文字
+        const auto text = getIsCompacted() ? index.data(Qt::ToolTipRole).toString() : QString();
         if (!text.isEmpty())
             ToolTip::showText(helpEvent->globalPos(), text, viewport());
         else {
@@ -89,6 +92,13 @@ bool NavigationBarView::viewportEvent(QEvent *event) {
     if (event->type() == QEvent::Leave || event->type() == QEvent::Hide)
         ToolTip::hideText();
     return QTreeWidget::viewportEvent(event);
+}
+
+void NavigationBarView::resizeEvent(QResizeEvent *event) {
+    QTreeWidget::resizeEvent(event);
+
+    if (columnWidth(0) != viewport()->width())
+        setColumnWidth(0, viewport()->width());
 }
 
 void NavigationBarView::mousePressEvent(QMouseEvent *event) {
@@ -172,7 +182,7 @@ void NavigationBarView::paintEvent(QPaintEvent *event) {
     // 指示条绘制
     if (d->_indicatorAnim->state() != QAbstractAnimation::Running)
         return;
-    
+
     QPainter painter(viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);

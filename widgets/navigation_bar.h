@@ -12,6 +12,7 @@ class WIDGETS_EXPORT NavigationBar : public QWidget {
     Q_OBJECT
     TOMEER_DECLARE_DPTR(NavigationBar)
     TOMEER_Q_PROPERTY_DECL(ThemeType::ThemeMode, ThemeMode)
+    TOMEER_Q_PROPERTY_DECL(NavigationBarType::DisplayMode, DisplayMode)
 public:
     explicit NavigationBar(QWidget *parent = nullptr);
     ~NavigationBar() override;
@@ -23,8 +24,11 @@ public:
     bool setCurrentKey(const QString &key);
     QString currentKey() const;
 
+    bool getIsCompacted() const;
+
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
     virtual void onThemeChanged(ThemeType::ThemeMode mode);
 };
 TOMEER_NAMESPACE_END

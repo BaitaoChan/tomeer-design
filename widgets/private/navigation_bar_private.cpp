@@ -1,5 +1,5 @@
-#include <QTreeWidgetItem>
 #include <QStackedWidget>
+#include <QTreeWidgetItem>
 
 #include "navigation_bar_private.h"
 #include "navigation_bar.h"
@@ -14,7 +14,7 @@ NavigationBarPrivate::NavigationBarPrivate(NavigationBar *q)
 NavigationBarPrivate::~NavigationBarPrivate() = default;
 
 void NavigationBarPrivate::onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
-    Q_Q(NavigationBar);
+    Q_UNUSED(previous)
     const auto key = current->data(0, NavigationBarType::KeyRole).toString();
     const auto page = _pages.value(key);
 
@@ -34,7 +34,8 @@ QTreeWidgetItem *NavigationBarPrivate::_createNode(NavigationBarType::NodeType t
     node->setData(0, NavigationBarType::IconRole, icon);
     node->setData(0, NavigationBarType::NodeTypeRole, type);
     node->setText(0, title);
-    // node->setToolTip(0, title);
+    // 收起态不绘制文字，标题改由 ToolTip 呈现
+    node->setToolTip(0, title);
     node->setFlags(type == NavigationBarType::Page ? Qt::ItemIsEnabled | Qt::ItemIsSelectable : Qt::ItemIsEnabled);
     return node;
 }

@@ -60,16 +60,18 @@ void ToolButtonStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         QFont font("tomeer");
         font.setPixelSize(opt->iconSize.height());
         painter->setFont(font);
-        QSize tSize = QFontMetrics(painter->font()).size(Qt::TextSingleLine, opt->text), iSize = opt->iconSize;
-        QRectF rect;
+
+        QSize tSize = QFontMetrics(opt->font).size(Qt::TextSingleLine, opt->text), iSize = opt->icon.isNull() ? QSize(0, 0) : opt->iconSize;
+        QRect rect = toolButton->rect();
+        rect.setLeft(rect.right() - spacing - QFontMetrics(opt->font).height() + 1);
         if (opt->toolButtonStyle == Qt::ToolButtonTextOnly)
-            rect = toolButton->rect().adjusted(tSize.width() + spacing, 0, 0, 0);
+            rect.setLeft(qMax(rect.left(), tSize.width() + spacing));
         if (opt->toolButtonStyle == Qt::ToolButtonIconOnly)
-            rect = toolButton->rect().adjusted(iSize.width() + spacing, 0, 0, 0);
+            rect.setLeft(qMax(rect.left(), iSize.width() + spacing));
         if (opt->toolButtonStyle == Qt::ToolButtonTextBesideIcon)
-            rect = toolButton->rect().adjusted(iSize.width() + tSize.width() + spacing, 0, 0, 0);
+            rect.setLeft(qMax(rect.left(), iSize.width() + tSize.width() + spacing));
         if (opt->toolButtonStyle == Qt::ToolButtonTextUnderIcon)
-            rect = toolButton->rect().adjusted(qMax(iSize.width(), tSize.width()) + spacing, 0, 0, 0);
+            rect.setLeft(qMax(rect.left(), qMax(iSize.width(), tSize.width()) + spacing));
         QPointF center = rect.center();
 
 #if TOMEER_ARROW_DRAW_MODE == 0

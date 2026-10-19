@@ -16,7 +16,7 @@ void NavigationBarNodeDelegate::paint(QPainter *painter, const QStyleOptionViewI
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
-    const QRect r = option.rect.adjusted(4, 2, -4, -2);
+    const QRect r = option.rect.adjusted(4, 4, -4, -4);
     const auto view = qobject_cast<const NavigationBarView *>(option.widget);
 
     // 背景
@@ -57,7 +57,9 @@ void NavigationBarNodeDelegate::paint(QPainter *painter, const QStyleOptionViewI
 
     // 图标
     const QSize iSize = view->iconSize();
-    const QRect iRect(r.left() + 12, r.center().y() - iSize.height() / 2, iSize.width(), iSize.height());
+    QRect iRect(r.left() + 12, r.center().y() - iSize.height() / 2, iSize.width(), iSize.height());
+    if (view->getIsCompacted())
+        iRect.moveCenter(r.center());
     const auto icon = static_cast<IconType::Icon>(index.data(NavigationBarType::IconRole).toInt());
 
     if (icon != IconType::None) {
@@ -67,6 +69,12 @@ void NavigationBarNodeDelegate::paint(QPainter *painter, const QStyleOptionViewI
         painter->setFont(font);
         painter->drawText(iRect, Qt::AlignCenter, QString(QChar(icon)));
         painter->restore();
+    }
+
+    // 收起只绘制图标
+    if (view->getIsCompacted()) {
+        painter->restore();
+        return;
     }
 
     QRect tRect = r.adjusted(iRect.right() - r.left() + 10, 0, -8, 0);

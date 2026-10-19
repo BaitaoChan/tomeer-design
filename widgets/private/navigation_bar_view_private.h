@@ -19,6 +19,7 @@ public:
 
     Q_SLOT void onExpanded(const QModelIndex &index);
     Q_SLOT void onCollapsed(const QModelIndex &index);
+    Q_SLOT void onIsCompactedChanged();
 
 private:
     QRect _indicatorRect(const QModelIndex &index) const;
